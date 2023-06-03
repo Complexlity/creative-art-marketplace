@@ -1,8 +1,15 @@
 import { type AppType } from "next/dist/shared/lib/utils";
-import "~/styles/globals.css";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
+import "~/styles/globals.css"
+
+const activeChain = "ethereum"
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+  return (
+    <ThirdwebProvider activeChain={activeChain}>
+      <Component {...pageProps} />
+    </ThirdwebProvider>
+  );
 };
 
 export default MyApp;
