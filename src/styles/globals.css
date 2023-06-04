@@ -12,3 +12,11 @@
   background-color: #d2f55e !important;
   color: #17233a !important;
 }
+
+section {
+  margin-bottom: 3rem;
+}
+
+.stack {
+  grid-area: 2/2/3/3
+}

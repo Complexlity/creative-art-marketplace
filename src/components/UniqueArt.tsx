@@ -2,22 +2,27 @@ const UniqueArt = () => {
   return (
     <section className="text-white">
       <div className="">
-        <h2 className="text-3xl">
+        <h2 className="text-3xl text-center">
           <span className="text-primary">Amazing</span> and Super{" "}
         </h2>
-        <div className="flex justify-between">
+        <div className="md:flex md:justify-between text-center">
           <h2 className="text-3xl">
             Unique Art of This <span className="text-primary">Week</span>
           </h2>
-          <button className="rounded-md bg-primary px-8 py-2 font-semibold text-gray-800">
+          <button className="hidden md:block rounded-md bg-primary px-8 py-2 font-semibold text-gray-800">
             See All
           </button>
         </div>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid  gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card />
         <Card />
         <Card />
+      </div>
+      <div className="text-center">
+        <button className="md:hidden mx-auto rounded-md bg-primary px-8 py-2 font-semibold text-gray-800">
+              See All
+            </button>
       </div>
     </section>
   );
@@ -25,7 +30,7 @@ const UniqueArt = () => {
 
 function Card() {
   return (
-    <div className="space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4">
+    <div className="space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4 mb-6">
       <img
         className="aspect-square rounded-lg object-cover object-top"
         src="/nft-1.jpg"
