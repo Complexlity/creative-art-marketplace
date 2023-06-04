@@ -1,8 +1,8 @@
 const UniqueArt = () => {
   return (
-    <section className="text-white">
+    <section className="text-white mb-12">
       <div className="">
-        <h2 className="text-3xl text-center">
+        <h2 className="text-3xl text-center md:text-start">
           <span className="text-primary">Amazing</span> and Super{" "}
         </h2>
         <div className="md:flex md:justify-between text-center">

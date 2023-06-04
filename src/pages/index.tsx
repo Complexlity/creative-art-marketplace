@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import Hero from '../components/Hero'
 import UniqueArt from "~/components/UniqueArt";
 import Subscribe from "~/components/Subscribe";
+import Footer from "~/components/Footer";
 const Home: NextPage = () => {
   return (
     <>
@@ -13,11 +14,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-gray-900">
-        <div className="mx-auto max-w-[1200px] px-4 md:px-8 ">
-          <NavBar></NavBar>
+        <div className="mx-auto max-w-[1400px] px-4 md:px-8 ">
+          <NavBar/>
           <Hero />
           <UniqueArt />
           <Subscribe />
+          <Footer/>
         </div>
       </div>
     </>

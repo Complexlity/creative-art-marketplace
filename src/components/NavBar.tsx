@@ -1,10 +1,10 @@
 import { Spin as Hamburger } from "hamburger-react";
 import { ConnectWallet } from "@thirdweb-dev/react";
-import Example from './Example'
+
 
 const NavBar = () => {
   return (
-    <nav className="flex items-center justify-between text-white">
+    <nav className="flex items-center justify-between text-white mb-12">
       <div className="text-3xl">
         Creative<span className="text-primary">art</span>
       </div>
