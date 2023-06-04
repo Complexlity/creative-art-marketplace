@@ -4,15 +4,29 @@ const Subscribe = () => {
       <div className="hidden md:grid">
         <div className="grid grid-cols-3">
           <img
-            className="stack w-48 rotate-[20deg] ml-20 "
+            className="five rounded-lg stack ml-32  w-48 rotate-[50deg] opacity-[60%] "
             src="/nft-1.jpg"
             alt=""
           />
-          <img className="stack w-48 z-10" src="/nft-1.jpg" alt="" />
-          <img className="stack w-48 rotate-[-20deg] -ml-20" src="/nft-1.jpg" alt="" />
+            <img
+              className="one rounded-lg stack  -ml-32 w-48 rotate-[-50deg] opacity-[60%]"
+              src="/nft-1.jpg"
+              alt=""
+            />
+          <img
+            className="four rounded-lg stack z-5 ml-20 w-48 rotate-[20deg] opacity-[80%] "
+            src="/nft-1.jpg"
+            alt=""
+          />
+          <img className="three rounded-lg stack z-10 w-48" src="/nft-1.jpg" alt="" />
+          <img
+            className="two rounded-lg stack z-5 -ml-20 w-48 rotate-[-20deg] opacity-[80%]"
+            src="/nft-1.jpg"
+            alt=""
+          />
         </div>
       </div>
-      <div className="space-y-6 text-center text-white md:text-start">
+      <div className="space-y-6 text-center text-white md:text-start z-50">
         <h2 className="mx-auto max-w-[24ch]  text-4xl font-bold md:m-0">
           Subscribe And <span className="text-primary">get our Updates </span>{" "}
           Every Week
@@ -33,15 +47,20 @@ const Subscribe = () => {
         </div>
       </div>
 
-      <div className="hidden">
-        <div className="image1 relative flex text-4xl md:hidden">
+      <div className="">
+        <div className="image1 relative flex justify-center text-4xl md:hidden">
           <img
-            className="relative left-[70px] ml-4  aspect-square w-[50%] rotate-[-30deg] rounded-xl object-cover object-top md:-ml-8"
+            className="relative left-[70px] aspect-square w-[50%] rotate-[-30deg] rounded-xl object-cover object-top md:-ml-8"
             src="/nft-1.jpg"
             alt=""
           />
           <img
             className="relative top-[50px] z-10 aspect-square w-5/12 rounded-lg object-cover object-top "
+            src="/nft-1.jpg"
+            alt=""
+          />
+          <img
+            className="relative left-[-70px]  aspect-square w-[50%] rotate-[30deg] rounded-xl object-cover object-top md:-ml-8"
             src="/nft-1.jpg"
             alt=""
           />
