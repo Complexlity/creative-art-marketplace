@@ -1,7 +1,7 @@
 const WeeklyArtists = () => {
   return (
-    <section className="mb-24">
-      <h2 className="text-white text-center text-4xl">Artists Of The <span className="text-primary">Week</span></h2>
+    <section className="mb-32 md:mb-40">
+      <h2 className="text-white text-center text-4xl mb-6"><span className="border-b-4 border-primary">Artists</span> Of The <span className="text-primary">Week</span></h2>
     <ul className="honeycomb" lang="es">
       <li className="honeycomb-cell">
         <img className="honeycomb-cell__image" src="/nft-1.jpg" />

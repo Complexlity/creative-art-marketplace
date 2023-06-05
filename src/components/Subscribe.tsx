@@ -1,6 +1,6 @@
 const Subscribe = () => {
   return (
-    <section className="items-center gap-4 md:grid md:grid-cols-2">
+    <section className="items-center gap-4 md:grid md:grid-cols-2 mb-24">
       <div className="hidden md:grid">
         <div className="grid grid-cols-3">
           <img
@@ -27,7 +27,7 @@ const Subscribe = () => {
         </div>
       </div>
       <div className="space-y-6 text-center text-white md:text-start z-50">
-        <h2 className="mx-auto max-w-[24ch]  text-4xl font-bold md:m-0">
+        <h2 className="mx-auto max-w-[32ch]  text-4xl font-bold md:m-0">
           Subscribe And <span className="text-primary">get our Updates </span>{" "}
           Every Week
         </h2>
@@ -50,17 +50,17 @@ const Subscribe = () => {
       <div className="">
         <div className="image1 relative flex justify-center text-4xl md:hidden">
           <img
-            className="relative left-[70px] aspect-square w-[50%] rotate-[-30deg] rounded-xl object-cover object-top md:-ml-8"
+            className="relative left-[70px] aspect-square w-[50%] rotate-[-30deg] rounded-xl object-cover object-top md:-ml-8 opacity-[60%]"
             src="/nft-1.jpg"
             alt=""
           />
           <img
-            className="relative top-[50px] z-10 aspect-square w-5/12 rounded-lg object-cover object-top "
+            className="relative top-[50px] z-10 aspect-square w-5/12 rounded-lg object-cover object-top opacity-[90%]"
             src="/nft-1.jpg"
             alt=""
           />
           <img
-            className="relative left-[-70px]  aspect-square w-[50%] rotate-[30deg] rounded-xl object-cover object-top md:-ml-8"
+            className="relative left-[-70px]  aspect-square w-[50%] rotate-[30deg] rounded-xl object-cover object-top md:-ml-8 opacity-[60%]"
             src="/nft-1.jpg"
             alt=""
           />
