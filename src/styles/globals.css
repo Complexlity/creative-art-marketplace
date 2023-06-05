@@ -3,6 +3,26 @@
 @tailwind utilities;
 
 
+
+
+@font-face {
+  font-family: ttramillas;
+  src: url("/TT\ Ramillas\ Trial\ Variable\ Roman.ttf");
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+section h1, section h2 {
+  font-family: ttramillas, "sans-serif" ;
+}
+
+
+.stack {
+  grid-area: 2/2/3/3
+}
+
 .gradient {
 background: rgb(210,245,94);
 background: radial-gradient(circle, rgba(210,245,94,1) 0%, transparent 100%);
@@ -11,14 +31,6 @@ background: radial-gradient(circle, rgba(210,245,94,1) 0%, transparent 100%);
 .connect-wallet {
   background-color: #d2f55e !important;
   color: #17233a !important;
-}
-
-section {
-  margin-bottom: 3rem;
-}
-
-.stack {
-  grid-area: 2/2/3/3
 }
 
 /* Weekly Artists */

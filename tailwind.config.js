@@ -17,6 +17,10 @@ module.exports = {
         '3xl': '0 30px 200px -5px rgba(0, 0, 0, 0.3)'
       }
     },
+    fontFamily: {
+      ttramillas: ["ttramillas", "sans-serif"],
+      roboto: ["Roboto", "sans-serif"]
+    }
   },
   plugins: [require("daisyui")],
 };
