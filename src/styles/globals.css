@@ -15,17 +15,22 @@
   src: url("/TT\ Ramillas\ Trial\ Variable\ Roman.ttf");
 }
 
-@font-face {
-  font-family: roboto;
-  src: url("/Roboto-Regular.ttf");
-}
 
 section {
   margin-bottom: 3rem;
 }
 
-section h1, section h2 {
+section h1, section h2, .countingDiv * {
   font-family: ttramillas, "sans-serif" ;
+}
+
+@font-face {
+  font-family: roboto;
+  src: url("/Roboto-Regular.ttf");
+}
+
+*:not(section h1):not(section h2):not(section h1 span):not(section h2 span):not(.countingDiv *) {
+  font-family: roboto, sans-serif;
 }
 
 
@@ -113,6 +118,7 @@ body {
   font-weight: 700;
   font-size: 1.5em;
   transition: opacity 350ms;
+  font-family: ttramillas, "sans serif"
 }
 
 .honeycomb-cell__title > small {
