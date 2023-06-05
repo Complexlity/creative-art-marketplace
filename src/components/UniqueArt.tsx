@@ -1,12 +1,12 @@
 const UniqueArt = () => {
   return (
-    <section className="text-white mb-12">
-      <div className="">
-        <h2 className="text-3xl text-center md:text-start">
+    <section className="text-white mb-24">
+      <div className="mb-6">
+        <h2 className="text-4xl text-center md:text-start">
           <span className="text-primary">Amazing</span> and Super{" "}
         </h2>
         <div className="md:flex md:justify-between text-center">
-          <h2 className="text-3xl">
+          <h2 className="text-4xl">
             Unique Art of This <span className="text-primary">Week</span>
           </h2>
           <button className="hidden md:block rounded-md bg-primary px-8 py-2 font-semibold text-gray-800">

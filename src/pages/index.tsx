@@ -5,6 +5,7 @@ import Hero from '../components/Hero'
 import UniqueArt from "~/components/UniqueArt";
 import Subscribe from "~/components/Subscribe";
 import Footer from "~/components/Footer";
+import WeeklyArtists from "~/components/WeeklyArtitsts";
 const Home: NextPage = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const Home: NextPage = () => {
           <NavBar/>
           <Hero />
           <UniqueArt />
+          <WeeklyArtists/>
           <Subscribe />
           <Footer/>
         </div>

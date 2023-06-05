@@ -20,3 +20,144 @@ section {
 .stack {
   grid-area: 2/2/3/3
 }
+
+/* Weekly Artists */
+:root {
+  --hexagon-width: 200px;
+  --hexagon-height: calc(var(--hexagon-width) * 0.55);
+  --hexagon-margin: 15px;
+  --hexagon-title-color: #fff;
+  --hexagon-border-color: #fff;
+  --hexagon-border-color--hover: #e0f872;
+  --hexagon-image-color: #3ea0eb58;
+  --honeycomb-max-width: 1200px;
+  --viewport-thereshold: calc(var(--hexagon-width) + var(--hexagon-margin));
+}
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  /* background: #3ea0eb; */
+  overflow-x: hidden;
+}
+
+*,
+*::before,*::after {
+  box-sizing: border-box;
+}
+
+.honeycomb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  max-width: var(--honeycomb-max-width);
+  margin: 0 auto;
+  padding: 0;
+  transform: translateY(calc(var(--hexagon-height) / 4));
+}
+
+.honeycomb-cell {
+  flex: 0 1 var(--hexagon-width);
+  max-width: var(--hexagon-width);
+  height: var(--hexagon-height);
+  margin: calc(var(--hexagon-height) / 2.1) calc(var(--hexagon-margin) / 2) var(--hexagon-margin);
+  position: relative;
+  padding: 0.5em;
+  text-align: center;
+  z-index: 1;
+}
+
+.honeycomb-cell__title {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  hyphens: auto;
+  word-break: break-word;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.5em;
+  transition: opacity 350ms;
+}
+
+.honeycomb-cell__title > small {
+  font-weight: 300;
+  margin-top: 0.25em;
+}
+
+.honeycomb-cell__image {
+  object-fit: cover;
+  object-position: top;
+}
+
+.honeycomb-cell::before,
+.honeycomb-cell::after {
+  content: '';
+}
+
+.honeycomb-cell::before,
+.honeycomb-cell::after,
+.honeycomb-cell__image {
+  top: -50%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  display: block;
+  position: absolute;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  z-index: -1;
+}
+
+.honeycomb-cell::before {
+  background: var(--hexagon-border-color);
+  transform: scale(1.055);
+}
+
+.honeycomb-cell::after {
+  background: var(--hexagon-image-color);
+  opacity: 0.5;
+  transition: opacity 350ms;
+}
+
+.honeycomb-cell:hover .honeycomb-cell__title {
+  opacity: 0;
+}
+
+.honeycomb-cell:hover::before {
+  background: var(--hexagon-border-color--hover);
+}
+
+.honeycomb-cell:hover::after {
+  opacity: 0;
+}
+
+.honeycomb__placeholder {
+  display: none;
+  opacity: 0;
+  width: var(--hexagon-width);
+  margin: 0 calc(var(--hexagon-margin) / 2);
+}
+
+@media (max-width: calc(var(--viewport-thereshold))) {
+  .honeycomb-cell { margin: calc(var(--hexagon-margin) / 2 + var(--hexagon-height) / 2) var(--hexagon-margin);
+  } }
+@media (min-width: calc(2 * var(--viewport-thereshold))) and (max-width: calc(3 * var(--viewport-thereshold))) { .honeycomb-cell:nth-child(3n) {
+  margin-right: calc(50% - var(--hexagon-width) / 2); margin-left: calc(50% - var(--hexagon-width) / 2); }
+
+.honeycomb__placeholder:nth-child(3n + 5) { display: block; } }
+
+@media (min-width: calc(3 * var(--viewport-thereshold))) and (max-width: calc(4 * var(--viewport-thereshold))) { .honeycomb-cell:nth-child(5n + 4) { margin-left: calc(50% - var(--hexagon-width) + var(--hexagon-margin)); }
+
+.honeycomb-cell:nth-child(5n + 5) { margin-right: calc(50% - var(--hexagon-width) + var(--hexagon-margin)); }
+
+.honeycombplaceholder:nth-child(5n), .honeycombplaceholder:nth-child(5n + 3) { display: block; } }
+
+@media (min-width: calc(4 * var(--viewport-thereshold))) { .honeycomb-cell:nth-child(7n + 5) { margin-left: calc(50% - var(--hexagon-width) * 1.5 + var(--hexagon-margin)); }
+
+.honeycomb-cell:nth-child(7n + 7), .honeycomb-cell:nth-child(7n + 5):nth-last-child(2) { margin-right: calc(50% - var(--hexagon-width) * 1.5 + var(--hexagon-margin)); }
+
+.honeycombplaceholder:nth-child(7n + 7), .honeycombplaceholder:nth-child(7n + 9), .honeycomb__placeholder:nth-child(7n + 11) { display: block; } }
