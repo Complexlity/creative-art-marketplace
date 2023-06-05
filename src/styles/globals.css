@@ -22,8 +22,9 @@ section {
 }
 
 /* Weekly Artists */
+
 :root {
-  --hexagon-width: 200px;
+  --hexagon-width: 150px;
   --hexagon-height: calc(var(--hexagon-width) * 0.55);
   --hexagon-margin: 15px;
   --hexagon-title-color: #fff;
@@ -32,6 +33,12 @@ section {
   --hexagon-image-color: #3ea0eb58;
   --honeycomb-max-width: 1200px;
   --viewport-thereshold: calc(var(--hexagon-width) + var(--hexagon-margin));
+}
+
+@media (min-width:600px){
+  :root {
+    --hexagon-width:250px;
+  }
 }
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');

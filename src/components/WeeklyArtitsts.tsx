@@ -16,14 +16,6 @@ const WeeklyArtists = () => {
         </li>
         <li className="honeycomb-cell">
           <img className="honeycomb-cell__image" src="/nft-1.jpg" />
-          <div className="honeycomb-cell__title">PixelPeng</div>
-        </li>
-        <li className="honeycomb-cell">
-          <img className="honeycomb-cell__image" src="/nft-1.jpg" />
-          <div className="honeycomb-cell__title">MysticMant</div>
-        </li>
-        <li className="honeycomb-cell">
-          <img className="honeycomb-cell__image" src="/nft-1.jpg" />
           <div className="honeycomb-cell__title">
             GalacticGaz<small>No vidrio</small>
           </div>

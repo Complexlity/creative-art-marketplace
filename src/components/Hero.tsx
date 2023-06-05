@@ -38,7 +38,7 @@ const Hero = () => {
               Place A Bid
             </button>
           </div>
-          <div className="gradient absolute bg-red-400 h-[50%] w-1/2 top-[30%] right-[46%] rounded-full shadow-primary shadow-3xl rotate-45 z[-10]">
+          <div className="gradient absolute h-[50%] w-1/2 top-[30%] right-[43%] rounded-full shadow-primary shadow-3xl rotate-45 z[-10]">
           </div>
           <img
             className="relative z-10 h-full w-full rounded-2xl object-cover object-top"
