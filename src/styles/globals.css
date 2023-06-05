@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.absolute-div {
-  position: absolute;
-  top: 81%;
-  left: 23%;
+
+.gradient {
+background: rgb(210,245,94);
+background: radial-gradient(circle, rgba(210,245,94,1) 0%, transparent 100%);
 }
 
 .connect-wallet {

@@ -25,11 +25,7 @@ const Hero = () => {
 
       <div className="">
         <div className="relative mx-auto w-[80%] h-[400px] max-w-[350px]">
-          <img
-            className="h-full w-full rounded-2xl object-cover object-top"
-            src="/nft-1.jpg"
-          />
-          <div className="absolute left-[40%] top-[85%] grid w-[220px] mx-4 gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2">
+          <div className="absolute left-[40%] top-[85%] grid w-[220px] mx-4 gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2 z-20">
             <p className="flex justify-between text-primary">
               <span>Ends in</span>
               <span>Current bid</span>
@@ -42,6 +38,12 @@ const Hero = () => {
               Place A Bid
             </button>
           </div>
+          <div className="gradient absolute bg-red-400 h-[50%] w-1/2 top-[30%] right-[46%] rounded-full shadow-primary shadow-3xl rotate-45 z[-10]">
+          </div>
+          <img
+            className="relative z-10 h-full w-full rounded-2xl object-cover object-top"
+            src="/nft-1.jpg"
+          />
         </div>
       </div>
       <CountingDiv className="mx-auto mt-24 flex md:hidden  " />

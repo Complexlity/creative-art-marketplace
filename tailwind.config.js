@@ -13,6 +13,9 @@ module.exports = {
       colors: {
         primary: "#d2f55e",
       },
+      boxShadow: {
+        '3xl': '0 45px 200px -5px rgba(0, 0, 0, 0.3)'
+      }
     },
   },
   plugins: [require("daisyui")],
