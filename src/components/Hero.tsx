@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <section className="py-6 md:grid md:grid-cols-2 mb-24">
       <div className=" mb-6 space-y-8 text-center text-white md:max-w-[70ch] md:text-start">
-        <h1 className=" text-5xl ">
+        <h1 className=" text-6xl ">
           Discover and Collect The Best NFTs{" "}
           <span className="text-primary">Digital Art.</span>
         </h1>

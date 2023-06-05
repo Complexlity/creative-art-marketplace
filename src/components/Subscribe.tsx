@@ -1,33 +1,37 @@
 const Subscribe = () => {
   return (
-    <section className="items-center gap-4 md:grid md:grid-cols-2 mb-24">
+    <section className="mb-24 items-center gap-4 md:grid md:grid-cols-2">
       <div className="hidden md:grid">
         <div className="grid grid-cols-3">
           <img
-            className="five rounded-lg stack ml-32  w-48 rotate-[50deg] opacity-[60%] "
+            className="five stack ml-32 w-48  rotate-[50deg] rounded-lg opacity-[60%] "
             src="/nft-1.jpg"
             alt=""
           />
-            <img
-              className="one rounded-lg stack  -ml-32 w-48 rotate-[-50deg] opacity-[60%]"
-              src="/nft-1.jpg"
-              alt=""
-            />
           <img
-            className="four rounded-lg stack z-5 ml-20 w-48 rotate-[20deg] opacity-[80%] "
+            className="one stack -ml-32  w-48 rotate-[-50deg] rounded-lg opacity-[60%]"
             src="/nft-1.jpg"
             alt=""
           />
-          <img className="three rounded-lg stack z-10 w-48" src="/nft-1.jpg" alt="" />
           <img
-            className="two rounded-lg stack z-5 -ml-20 w-48 rotate-[-20deg] opacity-[80%]"
+            className="four z-5 stack ml-20 w-48 rotate-[20deg] rounded-lg opacity-[80%] "
+            src="/nft-1.jpg"
+            alt=""
+          />
+          <img
+            className="three stack z-10 w-48 rounded-lg"
+            src="/nft-1.jpg"
+            alt=""
+          />
+          <img
+            className="two z-5 stack -ml-20 w-48 rotate-[-20deg] rounded-lg opacity-[80%]"
             src="/nft-1.jpg"
             alt=""
           />
         </div>
       </div>
-      <div className="space-y-6 text-center text-white md:text-start z-50">
-        <h2 className="mx-auto max-w-[32ch]  text-4xl font-bold md:m-0">
+      <div className="z-50 space-y-6 text-center text-white md:text-start">
+        <h2 className="mx-auto max-w-[32ch]  text-5xl font-bold md:m-0">
           Subscribe And <span className="text-primary">get our Updates </span>{" "}
           Every Week
         </h2>
@@ -48,9 +52,9 @@ const Subscribe = () => {
       </div>
 
       <div className="">
-        <div className="image1 relative flex justify-center text-4xl md:hidden">
+        <div className="image1 relative flex justify-center text-5xl md:hidden">
           <img
-            className="relative left-[70px] aspect-square w-[50%] rotate-[-30deg] rounded-xl object-cover object-top md:-ml-8 opacity-[60%]"
+            className="relative left-[70px] aspect-square w-[50%] rotate-[-30deg] rounded-xl object-cover object-top opacity-[60%] md:-ml-8"
             src="/nft-1.jpg"
             alt=""
           />
@@ -60,7 +64,7 @@ const Subscribe = () => {
             alt=""
           />
           <img
-            className="relative left-[-70px]  aspect-square w-[50%] rotate-[30deg] rounded-xl object-cover object-top md:-ml-8 opacity-[60%]"
+            className="relative left-[-70px]  aspect-square w-[50%] rotate-[30deg] rounded-xl object-cover object-top opacity-[60%] md:-ml-8"
             src="/nft-1.jpg"
             alt=""
           />
@@ -68,6 +72,6 @@ const Subscribe = () => {
       </div>
     </section>
   );
-}
+};
 
-export default Subscribe
+export default Subscribe;
