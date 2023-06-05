@@ -4,7 +4,7 @@ import { ConnectWallet } from "@thirdweb-dev/react";
 
 const NavBar = () => {
   return (
-    <nav className="flex items-center justify-between text-white mb-12">
+    <nav className="flex items-center justify-between text-white">
       <a href="/" className="text-3xl flex items-center gap-1">
         <img src="/logo.png" className="w-6 h-6" alt="" />
         <p className="font-ttramillas">Creative<span className="text-primary">art</span></p>
