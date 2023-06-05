@@ -55,10 +55,10 @@ type Props = {
 }
 function CountingDiv({ className }: Props) {
   return (
-    <div className={`${className} justify-center text-white`}>
+    <div className={`justify-center text-white ${className}`}>
       <div className="flex flex-1 flex-col justify-between border-r border-r-primary text-center">
         <p className="text-3xl">
-          <span className="text-primary">8.9</span>K
+          <span className="text-primary">120</span>K
         </p>
         <p>Art works</p>
       </div>
@@ -70,7 +70,7 @@ function CountingDiv({ className }: Props) {
       </div>
       <div className="flex flex-1 flex-col justify-between text-center">
         <p className="text-3xl">
-          <span className="text-3xl text-primary">8.9</span>K
+          <span className="text-3xl text-primary">65</span>K
         </p>
         <p>Collections</p>
       </div>
