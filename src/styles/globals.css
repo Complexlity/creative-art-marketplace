@@ -24,7 +24,7 @@ section {
 /* Weekly Artists */
 
 :root {
-  --hexagon-width: 150px;
+  --hexagon-width: 200px;
   --hexagon-height: calc(var(--hexagon-width) * 0.55);
   --hexagon-margin: 15px;
   --hexagon-title-color: #fff;
@@ -38,6 +38,7 @@ section {
 @media (min-width:600px){
   :root {
     --hexagon-width:250px;
+    --hexagon-margin:25px;
   }
 }
 

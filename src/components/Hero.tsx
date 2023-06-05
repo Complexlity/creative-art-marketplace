@@ -18,7 +18,7 @@ const Hero = () => {
           <button className=" rounded-lg bg-primary px-11 py-3 text-gray-800 hover:text-primary hover:outline-2 hover:outline-primary hover:bg-blue-950 hover:outline-dotted">
             Explore Now
           </button>
-          <button>Learn More </button>
+          <button className=""><span className="hover:border-b-4 py-1 hover:border-primary text-xl">Learn More</span></button>
         </div>
         <CountingDiv className="hidden md:-ml-12 md:flex" />
       </div>
