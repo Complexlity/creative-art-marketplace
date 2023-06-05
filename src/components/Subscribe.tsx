@@ -45,7 +45,7 @@ const Subscribe = () => {
             placeholder="Enter your e-mail"
             className="input-bordered input mb-6 w-full max-w-xs bg-slate-700 text-white focus:outline-primary md:rounded-r-none"
           />
-          <button className="mx-auto block rounded-lg bg-primary px-11 py-3 font-bold text-gray-800 md:inline md:h-12 md:rounded-l-none ">
+          <button className="mx-auto block rounded-lg bg-primary px-11 py-3 font-bold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary  md:inline md:h-12 md:rounded-l-none  ">
             Subscribe
           </button>
         </div>

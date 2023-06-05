@@ -9,7 +9,7 @@ const UniqueArt = () => {
           <h2 className="text-5xl">
             Unique Art of This <span className="text-primary">Week</span>
           </h2>
-          <button className="hidden rounded-md bg-primary px-8 py-2 font-semibold text-gray-800 md:block">
+          <button className="hidden rounded-md bg-primary px-8 py-2 font-semibold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:block">
             See All
           </button>
         </div>
@@ -20,7 +20,7 @@ const UniqueArt = () => {
         <Card />
       </div>
       <div className="text-center">
-        <button className="mx-auto rounded-md bg-primary px-8 py-2 font-semibold text-gray-800 md:hidden">
+        <button className="mx-auto rounded-md bg-primary px-8 py-2 font-semibold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:hidden">
           See All
         </button>
       </div>
@@ -52,7 +52,7 @@ function Card() {
             <span className="font-bold">03:24:56</span>
           </p>
         </div>
-        <button className="rounded-lg border border-primary px-6 py-3 font-bold text-primary">
+        <button className="rounded-lg border border-primary px-6 py-3 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800">
           Place A Bid
         </button>
       </div>
