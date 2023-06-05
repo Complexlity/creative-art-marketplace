@@ -15,13 +15,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-gray-900">
-        <div className="mx-auto max-w-[1400px] px-4 md:px-8 ">
-          <NavBar/>
+        <div className="mx-auto max-w-[1400px] px-4 font-roboto md:px-8 ">
+          <NavBar />
           <Hero />
           <UniqueArt />
-          <WeeklyArtists/>
+          <WeeklyArtists />
           <Subscribe />
-          <Footer/>
+          <Footer />
         </div>
       </div>
     </>

@@ -10,6 +10,11 @@
   src: url("/TT\ Ramillas\ Trial\ Variable\ Roman.ttf");
 }
 
+@font-face {
+  font-family: roboto;
+  src: url("/Roboto-Regular.ttf");
+}
+
 section {
   margin-bottom: 3rem;
 }

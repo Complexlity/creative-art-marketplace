@@ -19,7 +19,7 @@ module.exports = {
     },
     fontFamily: {
       ttramillas: ["ttramillas", "sans-serif"],
-      roboto: ["Roboto", "sans-serif"]
+      roboto: ["roboto", "sans-serif"]
     }
   },
   plugins: [require("daisyui")],
