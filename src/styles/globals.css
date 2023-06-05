@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 
-
+.main {
+  background-color: #111827;
+  background-image: url("/bg.png");
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
+}
 
 @font-face {
   font-family: ttramillas;
@@ -22,6 +27,7 @@ section {
 section h1, section h2 {
   font-family: ttramillas, "sans-serif" ;
 }
+
 
 
 .stack {
