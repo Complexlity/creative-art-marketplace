@@ -14,18 +14,12 @@
   background-image: url("/bg.png");
 }
 
-/* .upload-and-select {
-  /* grid-area: 1/1/4/4; */
-/* }  */
 
 
 
 @media (min-width: 768px) {
-  /* .upload-select-and-preview {
-    grid-template-columns: 1fr max(300px);
-  } */
   .mint-form {
-    grid-template-columns: 1fr max(300px);
+    grid-template-columns: 1fr max(280px);
   }
  }
 
