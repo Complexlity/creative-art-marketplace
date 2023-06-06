@@ -43,7 +43,9 @@
     color: var(--primary-clr) !important
   }
 
-
+.date-picker {
+  color-scheme: dark;
+}
 
 
 @media (min-width: 768px) {
