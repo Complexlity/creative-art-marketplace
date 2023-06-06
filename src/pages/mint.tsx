@@ -5,6 +5,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 import Footer from "~/components/Footer";
+import { Card } from "~/components/UniqueArt";
 
 const Home: NextPage = () => {
   return (
@@ -15,7 +16,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="main">
-        <div className="mx-auto max-w-[1400px] px-4 md:px-8 ">
+        <div className="mx-auto max-w-[1200px] px-4 md:px-8 ">
           <NavBar />
           <MintHero />
           <MintForm />
@@ -39,36 +40,44 @@ function MintHero() {
 function MintForm() {
   return (
     <form className="space-y-6 px-4 py-6 text-white border-b-2 border-b-gray-300">
-      <div className="upload-file grid gap-4">
-        <label>Upload file</label>
-        <div className="grid content-center items-center gap-4 rounded-xl border-4 border-dotted border-gray-400 px-4 py-8">
-          <p className="pt-2 text-center">
-            PNG, JPG, GIF, WEBP or MP4. Max 200mb.
-          </p>
-          <div className="text-center">
-            <button className="inline rounded-full bg-primary px-6 py-1 text-gray-800">
-              Browse
-            </button>
+      <div className="upload-select-and-preview grid gap-8 ">
+        <div className="upload-and-select grid gap-4 ">
+          <div className="upload-file grid gap-4">
+            <label>Upload file</label>
+            <div className="grid content-center items-center gap-4 rounded-xl border-4 border-dotted border-gray-400 px-4 py-8">
+              <p className="pt-2 text-center">
+                PNG, JPG, GIF, WEBP or MP4. Max 200mb.
+              </p>
+              <div className="text-center">
+                <button className="inline rounded-full bg-primary px-6 py-1 text-gray-800">
+                  Browse
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="select-method grid gap-4">
+            <label className="" htmlFor="">
+              Select Method
+            </label>
+            <div className="flex gap-4 items-start">
+              <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
+                <img className="h-8 w-8" src="/fixed.png" alt="" />
+                <p>Fixed Price</p>
+              </div>
+              <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
+                <img className="h-8 w-8" src="/fixed.png" alt="" />
+                <p>Fixed Price</p>
+              </div>
+              <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
+                <img className="h-8 w-8" src="/fixed.png" alt="" />
+                <p>Fixed Price</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="select-method grid gap-4">
-        <label className="" htmlFor="">
-          Select Method
-        </label>
-        <div className="flex  justify-center gap-4  sm:justify-start">
-          <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
-            <img className="h-8 w-8" src="/fixed.png" alt="" />
-            <p>Fixed Price</p>
-          </div>
-          <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
-            <img className="h-8 w-8" src="/fixed.png" alt="" />
-            <p>Fixed Price</p>
-          </div>
-          <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
-            <img className="h-8 w-8" src="/fixed.png" alt="" />
-            <p>Fixed Price</p>
-          </div>
+        <div className="hidden md:grid gap-4">
+          <label>Preview Item</label>
+          <Card />
         </div>
       </div>
       <div className="price mb-6 grid gap-2 text-white">

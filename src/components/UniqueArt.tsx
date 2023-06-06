@@ -28,7 +28,7 @@ const UniqueArt = () => {
   );
 };
 
-function Card() {
+export function Card() {
   return (
     <div className="mb-6 space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4">
       <img
