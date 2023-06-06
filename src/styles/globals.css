@@ -29,7 +29,7 @@
   position:absolute;
 }
 
-.method-card:focus,  {
+.method-card:focus, {
   border-color: white;
   border-width:2px;
   scale:101%;

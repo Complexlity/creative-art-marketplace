@@ -1,14 +1,22 @@
 import { FaHourglassHalf } from 'react-icons/fa';
 import { MdGroups } from 'react-icons/md'
 import { ImPriceTag } from 'react-icons/im'
+import { FiUnlock } from "react-icons/fi";
 import { type NextPage } from "next";
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 import Footer from "~/components/Footer";
 import { Card } from "~/components/UniqueArt";
+import { useState } from 'react';
 
 
-const Mint = () => {
+
+
+
+const Mint: NextPage = () => {
+  const [checked, setChecked] = useState(true)
+
+
   return (
     <>
       <Head>
@@ -19,8 +27,8 @@ const Mint = () => {
       <div className="main">
         <div className="mx-auto max-w-[1200px] px-4 md:px-8 ">
           <NavBar />
-          <MintHero />
-          <MintForm />
+          <MintHero  />
+          <MintForm checked={checked} setChecked={setChecked}/>
           <Footer />
         </div>
       </div>
@@ -38,7 +46,14 @@ function MintHero() {
   );
 }
 
-function MintForm() {
+
+function MintForm({ checked, setChecked }: { checked: any, setChecked: any }) {
+  const toggleChecked = () => {
+    setChecked(!checked)
+  }
+
+  let toggleColor = checked ? "bg-primary" : "";
+
   return (
     <form className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 py-8 text-white ">
       <div className="space-y-6">
@@ -58,10 +73,7 @@ function MintForm() {
         <div className="select-method grid gap-4">
           <h3 className="">Select Method</h3>
           <div className="flex items-start gap-4">
-            <label
-              className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600"
-              
-            >
+            <label className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
               <ImPriceTag className="icon h-8 w-8" color={"gray"} />
               <p>Fixed Price</p>
               <input type="radio" name="method" id="" />
@@ -83,6 +95,25 @@ function MintForm() {
               <input type="radio" name="method" id="" />
             </label>
           </div>
+        </div>
+        <div
+          tabIndex={0}
+          className="unlock grid gap-2 rounded-lg border-2 border-gray-600 p-4"
+        >
+          <div className="header flex justify-between ">
+            <p className="flex items-center gap-1">
+              <FiUnlock className="text-primary" /> Unlock once purchased{" "}
+            </p>
+            <input
+              type="checkbox"
+              className={`toggle ${toggleColor} focus:outline-2 focus:outline-primary`}
+              checked={checked}
+              onChange={toggleChecked}
+            />
+          </div>
+          <p className="text-gray-400">
+            Unlock content after successful transaction
+          </p>
         </div>
         <div className="price mb-6 grid gap-2 text-white">
           <label htmlFor="price" className="">
