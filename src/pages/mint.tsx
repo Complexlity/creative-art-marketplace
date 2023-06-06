@@ -7,7 +7,8 @@ import NavBar from "../components/NavBar";
 import Footer from "~/components/Footer";
 import { Card } from "~/components/UniqueArt";
 
-const Mint: NextPage = () => {
+
+const Mint = () => {
   return (
     <>
       <Head>
@@ -39,42 +40,48 @@ function MintHero() {
 
 function MintForm() {
   return (
-    <form className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 py-6 text-white ">
+    <form className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 py-8 text-white ">
       <div className="space-y-6">
-        <div className="upload-select-and-preview grid gap-8 ">
-          <div className="upload-and-select grid gap-4 ">
-            <div className="upload-file grid gap-4">
-              <label>Upload file</label>
-              <div className="grid content-center items-center gap-4 rounded-xl border-4 border-dotted border-gray-400 px-4 py-8">
-                <p className="pt-2 text-center">
-                  PNG, JPG, GIF, WEBP or MP4. Max 200mb.
-                </p>
-                <div className="text-center">
-                  <button className="inline rounded-full bg-primary px-6 py-1 text-gray-800">
-                    Browse
-                  </button>
-                </div>
-              </div>
+        <div className="upload-file grid gap-4">
+          <label>Upload file</label>
+          <div className="grid content-center items-center gap-4 rounded-xl border-4 border-dotted border-gray-400 px-4 py-8">
+            <p className="pt-2 text-center">
+              PNG, JPG, GIF, WEBP or MP4. Max 200mb.
+            </p>
+            <div className="text-center">
+              <button className="inline rounded-full bg-primary px-6 py-1 text-gray-800">
+                Browse
+              </button>
             </div>
-            <div className="select-method grid gap-4">
-              <label className="" htmlFor="">
-                Select Method
-              </label>
-              <div className="flex items-start gap-4">
-                <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
-                  <ImPriceTag className="h-8 w-8" color={"gray"} />
-                  <p>Fixed Price</p>
-                </div>
-                <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
-                  <FaHourglassHalf className="h-8 w-8" color={"gray"} />
-                  <p>Timed auction</p>
-                </div>
-                <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
-                  <MdGroups className="h-8 w-8" color={"gray"} />
-                  <p>Open Bids</p>
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
+        <div className="select-method grid gap-4">
+          <h3 className="">Select Method</h3>
+          <div className="flex items-start gap-4">
+            <label
+              className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600"
+              
+            >
+              <ImPriceTag className="icon h-8 w-8" color={"gray"} />
+              <p>Fixed Price</p>
+              <input type="radio" name="method" id="" />
+            </label>
+            <label
+              tabIndex={0}
+              className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 "
+            >
+              <FaHourglassHalf className="icon h-8 w-8" color={"gray"} />
+              <p>Timed auction</p>
+              <input type="radio" name="method" id="" />
+            </label>
+            <label
+              tabIndex={0}
+              className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 "
+            >
+              <MdGroups className="icon h-8 w-8" color={"gray"} />
+              <p>Open Bids</p>
+              <input type="radio" name="method" id="" />
+            </label>
           </div>
         </div>
         <div className="price mb-6 grid gap-2 text-white">
@@ -97,8 +104,11 @@ function MintForm() {
           <select
             id="collections"
             className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-blue-500 focus:ring-blue-500"
+            defaultValue={"SEL"}
           >
-            <option selected>Select Collection</option>
+            <option disabled value="SEL">
+              Select Collection
+            </option>
             <option value="DIG">Digital Art</option>
             <option value="COL">Collectibles</option>
             <option value="GAM">Gaming </option>

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-clr: #d2f55e
+}
 
 .main {
   background-color: #111827;
@@ -14,12 +17,38 @@
   background-image: url("/bg.png");
 }
 
+.method-card {
+  cursor:pointer;
+}
+
+.method-card input {
+  opacity:0;
+  cursor:pointer;
+  height: 0;
+  width:0;
+  position:absolute;
+}
+
+.method-card:focus,  {
+  border-color: white;
+  border-width:2px;
+  scale:101%;
+}
+
+   .method-card:has(input:checked){
+    border-color: var(--primary-clr)
+  }
+
+  .method-card.method-card:has(input:checked) .icon {
+    color: var(--primary-clr) !important
+  }
+
 
 
 
 @media (min-width: 768px) {
   .mint-form {
-    grid-template-columns: 1fr max(280px);
+    grid-template-columns: 1fr max(265px);
   }
  }
 
