@@ -21,7 +21,7 @@
   cursor:pointer;
 }
 
-.method-card input {
+.hidden-input {
   opacity:0;
   cursor:pointer;
   height: 0;

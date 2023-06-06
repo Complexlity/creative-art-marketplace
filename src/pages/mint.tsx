@@ -1,20 +1,19 @@
-import { FaHourglassHalf } from 'react-icons/fa';
+import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
 import { MdGroups } from 'react-icons/md'
 import { ImPriceTag } from 'react-icons/im'
-import { FiUnlock } from "react-icons/fi";
 import { type NextPage } from "next";
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 import Footer from "~/components/Footer";
 import { Card } from "~/components/UniqueArt";
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 
 
 
 
 const Mint: NextPage = () => {
-  const [checked, setChecked] = useState(true)
+  const [checked, setChecked] = useState<boolean>(true)
 
 
   return (
@@ -38,7 +37,7 @@ const Mint: NextPage = () => {
 
 function MintHero() {
   return (
-    <div className="border-b-2 border-white pt-10 pb-16">
+    <div className="border-b-2 border-white pt-10 pb-24">
       <h1 className="text-center text-5xl text-white md:text-6xl">
         Create <span className="text-primary"> Legendary </span>NFT
       </h1>
@@ -47,15 +46,22 @@ function MintHero() {
 }
 
 
-function MintForm({ checked, setChecked }: { checked: any, setChecked: any }) {
+function MintForm({ checked, setChecked }: { checked: boolean, setChecked: Dispatch<SetStateAction<boolean>> }) {
   const toggleChecked = () => {
     setChecked(!checked)
   }
 
   let toggleColor = checked ? "bg-primary" : "";
+  function submitForm(e: any) {
+    e.preventDefault()
+    alert("Hello World")
+  }
 
   return (
-    <form className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 py-8 text-white ">
+    <form
+      onSubmit={submitForm}
+      className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 pt-8 pb-12 text-white "
+    >
       <div className="space-y-6">
         <div className="upload-file grid gap-4">
           <label>Upload file</label>
@@ -64,9 +70,19 @@ function MintForm({ checked, setChecked }: { checked: any, setChecked: any }) {
               PNG, JPG, GIF, WEBP or MP4. Max 200mb.
             </p>
             <div className="text-center">
-              <button className="inline rounded-full bg-primary px-6 py-1 text-gray-800">
+              <label
+                htmlFor="nft"
+                className="inline rounded-full bg-primary px-6 py-1 text-gray-800"
+              >
                 Browse
-              </button>
+              </label>
+              <input
+                type="file"
+                id="nft"
+                name="nft"
+                accept="image/png, image/jpeg"
+                className="hidden-input"
+              />
             </div>
           </div>
         </div>
@@ -76,33 +92,56 @@ function MintForm({ checked, setChecked }: { checked: any, setChecked: any }) {
             <label className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
               <ImPriceTag className="icon h-8 w-8" color={"gray"} />
               <p>Fixed Price</p>
-              <input type="radio" name="method" id="" />
+              <input
+                className="hidden-input "
+                type="radio"
+                name="method"
+                id=""
+                value="fixed-price"
+              />
             </label>
             <label
               tabIndex={0}
-              className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 "
+              className="method-card   flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 "
             >
               <FaHourglassHalf className="icon h-8 w-8" color={"gray"} />
               <p>Timed auction</p>
-              <input type="radio" name="method" id="" />
+              <input
+                className="hidden-input"
+                type="radio"
+                name="method"
+                id=""
+                value="timed-auction"
+              />
             </label>
             <label
               tabIndex={0}
-              className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 "
+              className="method-card  flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 "
             >
               <MdGroups className="icon h-8 w-8" color={"gray"} />
               <p>Open Bids</p>
-              <input type="radio" name="method" id="" />
+              <input
+                className="hidden-input"
+                type="radio"
+                name="method"
+                id=""
+                value="open-bids"
+              />
             </label>
           </div>
         </div>
         <div
-          tabIndex={0}
           className="unlock grid gap-2 rounded-lg border-2 border-gray-600 p-4"
+          tabIndex={0}
         >
           <div className="header flex justify-between ">
             <p className="flex items-center gap-1">
-              <FiUnlock className="text-primary" /> Unlock once purchased{" "}
+              {checked ? (
+                <FaUnlockAlt className="text-primary" />
+              ) : (
+                <FaLock className="text-gray-600" />
+              )}{" "}
+              Unlock once purchased{" "}
             </p>
             <input
               type="checkbox"
@@ -115,15 +154,15 @@ function MintForm({ checked, setChecked }: { checked: any, setChecked: any }) {
             Unlock content after successful transaction
           </p>
         </div>
-        <div className="price mb-6 grid gap-2 text-white">
+        <div className="price mb-6 grid gap-2 text-gray-200">
           <label htmlFor="price" className="">
-            Price
+            Price (ETH)
           </label>
           <input
-            type="text"
+            type="number"
             id="price"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
-            placeholder="Enter price for one item ( ETH )"
+            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+            placeholder="Enter price for one item"
             required
           />
         </div>
@@ -188,7 +227,7 @@ function MintForm({ checked, setChecked }: { checked: any, setChecked: any }) {
         </button>
       </div>
 
-      <div className="hidden gap-4 self-start md:grid">
+      <div className="preview-item hidden gap-4 self-start md:grid">
         <label>Preview Item</label>
         <Card />
       </div>
