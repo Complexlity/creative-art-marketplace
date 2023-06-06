@@ -27,7 +27,7 @@ const Mint: NextPage = () => {
         <div className="mx-auto max-w-[1200px] px-4 md:px-8 ">
           <NavBar />
           <MintHero  />
-          <MintForm checked={checked} setChecked={setChecked}/>
+          <MintForm />
           <Footer />
         </div>
       </div>
@@ -45,10 +45,18 @@ function MintHero() {
   );
 }
 
+type methodOptions = "FIXED_PRICE" | "TIMED_AUCTION" | "OPEN BID"
 
-function MintForm({ checked, setChecked }: { checked: boolean, setChecked: Dispatch<SetStateAction<boolean>> }) {
+function MintForm() {
+  const [checked, setChecked] = useState<boolean>(false)
+  const [method, setMethod] = useState<methodOptions>("FIXED_PRICE")
   const toggleChecked = () => {
     setChecked(!checked)
+  }
+
+  const toggleOptions = (e: any) => {
+    const value = e.target.value.toUpperCase()
+    setMethod(value)
   }
 
   let toggleColor = checked ? "bg-primary" : "";
@@ -60,7 +68,7 @@ function MintForm({ checked, setChecked }: { checked: boolean, setChecked: Dispa
   return (
     <form
       onSubmit={submitForm}
-      className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 pt-8 pb-12 text-white "
+      className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 pb-12 pt-8 text-white "
     >
       <div className="space-y-6">
         <div className="upload-file grid gap-4">
@@ -97,7 +105,8 @@ function MintForm({ checked, setChecked }: { checked: boolean, setChecked: Dispa
                 type="radio"
                 name="method"
                 id=""
-                value="fixed-price"
+                value="fixed_price"
+                onChange={toggleOptions}
               />
             </label>
             <label
@@ -111,7 +120,8 @@ function MintForm({ checked, setChecked }: { checked: boolean, setChecked: Dispa
                 type="radio"
                 name="method"
                 id=""
-                value="timed-auction"
+                value="timed_auction"
+                onChange={toggleOptions}
               />
             </label>
             <label
@@ -125,11 +135,13 @@ function MintForm({ checked, setChecked }: { checked: boolean, setChecked: Dispa
                 type="radio"
                 name="method"
                 id=""
-                value="open-bids"
+                value="open_bids"
+                onChange={toggleOptions}
               />
             </label>
           </div>
         </div>
+        <MethodOptions method={method} />
         <div
           className="unlock grid gap-2 rounded-lg border-2 border-gray-600 p-4"
           tabIndex={0}
@@ -154,18 +166,7 @@ function MintForm({ checked, setChecked }: { checked: boolean, setChecked: Dispa
             Unlock content after successful transaction
           </p>
         </div>
-        <div className="price mb-6 grid gap-2 text-gray-200">
-          <label htmlFor="price" className="">
-            Price (ETH)
-          </label>
-          <input
-            type="number"
-            id="price"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
-            placeholder="Enter price for one item"
-            required
-          />
-        </div>
+
         <div className="choose-collection grid gap-1 text-white">
           <label htmlFor="">Choose collection</label>
           <p className="text-md text-gray-400">
@@ -232,6 +233,31 @@ function MintForm({ checked, setChecked }: { checked: boolean, setChecked: Dispa
         <Card />
       </div>
     </form>
+  );
+}
+
+
+function MethodOptions({method}: {method: methodOptions}) {
+  return (
+    <>
+      <p>Hello World {method}</p>
+      {method == "FIXED_PRICE" && (
+        <div className="price mb-6 grid gap-2 text-gray-200">
+          <label htmlFor="price" className="">
+            Price (ETH)
+          </label>
+          <input
+            type="number"
+            id="price"
+            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+            placeholder="Enter price for one item"
+            required
+          />
+        </div>
+      )}
+      {method == "TIMED_AUCTION" && <h1>{method}</h1>}
+      {method == "OPEN BID" && <h1>{method}</h1>}
+    </>
   );
 }
 
