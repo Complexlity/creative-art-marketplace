@@ -30,7 +30,7 @@ const UniqueArt = () => {
 
 export function Card() {
   return (
-    <div className="mb-6 space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4">
+    <div className="mb-6 space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4 max-w-full">
       <img
         className="aspect-square rounded-lg object-cover object-top"
         src="/nft-1.jpg"

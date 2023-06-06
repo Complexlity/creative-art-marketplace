@@ -39,111 +39,118 @@ function MintHero() {
 
 function MintForm() {
   return (
-    <form className="space-y-6 px-4 py-6 text-white border-b-2 border-b-gray-300">
-      <div className="upload-select-and-preview grid gap-8 ">
-        <div className="upload-and-select grid gap-4 ">
-          <div className="upload-file grid gap-4">
-            <label>Upload file</label>
-            <div className="grid content-center items-center gap-4 rounded-xl border-4 border-dotted border-gray-400 px-4 py-8">
-              <p className="pt-2 text-center">
-                PNG, JPG, GIF, WEBP or MP4. Max 200mb.
-              </p>
-              <div className="text-center">
-                <button className="inline rounded-full bg-primary px-6 py-1 text-gray-800">
-                  Browse
-                </button>
+    <form className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 py-6 text-white ">
+        <div className="space-y-6">
+          <div className="upload-select-and-preview grid gap-8 ">
+            <div className="upload-and-select grid gap-4 ">
+              <div className="upload-file grid gap-4">
+                <label>Upload file</label>
+                <div className="grid content-center items-center gap-4 rounded-xl border-4 border-dotted border-gray-400 px-4 py-8">
+                  <p className="pt-2 text-center">
+                    PNG, JPG, GIF, WEBP or MP4. Max 200mb.
+                  </p>
+                  <div className="text-center">
+                    <button className="inline rounded-full bg-primary px-6 py-1 text-gray-800">
+                      Browse
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="select-method grid gap-4">
+                <label className="" htmlFor="">
+                  Select Method
+                </label>
+                <div className="flex items-start gap-4">
+                  <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
+                    <img className="h-8 w-8" src="/fixed.png" alt="" />
+                    <p>Fixed Price</p>
+                  </div>
+                  <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
+                    <img className="h-8 w-8" src="/fixed.png" alt="" />
+                    <p>Fixed Price</p>
+                  </div>
+                  <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
+                    <img className="h-8 w-8" src="/fixed.png" alt="" />
+                    <p>Fixed Price</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="select-method grid gap-4">
-            <label className="" htmlFor="">
-              Select Method
+          <div className="price mb-6 grid gap-2 text-white">
+            <label htmlFor="price" className="">
+              Price
             </label>
-            <div className="flex gap-4 items-start">
-              <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
-                <img className="h-8 w-8" src="/fixed.png" alt="" />
-                <p>Fixed Price</p>
-              </div>
-              <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
-                <img className="h-8 w-8" src="/fixed.png" alt="" />
-                <p>Fixed Price</p>
-              </div>
-              <div className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
-                <img className="h-8 w-8" src="/fixed.png" alt="" />
-                <p>Fixed Price</p>
-              </div>
-            </div>
+            <input
+              type="text"
+              id="price"
+              className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Enter price for one item ( ETH )"
+              required
+            />
           </div>
+          <div className="choose-collection grid gap-1 text-white">
+            <label htmlFor="">Choose collection</label>
+            <p className="text-md text-gray-400">
+              Unlock content after successful transaction.
+            </p>
+            <select
+              id="collections"
+              className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-blue-500 focus:ring-blue-500"
+            >
+              <option selected>Select Collection</option>
+              <option value="DIG">Digital Art</option>
+              <option value="COL">Collectibles</option>
+              <option value="GAM">Gaming </option>
+              <option value="MUS">Music</option>
+            </select>
+          </div>
+          <div className="title mb-6 grid gap-2 text-gray-200">
+            <label htmlFor="title" className="">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="e.g Crypto Funk"
+              required
+            />
+          </div>
+          <div className="description mb-6 grid gap-2 text-gray-200">
+            <label htmlFor="description" className="">
+              Description
+            </label>
+            <input
+              type="text"
+              id="description"
+              className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="e.g This is a very limited item"
+              required
+            />
+          </div>
+          <div className="royalties mb-6 grid gap-2 text-gray-200">
+            <label htmlFor="royalties" className="">
+              Royalties (%)
+            </label>
+            <input
+              type="number"
+              max="70"
+              id="royalties"
+              className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="suggested: 0, 10%, 20%, 30%, Maximum is 70%"
+              required
+            />
+          </div>
+          <button className="rounded-full bg-primary px-6 py-1 text-gray-800">
+            Create Item
+          </button>
         </div>
-        <div className="hidden md:grid gap-4">
-          <label>Preview Item</label>
-          <Card />
-        </div>
+
+      <div className="hidden gap-4 self-start md:grid">
+        <label>Preview Item</label>
+        <Card />
       </div>
-      <div className="price mb-6 grid gap-2 text-white">
-        <label htmlFor="price" className="">
-          Price
-        </label>
-        <input
-          type="text"
-          id="price"
-          className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Enter price for one item ( ETH )"
-          required
-        />
-      </div>
-      <div className="choose-collection grid gap-1 text-white">
-        <label htmlFor="">Choose collection</label>
-        <p className="text-gray-400 text-md">Unlock content after successful transaction.</p>
-        <select
-          id="collections"
-          className="my-select block w-full rounded-lg border-2 border-gray-600 bg-gray-900 text-gray-300 p-2 text-sm   placeholder-gray-600 focus:border-blue-500 focus:ring-blue-500 mt-2"
-        >
-          <option selected>Select Collection</option>
-          <option value="DIG">Digital Art</option>
-          <option value="COL">Collectibles</option>
-          <option value="GAM">Gaming </option>
-          <option value="MUS">Music</option>
-        </select>
-      </div>
-      <div className="title mb-6 grid gap-2 text-gray-200">
-        <label htmlFor="title" className="">
-          Title
-        </label>
-        <input
-          type="text"
-          id="title"
-          className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
-          placeholder="e.g Crypto Funk"
-          required
-        />
-      </div>
-      <div className="description mb-6 grid gap-2 text-gray-200">
-        <label htmlFor="description" className="">
-          Description
-        </label>
-        <input
-          type="text"
-          id="description"
-          className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
-          placeholder="e.g This is a very limited item"
-          required
-        />
-      </div>
-      <div className="royalties mb-6 grid gap-2 text-gray-200">
-        <label htmlFor="royalties" className="">
-          Royalties (%)
-        </label>
-        <input
-          type="number"
-          max="70"
-          id="royalties"
-          className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
-          placeholder="suggested: 0, 10%, 20%, 30%, Maximum is 70%"
-          required
-        />
-      </div>
-      <button className="rounded-full px-6 py-1 bg-primary text-gray-800">Create Item</button>
     </form>
   );
 }
