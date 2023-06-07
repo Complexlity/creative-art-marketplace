@@ -4,11 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from '../../public/logo.png'
 import { useState } from "react";
+import { motion } from "framer-motion"
 
 
 const NavBar = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const toggledClass = isOpen ? "" : "open"
+
+
   return (
     <nav className="flex items-center justify-between text-white">
       <Link href="/" className="flex items-center gap-1 text-3xl">
@@ -33,10 +34,29 @@ const NavBar = () => {
           }}
         />
       </div>
+
+      <MobileMenu  />
+    </nav>
+  );
+};
+const variants = {
+  open: { opacity: 1, y: 0 },
+  closed: { opacity: 0, y: "-120%" },
+}
+
+function MobileMenu() {
+       const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  return (
+    <>
       <div className="lg:hidden">
         <Hamburger toggled={isOpen} toggle={setIsOpen} />
       </div>
-      <div className={`dropdown_menu absolute right-8 top-[60px] z-10 w-[300px] overflow-hidden rounded-lg bg-gray-400/50 backdrop-blur-sm ${toggledClass} py-2 transition-[height] duration-[.2s] `}>
+      <motion.div
+        animate={isOpen ? "open" : "closed"}
+        variants={variants}
+        className={`dropdown_menu absolute right-8 top-[60px] z-50 w-[300px] overflow-hidden rounded-lg bg-gray-400/50 py-2 backdrop-blur-sm transition-[height] duration-[.2s] `}
+      >
         <li className="flex items-center justify-center py-2">
           <a href="">Home</a>
         </li>
@@ -50,7 +70,7 @@ const NavBar = () => {
           <a href="">Contact</a>
         </li>
         <hr className="mx-auto w-4/5" />
-        <div className="mt-4 text-center py-2 ">
+        <div className="mt-4 py-2 text-center ">
           <ConnectWallet
             className=""
             theme="light"
@@ -60,9 +80,9 @@ const NavBar = () => {
             }}
           />
         </div>
-      </div>
-    </nav>
+      </motion.div>
+    </>
   );
-};
+}
 
 export default NavBar;
