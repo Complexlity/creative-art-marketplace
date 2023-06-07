@@ -1,21 +1,20 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useState } from 'react'
+import { useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "~/components/Footer";
 import { Card } from "~/components/UniqueArt";
-import { MdGroups } from 'react-icons/md'
-import { ImPriceTag } from 'react-icons/im'
+import { MdGroups } from "react-icons/md";
+import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
 
 type WithChidren = {
-  children: React.ReactNode
-}
-type methodOptions = "FIXED_PRICE" | "TIMED_AUCTION" | "OPEN BID"
+  children: React.ReactNode;
+};
+type methodOptions = "FIXED_PRICE" | "TIMED_AUCTION" | "OPEN BID";
 
 const Mint: NextPage = () => {
-  const [checked, setChecked] = useState<boolean>(true)
-
+  const [checked, setChecked] = useState<boolean>(true);
 
   return (
     <>
@@ -38,9 +37,9 @@ const Mint: NextPage = () => {
   );
 };
 
-export function HeroHeader({children}: WithChidren) {
+export function HeroHeader({ children }: WithChidren) {
   return (
-    <div className="border-b-2 border-white pt-10 pb-24">
+    <div className="border-b-2 border-white pb-24 pt-10">
       <h1 className="text-center text-5xl text-white md:text-6xl">
         {children}
       </h1>
@@ -48,23 +47,22 @@ export function HeroHeader({children}: WithChidren) {
   );
 }
 
-
 function MintForm() {
-  const [checked, setChecked] = useState<boolean>(false)
-  const [method, setMethod] = useState<methodOptions>("FIXED_PRICE")
+  const [checked, setChecked] = useState<boolean>(false);
+  const [method, setMethod] = useState<methodOptions>("FIXED_PRICE");
   const toggleChecked = () => {
-    setChecked(!checked)
-  }
+    setChecked(!checked);
+  };
 
   const toggleOptions = (e: any) => {
-    const value = e.target.value.toUpperCase()
-    setMethod(value)
-  }
+    const value = e.target.value.toUpperCase();
+    setMethod(value);
+  };
 
   let toggleColor = checked ? "bg-primary" : "";
   function submitForm(e: any) {
-    e.preventDefault()
-    alert("Hello World")
+    e.preventDefault();
+    alert("Hello World");
   }
 
   return (
@@ -176,7 +174,7 @@ function MintForm() {
           </p>
           <select
             id="collections"
-            className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-blue-500 focus:ring-blue-500"
+            className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
             defaultValue={"SEL"}
           >
             <option disabled value="SEL">
@@ -195,7 +193,7 @@ function MintForm() {
           <input
             type="text"
             id="title"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary"
             placeholder="e.g Crypto Funk"
             required
           />
@@ -207,7 +205,7 @@ function MintForm() {
           <input
             type="text"
             id="description"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary"
             placeholder="e.g This is a very limited item"
             required
           />
@@ -220,7 +218,7 @@ function MintForm() {
             type="number"
             max="70"
             id="royalties"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
             placeholder="suggested: 0, 10%, 20%, 30%, Maximum is 70%"
             required
           />
@@ -249,7 +247,7 @@ function MethodOptions({ method }: { method: methodOptions }) {
           <input
             type="number"
             id="price"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
             placeholder="Enter price for item"
             required
           />
@@ -264,7 +262,7 @@ function MethodOptions({ method }: { method: methodOptions }) {
             <input
               type="number"
               id="min-bid"
-              className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+              className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
               placeholder="Enter minimum bid"
               required
             />
@@ -276,7 +274,7 @@ function MethodOptions({ method }: { method: methodOptions }) {
                 type="date"
                 name="start_date"
                 id="start_date"
-                className=" date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+                className=" date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
               />
             </div>
             <div className="mb-6 grid gap-2 text-gray-200">
@@ -285,7 +283,7 @@ function MethodOptions({ method }: { method: methodOptions }) {
                 type="date"
                 name="end_date"
                 id="end_date"
-                className="date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+                className="date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
               />
             </div>
           </div>
