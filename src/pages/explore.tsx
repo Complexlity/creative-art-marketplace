@@ -15,7 +15,7 @@ const Explore = () => {
           Explore
         </HeroHeader>
         <ExploreCards />
-      
+
       <Footer />
       </div>
   </div>
@@ -30,7 +30,7 @@ function ExploreCards(){
           <input
             type="search"
             id="search-dropdown"
-            className=" z-20 block w-full rounded-lg border border-l-2 border-gray-600 border-l-gray-700 bg-transparent px-2  py-2 text-sm  text-white placeholder-gray-400 ring-blue-500 focus:border-gray-200"
+            className=" z-20 block w-full rounded-lg border-2 border-gray-600 border-l-gray-700 bg-transparent px-2  py-2 text-sm  text-white placeholder-gray-400 ring-blue-500 focus:border-primary focus:outline-none"
             placeholder="Search Items here...."
             required
           />
