@@ -3,81 +3,18 @@ import NavBar from '../../components/NavBar'
 import {MdVerified} from 'react-icons/md'
 import { IoMdCheckmarkCircle} from 'react-icons/io'
 import { MdPending, MdCancel } from "react-icons/md";
+import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import { IconType } from 'react-icons';
 import { Card } from '~/components/UniqueArt';
 function NFTItem() {
   const router = useRouter()
   const id = router.query.nftId
   return (
-    <div className="main text-white px-6 space-y-12">
+    <main className="main space-y-12 px-6 text-white">
       <NavBar />
-      <section className="item-details max-w-500px  mx-auto grid w-4/5 space-y-6 md:grid-cols-2">
-        <div className="item-image aspect-square">
-          <img
-            className="h-full w-full object-cover object-top"
-            src="/nft-1.jpg"
-          />
-        </div>
-        <div className="item-descriptions space-y-4">
-          <small className="auction-time"> Auctions end in 0h 0m 0s </small>
-          <h2 className="item-name">Red Ocean </h2>
-          <div className="interactions flex gap-4">
-            <div>Art</div>
-            <div>Seen</div>
-            <div>Likes</div>
-          </div>
-          <p className="item-description">
-            {" "}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis dicta
-            assumenda eveniet veniam rem eius, quibusdam nihil modi vel ipsum
-            maiores cum illum laboriosam repellat expedita voluptas ipsam
-            officiis voluptatum, ex itaque? Animi commodi ex praesentium,
-            voluptatem in velit blanditiis.
-          </p>
-
-          <div className="creator">
-            <h3>Creator</h3>
-            <div className="flex items-center gap-4">
-              <div className="creator-image relative h-12 w-12  rounded-full border-2 border-white ">
-                <MdVerified className="absolute -bottom-1 -right-1 text-primary" />
-
-                <img
-                  className="h-full w-full rounded-full object-cover object-top "
-                  src="/nft-1.jpg"
-                  alt=""
-                />
-              </div>
-              <p>John Smith</p>
-            </div>
-          </div>
-          <div className="flex gap-4 filter ">
-            <div>Bids</div>
-            <div>History</div>
-          </div>
-          <div className="bids grid gap-4 py-4">
-            <Bids />
-            <Bids status={"REJECTED"} />
-            <Bids status={"PENDING"} />
-            <Bids />
-          </div>
-          <div className="purchase-options flex gap-4">
-            <button className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:bg-amber-300 ">
-              Buy Now
-            </button>
-            <button className="rounded-full bg-gray-500 px-6 py-2 hover:bg-green-500">
-              Place a bid
-            </button>
-          </div>
-        </div>
-      </section>
-      <section className="related-items text-center space-y-6 mt-8">
-        <h2 className="text-3xl md:text-4xl tracking-wide">Related Items</h2>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-      </section>
-    </div>
+      <ItemDetails/>
+      <RelatedItems />
+    </main>
   );
 }
 
@@ -138,4 +75,100 @@ function Bids({ status }: { status?: BidStatus }) {
   );
 }
 
+function ItemDetails() {
+  return (
+    <section className="my-grid item-details max-w-[500px] md:max-w-full  mx-auto grid md:grid-cols-2 gap-12">
+        <div className="item-image aspect-square">
+          <img
+            className="h-full w-full object-cover object-top"
+            src="/nft-1.jpg"
+          />
+        </div>
+        <div className="item-descriptions space-y-6 md:-m-2">
+          <small className="auction-time">
+            {" "}
+            <span className="text-gray-400">Auctions end in</span> 0h 0m 0s{" "}
+          </small>
+          <h1 className="item-name text-5xl md:text-6xl">Red Ocean </h1>
+          <div className="interactions flex gap-4">
+            <div className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-,d shadow-gray-700">
+              <AiFillPicture /> Art
+            </div>
+            <div className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700">
+              <AiFillEye /> 250
+            </div>
+            <div className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700">
+              <AiFillHeart /> 18
+            </div>
+          </div>
+          <p className="item-description text-gray-400">
+            {" "}
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis dicta
+            assumenda eveniet veniam rem eius, quibusdam nihil modi vel ipsum
+            maiores cum illum laboriosam repellat expedita voluptas ipsam
+            officiis voluptatum, ex itaque? Animi commodi ex praesentium,
+            voluptatem in velit blanditiis.
+          </p>
+
+          <div className="creator grid gap-2">
+            <h3>Creator</h3>
+            <div className="flex items-center gap-4">
+              <div className="creator-image relative h-12 w-12  rounded-full border-2 border-white ">
+                <MdVerified className="absolute -bottom-1 -right-1 text-primary" />
+
+                <img
+                  className="h-full w-full rounded-full object-cover object-top "
+                  src="/nft-1.jpg"
+                  alt=""
+                />
+              </div>
+              <p className="font-semibold tracking-widest">John Smith</p>
+            </div>
+          </div>
+          <div className="flex gap-4 filter ">
+            <div
+              tabIndex={0}
+              className="rounded-md border-2 border-gray-300 px-5 py-[.05rem] focus:outline-2  "
+            >
+              Bids
+            </div>
+            <div
+              tabIndex={0}
+              className="rounded-md border-2 border-gray-500 px-5 py-[.05rem] text-gray-400 focus:outline-2"
+            >
+              History
+            </div>
+          </div>
+          <div className="bids grid gap-4 pb-4">
+            <Bids />
+            <Bids status={"REJECTED"} />
+            <Bids status={"PENDING"} />
+            <Bids />
+          </div>
+          <div className="purchase-options flex gap-4">
+            <button className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:shadow-round hover:shadow-gray-400">
+              Buy Now
+            </button>
+            <button className="rounded-full bg-gray-500 px-6 py-2 hover:shadow-round hover:shadow-primary">
+              Place a bid
+            </button>
+          </div>
+        </div>
+      </section>
+  )
+}
+
+function RelatedItems() {
+  return (
+    <section className="related-items space-y-6 text-center">
+      <h2 className="text-3xl tracking-wide md:text-4xl ">Related Items</h2>
+      <div className="related-cards grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
+    </section>
+  );
+}
 export default NFTItem

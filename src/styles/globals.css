@@ -50,9 +50,14 @@
 
 @media (min-width: 768px) {
   .mint-form {
-    grid-template-columns: 1fr max(265px);
+    grid-template-columns: 1fr minmax(0, 265px);
   }
+  .my-grid {
+    grid-template-columns: minmax(0,500px) minmax(0, 500px) !important;
+    justify-content:center;
+   }
  }
+
 
 @font-face {
   font-family: ttramillas;
