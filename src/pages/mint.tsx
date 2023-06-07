@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,  @typescript-eslint/no-unsafe-assignment */
+
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
@@ -25,10 +27,10 @@ const Mint: NextPage = () => {
         <div className="mx-auto max-w-[1200px] px-4 md:px-8 ">
           <NavBar />
 
-            <HeroHeader>
-              Create <span className="text-primary"> Legendary </span>NFT
-            </HeroHeader>
-            <MintForm />
+          <HeroHeader>
+            Create <span className="text-primary"> Legendary </span>NFT
+          </HeroHeader>
+          <MintForm />
 
           <Footer />
         </div>
