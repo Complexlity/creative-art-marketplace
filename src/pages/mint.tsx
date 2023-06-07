@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,  @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any,  @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call */
 
 import { type NextPage } from "next";
 import Head from "next/head";
