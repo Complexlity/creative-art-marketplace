@@ -9,12 +9,12 @@
 .main {
   background-color: #111827;
   background-image: url("/bg.png");
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
 }
 
 .my-select {
   background-image: url("/bg.png");
+  background-position: 10% 50%;
+  background-size: cover
 }
 
 .method-card {
