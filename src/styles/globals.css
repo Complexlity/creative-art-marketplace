@@ -49,14 +49,17 @@
 
 
 @media (min-width: 768px) {
-  .mint-form {
-    grid-template-columns: 1fr minmax(0, 265px);
-  }
   .my-grid {
     grid-template-columns: minmax(0,500px) minmax(0, 500px) !important;
     justify-content:center;
    }
  }
+
+ @media (min-width: 900px) {
+  .mint-form {
+    grid-template-columns: 1fr minmax(250px, 300px);
+  }
+}
 
 
 @font-face {
@@ -69,7 +72,7 @@ section {
   margin-bottom: 3rem;
 }
 
-section h1, section h2, .countingDiv * {
+section h1, section h2, .countingDiv *, header *, nav * {
   font-family: ttramillas, "sans-serif" ;
 }
 
@@ -78,7 +81,7 @@ section h1, section h2, .countingDiv * {
   src: url("/Roboto-Regular.ttf");
 }
 
-*:not(section h1):not(section h2):not(section h1 span):not(section h2 span):not(.countingDiv *) {
+*:not(section h1):not(section h2):not(section h1 span):not(section h2 span):not(.countingDiv *):not(header *):not(nav *) {
   font-family: roboto, sans-serif;
 }
 

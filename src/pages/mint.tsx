@@ -11,11 +11,9 @@ import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
 type WithChidren = {
   children: React.ReactNode;
 };
-type methodOptions = "FIXED_PRICE" | "TIMED_AUCTION" | "OPEN BID";
+type methodOptions = "FIXED_PRICE" | "TIMED_AUCTION" | "OPEN_BIDS";
 
 const Mint: NextPage = () => {
-  const [checked, setChecked] = useState<boolean>(true);
-
   return (
     <>
       <Head>
@@ -26,10 +24,12 @@ const Mint: NextPage = () => {
       <div className="main">
         <div className="mx-auto max-w-[1200px] px-4 md:px-8 ">
           <NavBar />
-          <HeroHeader>
-            Create <span className="text-primary"> Legendary </span>NFT
-          </HeroHeader>
-          <MintForm />
+
+            <HeroHeader>
+              Create <span className="text-primary"> Legendary </span>NFT
+            </HeroHeader>
+            <MintForm />
+
           <Footer />
         </div>
       </div>
@@ -39,11 +39,11 @@ const Mint: NextPage = () => {
 
 export function HeroHeader({ children }: WithChidren) {
   return (
-    <div className="border-b-2 border-white pb-24 pt-10">
+    <header className="border-b-2 border-white pb-24 pt-12 lg:pt-20">
       <h1 className="text-center text-5xl text-white md:text-6xl">
         {children}
       </h1>
-    </div>
+    </header>
   );
 }
 
@@ -107,6 +107,7 @@ function MintForm() {
                 id=""
                 value="fixed_price"
                 onChange={toggleOptions}
+                checked={method === "FIXED_PRICE"}
               />
             </label>
             <label
@@ -122,6 +123,7 @@ function MintForm() {
                 id=""
                 value="timed_auction"
                 onChange={toggleOptions}
+                checked={method === "TIMED_AUCTION"}
               />
             </label>
             <label
@@ -137,6 +139,7 @@ function MintForm() {
                 id=""
                 value="open_bids"
                 onChange={toggleOptions}
+                checked={method === "OPEN_BIDS"}
               />
             </label>
           </div>
@@ -223,7 +226,7 @@ function MintForm() {
             required
           />
         </div>
-        <button className="rounded-full bg-primary px-6 py-1 text-gray-800">
+        <button className="rounded-full bg-primary px-6 py-2 text-gray-800">
           Create Item
         </button>
       </div>
@@ -289,7 +292,7 @@ function MethodOptions({ method }: { method: methodOptions }) {
           </div>
         </>
       )}
-      {method == "OPEN BID" && null}
+      {method == "OPEN_BIDS" && null}
     </>
   );
 }

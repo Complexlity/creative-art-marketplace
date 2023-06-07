@@ -11,12 +11,12 @@ function NFTItem() {
   const router = useRouter()
   const id = router.query.nftId
   return (
-    <main className="main space-y-12 px-6 text-white">
+    <div className="main space-y-12 px-6 text-white">
       <NavBar />
       <ItemDetails/>
       <RelatedItems />
       <Footer />
-    </main>
+    </div>
   );
 }
 
