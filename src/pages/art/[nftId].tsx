@@ -6,6 +6,7 @@ import { MdPending, MdCancel } from "react-icons/md";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import { IconType } from 'react-icons';
 import { Card } from '~/components/UniqueArt';
+import Footer from '~/components/Footer';
 function NFTItem() {
   const router = useRouter()
   const id = router.query.nftId
@@ -14,6 +15,7 @@ function NFTItem() {
       <NavBar />
       <ItemDetails/>
       <RelatedItems />
+      <Footer />
     </main>
   );
 }
@@ -77,27 +79,27 @@ function Bids({ status }: { status?: BidStatus }) {
 
 function ItemDetails() {
   return (
-    <section className="my-grid item-details max-w-[500px] md:max-w-full  mx-auto grid md:grid-cols-2 gap-12">
+    <section className="my-grid item-details max-w-[500px] md:max-w-full  mx-auto grid md:grid-cols-2 gap-4 md:gap-12">
         <div className="item-image aspect-square">
           <img
             className="h-full w-full object-cover object-top"
             src="/nft-1.jpg"
           />
         </div>
-        <div className="item-descriptions space-y-6 md:-m-2">
+        <div className="item-descriptions grid gap-4 mb-8 md:-m-2">
           <small className="auction-time">
             {" "}
             <span className="text-gray-400">Auctions end in</span> 0h 0m 0s{" "}
           </small>
           <h1 className="item-name text-5xl md:text-6xl">Red Ocean </h1>
           <div className="interactions flex gap-4">
-            <div className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-,d shadow-gray-700">
+            <div className="hover:-translate-y-1 duration-300 ease-in-out flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700">
               <AiFillPicture /> Art
             </div>
-            <div className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700">
+            <div className="hover:-translate-y-1 duration-300 flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700">
               <AiFillEye /> 250
             </div>
-            <div className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700">
+            <div className="hover:-translate-y-1 duration-300 flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700">
               <AiFillHeart /> 18
             </div>
           </div>
@@ -125,21 +127,21 @@ function ItemDetails() {
               <p className="font-semibold tracking-widest">John Smith</p>
             </div>
           </div>
-          <div className="flex gap-4 filter ">
+          <div className="filter flex gap-4 mt-4 mb-2">
             <div
               tabIndex={0}
-              className="rounded-md border-2 border-gray-300 px-5 py-[.05rem] focus:outline-2  "
+              className="cursor-pointer hover:border-white rounded-md border-2 border-gray-300 px-5 py-[.05rem] focus:outline-2  "
             >
               Bids
             </div>
             <div
               tabIndex={0}
-              className="rounded-md border-2 border-gray-500 px-5 py-[.05rem] text-gray-400 focus:outline-2"
+              className="cursor-pointer hover:border-white rounded-md border-2 border-gray-500 px-5 py-[.05rem] text-gray-400 focus:outline-2"
             >
               History
             </div>
           </div>
-          <div className="bids grid gap-4 pb-4">
+          <div className="bids grid gap-2.5 mb-8">
             <Bids />
             <Bids status={"REJECTED"} />
             <Bids status={"PENDING"} />
@@ -160,8 +162,10 @@ function ItemDetails() {
 
 function RelatedItems() {
   return (
-    <section className="related-items space-y-6 text-center">
-      <h2 className="text-3xl tracking-wide md:text-4xl ">Related Items</h2>
+    <section className="related-items grid gap-12 text-center">
+      <h2 className="text-3xl  tracking-wide md:text-4xl relative">Related Items
+      <span className="absolute bg-primary w-[20%] max-w-[180px] h-[.2rem] bottom-[-.1rem] right-[50%] translate-x-[50%]"  ></span>
+      </h2>
       <div className="related-cards grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <Card />
         <Card />
