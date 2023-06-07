@@ -231,7 +231,7 @@ function MintForm() {
         </button>
       </div>
 
-      <div className="preview-item hidden gap-4 self-start md:grid">
+      <div className="preview-item hidden gap-4 self-start ">
         <label>Preview Item</label>
         <Card />
       </div>

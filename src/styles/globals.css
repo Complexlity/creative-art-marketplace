@@ -59,6 +59,9 @@
   .mint-form {
     grid-template-columns: 1fr minmax(250px, 300px);
   }
+  .preview-item {
+    display:grid
+  }
 }
 
 
