@@ -98,8 +98,8 @@ function MintForm() {
         </div>
         <div className="select-method grid gap-4">
           <h3 className="">Select Method</h3>
-          <div className="flex items-start gap-4">
-            <label className="method-card flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600">
+          <div className="flex flex-wrap items-start gap-4">
+            <label className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32">
               <ImPriceTag className="icon h-8 w-8" color={"gray"} />
               <p>Fixed Price</p>
               <input
@@ -114,7 +114,7 @@ function MintForm() {
             </label>
             <label
               tabIndex={0}
-              className="method-card   flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 "
+              className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
             >
               <FaHourglassHalf className="icon h-8 w-8" color={"gray"} />
               <p>Timed auction</p>
@@ -130,7 +130,7 @@ function MintForm() {
             </label>
             <label
               tabIndex={0}
-              className="method-card  flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 "
+              className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
             >
               <MdGroups className="icon h-8 w-8" color={"gray"} />
               <p>Open Bids</p>
@@ -171,7 +171,6 @@ function MintForm() {
             Unlock content after successful transaction
           </p>
         </div>
-
         <div className="choose-collection grid gap-1 text-white">
           <label htmlFor="">Choose collection</label>
           <p className="text-md text-gray-400">
@@ -191,6 +190,7 @@ function MintForm() {
             <option value="MUS">Music</option>
           </select>
         </div>
+        /
         <div className="title mb-6 grid gap-2 text-gray-200">
           <label htmlFor="title" className="">
             Title
