@@ -5,7 +5,7 @@ import Image from "next/image";
 import logo from '../../public/logo.png'
 import { useState } from "react";
 import { motion } from "framer-motion"
-
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const NavBar = () => {
 
@@ -25,17 +25,11 @@ const NavBar = () => {
         <li>Collections</li>
       </ul>
       <div className="hidden lg:block">
-        <ConnectWallet
-          className=""
-          theme="light"
-          dropdownPosition={{
-            align: "center",
-            side: "bottom",
-          }}
-        />
+
+        <ConnectButton/>
       </div>
 
-      <MobileMenu  />
+      <MobileMenu />
     </nav>
   );
 };
@@ -70,14 +64,19 @@ function MobileMenu() {
           <a href="">Contact</a>
         </li>
         <hr className="mx-auto w-4/5" />
-        <div className="mt-4 py-2 text-center ">
-          <ConnectWallet
-            className=""
-            theme="light"
-            dropdownPosition={{
-              align: "center",
-              side: "bottom",
-            }}
+        <div className="mt-4 py-2 grid justify-center">
+          <ConnectButton
+          accountStatus={{
+            smallScreen: 'avatar',
+            largeScreen: 'full'
+          }}
+          showBalance={{
+            smallScreen: true,
+            largeScreen: true
+          }}
+          chainStatus={{
+            smallScreen: 'icon'
+          }}
           />
         </div>
       </motion.div>
