@@ -40,8 +40,8 @@ const NavBar = () => {
   );
 };
 const variants = {
-  open: { opacity: 1, y: 0 },
-  closed: { opacity: 0, y: "-120%" },
+  open: { opacity: 1, x: 0 },
+  closed: { opacity: 0, x: "-50%" },
 }
 
 function MobileMenu() {
@@ -55,7 +55,7 @@ function MobileMenu() {
       <motion.div
         animate={isOpen ? "open" : "closed"}
         variants={variants}
-        className={`dropdown_menu absolute right-8 top-[60px] z-50 w-[300px] overflow-hidden rounded-lg bg-gray-400/50 py-2 backdrop-blur-sm transition-[height] duration-[.2s] `}
+        className={`dropdown_menu absolute sm:right-4 right-2 top-[60px] z-[12] w-full max-w-[300px] overflow-hidden rounded-lg bg-gray-400/50 py-2 backdrop-blur-sm transition-[height] duration-[.2s] `}
       >
         <li className="flex items-center justify-center py-2">
           <a href="">Home</a>

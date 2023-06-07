@@ -4,9 +4,11 @@ import nftImage from '../../public/nft-1.jpg'
 const WeeklyArtists = () => {
   return (
     <section className="mb-32 md:mb-40">
-      <h2 className="mb-6 text-center text-5xl text-white">
-        <span className="border-b-4 border-primary">Artists</span> Of The{" "}
-        <span className="text-primary">Week</span>
+      <h2 className=" text-center text-4xl md:text-5xl text-white">
+        <span className="relative">Artists
+        <hr className="absolute w-full  left-1/2 right-1/2 translate-x-[-50%] bg-primary md:p-[.1rem] p-[.06rem]" />
+        </span> Of The{" "}
+        <span className=" text-primary">Week</span>
       </h2>
       <ul className="honeycomb" lang="es">
         <li className="honeycomb-cell">

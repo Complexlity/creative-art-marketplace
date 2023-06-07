@@ -8,11 +8,11 @@ const UniqueArt = () => {
   return (
     <section className="mb-24 text-white">
       <div className="mb-6">
-        <h2 className="text-center text-5xl md:text-start">
+        <h2 className="text-center text-4xl md:text-5xl md:text-start">
           <span className="text-primary">Amazing</span> and Super{" "}
         </h2>
         <div className="text-center md:flex md:justify-between">
-          <h2 className="text-5xl">
+          <h2 className="text-4xl md:text-5xl">
             Unique Art of This <span className="text-primary">Week</span>
           </h2>
           <button className="hidden rounded-md bg-primary px-8 py-2 font-semibold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:block">
@@ -46,7 +46,7 @@ export function Card() {
         <p>Cyberpunk Cocomo</p>
         <p className="flex items-center gap-1">
           <span>
-            <Image alt="Ethereum Icon" className="h-4 w-4" src={ethereumImage} />
+            <Image alt="Ethereum Icon" className="h-4 w-6" src={ethereumImage} />
           </span>
           <span>490ETH</span>
         </p>
@@ -59,7 +59,7 @@ export function Card() {
             <span className="font-bold">03:24:56</span>
           </p>
         </div>
-        <button className="rounded-lg border border-primary px-6 py-3 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800">
+        <button className="rounded-lg border border-primary px-4 md:px-6 py-3 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800">
           Place A Bid
         </button>
       </div>

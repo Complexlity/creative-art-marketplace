@@ -15,7 +15,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="main">
-        <div className="mx-auto max-w-[1400px] px-4 md:px-8 ">
+        <div className="mx-auto max-w-[1400px] px-4 md:px-8 overflow-x-hidden">
           <NavBar />
           <Hero />
           <UniqueArt />
