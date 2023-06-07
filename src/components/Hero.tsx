@@ -1,4 +1,5 @@
-import { FC } from "react";
+import nftImage from '../../public/nft-1.jpg'
+import Image from 'next/image'
 
 const Hero = () => {
 
@@ -11,7 +12,7 @@ const Hero = () => {
         </h1>
         <p>
           Get started with the easiest and most secure platform to buy and trade
-          digital ART and NFT's. Start exploring the world of digital art and
+          digital ART and NFT&apos;s. Start exploring the world of digital art and
           NFTs today and take control of your digital assets with confidence
         </p>
         <div className="flex justify-center gap-4 font-bold md:justify-start">
@@ -39,9 +40,11 @@ const Hero = () => {
             </button>
           </div>
           <div className="gradient z[-10] absolute right-[43%] top-[30%] h-[50%] w-1/2 rotate-45 rounded-full shadow-3xl shadow-primary"></div>
-          <img
+          <Image
+            alt="Trending Image"
             className="relative z-10 h-full w-full rounded-2xl object-cover object-top"
-            src="/nft-1.jpg"
+            src={nftImage}
+            priority
           />
         </div>
       </div>

@@ -1,4 +1,6 @@
-const Footer  = () => {
+import Image from "next/image";
+import logoImg from '../../public/complex.png'
+const Footer = () => {
   return (
     <>
       <footer className="footer p-10 text-white grid grid-cols-2 md:grid-cols-4">
@@ -32,8 +34,8 @@ const Footer  = () => {
       </footer>
       <footer className="footer border-t border-base-300 px-10 py-4 text-white flex justify-between">
         <div className="grid-flow-col items-center ">
-          
-          <img src="/complex.png" width={32} height={32} alt="" />
+
+          <Image src={logoImg} width={32} height={32} alt="" />
           <p>
             Complexlity
             <br />

@@ -1,12 +1,16 @@
 import {useRouter} from 'next/router'
+import Image from 'next/image'
 import NavBar from '../../components/NavBar'
+import Footer from '~/components/Footer';
+import { Card } from '~/components/UniqueArt';
+import nftImage from '../../../public/nft-1.jpg'
+
 import {MdVerified} from 'react-icons/md'
 import { IoMdCheckmarkCircle} from 'react-icons/io'
 import { MdPending, MdCancel } from "react-icons/md";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
-import { IconType } from 'react-icons';
-import { Card } from '~/components/UniqueArt';
-import Footer from '~/components/Footer';
+import type { IconType } from 'react-icons';
+
 function NFTItem() {
   const router = useRouter()
   const id = router.query.nftId
@@ -50,9 +54,9 @@ function Bids({ status }: { status?: BidStatus }) {
     <div className="flex gap-4">
       <div className="bidder-image relative h-12  w-12 rounded-full border-2 border-white">
         <StatusIcon className={`absolute -bottom-1 -right-1 ${checkColor}`} />
-        <img
+        <Image
           className="h-full w-full rounded-full object-cover object-top"
-          src="/nft-1.jpg"
+          src={nftImage}
           alt=""
         />
       </div>
@@ -81,9 +85,10 @@ function ItemDetails() {
   return (
     <section className="my-grid item-details max-w-[500px] md:max-w-full  mx-auto grid md:grid-cols-2 gap-4 md:gap-12">
         <div className="item-image aspect-square">
-          <img
+        <Image
+            alt="NFT Image"
             className="h-full w-full object-cover object-top"
-            src="/nft-1.jpg"
+            src={nftImage}
           />
         </div>
         <div className="item-descriptions grid gap-4 mb-8 md:-m-2">
@@ -118,9 +123,9 @@ function ItemDetails() {
               <div className="creator-image relative h-12 w-12  rounded-full border-2 border-white ">
                 <MdVerified className="absolute -bottom-1 -right-1 text-primary" />
 
-                <img
+                <Image
                   className="h-full w-full rounded-full object-cover object-top "
-                  src="/nft-1.jpg"
+                  src={nftImage}
                   alt=""
                 />
               </div>

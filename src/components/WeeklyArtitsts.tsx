@@ -1,3 +1,6 @@
+import Image from 'next/image'
+import nftImage from '../../public/nft-1.jpg'
+
 const WeeklyArtists = () => {
   return (
     <section className="mb-32 md:mb-40">
@@ -7,27 +10,27 @@ const WeeklyArtists = () => {
       </h2>
       <ul className="honeycomb" lang="es">
         <li className="honeycomb-cell">
-          <img className="honeycomb-cell__image" src="/nft-1.jpg" />
+          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
           <div className="honeycomb-cell__title">CryptoKittyQ</div>
         </li>
         <li className="honeycomb-cell">
-          <img className="honeycomb-cell__image" src="/nft-1.jpg" />
+          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
           <div className="honeycomb-cell__title">RoboRarity</div>
         </li>
         <li className="honeycomb-cell">
-          <img className="honeycomb-cell__image" src="/nft-1.jpg" />
+          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
           <div className="honeycomb-cell__title">
             GalacticGaz<small>No vidrio</small>
           </div>
         </li>
         <li className="honeycomb-cell">
-          <img className="honeycomb-cell__image" src="/nft-1.jpg" />
+          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
           <div className="honeycomb-cell__title">
             ElecEag<small>1 de repuesto</small>
           </div>
         </li>
         <li className="honeycomb-cell">
-          <img className="honeycomb-cell__image" src="/nft-1.jpg" />
+          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
           <div className="honeycomb-cell__title">NeonNar</div>
         </li>
         <li className="honeycomb-cell honeycomb__placeholder"></li>

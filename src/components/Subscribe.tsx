@@ -1,32 +1,39 @@
+import Image from "next/image";
+import nftImage from '../../public/nft-1.jpg'
+
 const Subscribe = () => {
   return (
     <section className="mb-24 items-center gap-4 md:grid md:grid-cols-2">
       <div className="hidden md:grid">
         <div className="grid grid-cols-3">
-          <img
+          <Image
             className="five stack ml-32 w-48  rotate-[50deg] rounded-lg opacity-[60%] "
-            src="/nft-1.jpg"
-            alt=""
+            src={nftImage}
+            alt="Nft Image"
           />
-          <img
+          <Image
+
             className="one stack -ml-32  w-48 rotate-[-50deg] rounded-lg opacity-[60%]"
-            src="/nft-1.jpg"
-            alt=""
+            src={nftImage}
+            alt="Nft Image"
           />
-          <img
+          <Image
+
             className="four z-5 stack ml-20 w-48 rotate-[20deg] rounded-lg opacity-[80%] "
-            src="/nft-1.jpg"
-            alt=""
+            src={nftImage}
+            alt="Nft Image"
           />
-          <img
+          <Image
+
             className="three stack z-10 w-48 rounded-lg"
-            src="/nft-1.jpg"
-            alt=""
+            src={nftImage}
+            alt="Nft Image"
           />
-          <img
+          <Image
+
             className="two z-5 stack -ml-20 w-48 rotate-[-20deg] rounded-lg opacity-[80%]"
-            src="/nft-1.jpg"
-            alt=""
+            src={nftImage}
+            alt="Nft Image"
           />
         </div>
       </div>
@@ -53,20 +60,23 @@ const Subscribe = () => {
 
       <div className="">
         <div className="image1 relative flex justify-center text-5xl md:hidden">
-          <img
+          <Image
+
             className="relative left-[70px] aspect-square w-[50%] rotate-[-30deg] rounded-xl object-cover object-top opacity-[60%] md:-ml-8"
-            src="/nft-1.jpg"
-            alt=""
+            src={nftImage}
+            alt="Nft Image"
           />
-          <img
+          <Image
+
             className="relative top-[50px] z-10 aspect-square w-5/12 rounded-lg object-cover object-top opacity-[90%]"
-            src="/nft-1.jpg"
-            alt=""
+            src={nftImage}
+            alt="Nft Image"
           />
-          <img
+          <Image
+
             className="relative left-[-70px]  aspect-square w-[50%] rotate-[30deg] rounded-xl object-cover object-top opacity-[60%] md:-ml-8"
-            src="/nft-1.jpg"
-            alt=""
+            src={nftImage}
+            alt="Nft Image"
           />
         </div>
       </div>

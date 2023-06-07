@@ -1,3 +1,9 @@
+import Image from 'next/image'
+import nftImage from '../../public/nft-1.jpg'
+import ethereumImage from "../../public/ethereum.png";
+import clockImage from '../../public/clock.png'
+
+
 const UniqueArt = () => {
   return (
     <section className="mb-24 text-white">
@@ -31,15 +37,16 @@ const UniqueArt = () => {
 export function Card() {
   return (
     <div className="mb-6 space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4 max-w-full">
-      <img
+      <Image
+        alt="Nft Image"
         className="aspect-square rounded-lg object-cover object-top"
-        src="/nft-1.jpg"
+        src={nftImage}
       />
       <div className="flex justify-between font-semibold tracking-wide">
         <p>Cyberpunk Cocomo</p>
         <p className="flex items-center gap-1">
           <span>
-            <img className="h-4 w-4" src="/ethereum.png" />
+            <Image alt="Ethereum Icon" className="h-4 w-4" src={ethereumImage} />
           </span>
           <span>490ETH</span>
         </p>
@@ -48,7 +55,7 @@ export function Card() {
         <div>
           <small className="text-gray-400">Ending In</small>
           <p className="flex items-center gap-3">
-            <img className="h-4 w-4" src="/clock.png" />{" "}
+            <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
             <span className="font-bold">03:24:56</span>
           </p>
         </div>

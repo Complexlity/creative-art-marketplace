@@ -1,14 +1,17 @@
 import { Spin as Hamburger } from "hamburger-react";
 import { ConnectWallet } from "@thirdweb-dev/react";
+import Link from "next/link";
+import Image from "next/image";
+import logo from '../../public/logo.png'
 
 
 const NavBar = () => {
   return (
     <nav className="flex items-center justify-between text-white">
-      <a href="/" className="text-3xl flex items-center gap-1">
-        <img src="/logo.png" className="w-6 h-6" alt="" />
+      <Link href="/" className="text-3xl flex items-center gap-1">
+        <Image src={logo} className="w-6 h-6" alt="Creative logo" />
         <p className="logo-text">Creative<span className="text-primary">art</span></p>
-      </a>
+      </Link>
       <ul className="hidden list-none items-center gap-8 lg:flex">
         <li className="border-b-2 border-primary">Marketplace</li>
         <li>Artists</li>

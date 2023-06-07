@@ -59,7 +59,7 @@ function MintForm() {
     setMethod(value);
   };
 
-  let toggleColor = checked ? "bg-primary" : "";
+  const toggleColor = checked ? "bg-primary" : "";
   function submitForm(e: any) {
     e.preventDefault();
     alert("Hello World");
