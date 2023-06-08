@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import nftImage from '../../public/nft-1.jpg'
 import Image from 'next/image'
 
 const Hero = () => {
-
+  const [loaded, setLoaded] = useState<boolean>(false)
   return (
     <section className="mb-24 py-6 md:grid md:grid-cols-2">
       <div className=" mb-6 space-y-8 text-center text-white md:max-w-[70ch] md:text-start">
@@ -39,12 +40,13 @@ const Hero = () => {
               Place A Bid
             </button>
           </div>
-          <div className="gradient absolute right-[43%] top-[30%] h-[50%] w-1/2 rotate-45 shadow-3xl rounded-full shadow-primary"></div>
+          <div className={`${loaded ? "" : "hidden"} gradient absolute right-[43%] top-[30%] h-[50%] w-1/2 rotate-45 shadow-3xl rounded-full shadow-primary`}></div>
           <Image
             alt="Trending Image"
             className="relative z-10 h-full w-full rounded-2xl object-cover object-top"
             src={nftImage}
             priority
+            onLoad={setLoaded.bind(null, true)}
           />
         </div>
       </div>
