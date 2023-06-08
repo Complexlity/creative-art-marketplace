@@ -6,6 +6,7 @@ import UniqueArt from "~/components/UniqueArt";
 import Subscribe from "~/components/Subscribe";
 import Footer from "~/components/Footer";
 import WeeklyArtists from "~/components/WeeklyArtitsts";
+
 const Home: NextPage = () => {
   return (
     <>

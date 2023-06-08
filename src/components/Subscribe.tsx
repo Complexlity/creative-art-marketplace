@@ -1,7 +1,15 @@
 import Image from "next/image";
 import nftImage from '../../public/nft-1.jpg'
+import { nftsData, randomNumberGenerator } from "~/utils/nfts";
 
 const Subscribe = () => {
+  let idx1 = randomNumberGenerator.next().value;
+  let idx2 = randomNumberGenerator.next().value;
+  let idx3 = randomNumberGenerator.next().value;
+  console.log({ idx1, idx2, idx3 });
+  if (!idx1) idx1 = 0;
+  if (!idx2) idx2 = 0;
+  if (!idx3) idx3 = 0;
   return (
     <section className="mb-24 items-center gap-4 md:grid md:grid-cols-2">
       <div className="fan-cards hidden md:grid">
@@ -58,17 +66,17 @@ const Subscribe = () => {
         <div className="image1 relative flex justify-center text-5xl md:hidden">
           <Image
             className="relative left-[70px] aspect-square w-[50%] rotate-[-30deg] rounded-xl object-cover object-top opacity-[60%] md:-ml-8"
-            src={nftImage}
+            src={nftsData[idx1]!.image}
             alt="Nft Image"
           />
           <Image
             className="relative top-[50px] z-10 aspect-square w-5/12 rounded-lg object-cover object-top opacity-[90%]"
-            src={nftImage}
+            src={nftsData[idx2]!.image}
             alt="Nft Image"
           />
           <Image
             className="relative left-[-70px]  aspect-square w-[50%] rotate-[30deg] rounded-xl object-cover object-top opacity-[60%] md:-ml-8"
-            src={nftImage}
+            src={nftsData[idx3]!.image}
             alt="Nft Image"
           />
         </div>

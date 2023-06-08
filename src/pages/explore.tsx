@@ -1,45 +1,40 @@
 import Footer from "~/components/Footer";
 import NavBar from "~/components/NavBar";
 import { HeroHeader } from "./mint";
-import { AiOutlineSearch } from 'react-icons/ai'
+import { AiOutlineSearch } from "react-icons/ai";
 import { Card } from "~/components/UniqueArt";
-import { nftsData, randomNumberGenerator, NFTS
- } from "~/utils/nfts";
+import { nftsData, randomNumberGenerator, NFT } from "~/utils/nfts";
 import { useEffect, useState } from "react";
 
 const Explore = () => {
   return (
     <div className="main">
-      <div className="mx-auto max-w-[1200px] px-4 md:px-8 text-white" >
-      <NavBar />
-
-        <HeroHeader>
-          Explore
-        </HeroHeader>
+      <div className="mx-auto max-w-[1200px] px-4 text-white md:px-8">
+        <NavBar />
+        <HeroHeader>Explore</HeroHeader>
         <ExploreCards />
-
-      <Footer />
+        <Footer />
       </div>
-  </div>
+    </div>
   );
-}
+};
 
-function ExploreCards(){
-    const [generator] = useState(randomNumberGenerator)
-    const [cardss, setCardss] = useState<JSX.Element[]>([]);
-    useEffect(() => {
-    let cards: JSX.Element[] = []
+function ExploreCards() {
+  const [generator] = useState(randomNumberGenerator);
+  const [cardss, setCardss] = useState<JSX.Element[]>([]);
+  useEffect(() => {
+    let cards: JSX.Element[] = [];
     for (let i = 0; i < 12; i++) {
       let generatedIdx = generator.next().value;
-      if(!generatedIdx) generatedIdx = 0
-      const item = nftsData[generatedIdx] as Required<NFTS>;
+      if (!generatedIdx) generatedIdx = 0;
+      const item = nftsData[generatedIdx] as Required<NFT>;
       cards.push(<Card key={item.id} item={item} />);
-      }
-    setCardss(cards)
-  }, [])
+    }
+    setCardss(cards);
+  }, []);
 
   return (
-    <section className="grid gap-12 border-b-2 border-b-gray-300 pt-8 pb-12">
+    <section className="grid gap-12 border-b-2 border-b-gray-300 pb-12 pt-8">
       <div className="filters grid items-center gap-4 md:grid-cols-4">
         <div className="relative w-full self-end">
           <input
@@ -97,9 +92,7 @@ function ExploreCards(){
         </select>
       </div>
       <div className="cards">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {cardss}
-        </div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">{cardss}</div>
         <div className="load-more text-center">
           <button className="mx-auto justify-center rounded-full bg-primary px-6 py-2 text-gray-800">
             Load More
@@ -110,5 +103,4 @@ function ExploreCards(){
   );
 }
 
-
-export default Explore
+export default Explore;
