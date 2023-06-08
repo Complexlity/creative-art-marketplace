@@ -2,17 +2,20 @@ import { type AppType } from "next/dist/shared/lib/utils";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
 import "@rainbow-me/rainbowkit/styles.css";
 import "~/styles/globals.css"
-import { getDefaultWallets, RainbowKitProvider, darkTheme, midnightTheme } from "@rainbow-me/rainbowkit";
+import { getDefaultWallets, RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
+const apiKey = process.env.ALCHEMY_ID as string
+
+
 const { chains, publicClient } = configureChains(
   [mainnet, polygon, optimism, arbitrum],
   [
-    //@ts-ignore
-    alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
+
+    alchemyProvider({ apiKey }),
     publicProvider()
   ]
 );
@@ -34,7 +37,12 @@ const activeChain = "ethereum"
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} theme={darkTheme()} coolMode
+      <RainbowKitProvider
+        chains={chains}
+        theme={darkTheme({
+          accentColor: "orange",
+        })}
+        coolMode
       >
         <ThirdwebProvider activeChain={activeChain}>
           <Component {...pageProps} />

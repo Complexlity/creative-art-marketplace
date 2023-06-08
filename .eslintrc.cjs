@@ -29,6 +29,23 @@ const config = {
       },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/no-explicit-any": ["warn", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint / no - unsafe - assignment": [
+      "warn",
+      { argsIgnorePattern: "^_" },
+    ],
+    "@typescript - eslint / no - unsafe - call": [
+      "warn",
+      { argsIgnorePattern: "^_" },
+    ],
+    "@typescript - eslint / no - unsafe - member - access": [
+      "warn",
+      { argsIgnorePattern: "^_" },
+    ],
+    "@typescript - eslint / no - unsafe - argument": [
+      "warn",
+      { argsIgnorePattern: "^_" },
+    ],
   },
 };
 
