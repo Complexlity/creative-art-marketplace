@@ -3,7 +3,9 @@ import NavBar from "~/components/NavBar";
 import { HeroHeader } from "./mint";
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Card } from "~/components/UniqueArt";
-
+import { nftsData, randomNumberGenerator, NFTS
+ } from "~/utils/nfts";
+import { useEffect, useState } from "react";
 
 const Explore = () => {
   return (
@@ -23,6 +25,19 @@ const Explore = () => {
 }
 
 function ExploreCards(){
+    const [generator] = useState(randomNumberGenerator)
+    const [cardss, setCardss] = useState<JSX.Element[]>([]);
+    useEffect(() => {
+    let cards: JSX.Element[] = []
+    for (let i = 0; i < 12; i++) {
+      let generatedIdx = generator.next().value;
+      if(!generatedIdx) generatedIdx = 0
+      const item = nftsData[generatedIdx] as Required<NFTS>;
+      cards.push(<Card key={item.id} item={item} />);
+      }
+    setCardss(cards)
+  }, [])
+
   return (
     <section className="grid gap-12 border-b-2 border-b-gray-300 pt-8 pb-12">
       <div className="filters grid items-center gap-4 md:grid-cols-4">
@@ -83,13 +98,7 @@ function ExploreCards(){
       </div>
       <div className="cards">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {(() => {
-            const cards = [];
-            for (let i = 0; i < 12; i++) {
-              cards.push(<Card key={i} />);
-            }
-            return cards;
-          })()}
+          {cardss}
         </div>
         <div className="load-more text-center">
           <button className="mx-auto justify-center rounded-full bg-primary px-6 py-2 text-gray-800">

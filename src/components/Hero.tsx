@@ -1,9 +1,15 @@
 import { useState } from 'react';
 import nftImage from '../../public/nft-1.jpg'
 import Image from 'next/image'
+import { nftsData , randomNumberGenerator} from '~/utils/nfts';
+
 
 const Hero = () => {
   const [loaded, setLoaded] = useState<boolean>(false)
+  let idx = randomNumberGenerator.next().value
+  console.log({idx})
+  if(!idx) idx = 0
+
   return (
     <section className="mb-24 py-6 md:grid md:grid-cols-2">
       <div className=" mb-6 space-y-8 text-center text-white md:max-w-[70ch] md:text-start">
@@ -44,7 +50,7 @@ const Hero = () => {
           <Image
             alt="Trending Image"
             className="relative z-10 h-full w-full rounded-2xl object-cover object-top"
-            src={nftImage}
+            src={nftsData[idx]!.image}
             priority
             onLoad={setLoaded.bind(null, true)}
           />

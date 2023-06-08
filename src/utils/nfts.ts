@@ -1,8 +1,9 @@
 import { StaticImageData } from 'next/dist/client/image';
 import image from '../../public/nft-1.jpg'
-import {nanoid} from 'nanoid'
+import { nanoid } from 'nanoid'
+import yieldNumber from "./yieldNumbers";
 
-type NFTS = {
+export type NFTS = {
   id?: string;
   name: string;
   price: number;
@@ -20,100 +21,103 @@ function generateRandomDate() {
   return new Date(now + randomTime);
 }
 
-const nftsData: NFTS[] = [
+let partialNFTsData: NFTS[] = [
     {
-      name: "AbstractVision",
+      name: "Abstract Vision",
       price: 150.25,
 
       image: image
     },
   {
 
-name: "NatureExplorer",
+name: "Nature Explorer",
 price: 75.9,
     image:image
 
 },
   {
 
-    name: "CosmicDream",
+    name: "Cosmic Dream",
     price: 25.75,
 
     image:image
   },
 {
-  name: "DigitalWhale",
+  name: "Digital Whale",
   price: 99.99,
 
   image:image
 },
  {
-  name: "EtherealGarden",
+  name: "Ethereal Garden",
   price: 180.5,
 
     image:image
 
   },
  {
-name: "PixelJungle",
+name: "Pixel Jungle",
 price: 50.75,
     image:image
 
   },
  {
-  name: "DreamyMountain",
+  name: "Dreamy Mountain",
 price: 120.0,
      image:image
 
    },
 {
-name: "CrystalWave",
+name: "Crystal Wave",
 price: 35.25,
     image:image
 
   },
  {
-  name: "UrbanReflection",
+  name: "Urban Reflection",
   price: 60.75,
 
   image:image
 },
 {
-name: "NeonSerenity",
+name: "Neon Serenity",
 price: 90.0,
 image:image
 },
 {
-name: "MysticSunrise",
+name: "Mystic Sunrise",
 price: 15.5,
 image:image
 },
  {
-name: "CelestialWaters",
+name: "Celestial Waters",
 price: 100.99,
 image:image
 },
 {
-  name: "EnchantedForest",
+  name: "Enchanted Forest",
 price: 45.75,
 image:image
 },{
 
-name: "GalacticVoyager",
+name: "Galactic Voyager",
 price: 85.5,
 image:image
 },{
-  name: "DreamscapeJourney",
+  name: "Dreamscape Journey",
   price: 65.0,
 
   image:image
 }
   ]
 
-nftsData.forEach(item => {
+const nftsData: Required<NFTS>[] = partialNFTsData.map(item => {
   item.id = nanoid(5)
   item.endTime = generateRandomDate()
+  return item as Required<NFTS>
 })
 
+const randomNumberGenerator = yieldNumber(nftsData.length)
 
-export default nftsData as unknown as Required<NFTS>
+
+export { nftsData, randomNumberGenerator  }
