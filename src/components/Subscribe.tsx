@@ -34,7 +34,7 @@ const Subscribe = () => {
         </div>
       </div>
       <div className="main-form z-50 grid gap-4 text-center text-white md:text-start">
-        <h2 className="mx-auto mb-2 max-w-[32ch] text-5xl font-bold md:m-0">
+        <h2 className="mx-auto mb-2 max-w-[18ch] text-5xl font-bold md:m-0">
           Subscribe And <span className="text-primary">get our Updates </span>{" "}
           Every Week
         </h2>
@@ -42,13 +42,13 @@ const Subscribe = () => {
           We have a blog related to NFT so we can share thoughts and routines on
           our blog which is updated weekly
         </p>
-        <div className="md:flex md:max-w-[60ch]  ">
+        <div className="mx-1 md:flex md:max-w-[60ch]  ">
           <input
             type="text"
             placeholder="Enter your e-mail"
-            className="input-bordered input mb-6 w-full max-w-[60ch] bg-slate-700 text-white focus:outline-primary md:max-w-[70ch] md:rounded-r-none"
+            className="input-bordered input mb-6 w-full max-w-[60ch] bg-slate-700 text-white focus:border-primary focus:border-2 md:max-w-[70ch] hover:border-white hover:border-2 md:rounded-r-none"
           />
-          <button className="mx-auto block rounded-lg bg-primary px-11 py-3 font-bold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary  md:inline md:h-12 md:rounded-l-none  ">
+          <button className="mx-auto block rounded-lg bg-primary px-11 md:px-4 md:py-2 py-3 font-bold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary  md:inline md:h-12 md:rounded-l-none  ">
             Subscribe
           </button>
         </div>

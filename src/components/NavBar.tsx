@@ -1,15 +1,17 @@
-import { Spin as Hamburger } from "hamburger-react";
-import { ConnectWallet } from "@thirdweb-dev/react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from '../../public/logo.png'
+import {useRouter} from 'next/router'
 import { useState } from "react";
+import logo from '../../public/logo.png'
+import { Spin as Hamburger } from "hamburger-react";
 import { motion } from "framer-motion"
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
+
+
 const NavBar = () => {
-
-
+  const routePath = useRouter().pathname
+  const activeLink = "border-b-2 border-primary"
   return (
     <nav className="flex items-center justify-between text-white">
       <Link href="/" className="flex items-center gap-1 text-3xl">
@@ -19,14 +21,18 @@ const NavBar = () => {
         </p>
       </Link>
       <ul className="hidden list-none items-center gap-8 lg:flex">
-        <li className="border-b-2 border-primary">Marketplace</li>
-        <li>Artists</li>
-        <li>Community</li>
-        <li>Collections</li>
+        <Link href="/"><li className={routePath === "/" ? activeLink : ""}>
+          Home
+        </li></Link>
+        <Link href="/mint"><li className={routePath === "/mint" ? activeLink : ""}>
+          Mint
+        </li></Link>
+        <Link href="/explore"><li className={routePath === "/explore" ? activeLink : ""}>
+          Explore
+        </li></Link>
       </ul>
       <div className="hidden lg:block">
-
-        <ConnectButton/>
+        <ConnectButton />
       </div>
 
       <MobileMenu />
@@ -40,6 +46,8 @@ const variants = {
 
 function MobileMenu() {
        const [isOpen, setIsOpen] = useState<boolean>(false);
+       const routePath = useRouter().pathname
+  const activeMobileLink = "bg-primary text-gray-900 opacity-[80%]"
 
   return (
     <>
@@ -49,34 +57,48 @@ function MobileMenu() {
       <motion.div
         animate={isOpen ? "open" : "closed"}
         variants={variants}
-        className={`opacity-0 dropdown_menu absolute sm:right-4 right-2 top-[60px] z-[12] w-full max-w-[300px] overflow-hidden rounded-lg bg-gray-400/50 py-2 backdrop-blur-sm transition-[height] duration-[.2s] `}
+        className={`dropdown_menu absolute right-2 top-[60px] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden  rounded-lg bg-gray-400/50 px-2 py-2 text-lg opacity-0 backdrop-blur-sm transition-[height] duration-[.2s] sm:right-4 `}
       >
-        <li className="flex items-center justify-center py-2">
-          <a href="">Home</a>
-        </li>
-        <li className="flex items-center justify-center py-2 ">
-          <a href="">About</a>
-        </li>
-        <li className="flex items-center justify-center   py-2">
-          <a href="">Services</a>
-        </li>
-        <li className="flex items-center justify-center  py-2 ">
-          <a href="">Contact</a>
-        </li>
+        <Link href="/"><li
+          className={`flex items-center justify-center rounded-lg
+py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
+            routePath === "/" ? activeMobileLink : ""
+          }`}
+        >
+          Home
+        </li></Link>
+       <Link href="/mint"> <li
+          className={`flex items-center justify-center rounded-lg
+py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
+            routePath === "/mint" ? activeMobileLink : ""
+          }`}
+        >Mint
+        </li></Link>
+        <Link href="/explore">
+          {" "}
+          <li
+            className={`flex items-center justify-center rounded-lg
+py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
+              routePath === "/explore" ? activeMobileLink : ""
+            }`}
+          >
+            Explore
+          </li>
+        </Link>
         <hr className="mx-auto w-4/5" />
-        <div className="mt-4 py-2 grid justify-center">
+        <div className="mt-4 grid justify-center py-2">
           <ConnectButton
-          accountStatus={{
-            smallScreen: 'avatar',
-            largeScreen: 'full'
-          }}
-          showBalance={{
-            smallScreen: true,
-            largeScreen: true
-          }}
-          chainStatus={{
-            smallScreen: 'icon'
-          }}
+            accountStatus={{
+              smallScreen: "avatar",
+              largeScreen: "full",
+            }}
+            showBalance={{
+              smallScreen: true,
+              largeScreen: true,
+            }}
+            chainStatus={{
+              smallScreen: "icon",
+            }}
           />
         </div>
       </motion.div>

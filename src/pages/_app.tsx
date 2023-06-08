@@ -40,7 +40,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <RainbowKitProvider
         chains={chains}
         theme={darkTheme({
-          accentColor: "orange",
+          // accentColor: "orange",
         })}
         coolMode
       >
