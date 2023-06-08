@@ -5,5 +5,5 @@
 5. Add state to collect mint form values
 6. Add validator (formik + yup?) to form to prevent wrong submit
 7. Add routing to a single item ✔
-8. Add connect wallet button ✔
+8. Add and style connect wallet button ✔
 9. Optional add artists page and routing to artists page
