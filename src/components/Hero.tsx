@@ -26,7 +26,7 @@ const Hero = () => {
 
       <div className="">
         <div className="relative mx-auto h-[400px] w-[80%] max-w-[350px] ">
-          <div className="absolute scale-[80%] left-[0%] right-0 mx-auto md:left-[40%] top-[85%] z-20 md:mx-4 grid w-[220px] gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2">
+          <div className="absolute scale-[80%] lg:scale-[100%] left-[0%] right-0 mx-auto md:left-[40%] top-[85%] z-20 md:mx-4 grid w-[220px] gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2">
             <p className="flex justify-between text-primary">
               <span>Ends in</span>
               <span>Current bid</span>

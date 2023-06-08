@@ -1,3 +1,5 @@
+import { off } from "process";
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
 
@@ -29,7 +31,7 @@ const config = {
       },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "@typescript-eslint/no-explicit-any": ["warn", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint / no - unsafe - assignment": [
       "warn",
       { argsIgnorePattern: "^_" },

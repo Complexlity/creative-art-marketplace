@@ -49,7 +49,7 @@ function MobileMenu() {
       <motion.div
         animate={isOpen ? "open" : "closed"}
         variants={variants}
-        className={`dropdown_menu absolute sm:right-4 right-2 top-[60px] z-[12] w-full max-w-[300px] overflow-hidden rounded-lg bg-gray-400/50 py-2 backdrop-blur-sm transition-[height] duration-[.2s] `}
+        className={`opacity-0 dropdown_menu absolute sm:right-4 right-2 top-[60px] z-[12] w-full max-w-[300px] overflow-hidden rounded-lg bg-gray-400/50 py-2 backdrop-blur-sm transition-[height] duration-[.2s] `}
       >
         <li className="flex items-center justify-center py-2">
           <a href="">Home</a>
