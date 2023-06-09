@@ -134,13 +134,6 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/explore
               smallScreen: "avatar",
               largeScreen: "full",
             }}
-            showBalance={{
-              smallScreen: true,
-              largeScreen: true,
-            }}
-            chainStatus={{
-              smallScreen: "icon",
-            }}
           />
         </motion.div>
       </motion.div>

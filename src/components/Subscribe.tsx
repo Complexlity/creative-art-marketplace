@@ -1,9 +1,9 @@
 import Image from "next/image";
 // import { nftsData, randomNumberGenerator } from "~/utils/nfts";
-import { useNftsDataContext } from '../utils/DataContext'
+import { useNftsDataContext } from "../utils/DataContext";
 
 const Subscribe = () => {
-  const nftsData = useNftsDataContext().nftsData
+  const nftsData = useNftsDataContext().nftsData;
   return (
     <section className="mb-24 items-center gap-4 md:grid md:grid-cols-2">
       <div className="fan-cards hidden md:grid">

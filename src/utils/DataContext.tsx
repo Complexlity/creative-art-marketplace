@@ -1,5 +1,5 @@
-import { useState, createContext, useContext } from "react";
-import { nftsData, NFT } from "./nfts";
+import { useState, createContext, useContext, useEffect } from "react";
+import { partialNFTsData, NFT } from "./nfts";
 
 function shuffleArray<T>(array: T[]) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -10,13 +10,41 @@ function shuffleArray<T>(array: T[]) {
   return array;
 }
 
-const randomNftsData = shuffleArray(nftsData);
+export function generateNFTPrice() {
+  // Define the range of possible values for NFT cost
+  const minPrice = 0.01; // Minimum cost in ETH
+  const maxPrice = 1; // Maximum cost in ETH
+  // Generate a random value within the range
+  const randomPrice = Math.random() * (maxPrice - minPrice) + minPrice;
+  return Number(randomPrice.toFixed(2));
+}
+
+function generateRandomDate() {
+  const now = Date.now();
+  const sevenDays = 2 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+  const randomTime = Math.floor(Math.random() * sevenDays); // Random time within the range
+  return new Date(randomTime);
+}
+
+// console.log({partialNFTsData})
+const randomNftsData = shuffleArray(partialNFTsData);
+// console.log({randomNftsData})
+
+const nftsData: NFT[] = randomNftsData.map((item) => {
+  item.endTime = generateRandomDate().toDateString();
+  item.price = generateNFTPrice()
+  return item as NFT;
+})
+// console.log({nftsData})
 
 export type GlobalNftsData = {
   nftsData: NFT[];
 };
+
+
+
 const NftsDataContext = createContext<GlobalNftsData>({
-  nftsData: randomNftsData,
+  nftsData
 });
 
 interface Props {
@@ -26,10 +54,9 @@ interface Props {
 export const useNftsDataContext = () => useContext(NftsDataContext);
 
 const NftsDataContextProvider = ({ children }: Props) => {
-  const [darkMode, setDarkMode] = useState(false);
-
+  // console.log({nftsData})
   return (
-    <NftsDataContext.Provider value={{ nftsData }}>
+    <NftsDataContext.Provider value={{  nftsData }}>
       {children}
     </NftsDataContext.Provider>
   );

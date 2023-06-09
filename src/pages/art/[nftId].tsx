@@ -13,7 +13,7 @@ import { MdPending, MdCancel } from "react-icons/md";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import type { IconType } from "react-icons";
 
-import { NFT, generateNFTPrice } from  "../../utils/nfts"
+import { NFT, generateNFTPrice } from "../../utils/nfts";
 import { people } from "~/utils/people";
 import { People } from "~/utils/people";
 import { useNftsDataContext } from "~/utils/DataContext";
@@ -31,15 +31,14 @@ function pickRandomItems<T>(arr: T[], numOfItems: number) {
   return result;
 }
 
-
 export const getStaticProps: GetStaticProps = async (context) => {
   const itemID = context.params?.nftId;
-  const nftsData = useNftsDataContext().nftsData
-  console.log({nftsData})
-  const peoplePicked = pickRandomItems(people, 4)
+  const nftsData = useNftsDataContext().randomNftsData;
+  console.log({ nftsData });
+  const peoplePicked = pickRandomItems(people, 4);
   const foundItem = nftsData.find((item: NFT) => itemID === item.id);
-  let otherItems = nftsData.filter(item => itemID !== item.id)
-  otherItems = pickRandomItems(otherItems, 6) as NFT[]
+  let otherItems = nftsData.filter((item) => itemID !== item.id);
+  otherItems = pickRandomItems(otherItems, 6) as NFT[];
   if (!foundItem) {
     return {
       props: { hasError: true },
@@ -50,13 +49,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       nftData: foundItem,
       randomPeople: peoplePicked,
-      relatedItems: otherItems
+      relatedItems: otherItems,
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = useNftsDataContext().nftsData;
+  const data = useNftsDataContext().randomNftsData;
   const pathsWithParams = data.map((item: NFT) => ({
     params: { nftId: item.id },
   }));
@@ -66,8 +65,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: false,
   };
 };
-
-
 
 function NFTItem() {
   // const router = useRouter();
@@ -87,10 +84,7 @@ function NFTItem() {
   //     <Footer />
   //   </div>
   // );
-  return (
-    <div>Hello World</div>
-  )
-
+  return <div>Hello World</div>;
 }
 
 type BidStatus = "PENDING" | "ACCEPTED" | "REJECTED";
@@ -117,29 +111,27 @@ function getStatus(status: BidStatus) {
 }
 
 function getRandomStatus(): BidStatus | undefined {
-  let statuses: BidStatus[] = ["ACCEPTED", "PENDING", "REJECTED"]
+  let statuses: BidStatus[] = ["ACCEPTED", "PENDING", "REJECTED"];
   return statuses[Math.floor(Math.random() * statuses.length)];
 }
 
-function Bids({ status, person }: { status?: BidStatus, person: People }) {
-
+function Bids({ status, person }: { status?: BidStatus; person: People }) {
   function generateRandomDate() {
-  const now = new Date().getTime(); // get the timestamp of the current date and time
-  const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000; // subtract the number of milliseconds in 7 days to get the timestamp of 7 days ago
-  const randomTimestamp =
-    Math.floor(Math.random() * (now - sevenDaysAgo)) + sevenDaysAgo; // generate a random timestamp between now and 7 days ago
-  const randomDate = new Date(randomTimestamp); // create a new Date object from the random timestamp
+    const now = new Date().getTime(); // get the timestamp of the current date and time
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000; // subtract the number of milliseconds in 7 days to get the timestamp of 7 days ago
+    const randomTimestamp =
+      Math.floor(Math.random() * (now - sevenDaysAgo)) + sevenDaysAgo; // generate a random timestamp between now and 7 days ago
+    const randomDate = new Date(randomTimestamp); // create a new Date object from the random timestamp
 
-  const month = String(randomDate.getMonth() + 1).padStart(2, "0"); // get the month and pad it with a leading zero if necessary
-  const day = String(randomDate.getDate()).padStart(2, "0"); // get the day and pad it with a leading zero if necessary
-  const year = randomDate.getFullYear(); // get the year
-  const hours = randomDate.getHours() % 12 || 12; // get the hours in 12-hour format
-  const minutes = String(randomDate.getMinutes()).padStart(2, "0"); // get the minutes and pad it with a leading zero if necessary
-  const ampm = randomDate.getHours() < 12 ? "AM" : "PM"; // get the AM/PM indicator
+    const month = String(randomDate.getMonth() + 1).padStart(2, "0"); // get the month and pad it with a leading zero if necessary
+    const day = String(randomDate.getDate()).padStart(2, "0"); // get the day and pad it with a leading zero if necessary
+    const year = randomDate.getFullYear(); // get the year
+    const hours = randomDate.getHours() % 12 || 12; // get the hours in 12-hour format
+    const minutes = String(randomDate.getMinutes()).padStart(2, "0"); // get the minutes and pad it with a leading zero if necessary
+    const ampm = randomDate.getHours() < 12 ? "AM" : "PM"; // get the AM/PM indicator
 
-  return `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
-}
-
+    return `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
+  }
 
   if (!status) status = "ACCEPTED";
   const { checkColor, statusText, StatusIcon } = getStatus(status);
@@ -161,25 +153,30 @@ function Bids({ status, person }: { status?: BidStatus, person: People }) {
             {generateNFTPrice()}ETH
           </span>
         </p>
-          <p>
-            by{" "}
-            <span className="font-bold tracking-wider text-white">
-              {person.name}
-            </span>{" "}
-            at {generateRandomDate()}
-          </p>
+        <p>
+          by{" "}
+          <span className="font-bold tracking-wider text-white">
+            {person.name}
+          </span>{" "}
+          at {generateRandomDate()}
+        </p>
       </div>
     </div>
   );
 }
 
-function ItemDetails({ nftData, randomPeople }: { nftData: NFT, randomPeople: People[] }) {
-  console.log({data: nftData})
+function ItemDetails({
+  nftData,
+  randomPeople,
+}: {
+  nftData: NFT;
+  randomPeople: People[];
+}) {
+  console.log({ data: nftData });
   function getRandomNumber(n: number) {
-  let number = Math.floor(Math.random() * (n + 1))
-  return number.toString()
-}
-
+    let number = Math.floor(Math.random() * (n + 1));
+    return number.toString();
+  }
 
   return (
     <section className="my-grid item-details mx-auto grid  max-w-[500px] gap-4 md:max-w-full md:grid-cols-2 md:gap-12">
@@ -256,9 +253,9 @@ function ItemDetails({ nftData, randomPeople }: { nftData: NFT, randomPeople: Pe
           <Bids person={randomPeople[1]!} status={"REJECTED"} />
           <Bids person={randomPeople[2]!} status={"PENDING"} />
           <Bids person={randomPeople[3]!} /> */}
-          { randomPeople.map((person, id) => {
-          return <Bids key={id} person={person} status={getRandomStatus()} />
-        })}
+          {randomPeople.map((person, id) => {
+            return <Bids key={id} person={person} status={getRandomStatus()} />;
+          })}
         </div>
         <div className="purchase-options flex gap-4">
           <button className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:shadow-round hover:shadow-gray-400">
@@ -273,7 +270,7 @@ function ItemDetails({ nftData, randomPeople }: { nftData: NFT, randomPeople: Pe
   );
 }
 
-function RelatedItems({  relatedItems }  : { relatedItems: NFT[]}) {
+function RelatedItems({ relatedItems }: { relatedItems: NFT[] }) {
   return (
     <section className="related-items grid gap-12 text-center">
       <h2 className="relative  text-3xl tracking-wide md:text-4xl">
@@ -285,8 +282,8 @@ function RelatedItems({  relatedItems }  : { relatedItems: NFT[]}) {
         <Card />
         <Card />
         <Card /> */}
-        { relatedItems.map((item) => {
-          return <Card key={item.id} item={item} />
+        {relatedItems.map((item) => {
+          return <Card key={item.id} item={item} />;
         })}
       </div>
     </section>

@@ -1,17 +1,14 @@
-import { useState } from 'react';
-import Image from 'next/image'
-import { nftsData , randomNumberGenerator} from '~/utils/nfts';
-import Link from 'next/link';
-import { useNftsDataContext } from '~/utils/DataContext';
-
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useNftsDataContext } from "~/utils/DataContext";
 
 const Hero = () => {
-
-  const [loaded, setLoaded] = useState<boolean>(false)
+  const [loaded, setLoaded] = useState<boolean>(false);
   // let idx = randomNumberGenerator.next().value
   // console.log({data: nftsData[idx!]})
   // if(!idx) idx = 0
-  const nftData = useNftsDataContext().nftsData
+  const nftsData = useNftsDataContext().nftsData;
 
   return (
     <section className="mb-24 py-6 md:grid md:grid-cols-2">
@@ -47,7 +44,7 @@ const Hero = () => {
             </p>
             <p className="flex justify-between font-bold text-white">
               <span>05:45:47</span>
-              <span suppressHydrationWarning={true} >
+              <span suppressHydrationWarning={true}>
                 {nftsData[0]?.price}ETH
               </span>
             </p>
@@ -77,11 +74,13 @@ const Hero = () => {
 };
 
 type Props = {
-  className: string
-}
+  className: string;
+};
 function CountingDiv({ className }: Props) {
   return (
-    <div className={`countingDiv font-bold justify-center text-white ${className}`}>
+    <div
+      className={`countingDiv justify-center font-bold text-white ${className}`}
+    >
       <div className="flex flex-1 flex-col justify-between border-r border-r-primary text-center">
         <p className="text-3xl">
           <span className="text-primary">120</span>K
