@@ -44,7 +44,7 @@ const Hero = () => {
             </p>
             <p className="flex justify-between font-bold text-white">
               <span>05:45:47</span>
-              <span suppressHydrationWarning={true}>
+              <span >
                 {nftsData[0]?.price}ETH
               </span>
             </p>

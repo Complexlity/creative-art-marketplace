@@ -42,18 +42,14 @@ const UniqueArt = () => {
 
 export function Card({ item }: { item: NFT }) {
   return (
-    <div
-      suppressHydrationWarning={true}
-      className="mb-6 max-w-full space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
-    >
+    <div className="mb-6 max-w-full space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4">
       <Image
         alt="Nft Image"
         className="aspect-square rounded-lg object-cover object-top"
         src={item!.image}
-        suppressHydrationWarning={true}
       />
       <div className="flex justify-between font-semibold tracking-wide">
-        <p suppressHydrationWarning={true}>{item!.name}</p>
+        <p>{item!.name}</p>
         <p className="flex items-center gap-1">
           <span>
             <Image
@@ -62,7 +58,7 @@ export function Card({ item }: { item: NFT }) {
               src={ethereumImage}
             />
           </span>
-          <span suppressHydrationWarning={true}>{item!.price}ETH</span>
+          <span>{item!.price}ETH</span>
         </p>
       </div>
       <div className="flex justify-between">
