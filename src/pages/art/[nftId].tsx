@@ -149,7 +149,7 @@ function ItemDetails({
       <div className="item-image aspect-square">
         <Image
           alt="NFT Image"
-          className="h-full w-full object-cover object-top"
+          className="h-full w-full object-cover object-top rounded-xl"
           src={nftData.image}
         />
       </div>

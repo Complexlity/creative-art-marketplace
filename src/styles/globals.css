@@ -24,6 +24,10 @@
   cursor:pointer;
 }
 
+.my-card-image {
+  clip-path: polygon(10% 0%, 100% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 100%, 0% 10%);
+}
+
 .hidden-input {
   opacity:0;
   cursor:pointer;

@@ -42,10 +42,10 @@ const UniqueArt = () => {
 
 export function Card({ item }: { item: NFT }) {
   return (
-    <div className="mb-6 max-w-full space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4">
+    <div className=" mb-6 max-w-full space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4">
       <Image
         alt="Nft Image"
-        className="aspect-square rounded-lg object-cover object-top"
+        className="my-card-image aspect-square rounded-lg object-cover object-top"
         src={item!.image}
       />
       <div className="flex justify-between font-semibold tracking-wide">
