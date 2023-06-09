@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Image from 'next/image'
-import nftImage from '../../public/nft-1.jpg'
 import { nftsData , randomNumberGenerator} from '~/utils/nfts';
 import Link from 'next/link';
 

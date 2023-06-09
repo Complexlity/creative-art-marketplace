@@ -1,7 +1,6 @@
 import Image from "next/image";
-import nftImage from "../../public/nft-1.jpg";
-import ethereumImage from "../../public/ethereum.png";
-import clockImage from "../../public/clock.png";
+import ethereumImage from "../../public/icons/ethereum.png";
+import clockImage from "../../public/icons/clock.png";
 import { nftsData, randomNumberGenerator, NFT } from "~/utils/nfts";
 
 import { useState, useEffect } from "react";

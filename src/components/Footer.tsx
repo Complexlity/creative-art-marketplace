@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logoImg from '../../public/complex.png'
+import logoImg from '../../public/icons/complex.png'
 const Footer = () => {
   return (
     <>

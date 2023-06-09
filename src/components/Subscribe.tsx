@@ -1,42 +1,47 @@
 import Image from "next/image";
-import nftImage from '../../public/nft-1.jpg'
 import { nftsData, randomNumberGenerator } from "~/utils/nfts";
 
 const Subscribe = () => {
   let idx1 = randomNumberGenerator.next().value;
   let idx2 = randomNumberGenerator.next().value;
   let idx3 = randomNumberGenerator.next().value;
+  let idx4 = randomNumberGenerator.next().value;
+  let idx5 = randomNumberGenerator.next().value;
+
   console.log({ idx1, idx2, idx3 });
   if (!idx1) idx1 = 0;
   if (!idx2) idx2 = 0;
   if (!idx3) idx3 = 0;
+  if (!idx4) idx4 = 0;
+  if (!idx5) idx5 = 0;
+
   return (
     <section className="mb-24 items-center gap-4 md:grid md:grid-cols-2">
       <div className="fan-cards hidden md:grid">
         <div className="grid grid-cols-3">
           <Image
             className="five stack ml-32 w-48  rotate-[50deg] rounded-lg opacity-[60%] "
-            src={nftImage}
+            src={nftsData[idx1]!.image}
             alt="Nft Image"
           />
           <Image
             className="one stack -ml-32  w-48 rotate-[-50deg] rounded-lg opacity-[60%]"
-            src={nftImage}
+            src={nftsData[idx2]!.image}
             alt="Nft Image"
           />
           <Image
             className="four z-5 stack ml-20 w-48 rotate-[20deg] rounded-lg opacity-[80%] "
-            src={nftImage}
+            src={nftsData[idx3]!.image}
             alt="Nft Image"
           />
           <Image
             className="three stack z-10 w-48 rounded-lg"
-            src={nftImage}
+            src={nftsData[idx4]!.image}
             alt="Nft Image"
           />
           <Image
             className="two z-5 stack -ml-20 w-48 rotate-[-20deg] rounded-lg opacity-[80%]"
-            src={nftImage}
+            src={nftsData[idx5]!.image}
             alt="Nft Image"
           />
         </div>
@@ -54,9 +59,9 @@ const Subscribe = () => {
           <input
             type="text"
             placeholder="Enter your e-mail"
-            className="input-bordered input mb-6 w-full max-w-[60ch] bg-slate-700 text-white focus:border-primary focus:border-2 md:max-w-[70ch] hover:border-white hover:border-2 md:rounded-r-none"
+            className="input-bordered input mb-6 w-full max-w-[60ch] bg-slate-700 text-white hover:border-2 hover:border-white focus:border-2 focus:border-primary md:max-w-[70ch] md:rounded-r-none"
           />
-          <button className="mx-auto block rounded-lg bg-primary px-11 md:px-4 md:py-2 py-3 font-bold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary  md:inline md:h-12 md:rounded-l-none  ">
+          <button className="mx-auto block rounded-lg bg-primary px-11 py-3 font-bold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:inline md:h-12  md:rounded-l-none md:px-4 md:py-2  ">
             Subscribe
           </button>
         </div>

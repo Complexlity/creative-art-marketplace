@@ -17,11 +17,11 @@ import { nftsData, NFT, generateNFTPrice } from  "../../utils/nfts"
 import { people } from "~/utils/people";
 import { People } from "~/utils/people";
 
-function pickRandomItems<T>(arr: T[]) {
+function pickRandomItems<T>(arr: T[], numOfItems: number) {
   const result = [];
   const arrCopy = [...arr]; // make a copy of the original array to avoid modifying it
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < numOfItems; i++) {
     const randomIndex = Math.floor(Math.random() * arrCopy.length);
     result.push(arrCopy[randomIndex]); // add the randomly selected item to the result array
     arrCopy.splice(randomIndex, 1); // remove the selected item from the copy of the array
@@ -33,8 +33,10 @@ function pickRandomItems<T>(arr: T[]) {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const itemID = context.params?.nftId;
-  const peoplePicked = pickRandomItems(people)
+  const peoplePicked = pickRandomItems(people, 4)
   const foundItem = nftsData.find((item: NFT) => itemID === item.id);
+  let otherItems = nftsData.filter(item => itemID !== item.id)
+  otherItems = pickRandomItems(otherItems, 6) as NFT[]
   if (!foundItem) {
     return {
       props: { hasError: true },
@@ -44,7 +46,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       nftData: foundItem,
-      randomPeople: peoplePicked
+      randomPeople: peoplePicked,
+      relatedItems: otherItems
     },
   };
 };
@@ -61,7 +64,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-function NFTItem(props: { nftData: NFT; hasError: boolean; randomPeople: People[] }) {
+function NFTItem(props: { nftData: NFT; hasError: boolean; randomPeople: People[], relatedItems: NFT[] }) {
   const router = useRouter();
 if (props.hasError) {
     return <h1>Error - please try another parameter</h1>;
@@ -70,7 +73,7 @@ if (props.hasError) {
     <div className="main space-y-12 px-6 text-white">
       <NavBar />
       <ItemDetails nftData={props.nftData} randomPeople={props.randomPeople} />
-      <RelatedItems />
+      <RelatedItems relatedItems={props.relatedItems} />
       <Footer />
     </div>
   );
@@ -97,6 +100,11 @@ function getStatus(status: BidStatus) {
       break;
   }
   return { checkColor, statusText, StatusIcon };
+}
+
+function getRandomStatus(): BidStatus | undefined {
+  let statuses: BidStatus[] = ["ACCEPTED", "PENDING", "REJECTED"]
+  return statuses[Math.floor(Math.random() * statuses.length)];
 }
 
 function Bids({ status, person }: { status?: BidStatus, person: People }) {
@@ -139,7 +147,6 @@ function Bids({ status, person }: { status?: BidStatus, person: People }) {
             {generateNFTPrice()}ETH
           </span>
         </p>
-        {status === "PENDING" ? null : (
           <p>
             by{" "}
             <span className="font-bold tracking-wider text-white">
@@ -147,7 +154,6 @@ function Bids({ status, person }: { status?: BidStatus, person: People }) {
             </span>{" "}
             at {generateRandomDate()}
           </p>
-        )}
       </div>
     </div>
   );
@@ -232,10 +238,13 @@ function ItemDetails({ nftData, randomPeople }: { nftData: NFT, randomPeople: Pe
           </div>
         </div>
         <div className="bids mb-8 grid gap-2.5">
-          <Bids person={randomPeople[0]!} />
+          {/* <Bids person={randomPeople[0]!} />
           <Bids person={randomPeople[1]!} status={"REJECTED"} />
           <Bids person={randomPeople[2]!} status={"PENDING"} />
-          <Bids person={randomPeople[3]!} />
+          <Bids person={randomPeople[3]!} /> */}
+          { randomPeople.map((person, id) => {
+          return <Bids key={id} person={person} status={getRandomStatus()} />
+        })}
         </div>
         <div className="purchase-options flex gap-4">
           <button className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:shadow-round hover:shadow-gray-400">
@@ -250,7 +259,7 @@ function ItemDetails({ nftData, randomPeople }: { nftData: NFT, randomPeople: Pe
   );
 }
 
-function RelatedItems() {
+function RelatedItems({  relatedItems }  : { relatedItems: NFT[]}) {
   return (
     <section className="related-items grid gap-12 text-center">
       <h2 className="relative  text-3xl tracking-wide md:text-4xl">
@@ -262,6 +271,9 @@ function RelatedItems() {
         <Card />
         <Card />
         <Card /> */}
+        { relatedItems.map((item) => {
+          return <Card key={item.id} item={item} />
+        })}
       </div>
     </section>
   );

@@ -3,16 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --primary-clr: #d2f55e
+  --primary-clr: #d2f55e;
+  --bg-image: url("/backgrounds/bg.png");
+  --font-header: url("/TT\ Ramillas\ Trial\ Variable\ Roman.ttf");
+  --font-text: url("/Roboto-Regular.ttf");
 }
 
 .main {
   background-color: #111827;
-  background-image: url("/bg.png");
+  background-image: var(--bg-image)
 }
 
 .my-select {
-  background-image: url("/bg.png");
+  background-image: var(--bg-image);
   background-position: 10% 50%;
   background-size: cover
 }
@@ -67,7 +70,7 @@
 
 @font-face {
   font-family: ttramillas;
-  src: url("/TT\ Ramillas\ Trial\ Variable\ Roman.ttf");
+  src: var(--font-header)
 }
 
 
@@ -81,7 +84,7 @@ section h1, section h2, .countingDiv *, header *, nav * {
 
 @font-face {
   font-family: roboto;
-  src: url("/Roboto-Regular.ttf");
+  src: var(--font-text)
 }
 
 *:not(section h1):not(section h2):not(section h1 span):not(section h2 span):not(.countingDiv *):not(header *):not(nav *) {

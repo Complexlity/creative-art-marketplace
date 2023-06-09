@@ -6,4 +6,5 @@
 6. Add validator (formik + yup?) to form to prevent wrong submit
 7. Add routing to a single item ✔
 8. Add and style connect wallet button ✔
-9. Optional add artists page and routing to artists page
+9. Add navbar sticky on scroll
+10. Optional add artists page and routing to artists page
