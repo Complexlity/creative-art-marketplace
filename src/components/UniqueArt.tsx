@@ -1,18 +1,17 @@
 import Image from "next/image";
 import ethereumImage from "../../public/icons/ethereum.png";
 import clockImage from "../../public/icons/clock.png";
-import { nftsData, randomNumberGenerator, NFT } from "~/utils/nfts";
+import {  NFT } from "~/utils/nfts";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useNftsDataContext } from "~/utils/DataContext";
 
 const UniqueArt = () => {
-  const [generator] = useState(randomNumberGenerator);
+  const nftsData = useNftsDataContext().nftsData
   let cards = [];
-  for (let i = 0; i < 3; i++) {
-    let generatedIdx = generator.next().value;
-    if (!generatedIdx) generatedIdx = 0;
-    const item = nftsData[generatedIdx] as NFT;
+  for (let i = 1; i < 4; i++) {
+    const item = nftsData[i] as NFT;
     cards.push(<Card key={item.id} item={item} />);
   }
 

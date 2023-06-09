@@ -13,9 +13,10 @@ import { MdPending, MdCancel } from "react-icons/md";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import type { IconType } from "react-icons";
 
-import { nftsData, NFT, generateNFTPrice } from  "../../utils/nfts"
+import { NFT, generateNFTPrice } from  "../../utils/nfts"
 import { people } from "~/utils/people";
 import { People } from "~/utils/people";
+import { useNftsDataContext } from "~/utils/DataContext";
 
 function pickRandomItems<T>(arr: T[], numOfItems: number) {
   const result = [];
@@ -33,6 +34,8 @@ function pickRandomItems<T>(arr: T[], numOfItems: number) {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const itemID = context.params?.nftId;
+  const nftsData = useNftsDataContext().nftsData
+  console.log({nftsData})
   const peoplePicked = pickRandomItems(people, 4)
   const foundItem = nftsData.find((item: NFT) => itemID === item.id);
   let otherItems = nftsData.filter(item => itemID !== item.id)
@@ -53,7 +56,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = nftsData;
+  const data = useNftsDataContext().nftsData;
   const pathsWithParams = data.map((item: NFT) => ({
     params: { nftId: item.id },
   }));
@@ -64,19 +67,30 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-function NFTItem(props: { nftData: NFT; hasError: boolean; randomPeople: People[], relatedItems: NFT[] }) {
-  const router = useRouter();
-if (props.hasError) {
-    return <h1>Error - please try another parameter</h1>;
-  }
+
+
+function NFTItem() {
+  // const router = useRouter();
+  // console.log(router.query)
+  // const id = router.query.nftId
+  // const nftsData = useNftsDataContext().nftsData
+  // const nftData = nftsData.find(item => id === item.id)
+  // const randomPeople = pickRandomItems(people, 4) as People[]
+  // let relatedItems = nftsData.filter(item => id !== item.id)
+  // relatedItems = pickRandomItems(relatedItems, 6) as NFT[]
+  // console.log({id, nftData})
+  // return (
+  //   <div className="main space-y-12 px-6 text-white">
+  //     <NavBar />
+  //     <ItemDetails nftData={nftData} randomPeople={randomPeople} />
+  //     <RelatedItems relatedItems={relatedItems} />
+  //     <Footer />
+  //   </div>
+  // );
   return (
-    <div className="main space-y-12 px-6 text-white">
-      <NavBar />
-      <ItemDetails nftData={props.nftData} randomPeople={props.randomPeople} />
-      <RelatedItems relatedItems={props.relatedItems} />
-      <Footer />
-    </div>
-  );
+    <div>Hello World</div>
+  )
+
 }
 
 type BidStatus = "PENDING" | "ACCEPTED" | "REJECTED";

@@ -2,13 +2,16 @@ import { useState } from 'react';
 import Image from 'next/image'
 import { nftsData , randomNumberGenerator} from '~/utils/nfts';
 import Link from 'next/link';
+import { useNftsDataContext } from '~/utils/DataContext';
 
 
 const Hero = () => {
+
   const [loaded, setLoaded] = useState<boolean>(false)
-  let idx = randomNumberGenerator.next().value
-  console.log({data: nftsData[idx!]})
-  if(!idx) idx = 0
+  // let idx = randomNumberGenerator.next().value
+  // console.log({data: nftsData[idx!]})
+  // if(!idx) idx = 0
+  const nftData = useNftsDataContext().nftsData
 
   return (
     <section className="mb-24 py-6 md:grid md:grid-cols-2">
@@ -45,10 +48,10 @@ const Hero = () => {
             <p className="flex justify-between font-bold text-white">
               <span>05:45:47</span>
               <span suppressHydrationWarning={true} >
-                {nftsData[idx]?.price}ETH
+                {nftsData[0]?.price}ETH
               </span>
             </p>
-            <Link href={`/art/${nftsData[idx]!.id}`} className="grid">
+            <Link href={`/art/${nftsData[0]!.id}`} className="grid">
               <button className="mt-1 rounded-lg border border-primary py-2 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800">
                 Place A Bid
               </button>
@@ -62,7 +65,7 @@ const Hero = () => {
           <Image
             alt="Trending Image"
             className="relative z-10 h-full w-full rounded-2xl object-cover object-top"
-            src={nftsData[idx]!.image}
+            src={nftsData[0]!.image}
             priority
             onLoad={setLoaded.bind(null, true)}
           />

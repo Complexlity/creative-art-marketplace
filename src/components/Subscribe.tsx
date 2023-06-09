@@ -1,47 +1,36 @@
 import Image from "next/image";
-import { nftsData, randomNumberGenerator } from "~/utils/nfts";
+// import { nftsData, randomNumberGenerator } from "~/utils/nfts";
+import { useNftsDataContext } from '../utils/DataContext'
 
 const Subscribe = () => {
-  let idx1 = randomNumberGenerator.next().value;
-  let idx2 = randomNumberGenerator.next().value;
-  let idx3 = randomNumberGenerator.next().value;
-  let idx4 = randomNumberGenerator.next().value;
-  let idx5 = randomNumberGenerator.next().value;
-
-  console.log({ idx1, idx2, idx3 });
-  if (!idx1) idx1 = 0;
-  if (!idx2) idx2 = 0;
-  if (!idx3) idx3 = 0;
-  if (!idx4) idx4 = 0;
-  if (!idx5) idx5 = 0;
-
+  const nftsData = useNftsDataContext().nftsData
   return (
     <section className="mb-24 items-center gap-4 md:grid md:grid-cols-2">
       <div className="fan-cards hidden md:grid">
         <div className="grid grid-cols-3">
           <Image
             className="five stack ml-32 w-48  rotate-[50deg] rounded-lg opacity-[60%] "
-            src={nftsData[idx1]!.image}
+            src={nftsData[4]!.image}
             alt="Nft Image"
           />
           <Image
             className="one stack -ml-32  w-48 rotate-[-50deg] rounded-lg opacity-[60%]"
-            src={nftsData[idx2]!.image}
+            src={nftsData[5]!.image}
             alt="Nft Image"
           />
           <Image
             className="four z-5 stack ml-20 w-48 rotate-[20deg] rounded-lg opacity-[80%] "
-            src={nftsData[idx3]!.image}
+            src={nftsData[6]!.image}
             alt="Nft Image"
           />
           <Image
             className="three stack z-10 w-48 rounded-lg"
-            src={nftsData[idx4]!.image}
+            src={nftsData[7]!.image}
             alt="Nft Image"
           />
           <Image
             className="two z-5 stack -ml-20 w-48 rotate-[-20deg] rounded-lg opacity-[80%]"
-            src={nftsData[idx5]!.image}
+            src={nftsData[8]!.image}
             alt="Nft Image"
           />
         </div>
@@ -71,17 +60,17 @@ const Subscribe = () => {
         <div className="image1 relative flex justify-center text-5xl md:hidden">
           <Image
             className="relative left-[70px] aspect-square w-[50%] rotate-[-30deg] rounded-xl object-cover object-top opacity-[60%] md:-ml-8"
-            src={nftsData[idx1]!.image}
+            src={nftsData[9]!.image}
             alt="Nft Image"
           />
           <Image
             className="relative top-[50px] z-10 aspect-square w-5/12 rounded-lg object-cover object-top opacity-[90%]"
-            src={nftsData[idx2]!.image}
+            src={nftsData[10]!.image}
             alt="Nft Image"
           />
           <Image
             className="relative left-[-70px]  aspect-square w-[50%] rotate-[30deg] rounded-xl object-cover object-top opacity-[60%] md:-ml-8"
-            src={nftsData[idx3]!.image}
+            src={nftsData[11]!.image}
             alt="Nft Image"
           />
         </div>
