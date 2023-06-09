@@ -235,7 +235,7 @@ function MintForm() {
 
       <div className="preview-item hidden gap-4 self-start ">
         <label>Preview Item</label>
-        <Card />
+        {/* <Card /> */}
       </div>
     </form>
   );
