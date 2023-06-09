@@ -40,53 +40,95 @@ const NavBar = () => {
   );
 };
 const variants = {
-  open: { opacity: 1,  x: 0, scale: 1  },
-  closed: { opacity: 0,  x: "-100%", scale: 0 },
+  open: {
+    opacity: 1,
+    scale: 1,
+  },
+  closed: {
+    opacity: 0,
+    scale: 0,
+       transition: { when: "afterChildren", },
+  },
 };
+
+const oneVariants =  {
+  open: { opacity: 1, y: 0, transition: { delay: .4, duration: .3} },
+  closed: { opacity: 0, y: "-100%", transition: {
+    delay: .1
+  } }
+}
+const twoVariants = {
+  open: { opacity: 1, x: 0 , transition: { delay: .3, duration: .3} },
+  closed: { opacity: 0, x: "100%", transition: {
+    delay: .2, duration: .3
+  }
+  }
+}
+
+const threeVariants = {
+  open: { opacity: 1, x: 0, transtion: { delay: .2, duration: .3} },
+  closed: { opacity: 0, x: "-100%", transition: {
+    delay: .2
+  } }
+}
+const fourVariants = {
+  open: { opacity: 1, y: 0, transition: { delay: .1, duration:.2} },
+  closed: { opacity: 0, y: "100%", transition: {
+    delay: .4
+  } }
+}
+
+
 
 function MobileMenu() {
        const [isOpen, setIsOpen] = useState<boolean>(false);
        const routePath = useRouter().pathname
-  const activeMobileLink = "bg-primary text-gray-900 opacity-[80%]"
+  const activeMobileLink = "border-primary border-y-2"
 
   return (
     <>
       <div className="lg:hidden">
         <Hamburger toggled={isOpen} toggle={setIsOpen} />
       </div>
-      <motion.div
+     <motion.div
         animate={isOpen ? "open" : "closed"}
         variants={variants}
-        className={`dropdown_menu absolute right-2 top-[60px] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden  rounded-lg bg-gray-400/50 px-2 py-2 text-lg opacity-0 backdrop-blur-sm transition-[height] duration-[.2s] sm:right-4 `}
+        className={`lg:hidden dropdown_menu absolute right-2 top-[60px] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden  rounded-lg bg-gray-400/50 px-2 py-2 text-lg opacity-0 backdrop-blur-sm transition-[height] duration-[.2s] sm:right-4 `}
       >
-        <Link href="/"><li
-          className={`flex items-center justify-center rounded-lg
-py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
-            routePath === "/" ? activeMobileLink : ""
-          }`}
-        >
-          Home
-        </li></Link>
-       <Link href="/mint"> <li
-          className={`flex items-center justify-center rounded-lg
-py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
-            routePath === "/mint" ? activeMobileLink : ""
-          }`}
-        >Mint
-        </li></Link>
+        <Link href="/">
+          <motion.li
+            variants={oneVariants}
+            className={`flex items-center justify-center rounded-lg
+py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/" ? activeMobileLink : ""
+              }`}
+          >
+            Home
+          </motion.li>
+        </Link>
+        <Link href="/mint">
+          {" "}
+          <motion.li
+            variants={twoVariants}
+            className={`flex items-center justify-center rounded-lg
+py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/mint" ? activeMobileLink : ""
+              }`}
+          >
+            Mint
+          </motion.li>
+        </Link>
         <Link href="/explore">
           {" "}
-          <li
+          <motion.li
+            variants={threeVariants}
             className={`flex items-center justify-center rounded-lg
-py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
-              routePath === "/explore" ? activeMobileLink : ""
-            }`}
+py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/explore" ? activeMobileLink : ""
+              }`}
           >
             Explore
-          </li>
+          </motion.li>
         </Link>
         <hr className="mx-auto w-4/5" />
-        <div className="mt-4 grid justify-center py-2">
+        <motion.div variants={fourVariants} className="mt-4 grid justify-center py-2">
           <ConnectButton
             accountStatus={{
               smallScreen: "avatar",
@@ -100,8 +142,9 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
               smallScreen: "icon",
             }}
           />
-        </div>
+        </motion.div>
       </motion.div>
+
     </>
   );
 }

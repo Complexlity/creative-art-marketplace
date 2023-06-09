@@ -9,6 +9,7 @@ import { Card } from "~/components/UniqueArt";
 import { MdGroups } from "react-icons/md";
 import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion"
 
 type WithChidren = {
   children: React.ReactNode;
@@ -190,7 +191,6 @@ function MintForm() {
             <option value="MUS">Music</option>
           </select>
         </div>
-        /
         <div className="title mb-6 grid gap-2 text-gray-200">
           <label htmlFor="title" className="">
             Title
@@ -244,56 +244,76 @@ function MintForm() {
 function MethodOptions({ method }: { method: methodOptions }) {
   return (
     <>
+        <AnimatePresence>
       {method == "FIXED_PRICE" && (
-        <div className="price mb-6 grid gap-2 text-gray-200">
-          <label htmlFor="price" className="">
-            Price (ETH)
-          </label>
-          <input
-            type="number"
-            id="price"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
-            placeholder="Enter price for item"
-            required
-          />
-        </div>
-      )}
-      {method == "TIMED_AUCTION" && (
-        <>
-          <div className="price mb-6 grid gap-2 text-gray-200">
+          <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: .3} }}
+            exit={{ opacity: 0, transition: {duration: .3} }}
+          className="price mb-6 grid gap-2 text-gray-200">
             <label htmlFor="price" className="">
-              Minimum Bid (ETH)
+              Price (ETH)
             </label>
             <input
               type="number"
-              id="min-bid"
+              id="price"
               className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
-              placeholder="Enter minimum bid"
+              placeholder="Enter price for item"
               required
             />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="mb-6 grid gap-2 text-gray-200">
-              <label htmlFor="start_date">Starting Date</label>
+          </motion.div>
+      )}
+        </AnimatePresence>
+          <AnimatePresence>
+      {method == "TIMED_AUCTION" && (
+        <>
+            <motion.div initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: {duration: .3} }}
+                    exit={{ opacity: 0 , transition: {duration: .3}}}
+
+            className="price mb-6 grid gap-2 text-gray-200">
+              <label htmlFor="price" className="">
+                Minimum Bid (ETH)
+              </label>
               <input
-                type="date"
-                name="start_date"
-                id="start_date"
-                className=" date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
+                type="number"
+                id="min-bid"
+                className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
+                placeholder="Enter minimum bid"
+                required
               />
-            </div>
-            <div className="mb-6 grid gap-2 text-gray-200">
-              <label htmlFor="end_date">Ending Date</label>
-              <input
-                type="date"
-                name="end_date"
-                id="end_date"
-                className="date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
-              />
-            </div>
-          </div>
+            </motion.div>
+
+
+
+            <motion.div initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+
+            className="grid grid-cols-2 gap-4">
+              <div className="mb-6 grid gap-2 text-gray-200">
+                <label htmlFor="start_date">Starting Date</label>
+                <input
+                  type="date"
+                  name="start_date"
+                  id="start_date"
+                  className=" date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
+                />
+              </div>
+              <div className="mb-6 grid gap-2 text-gray-200">
+                <label htmlFor="end_date">Ending Date</label>
+                <input
+                  type="date"
+                  name="end_date"
+                  id="end_date"
+                  className="date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
+                />
+              </div>
+            </motion.div>
+
         </>
       )}
+      </AnimatePresence>
       {method == "OPEN_BIDS" && null}
     </>
   );
