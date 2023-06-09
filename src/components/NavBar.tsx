@@ -40,9 +40,9 @@ const NavBar = () => {
   );
 };
 const variants = {
-  open: { opacity: 1, x: 0, scale: 1 },
-  closed: { opacity: 0, x: "-50", scale: 0 },
-}
+  open: { opacity: 1,  x: 0, scale: 1  },
+  closed: { opacity: 0,  x: "-100%", scale: 0 },
+};
 
 function MobileMenu() {
        const [isOpen, setIsOpen] = useState<boolean>(false);
