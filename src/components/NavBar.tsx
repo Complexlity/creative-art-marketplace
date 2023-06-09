@@ -40,8 +40,8 @@ const NavBar = () => {
   );
 };
 const variants = {
-  open: { opacity: 1, x: 0, pointerEvents: "auto" },
-  closed: { opacity: 0, x: "-50%", pointerEvents:"none" },
+  open: { opacity: 1, x: 0, scale: 1 },
+  closed: { opacity: 0, x: "-50", scale: 0 },
 }
 
 function MobileMenu() {
