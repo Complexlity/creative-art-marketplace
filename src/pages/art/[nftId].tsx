@@ -33,19 +33,12 @@ function pickRandomItems<T>(arr: T[], numOfItems: number) {
 
 function NFTItem() {
   const router = useRouter();
-  const [nftData, setNftData] = useState<NFT>();
   const nftsData = useNftsDataContext().nftsData;
-  const [relatedItems, setRelatedItems] = useState<NFT[]>([]);
-  console.log(router.query);
   const id = router.query.nftId;
   const randomPeople = pickRandomItems(people, 4) as People[];
-  useEffect(() => {
-    const nftDatas = nftsData.find((item) => id === item.id) as NFT;
-    let relatedItems = nftsData.filter((item) => id !== item.id);
-    relatedItems = pickRandomItems(relatedItems, 6) as NFT[];
-    setNftData(nftDatas);
-    setRelatedItems(relatedItems);
-  }, []);
+  const nftData = nftsData.find((item) => id === item.id) as NFT;
+  let relatedItems = nftsData.filter((item) => id !== item.id);
+  relatedItems = pickRandomItems(relatedItems, 6) as NFT[];
 
   return (
     <div className="main space-y-12 px-6 text-white">
@@ -56,7 +49,6 @@ function NFTItem() {
       <Footer />
     </div>
   );
-  return <div>Hello World</div>;
 }
 
 type BidStatus = "PENDING" | "ACCEPTED" | "REJECTED";
