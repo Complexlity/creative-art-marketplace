@@ -17,6 +17,8 @@ import { NFT } from "../../utils/nfts";
 import { people } from "~/utils/people";
 import { People } from "~/utils/people";
 import { useNftsDataContext, generateNFTPrice } from "~/utils/DataContext";
+import { Modal, Button, Label, Checkbox, TextInput } from "flowbite-react";
+import Link from "next/link";
 
 function pickRandomItems<T>(arr: T[], numOfItems: number) {
   const result = [];
@@ -52,7 +54,7 @@ function NFTItem() {
 }
 
 type BidStatus = "PENDING" | "ACCEPTED" | "REJECTED";
-function getStatus(status: BidStatus) {
+function getStatusText(status: BidStatus) {
   let checkColor: string, statusText: string, StatusIcon: IconType;
   switch (status) {
     case "REJECTED":
@@ -98,7 +100,7 @@ function Bids({ status, person }: { status?: BidStatus; person: People }) {
   }
 
   if (!status) status = "ACCEPTED";
-  const { checkColor, statusText, StatusIcon } = getStatus(status);
+  const { checkColor, statusText, StatusIcon } = getStatusText(status);
   return (
     <div className="flex gap-4">
       <div className="bidder-image relative h-12  w-12 rounded-full border-2 border-white">
@@ -135,7 +137,8 @@ function ItemDetails({
 }: {
   nftData: NFT | undefined;
   randomPeople: People[];
-}) {
+  }) {
+
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;
 
@@ -149,7 +152,7 @@ function ItemDetails({
       <div className="item-image aspect-square">
         <Image
           alt="NFT Image"
-          className="h-full w-full object-cover object-top rounded-xl"
+          className="h-full w-full rounded-xl object-cover object-top"
           src={nftData.image}
         />
       </div>
@@ -208,23 +211,14 @@ function ItemDetails({
             History
           </div>
         </div>
-        <div className="bids mb-8 grid gap-2.5">
-          {/* <Bids person={randomPeople[0]!} />
-          <Bids person={randomPeople[1]!} status={"REJECTED"} />
-          <Bids person={randomPeople[2]!} status={"PENDING"} />
-          <Bids person={randomPeople[3]!} /> */}
+        <div suppressHydrationWarning={true} className="bids mb-8 grid gap-2.5">
           {randomPeople.map((person, id) => {
             return <Bids key={id} person={person} status={getRandomStatus()} />;
           })}
         </div>
-        <div className="purchase-options flex gap-4">
-          <button className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:shadow-round hover:shadow-gray-400">
-            Buy Now
-          </button>
-          <button className="rounded-full bg-gray-500 px-6 py-2 hover:shadow-round hover:shadow-primary">
-            Place a bid
-          </button>
-        </div>
+
+
+        <Modals nftData={nftData} />
       </div>
     </section>
   );
@@ -237,16 +231,100 @@ function RelatedItems({ relatedItems }: { relatedItems: NFT[] }) {
         Related Items
         <span className="absolute bottom-[-.1rem] right-[50%] h-[.2rem] w-[20%] max-w-[180px] translate-x-[50%] bg-primary"></span>
       </h2>
-      <div className="related-cards grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {/* <Card />
-        <Card />
-        <Card />
-        <Card /> */}
+      <div suppressHydrationWarning={true} className="related-cards grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {relatedItems.map((item) => {
           return <Card key={item.id} item={item} />;
         })}
       </div>
     </section>
+  );
+}
+
+type BuyOptions = "BUY_NOW" | "PLACE_BID"
+function Modals({nftData}: {nftData: NFT}) {
+  const [openModal, setOpenModal] = useState<BuyOptions | undefined>();
+  const props = { openModal, setOpenModal };
+  return (
+    <>
+      <div className="purchase-options flex gap-4">
+        <button
+          onClick={() => setOpenModal("BUY_NOW")}
+          className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:shadow-round hover:shadow-gray-400"
+        >
+          Buy Now
+        </button>
+        <button
+          onClick={() => props.setOpenModal("PLACE_BID")}
+          className="rounded-full bg-gray-500 px-6 py-2 hover:shadow-round hover:shadow-primary"
+        >
+          Place a bid
+        </button>
+      </div>
+      <Modal
+        dismissible
+        className="backdrop-blur"
+        show={openModal === "BUY_NOW"}
+        onClose={() => props.setOpenModal(undefined)}
+      >
+        <Modal.Header>{nftData.name}</Modal.Header>
+        <Modal.Body className="">
+          <div className="space-y-6 ">
+            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              {nftData.description}
+            </p>
+            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              Are you sure you want to purchase this item for {nftData.price}
+              ETH?
+            </p>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => props.setOpenModal(undefined)}>
+            I accept
+          </Button>
+          <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
+            Decline
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+      dismissible
+        show={openModal === "PLACE_BID"}
+        size="md"
+        popup
+        onClose={() => props.setOpenModal(undefined)}
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white font-ttramillas">
+              {nftData.name}
+            </h3>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="current_price" value="Current Price" />
+              </div>
+              <TextInput disabled id="current_price" placeholder="" required value={nftData.price} helperText={<>NOTE: Prices can fluctuate depending on the market </>} />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="your_bid" value="Enter your bid amount" />
+              </div>
+              <TextInput id="your_bid" type="number" required />
+            </div>
+
+              <div className="flex items-center gap-2">
+                <Checkbox id="remember" />
+                <Label htmlFor="remember">I understand the terms of bidding on this platform</Label>
+            </div>
+            <div className="w-full">
+              <Button>Submit</Button>
+            </div>
+          
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }
 export default NFTItem;

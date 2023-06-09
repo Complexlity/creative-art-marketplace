@@ -16,6 +16,8 @@
     "@thirdweb-dev/sdk": "^3.10.20",
     "@types/react-icons": "^3.0.0",
     "ethers": "^5.7.2",
+    "flowbite": "^1.6.5",
+    "flowbite-react": "^0.4.7",
     "framer-motion": "^10.12.16",
     "nanoid": "^4.0.2",
     "next": "^13.4.2",
