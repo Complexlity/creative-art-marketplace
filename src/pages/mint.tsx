@@ -10,6 +10,9 @@ import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion"
 import Card from "~/components/Card";
+import { useFormik } from "formik";
+import { schema } from "~/utils/schema";
+
 
 type WithChidren = {
   children: React.ReactNode;
@@ -61,8 +64,33 @@ function MintForm() {
     const value = e.target.value.toUpperCase();
     setMethod(value);
   };
+const toggleColor = checked ? "bg-primary" : "";
 
-  const toggleColor = checked ? "bg-primary" : "";
+  const formik  = useFormik({
+    initialValues: {
+      title: "",
+      price: 0,
+      description: '',
+      royalties: 0,
+      collections: "SEL",
+      startDate:"",
+    endDate: "",
+    },
+    onSubmit: values => {
+      alert(JSON.stringify(values, null, 2))
+    },
+    validationSchema: schema
+  })
+  const { errors, touched, values, handleChange, handleSubmit, handleBlur } = formik
+
+
+let royaltiesErr = errors.royalties && touched.royalties;
+let titleErr = errors.title && touched.title;
+let descriptionErr = errors.description && touched.description;
+let collectionsErr = errors.royalties && touched.royalties;
+
+  console.log(errors, values, touched)
+
   function submitForm(e: any) {
     e.preventDefault();
     alert("Hello World");
@@ -70,7 +98,7 @@ function MintForm() {
 
   return (
     <form
-      onSubmit={submitForm}
+      onSubmit={handleSubmit}
       className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 pb-12 pt-8 text-white "
     >
       <div className="space-y-6">
@@ -96,6 +124,46 @@ function MintForm() {
               />
             </div>
           </div>
+        </div>
+
+        <div className="title mb-6 grid gap-2 text-gray-200">
+          <label htmlFor="title" className="">
+            Title
+          </label>
+          <input
+            type="text"
+            id="title"
+            className={`block w-full rounded-lg   border-2  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary
+
+ ${!touched.title ? "border-gray-600" : titleErr ? "border-red-400" : "border-green-400"} `}
+            placeholder="e.g Crypto Funk"
+            value={values.title}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <small className="text-red-400">{titleErr ? errors.title : ""}</small>
+        </div>
+        <div className="description mb-6 grid gap-2 text-gray-200">
+          <label htmlFor="description" className="">
+            Description
+          </label>
+          <input
+            type="text"
+            id="description"
+            className={`${!touched.description ? "border-gray-600" : descriptionErr ? "border-red-400" : "border-green-400" } block w-full rounded-lg border-2 border-gray-600 bg-transparent p-2
+             text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary
+             `}
+            placeholder="e.g This is a very limited item"
+            required
+            value={values.description}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <small className="text-red-400">
+            {errors.description && touched.description
+              ? errors.description
+              : ""}
+          </small>
         </div>
         <div className="select-method grid gap-4">
           <h3 className="">Select Method</h3>
@@ -147,7 +215,7 @@ function MintForm() {
             </label>
           </div>
         </div>
-        <MethodOptions method={method} />
+        <MethodOptions method={method} formik={formik} />
         <div
           className="unlock grid gap-2 rounded-lg border-2 border-gray-600 p-4"
           tabIndex={0}
@@ -179,41 +247,33 @@ function MintForm() {
           </p>
           <select
             id="collections"
-            className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+            className={`my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary
+             ${
+               !touched.collections
+                 ? "border-gray-600"
+                 : collectionsErr
+                 ? "border-red-400"
+                 : "border-green-400"
+             }`}
+            value={values.collections}
+            onChange={handleChange}
             defaultValue={"SEL"}
           >
             <option disabled value="SEL">
               Select Collection
             </option>
-            <option value="DIG">Digital Art</option>
+            <option value="ART">Digital Art</option>
             <option value="COL">Collectibles</option>
             <option value="GAM">Gaming </option>
             <option value="MUS">Music</option>
+            <option value="EST">Real Estate</option>
+            <option value="DOM">Domain Names</option>
           </select>
-        </div>
-        <div className="title mb-6 grid gap-2 text-gray-200">
-          <label htmlFor="title" className="">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary"
-            placeholder="e.g Crypto Funk"
-            required
-          />
-        </div>
-        <div className="description mb-6 grid gap-2 text-gray-200">
-          <label htmlFor="description" className="">
-            Description
-          </label>
-          <input
-            type="text"
-            id="description"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary"
-            placeholder="e.g This is a very limited item"
-            required
-          />
+          <small className="text-red-400">
+            {errors.collections && touched.collections
+              ? errors.collections
+              : ""}
+          </small>
         </div>
         <div className="royalties mb-6 grid gap-2 text-gray-200">
           <label htmlFor="royalties" className="">
@@ -223,10 +283,23 @@ function MintForm() {
             type="number"
             max="70"
             id="royalties"
-            className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
+            className={`block w-full rounded-lg   border-2  border-gray-600 bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary
+             ${
+               !touched.royalties
+                 ? "border-gray-600"
+                 : royaltiesErr
+                 ? "border-red-400"
+                 : "border-green-400"
+             }`}
             placeholder="suggested: 0, 10%, 20%, 30%, Maximum is 70%"
             required
+            value={values.royalties}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+          <small className="text-red-400">
+            {errors.royalties && touched.royalties ? errors.royalties : ""}
+          </small>
         </div>
         <button className="rounded-full bg-primary px-6 py-2 text-gray-800">
           Create Item
@@ -241,56 +314,77 @@ function MintForm() {
   );
 }
 
-function MethodOptions({ method }: { method: methodOptions }) {
+function MethodOptions({ method, formik }: {
+  method: methodOptions, formik: any
+},) {
+  const { errors, touched, values, handleChange, handleSubmit, handleBlur } =
+    formik;
+  const priceErr = errors.price && touched.price
   return (
     <>
-        <AnimatePresence>
-      {method == "FIXED_PRICE" && (
+      <AnimatePresence>
+        {method == "FIXED_PRICE" && (
           <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: .3} }}
-            exit={{ opacity: 0, transition: {duration: .3} }}
-          className="price mb-6 grid gap-2 text-gray-200">
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.3 } }}
+            exit={{ opacity: 0, transition: { duration: 0.3 } }}
+            className="price mb-6 grid gap-2 text-gray-200"
+          >
             <label htmlFor="price" className="">
               Price (ETH)
             </label>
             <input
               type="number"
               id="price"
-              className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
+              className={`block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary
+               ${!touched.price ? "border-gray-600" : priceErr ? "border-red-400" : "border-green-400"}`}
               placeholder="Enter price for item"
               required
+              value={values.price}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
+            <small className="text-red-400">
+              {priceErr ? errors.price : ""}
+            </small>
           </motion.div>
-      )}
-        </AnimatePresence>
-          <AnimatePresence>
-      {method == "TIMED_AUCTION" && (
-        <>
-            <motion.div initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, transition: {duration: .3} }}
-                    exit={{ opacity: 0 , transition: {duration: .3}}}
-
-            className="price mb-6 grid gap-2 text-gray-200">
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {method == "TIMED_AUCTION" && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: 0.3 } }}
+              exit={{ opacity: 0, transition: { duration: 0.3 } }}
+              className="price mb-6 grid gap-2 text-gray-200"
+            >
               <label htmlFor="price" className="">
                 Minimum Bid (ETH)
               </label>
               <input
                 type="number"
                 id="min-bid"
-                className="block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
+                className={`block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary ${
+                  !touched.price ? "border-gray-600" : priceErr ? "border-red-400" : "border-green-400"
+                }`}
                 placeholder="Enter minimum bid"
                 required
+                value={values.price}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
+              <small className="text-red-400">
+                {priceErr ? errors.price : ""}
+              </small>
             </motion.div>
 
-
-
-            <motion.div initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-
-            className="grid grid-cols-2 gap-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-2 gap-4"
+            >
               <div className="mb-6 grid gap-2 text-gray-200">
                 <label htmlFor="start_date">Starting Date</label>
                 <input
@@ -310,9 +404,8 @@ function MethodOptions({ method }: { method: methodOptions }) {
                 />
               </div>
             </motion.div>
-
-        </>
-      )}
+          </>
+        )}
       </AnimatePresence>
       {method == "OPEN_BIDS" && null}
     </>

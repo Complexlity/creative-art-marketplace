@@ -15,9 +15,9 @@
 }
 
 .my-select {
-  background-image: var(--bg-image);
+  background-image: var(--bg-image) !important;
   background-position: 10% 50%;
-  background-size: cover
+  background-size: cover !important
 }
 
 .method-card {
