@@ -63,7 +63,7 @@ const Hero = () => {
           <Image
             suppressHydrationWarning={true}
             alt="Trending Image"
-            className="relative z-10 h-full w-full rounded-2xl object-cover object-top"
+            className="relative z-10 max-w-[500px] mx-auto h-full w-full rounded-2xl object-cover object-top"
             src={nftsData[0]!.image}
             priority
             onLoad={setLoaded.bind(null, true)}
