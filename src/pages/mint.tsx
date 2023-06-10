@@ -10,8 +10,9 @@ import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion"
 import Card from "~/components/Card";
-import { useFormik } from "formik";
+import { useFormik, Field } from "formik";
 import { schema } from "~/utils/schema";
+import { StaticImageData } from "next/image";
 
 
 type WithChidren = {
@@ -54,6 +55,8 @@ export function HeroHeader({ children }: WithChidren) {
 }
 
 function MintForm() {
+  const [image, setImage] = useState<StaticImageData>()
+  const [imageError, setImageError] = useState<string>()
   const [checked, setChecked] = useState<boolean>(false);
   const [method, setMethod] = useState<methodOptions>("FIXED_PRICE");
   const toggleChecked = () => {
@@ -76,8 +79,9 @@ const toggleColor = checked ? "bg-primary" : "";
       collections: "SEL",
       startDate:"",
       endDate: "",
-    isPrice: false,
-    isMinBid: false
+      isPrice: false,
+    isMinBid: false,
+
     },
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2))
@@ -92,7 +96,18 @@ let titleErr = errors.title && touched.title;
 let descriptionErr = errors.description && touched.description;
 let collectionsErr = errors.royalties && touched.royalties;
 
-  console.log(errors, values, touched)
+  function showImage(e: any) {
+    const file = e.target.files[0]
+    console.log(file)
+    if(file.size > (5000 * 1024)) {
+      console.log("File too large")
+      setImageError("File Too Large")
+      return
+    }
+    let fileUrl = URL.createObjectURL(e.target.files[0]) as unknown as StaticImageData
+    setImage(fileUrl);
+    setImageError('')
+  }
 
   function submitForm(e: any) {
     e.preventDefault();
@@ -105,11 +120,12 @@ let collectionsErr = errors.royalties && touched.royalties;
       className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 pb-12 pt-8 text-white "
     >
       <div className="space-y-6">
+
         <div className="upload-file grid gap-4">
           <label>Upload file</label>
-          <div className="grid content-center items-center gap-4 rounded-xl border-4 border-dotted border-gray-400 px-4 py-8">
+          <div className={`grid content-center items-center gap-4 rounded-xl border-4 border-dotted px-4 py-8 ${imageError ? "border-red-400" : image ? "border-green-400" : "border-gray-600"}`}>
             <p className="pt-2 text-center">
-              PNG, JPG, GIF, WEBP or MP4. Max 200mb.
+              PNG, JPG, WEBP or PNG
             </p>
             <div className="text-center">
               <label
@@ -122,11 +138,17 @@ let collectionsErr = errors.royalties && touched.royalties;
                 type="file"
                 id="nft"
                 name="nft"
-                accept="image/png, image/jpeg"
+                accept="image/png, image/jpeg, image/png"
                 className="hidden-input"
+                onChange={showImage}
+
               />
+
             </div>
-          </div>
+
+
+            </div>
+      <small className={`mx-auto ${imageError ? "text-red-400" : "text-green-400"}`}>{imageError ? imageError : image ?  "File Added Successfully!!" : ""}</small>
         </div>
 
         <div className="title mb-6 grid gap-2 text-gray-200">
@@ -138,7 +160,13 @@ let collectionsErr = errors.royalties && touched.royalties;
             id="title"
             className={`block w-full rounded-lg   border-2  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary
 
- ${!touched.title ? "border-gray-600" : titleErr ? "border-red-400" : "border-green-400"} `}
+ ${
+   !touched.title
+     ? "border-gray-600"
+     : titleErr
+     ? "border-red-400"
+     : "border-green-400"
+ } `}
             placeholder="e.g Crypto Funk"
             value={values.title}
             onChange={handleChange}
@@ -153,7 +181,13 @@ let collectionsErr = errors.royalties && touched.royalties;
           <input
             type="text"
             id="description"
-            className={`${!touched.description ? "border-gray-600" : descriptionErr ? "border-red-400" : "border-green-400" } block w-full rounded-lg border-2 border-gray-600 bg-transparent p-2
+            className={`${
+              !touched.description
+                ? "border-gray-600"
+                : descriptionErr
+                ? "border-red-400"
+                : "border-green-400"
+            } block w-full rounded-lg border-2 border-gray-600 bg-transparent p-2
              text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary
              `}
             placeholder="e.g This is a very limited item"
@@ -260,7 +294,6 @@ let collectionsErr = errors.royalties && touched.royalties;
              }`}
             value={values.collections}
             onChange={handleChange}
-            defaultValue={"SEL"}
           >
             <option disabled value="SEL">
               Select Collection
@@ -311,7 +344,7 @@ let collectionsErr = errors.royalties && touched.royalties;
 
       <div className="preview-item hidden gap-4 self-start ">
         <label>Preview Item</label>
-        <Card />
+        <Card item={{image, name: values.title, price: (values.price || values.minBid), category: values.collections,   }} />
       </div>
     </form>
   );

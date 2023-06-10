@@ -1,4 +1,6 @@
 import * as yup from 'yup'
+const FILE_SIZE = 100 * 1024;
+const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/webp", "image/png", "image/svg"];
 
 export const schema = yup.object().shape({
   title: yup.string().required("Provide a title to your NFT"),
@@ -16,6 +18,15 @@ export const schema = yup.object().shape({
   }),
   description: yup.string().required("Provide a description of you NFT"),
   royalties: yup.number().min(1, "Royalties cannot be null").max(100, "Item cannot exceed 100%").required("You need to state how much royalties you will collect"),
-  collections: yup.string().required("Choose a category")
+  collections: yup.string().required("Choose a category"),
+  nft: yup
+        .mixed()
+        .required("A file is required")
+        .test(
+          "fileFormat",
+          "Unsupported Format. (JPEG, JPG, PNG, WEBP, SVG allowed)",
+          //@ts-ignore
+          value => value && SUPPORTED_FORMATS.includes(value.type)
+        )
 
 });
