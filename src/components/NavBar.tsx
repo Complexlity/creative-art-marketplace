@@ -51,16 +51,21 @@ const variants = {
   },
 };
 
-const oneVariants =  {
-  open: { opacity: 1, y: 0, transition: { delay: .4, duration: .3} },
-  closed: { opacity: 0, y: "-100%", transition: {
-    delay: .1
-  } }
-}
+const oneVariants = {
+  open: { opacity: 1, y: 0, transition: { delay: 0.4, duration: 0.3 } },
+  closed: {
+    opacity: 0,
+    y: "-100%",
+    transition: {
+      delay: 0.4,
+      duration: 0.3,
+    },
+  },
+};
 const twoVariants = {
   open: { opacity: 1, x: 0 , transition: { delay: .3, duration: .3} },
   closed: { opacity: 0, x: "100%", transition: {
-    delay: .2, duration: .3
+    delay: .3, duration: .3
   }
   }
 }
@@ -68,15 +73,20 @@ const twoVariants = {
 const threeVariants = {
   open: { opacity: 1, x: 0, transtion: { delay: .2, duration: .3} },
   closed: { opacity: 0, x: "-100%", transition: {
-    delay: .2
+    delay: .2, duration: .3
   } }
 }
 const fourVariants = {
-  open: { opacity: 1, y: 0, transition: { delay: .1, duration:.2} },
-  closed: { opacity: 0, y: "100%", transition: {
-    delay: .4
-  } }
-}
+  open: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.3 } },
+  closed: {
+    opacity: 0,
+    y: "100%",
+    transition: {
+      delay: 0.1,
+      duration: 0.3,
+    },
+  },
+};
 
 
 
