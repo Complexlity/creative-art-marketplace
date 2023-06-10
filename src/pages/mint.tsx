@@ -84,7 +84,8 @@ const toggleColor = checked ? "bg-primary" : "";
 
     },
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2))
+      if(!image) return
+      
     },
     validationSchema: schema
   })
