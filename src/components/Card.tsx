@@ -4,8 +4,24 @@ import Image from "next/image"
 import ethereumImage from "../../public/icons/ethereum.png";
 import clockImage from "../../public/icons/clock.png";
 import CountDownComponent from "./Countdown";
+import { nanoid } from "nanoid";
+import defaultImage from '../../public/nfts/default.svg'
 
-export function Card({ item }: { item: NFT }) {
+
+
+export function Card({ item }: { item?: NFT }) {
+  if (!item) {
+    item = {
+      id: nanoid(5),
+      name: "",
+      price: 0,
+      image: defaultImage,
+      category: "",
+      description: "",
+      endTime: 0,
+      creator:""
+  }
+}
   return (
     <div
       suppressHydrationWarning={true}

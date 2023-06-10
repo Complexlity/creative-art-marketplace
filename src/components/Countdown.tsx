@@ -8,7 +8,7 @@ type Renderer = {
   completed: boolean
 }
 const renderer = ({ hours, minutes, seconds, completed }: Renderer) => {
-  const Completionist = () => <span className="text-green-500">SOLD</span>;
+  const Completionist = () => <span className="text-green-500">NIL</span>;
   if (completed) {
     // Render a completed state
   return <Completionist />;

@@ -9,6 +9,7 @@ import { MdGroups } from "react-icons/md";
 import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion"
+import Card from "~/components/Card";
 
 type WithChidren = {
   children: React.ReactNode;
@@ -234,7 +235,7 @@ function MintForm() {
 
       <div className="preview-item hidden gap-4 self-start ">
         <label>Preview Item</label>
-        {/* <Card /> */}
+        <Card />
       </div>
     </form>
   );
