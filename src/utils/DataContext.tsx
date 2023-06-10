@@ -1,5 +1,6 @@
 import { useState, createContext, useContext, useEffect } from "react";
 import { partialNFTsData, NFT } from "./nfts";
+import { People, people } from "./people";
 
 function shuffleArray<T>(array: T[]) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -28,6 +29,7 @@ function generateRandomDate() {
 
 // console.log({partialNFTsData})
 const randomNftsData = shuffleArray(partialNFTsData);
+const randomPeopleData = shuffleArray(people)
 // console.log({randomNftsData})
 
 const nftsData: NFT[] = randomNftsData.map((item) => {
@@ -35,16 +37,19 @@ const nftsData: NFT[] = randomNftsData.map((item) => {
   item.price = generateNFTPrice()
   return item as NFT;
 })
-// console.log({nftsData})
 
+
+let peopleData = randomPeopleData
 export type GlobalNftsData = {
   nftsData: NFT[];
+  peopleData: People[]
 };
 
 
 
 const NftsDataContext = createContext<GlobalNftsData>({
-  nftsData
+  nftsData,
+  peopleData
 });
 
 interface Props {
@@ -56,7 +61,7 @@ export const useNftsDataContext = () => useContext(NftsDataContext);
 const NftsDataContextProvider = ({ children }: Props) => {
   // console.log({nftsData})
   return (
-    <NftsDataContext.Provider value={{  nftsData }}>
+    <NftsDataContext.Provider value={{  nftsData, peopleData }}>
       {children}
     </NftsDataContext.Provider>
   );
