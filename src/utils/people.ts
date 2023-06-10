@@ -27,7 +27,7 @@ type People = {
 
 const people: People[] = [
   {
-    name: "Sophia Anderson",
+    name: "Victor Jewels",
     image: image1
   },
   {

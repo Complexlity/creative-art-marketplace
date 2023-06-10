@@ -24,7 +24,7 @@ export type NFT = {
   id: string;
   name: string;
   price: number,
-  endTime: string;
+  endTime: number;
   image: StaticImageData;
   creator: string,
   description: string,

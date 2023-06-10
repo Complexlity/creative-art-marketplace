@@ -15,6 +15,7 @@ import { people } from "~/utils/people";
 import { People } from "~/utils/people";
 import { useNftsDataContext, generateNFTPrice } from "~/utils/DataContext";
 import { Modal, Button, Label, Checkbox, TextInput } from "flowbite-react";
+import CountDownComponent from "~/components/Countdown";
 
 
 function pickRandomItems<T>(arr: T[], numOfItems: number) {
@@ -158,7 +159,7 @@ function ItemDetails({
         <small className="auction-time">
           {" "}
           <span className="text-gray-400">Auctions end in</span>{" "}
-          {nftData.endTime}{" "}
+          <CountDownComponent timeDifference={nftData.endTime}/>
         </small>
 
         <h1 className="item-name text-5xl md:text-6xl">{nftData.name}</h1>

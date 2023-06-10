@@ -24,7 +24,7 @@ function generateRandomDate() {
   const now = Date.now();
   const sevenDays = 2 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
   const randomTime = Math.floor(Math.random() * sevenDays); // Random time within the range
-  return new Date(randomTime);
+  return randomTime;
 }
 
 // console.log({partialNFTsData})
@@ -33,7 +33,7 @@ const randomPeopleData = shuffleArray(people)
 // console.log({randomNftsData})
 
 const nftsData: NFT[] = randomNftsData.map((item) => {
-  item.endTime = generateRandomDate().toDateString();
+  item.endTime = generateRandomDate()
   item.price = generateNFTPrice()
   return item as NFT;
 })

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image"
 import ethereumImage from "../../public/icons/ethereum.png";
 import clockImage from "../../public/icons/clock.png";
+import CountDownComponent from "./Countdown";
 
 export function Card({ item }: { item: NFT }) {
   return (
@@ -26,11 +27,11 @@ export function Card({ item }: { item: NFT }) {
         </p>
       </div>
       <div className="flex justify-between">
-        <div>
+        <div className="grid text-start " >
           <small className="text-gray-400">Ending In</small>
-          <p className="flex items-center gap-3">
+          <p className="flex items-center gap-1">
             <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
-            <span className="font-bold">03:24:56</span>
+            <span className="font-bold"><CountDownComponent timeDifference={item!.endTime}/></span>
           </p>
         </div>
         <Link href={`/art/${item.id}`}>
