@@ -1,12 +1,9 @@
-import { GetStaticProps, GetStaticPaths } from "next";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import NavBar from "~/components/NavBar";
 import Footer from "~/components/Footer";
-import { Card } from "~/components/UniqueArt";
-import nftImage from "../../../public/nft-1.jpg";
-
+import { Card } from "~/components/Card";
 import { MdVerified } from "react-icons/md";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdPending, MdCancel } from "react-icons/md";
@@ -18,7 +15,7 @@ import { people } from "~/utils/people";
 import { People } from "~/utils/people";
 import { useNftsDataContext, generateNFTPrice } from "~/utils/DataContext";
 import { Modal, Button, Label, Checkbox, TextInput } from "flowbite-react";
-import Link from "next/link";
+
 
 function pickRandomItems<T>(arr: T[], numOfItems: number) {
   const result = [];
@@ -138,6 +135,7 @@ function ItemDetails({
   nftData: NFT | undefined;
   randomPeople: People[];
   }) {
+  const nftImage = pickRandomItems(people, 1)[0]?.image.src
 
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;
@@ -189,8 +187,10 @@ function ItemDetails({
               <MdVerified className="absolute -bottom-1 -right-1 text-primary" />
 
               <Image
+                width={500}
+                height={500}
                 className="h-full w-full rounded-full object-cover object-top "
-                src={nftImage}
+                src={nftImage!}
                 alt=""
               />
             </div>
@@ -320,7 +320,7 @@ function Modals({nftData}: {nftData: NFT}) {
             <div className="w-full">
               <Button>Submit</Button>
             </div>
-          
+
           </div>
         </Modal.Body>
       </Modal>
