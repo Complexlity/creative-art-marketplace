@@ -14,7 +14,7 @@ const renderer = ({ hours, minutes, seconds, completed }: Renderer) => {
   return <Completionist />;
 } else {
   // Render a countdown
-  return <span>{zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>;
+  return <span suppressHydrationWarning={true}>{zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>;
 }
 };
 

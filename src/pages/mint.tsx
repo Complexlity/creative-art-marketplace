@@ -5,7 +5,6 @@ import Head from "next/head";
 import { useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "~/components/Footer";
-import { Card } from "~/components/UniqueArt";
 import { MdGroups } from "react-icons/md";
 import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";

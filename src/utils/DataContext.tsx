@@ -22,7 +22,7 @@ export function generateNFTPrice() {
 
 function generateRandomDate() {
   const now = Date.now();
-  const sevenDays = 2 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+  const sevenDays = 5 * 24 * 60 * 60 * 1000; // 5 days in milliseconds
   const randomTime = Math.floor(Math.random() * sevenDays); // Random time within the range
   return randomTime;
 }

@@ -2,7 +2,7 @@ import Footer from "~/components/Footer";
 import NavBar from "~/components/NavBar";
 import { HeroHeader } from "./mint";
 import { AiOutlineSearch } from "react-icons/ai";
-import { Card } from "~/components/UniqueArt";
+import { Card } from "~/components/Card";
 import { useNftsDataContext } from "~/utils/DataContext";
 
 const Explore = () => {
@@ -79,7 +79,7 @@ function ExploreCards() {
         </select>
       </div>
       <div className="cards">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div suppressHydrationWarning={true} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {nftsData.map((item) => {
             return <Card key={item.id} item={item} />;
           })}

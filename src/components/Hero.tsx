@@ -2,6 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useNftsDataContext } from "~/utils/DataContext";
+import CountDownComponent from "./Countdown";
 
 const Hero = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -37,14 +38,14 @@ const Hero = () => {
 
       <div className="">
         <div className="relative mx-auto h-[400px] w-[80%] max-w-[350px] ">
-          <div className="absolute left-[0%] right-0 top-[85%] z-20 mx-auto grid w-[220px] scale-[80%] gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2 md:left-[40%] md:mx-4 lg:scale-[100%]">
+          <div className="absolute left-[30vw] right-0 top-[85%] z-20 mx-auto grid w-[220px] scale-[80%] gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2 md:left-[40%] md:mx-4 lg:scale-[100%]">
             <p className="flex justify-between text-primary">
               <span>Ends in</span>
               <span>Current bid</span>
             </p>
             <p className="flex justify-between font-bold text-white">
-              <span>05:45:47</span>
-              <span >
+              <span><CountDownComponent timeDifference={nftsData[0]!.endTime}/></span>
+              <span suppressHydrationWarning={true}>
                 {nftsData[0]?.price}ETH
               </span>
             </p>
@@ -60,6 +61,7 @@ const Hero = () => {
             } gradient absolute right-[43%] top-[30%] h-[50%] w-1/2 rotate-45 rounded-full shadow-3xl shadow-primary`}
           ></div>
           <Image
+            suppressHydrationWarning={true}
             alt="Trending Image"
             className="relative z-10 h-full w-full rounded-2xl object-cover object-top"
             src={nftsData[0]!.image}

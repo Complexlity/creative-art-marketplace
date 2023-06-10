@@ -7,4 +7,6 @@
 7. Add routing to a single item ✔
 8. Add and style connect wallet button ✔
 9. Add navbar sticky on scroll
-10. Optional add artists page and routing to artists page
+10. Add Countdown
+11. Add modal for purchase item
+12. Optional add artists page and routing to artists page
