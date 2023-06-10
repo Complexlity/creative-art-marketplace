@@ -70,18 +70,21 @@ const toggleColor = checked ? "bg-primary" : "";
     initialValues: {
       title: "",
       price: 0,
+      minBid: 0,
       description: '',
       royalties: 0,
       collections: "SEL",
       startDate:"",
-    endDate: "",
+      endDate: "",
+    isPrice: false,
+    isMinBid: false
     },
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2))
     },
     validationSchema: schema
   })
-  const { errors, touched, values, handleChange, handleSubmit, handleBlur } = formik
+  const { errors, touched, values, handleChange, handleSubmit, handleBlur,  } = formik
 
 
 let royaltiesErr = errors.royalties && touched.royalties;
@@ -250,10 +253,10 @@ let collectionsErr = errors.royalties && touched.royalties;
             className={`my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary
              ${
                !touched.collections
-                 ? "border-gray-600"
+                 ? "base"
                  : collectionsErr
-                 ? "border-red-400"
-                 : "border-green-400"
+                 ? "error"
+                 : "success"
              }`}
             value={values.collections}
             onChange={handleChange}
@@ -301,7 +304,7 @@ let collectionsErr = errors.royalties && touched.royalties;
             {errors.royalties && touched.royalties ? errors.royalties : ""}
           </small>
         </div>
-        <button className="rounded-full bg-primary px-6 py-2 text-gray-800">
+        <button className="submit rounded-full bg-primary px-6 py-2 text-gray-800">
           Create Item
         </button>
       </div>
@@ -320,6 +323,11 @@ function MethodOptions({ method, formik }: {
   const { errors, touched, values, handleChange, handleSubmit, handleBlur } =
     formik;
   const priceErr = errors.price && touched.price
+  const minBidErr = errors.minBid && touched.minBid
+  values.isPrice = method == "FIXED_PRICE" ? true : false
+  values.isMinBid = method == "TIMED_AUCTION" ? true : false
+
+
   return (
     <>
       <AnimatePresence>
@@ -359,23 +367,23 @@ function MethodOptions({ method, formik }: {
               exit={{ opacity: 0, transition: { duration: 0.3 } }}
               className="price mb-6 grid gap-2 text-gray-200"
             >
-              <label htmlFor="price" className="">
+              <label htmlFor="minBid" className="">
                 Minimum Bid (ETH)
               </label>
               <input
                 type="number"
-                id="min-bid"
+                id="minBid"
                 className={`block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary ${
-                  !touched.price ? "border-gray-600" : priceErr ? "border-red-400" : "border-green-400"
+                  !touched.minBid ? "border-gray-600" : minBidErr ? "border-red-400" : "border-green-400"
                 }`}
                 placeholder="Enter minimum bid"
                 required
-                value={values.price}
+                value={values.minBid}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <small className="text-red-400">
-                {priceErr ? errors.price : ""}
+                {minBidErr ? errors.minBid : ""}
               </small>
             </motion.div>
 
@@ -386,21 +394,31 @@ function MethodOptions({ method, formik }: {
               className="grid grid-cols-2 gap-4"
             >
               <div className="mb-6 grid gap-2 text-gray-200">
-                <label htmlFor="start_date">Starting Date</label>
+                <label htmlFor="startDate">Starting Date</label>
                 <input
                   type="date"
-                  name="start_date"
-                  id="start_date"
-                  className=" date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
+                  name="startDate"
+                  id="startDate"
+                  className={`date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primaryfocus:ring-primary
+                  ${touched.endData && values.endDate ? ".success" : ""}
+                  `}
+                value={values.startDate}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 />
               </div>
               <div className="mb-6 grid gap-2 text-gray-200">
-                <label htmlFor="end_date">Ending Date</label>
+                <label htmlFor="endDate">Ending Date</label>
                 <input
                   type="date"
-                  name="end_date"
-                  id="end_date"
-                  className="date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary"
+                  name="endDate"
+                  id="endDate"
+                  className={`date-picker w-full rounded-lg border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary
+                  ${touched.endData && values.endDate ? "success" : ""}
+                  `}
+                  value={values.endDate}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
               </div>
             </motion.div>
