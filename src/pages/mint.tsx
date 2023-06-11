@@ -2,13 +2,13 @@
 
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "~/components/Footer";
 import { MdGroups } from "react-icons/md";
 import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useCycle } from "framer-motion";
 import Card from "~/components/Card";
 import { useFormik, } from "formik";
 import { schema } from "~/utils/schema";
@@ -18,6 +18,10 @@ import { NFT } from "~/utils/nfts";
 import { nanoid } from "nanoid";
 import { Alert } from "flowbite-react";
 import CountDownComponent from "~/components/Countdown";
+import {useRouter} from 'next/router'
+
+
+
 
 function getCategory(category: string): string {
   const categoryMap = {
@@ -41,6 +45,7 @@ type WithChidren = {
 type methodOptions = "FIXED_PRICE" | "TIMED_AUCTION" | "OPEN_BIDS";
 
 const Mint: NextPage = () => {
+
   return (
     <>
       <Head>
@@ -74,11 +79,19 @@ export function HeroHeader({ children }: WithChidren) {
   );
 }
 
+
+
 function MintForm() {
   const [image, setImage] = useState<StaticImageData>()
   const [imageError, setImageError] = useState<string>()
   const [checked, setChecked] = useState<boolean>(false);
   const [method, setMethod] = useState<methodOptions>("FIXED_PRICE");
+  const [submitted, setSubmitted] = useState<boolean>(false)
+  const setNftsData = useNftsDataContext().setNftsData;
+  const nftsData = useNftsDataContext().nftsData;
+  const router = useRouter()
+
+
   const toggleChecked = () => {
     setChecked(!checked);
   };
@@ -87,7 +100,6 @@ function MintForm() {
     const value = e.target.value.toUpperCase();
     setMethod(value);
   };
-const toggleColor = checked ? "bg-primary" : "";
 
   const formik  = useFormik({
     initialValues: {
@@ -100,11 +112,16 @@ const toggleColor = checked ? "bg-primary" : "";
       startDate: undefined,
       endDate: undefined,
       isPrice: false,
-    isMinBid: false,
+      isMinBid: false,
 
     },
     onSubmit: values => {
-      if(!image) return
+      console.log("I am here")
+      if (!image) {
+        setImageError("NFT image not provided")
+        return
+      }
+      setSubmitted(true)
       const newItem: NFT = {
         id: nanoid(),
         name: values.title,
@@ -113,23 +130,22 @@ const toggleColor = checked ? "bg-primary" : "";
         creator: "John Doe",
         image,
         endTime: generateRandomDate(),
-        category: getCategory(values.collections)
-      }
-      const setNftsData = useNftsDataContext().setNftsData
-      const nftsData = useNftsDataContext().nftsData
-      setNftsData([...nftsData, newItem])
+        category: getCategory(values.collections),
+      };
+      setNftsData([...nftsData, newItem]);
+    setTimeout(() => {
+    router.push("/explore");
+    }, 3000);
     },
     validationSchema: schema
   })
-  const { errors, touched, values, handleChange, handleSubmit, handleBlur,  } = formik
-  console.log(touched)
-
-
+  const { errors, touched, values, handleChange, handleSubmit, handleBlur, } = formik
+  const toggleColor = checked ? "bg-primary" : "";
 let royaltiesErr = errors.royalties && touched.royalties;
 let titleErr = errors.title && touched.title;
 let descriptionErr = errors.description && touched.description;
 let collectionsErr = errors.royalties && touched.royalties;
-
+console.log({image: typeof image})
   function showImage(e: any) {
     const file = e.target.files[0]
     console.log(file)
@@ -143,55 +159,62 @@ let collectionsErr = errors.royalties && touched.royalties;
     setImageError('')
   }
 
-  function submitForm(e: any) {
-    e.preventDefault();
-
-  }
-
   return (
     <>
-    <form
-      onSubmit={handleSubmit}
-      className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 pb-12 pt-8 text-white" >
-
-      <div className="space-y-6">
-        <div className="upload-file grid gap-4">
-          <label>Upload file</label>
-          <div className={`grid content-center items-center gap-4 rounded-xl border-4 border-dotted px-4 py-8 ${imageError ? "border-red-400" : image ? "border-green-400" : "border-gray-600"}`}>
-            <p className="pt-2 text-center">
-              PNG, JPG, WEBP or PNG
-            </p>
-            <div className="text-center">
-              <label
-                htmlFor="nft"
-                className="inline rounded-full bg-primary px-6 py-1 text-gray-800"
-              >
-                Browse
-              </label>
-              <input
-                type="file"
-                id="nft"
-                name="nft"
-                accept="image/png, image/jpeg, image/png"
-                className="hidden-input"
-                onChange={showImage}
-
-              />
-
+      <form
+        onSubmit={handleSubmit}
+        className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 pb-12 pt-8 text-white"
+      >
+        <div className="space-y-6">
+          <div className="upload-file grid gap-4">
+            <label>Upload file</label>
+            <div
+              className={`grid content-center items-center gap-4 rounded-xl border-4 border-dotted px-4 py-8 ${
+                imageError
+                  ? "border-red-400"
+                  : image
+                  ? "border-green-400"
+                  : "border-gray-600"
+              }`}
+            >
+              <p className="pt-2 text-center">PNG, JPG, WEBP or PNG</p>
+              <div className="text-center">
+                <label
+                  htmlFor="nft"
+                  className="inline rounded-full bg-primary px-6 py-1 text-gray-800"
+                >
+                  Browse
+                </label>
+                <input
+                  type="file"
+                  id="nft"
+                  name="nft"
+                  accept="image/png, image/jpeg, image/png"
+                  className="hidden-input"
+                  onChange={showImage}
+                />
+              </div>
             </div>
-
-
-            </div>
-      <small className={`mx-auto ${imageError ? "text-red-400" : "text-green-400"}`}>{imageError ? imageError : image ?  "File Added Successfully!!" : ""}</small>
-        </div>
-        <div className="title mb-6 grid gap-2 text-gray-200">
-          <label htmlFor="title" className="">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            className={`block w-full rounded-lg   border-2  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary
+            <small
+              className={`mx-auto ${
+                imageError ? "text-red-400" : "text-green-400"
+              }`}
+            >
+              {imageError
+                ? imageError
+                : image
+                ? "File Added Successfully!!"
+                : ""}
+            </small>
+          </div>
+          <div className="title mb-6 grid gap-2 text-gray-200">
+            <label htmlFor="title" className="">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              className={`block w-full rounded-lg   border-2  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary
 
  ${
    !touched.title
@@ -200,125 +223,128 @@ let collectionsErr = errors.royalties && touched.royalties;
      ? "border-red-400"
      : "border-green-400"
  } `}
-            placeholder="e.g Crypto Funk"
-            value={values.title}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <small className="text-red-400">{titleErr ? errors.title : ""}</small>
-        </div>
-        <div className="description mb-6 grid gap-2 text-gray-200">
-          <label htmlFor="description" className="">
-            Description
-          </label>
-          <input
-            type="text"
-            id="description"
-            className={`${
-              !touched.description
-                ? "border-gray-600"
-                : descriptionErr
-                ? "border-red-400"
-                : "border-green-400"
-            } block w-full rounded-lg border-2 border-gray-600 bg-transparent p-2
+              placeholder="e.g Crypto Funk"
+              value={values.title}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+            />
+            <small className="text-red-400">
+              {titleErr ? errors.title : ""}
+            </small>
+          </div>
+          <div className="description mb-6 grid gap-2 text-gray-200">
+            <label htmlFor="description" className="">
+              Description
+            </label>
+            <input
+              type="text"
+              id="description"
+              className={`${
+                !touched.description
+                  ? "border-gray-600"
+                  : descriptionErr
+                  ? "border-red-400"
+                  : "border-green-400"
+              } block w-full rounded-lg border-2 border-gray-600 bg-transparent p-2
              text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary
              `}
-            placeholder="e.g This is a very limited item"
-            required
-            value={values.description}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <small className="text-red-400">
-            {errors.description && touched.description
-              ? errors.description
-              : ""}
-          </small>
-        </div>
-        <div className="select-method grid gap-4">
-          <h3 className="">Select Method</h3>
-          <div className="flex flex-wrap items-start gap-4">
-            <label className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32">
-              <ImPriceTag className="icon h-8 w-8" color={"gray"} />
-              <p>Fixed Price</p>
-              <input
-                className="hidden-input "
-                type="radio"
-                name="method"
-                id=""
-                value="fixed_price"
-                onChange={toggleOptions}
-                checked={method === "FIXED_PRICE"}
-              />
-            </label>
-            <label
-              tabIndex={0}
-              className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
-            >
-              <FaHourglassHalf className="icon h-8 w-8" color={"gray"} />
-              <p>Timed auction</p>
-              <input
-                className="hidden-input"
-                type="radio"
-                name="method"
-                id=""
-                value="timed_auction"
-                onChange={toggleOptions}
-                checked={method === "TIMED_AUCTION"}
-              />
-            </label>
-            <label
-              tabIndex={0}
-              className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
-            >
-              <MdGroups className="icon h-8 w-8" color={"gray"} />
-              <p>Open Bids</p>
-              <input
-                className="hidden-input"
-                type="radio"
-                name="method"
-                id=""
-                value="open_bids"
-                onChange={toggleOptions}
-                checked={method === "OPEN_BIDS"}
-              />
-            </label>
-          </div>
-        </div>
-        <MethodOptions method={method} formik={formik} />
-        <div
-          className="unlock grid gap-2 rounded-lg border-2 border-gray-600 p-4"
-          tabIndex={0}
-        >
-          <div className="header flex justify-between ">
-            <p className="flex items-center gap-1">
-              {checked ? (
-                <FaUnlockAlt className="text-primary" />
-              ) : (
-                <FaLock className="text-gray-600" />
-              )}{" "}
-              Unlock once purchased{" "}
-            </p>
-            <input
-              type="checkbox"
-              className={`toggle ${toggleColor} focus:outline-2 focus:outline-primary`}
-              checked={checked}
-              onChange={toggleChecked}
+              placeholder="e.g This is a very limited item"
+              required
+              value={values.description}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
+            <small className="text-red-400">
+              {errors.description && touched.description
+                ? errors.description
+                : ""}
+            </small>
           </div>
-          <p className="text-gray-400">
-            Unlock content after successful transaction
-          </p>
-        </div>
-        <div className="choose-collection grid gap-1 text-white">
-          <label htmlFor="collections">Choose collection</label>
-          <p className="text-md text-gray-400">
-            Unlock content after successful transaction.
-          </p>
-          <select
-            id="collections"
-            name="collections"
-            className={`my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary
+          <div className="select-method grid gap-4">
+            <h3 className="">Select Method</h3>
+            <div className="flex flex-wrap items-start gap-4">
+              <label className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32">
+                <ImPriceTag className="icon h-8 w-8" color={"gray"} />
+                <p>Fixed Price</p>
+                <input
+                  className="hidden-input "
+                  type="radio"
+                  name="method"
+                  id=""
+                  value="fixed_price"
+                  onChange={toggleOptions}
+                  checked={method === "FIXED_PRICE"}
+                />
+              </label>
+              <label
+                tabIndex={0}
+                className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
+              >
+                <FaHourglassHalf className="icon h-8 w-8" color={"gray"} />
+                <p>Timed auction</p>
+                <input
+                  className="hidden-input"
+                  type="radio"
+                  name="method"
+                  id=""
+                  value="timed_auction"
+                  onChange={toggleOptions}
+                  checked={method === "TIMED_AUCTION"}
+                />
+              </label>
+              <label
+                tabIndex={0}
+                className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
+              >
+                <MdGroups className="icon h-8 w-8" color={"gray"} />
+                <p>Open Bids</p>
+                <input
+                  className="hidden-input"
+                  type="radio"
+                  name="method"
+                  id=""
+                  value="open_bids"
+                  onChange={toggleOptions}
+                  checked={method === "OPEN_BIDS"}
+                />
+              </label>
+            </div>
+          </div>
+          <MethodOptions method={method} formik={formik} />
+          <div
+            className="unlock grid gap-2 rounded-lg border-2 border-gray-600 p-4"
+            tabIndex={0}
+          >
+            <div className="header flex justify-between ">
+              <p className="flex items-center gap-1">
+                {checked ? (
+                  <FaUnlockAlt className="text-primary" />
+                ) : (
+                  <FaLock className="text-gray-600" />
+                )}{" "}
+                Unlock once purchased{" "}
+              </p>
+              <input
+                type="checkbox"
+                className={`toggle ${toggleColor} focus:outline-2 focus:outline-primary`}
+                checked={checked}
+                onChange={toggleChecked}
+              />
+            </div>
+            <p className="text-gray-400">
+              Unlock content after successful transaction
+            </p>
+          </div>
+          <div className="choose-collection grid gap-1 text-white">
+            <label htmlFor="collections">Choose collection</label>
+            <p className="text-md text-gray-400">
+              Unlock content after successful transaction.
+            </p>
+            <select
+              id="collections"
+              name="collections"
+              className={`my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary
              ${
                !touched.collections
                  ? "base"
@@ -326,34 +352,34 @@ let collectionsErr = errors.royalties && touched.royalties;
                  ? "error"
                  : "success"
              }`}
-            value={values.collections}
-            onChange={handleChange}
-          >
-            <option disabled value="SEL">
-              Select Collection
-            </option>
-            <option value="ART">Digital Art</option>
-            <option value="COL">Collectibles</option>
-            <option value="GAM">Gaming </option>
-            <option value="MUS">Music</option>
-            <option value="EST">Real Estate</option>
-            <option value="DOM">Domain Names</option>
-          </select>
-          <small className="text-red-400">
-            {errors.collections && touched.collections
-              ? errors.collections
-              : ""}
-          </small>
-        </div>
-        <div className="royalties mb-6 grid gap-2 text-gray-200">
-          <label htmlFor="royalties" className="">
-            Royalties (%)
-          </label>
-          <input
-            type="number"
-            max="70"
-            id="royalties"
-            className={`block w-full rounded-lg   border-2  border-gray-600 bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary
+              value={values.collections}
+              onChange={handleChange}
+            >
+              <option disabled value="SEL">
+                Select Collection
+              </option>
+              <option value="ART">Digital Art</option>
+              <option value="COL">Collectibles</option>
+              <option value="GAM">Gaming </option>
+              <option value="MUS">Music</option>
+              <option value="EST">Real Estate</option>
+              <option value="DOM">Domain Names</option>
+            </select>
+            <small className="text-red-400">
+              {errors.collections && touched.collections
+                ? errors.collections
+                : ""}
+            </small>
+          </div>
+          <div className="royalties mb-6 grid gap-2 text-gray-200">
+            <label htmlFor="royalties" className="">
+              Royalties (%)
+            </label>
+            <input
+              type="number"
+              max="70"
+              id="royalties"
+              className={`block w-full rounded-lg   border-2  border-gray-600 bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary
              ${
                !touched.royalties
                  ? "border-gray-600"
@@ -361,36 +387,36 @@ let collectionsErr = errors.royalties && touched.royalties;
                  ? "border-red-400"
                  : "border-green-400"
              }`}
-            placeholder="suggested: 0, 10%, 20%, 30%, Maximum is 70%"
-            required
-            value={values.royalties}
-            onChange={handleChange}
-            onBlur={handleBlur}
+              placeholder="suggested: 0, 10%, 20%, 30%, Maximum is 70%"
+              required
+              value={values.royalties}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <small className="text-red-400">
+              {errors.royalties && touched.royalties ? errors.royalties : ""}
+            </small>
+          </div>
+          <input
+            type="submit"
+            value="Create Item"
+            className="submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800"
           />
-          <small className="text-red-400">
-            {errors.royalties && touched.royalties ? errors.royalties : ""}
-          </small>
         </div>
-        <button className="submit rounded-full bg-primary px-6 py-2 text-gray-800">
-          Create Item
-        </button>
-      </div>
-      <div className="preview-item hidden gap-4 self-start ">
-        <label>Preview Item</label>
-        <Card item={{image, name: values.title, price: (values.price || values.minBid), category: values.collections,   }} />
-      </div>
+        <div className="preview-item hidden gap-4 self-start ">
+          <label>Preview Item</label>
+          <Card
+            item={{
+              image,
+              name: values.title,
+              price: values.price || values.minBid,
+              category: values.collections,
+            }}
+            fromInput={true}
+          />
+        </div>
       </form>
-      <Alert color="success">
-         <span>
-        <p>
-          <span className="font-medium">
-            Info alert!
-          </span>
-          Change a few things up and try submitting again.
-          <CountDownComponent timeDifference={3}/>s...
-          </p>
-      </span>
-        </Alert>
+      <AlertModal submitted={submitted} />
     </>
   );
 }
@@ -506,6 +532,24 @@ function MethodOptions({ method, formik }: {
       {method == "OPEN_BIDS" && null}
     </>
   );
+}
+
+
+function AlertModal({ submitted }: {submitted: boolean}) {
+  return (
+    <>
+    {submitted ?       <Alert color="success">
+        < span >
+          <p>
+            <span className="font-medium">Info alert!</span>
+            Congratulations you are going to be rich in{' '}
+            <CountDownComponent timeDifference={4000} /> s
+
+          </p>
+        </span >
+      </Alert >: null}
+    </>
+  )
 }
 
 export default Mint;

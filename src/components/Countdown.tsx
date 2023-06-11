@@ -7,18 +7,18 @@ type Renderer = {
   seconds: number,
   completed: boolean
 }
-const renderer = ({ hours, minutes, seconds, completed }: Renderer) => {
+let renderer = ({ hours, minutes, seconds, completed }: Renderer) => {
   const Completionist = () => <span className="text-green-500">NIL</span>;
   if (completed) {
     // Render a completed state
   return <Completionist />;
 } else {
   // Render a countdown
-  return <span suppressHydrationWarning={true}>{zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>;
+  return <span suppressHydrationWarning={true}>{hours ? `${zeroPad(hours) }:` : ""}{minutes ? `${zeroPad(minutes)} :` : ""}{zeroPad(seconds)}</span>;
 }
 };
 
-export default function CountDownComponent({ timeDifference }: {timeDifference: number}) {
+export default function CountDownComponent({ timeDifference }: { timeDifference: number }) {
   return <Countdown date={Date.now() + timeDifference} renderer={renderer}/>
 }
 

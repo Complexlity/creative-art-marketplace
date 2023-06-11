@@ -24,6 +24,7 @@ module.exports = {
       roboto: ["roboto", "sans-serif"],
     },
   },
-  plugins: [require("daisyui"),
-  require("flowbite/plugin")],
+  plugins: [require("flowbite/plugin"),
+  require("daisyui"),
+],
 };

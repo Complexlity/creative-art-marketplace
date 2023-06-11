@@ -9,24 +9,25 @@ import defaultImage from '../../public/nfts/default.svg'
 import { useState, useEffect } from 'react'
 
 
-export function Card({ item }: { item?: Partial<NFT> }) {
-  const [isStaticImage, setStatic] = useState<boolean>(false)
+export function Card({ item, fromInput }: { item?: Partial<NFT>, fromInput?: boolean }) {
+  const [isStaticImage, setStaticImage] = useState<boolean>(true)
   useEffect(() => {
-    if (item!.image) setStatic(true)
+    if (fromInput || typeof item!.image === 'string') setStaticImage(false)
   }, [])
-  const  defaultItem = {
-      id: nanoid(5),
-      name: "",
-      price: 0,
-      image: defaultImage,
-      category: "",
-      description: "",
-      endTime: 0,
-      creator: ""
-    }
+  const defaultItem = {
+    id: nanoid(5),
+    name: "",
+    price: 0,
+    image: defaultImage,
+    category: "",
+    description: "",
+    endTime: 0,
+    creator: ""
+  }
 
   const mergedItem = { ...defaultItem, ...item }
-  if(mergedItem.image === undefined) mergedItem.image = defaultImage
+  if (mergedItem.image === undefined) mergedItem.image = defaultImage
+
 
   return (
     <div

@@ -8,25 +8,25 @@ export const schema = yup.object().shape({
   isMinBid: yup.boolean(),
   price: yup.number().when("isPrice", {
     is: true,
-    then: () => yup.number()
-      .min(1, "Price must be greater than zero").required("Price cannot be empty")
+    then: () =>
+      yup.number().moreThan(0, "Number must be greater than zero").nullable().required("Min bid cannot be empty"),
   }),
   minBid: yup.number().when("isMinBid", {
     is: true,
-    then: () => yup.number()
-      .min(1, "Price must be greater than zero").required("Min bid cannot be empty")
+    then: () =>
+      yup
+        .number()
+        .moreThan(0, "Number must be greater than zero")
+        .nullable()
+        .required("Min bid cannot be empty"),
   }),
   description: yup.string().required("Provide a description of you NFT"),
-  royalties: yup.number().min(1, "Royalties cannot be null").max(100, "Item cannot exceed 100%").required("You need to state how much royalties you will collect"),
-  collections: yup.string().required("Choose a category"),
-  nft: yup
-        .mixed()
-        .required("A file is required")
-        .test(
-          "fileFormat",
-          "Unsupported Format. (JPEG, JPG, PNG, WEBP, SVG allowed)",
-          //@ts-ignore
-          value => value && SUPPORTED_FORMATS.includes(value.type)
-        )
+  royalties: yup
+    .number()
+    .required("Missing Or Invalid (must be integer greater between 0 and 70")
+  .moreThan(0, "Number must be greater than zero")
+    .nullable()
+    .max(70, "Item cannot exceed 70%"),
 
+  collections: yup.string().required("Choose a category"),
 });
