@@ -1,25 +1,83 @@
 import Footer from "~/components/Footer";
 import NavBar from "~/components/NavBar";
 import { HeroHeader } from "./mint";
-import { AiOutlineSearch } from "react-icons/ai";
 import { Card } from "~/components/Card";
 import { useNftsDataContext } from "~/utils/DataContext";
+import {useState} from 'react'
+import { NFT } from "~/utils/nfts";
+
+import { AiOutlineSearch } from "react-icons/ai";
+import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
+import { AnimatePresence } from 'framer-motion'
 
 const Explore = () => {
+  const nftsData = useNftsDataContext().nftsData;
   return (
     <div className="main">
       <div className="mx-auto max-w-[1200px] px-4 text-white md:px-8">
         <NavBar />
         <HeroHeader>Explore</HeroHeader>
-        <ExploreCards />
+        <ExploreCards nftsData={nftsData} />
         <Footer />
       </div>
     </div>
   );
 };
 
-function ExploreCards() {
-  const nftsData = useNftsDataContext().nftsData;
+type SeeMore = {
+  initialValue: number,
+  step: number,
+  max: number
+}
+
+function ExploreCards({nftsData} : { nftsData: NFT[]}) {
+  const [seeMore, setSeeMore] = useState<SeeMore>({
+    initialValue: 6,
+    step: 3,
+    max: nftsData.length,
+  })
+  const [showingCondition, setShowingCondition] = useState({
+    maxxed: false,
+    minned: true
+  })
+
+  function showMore() {
+    if(showingCondition.maxxed) return
+    if(showingCondition.minned) setShowingCondition({...showingCondition, minned: false})
+    const { initialValue, step, max, } = seeMore
+
+    let next = initialValue + step
+    if(next >= max){
+      next = max
+      setShowingCondition({...showingCondition, maxxed: true})
+    }
+    setSeeMore({ ...seeMore, initialValue: next })
+
+  }
+
+  function showLess() {
+  if (showingCondition.minned) return;
+  if (showingCondition.maxxed) {
+    setShowingCondition(() =>{
+      return { ...showingCondition, maxxed: false }
+    });
+  }
+
+  const { initialValue, step } = seeMore;
+  let prev = initialValue - step;
+
+  if (prev <= 6) {
+    setShowingCondition(() => {
+      return { ...showingCondition, minned: true }});
+    prev = 6;
+  }
+
+  setSeeMore({ ...seeMore, initialValue: prev });
+
+  }
+
+  const disabledStyles = "bg-gray-400 hover:scale-[100%] hover:shadow-none text-blue-900 opacity-[60%] cursor-not-allowed"
+  console.log({seeMore, showingCondition})
   return (
     <section className="grid gap-12 border-b-2 border-b-gray-300 pb-12 pt-8">
       <div className="filters grid items-center gap-4 md:grid-cols-4">
@@ -79,14 +137,33 @@ function ExploreCards() {
         </select>
       </div>
       <div className="cards">
-        <div suppressHydrationWarning={true} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {nftsData.map((item) => {
+        <div
+          suppressHydrationWarning={true}
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+        >
+          <AnimatePresence>
+          {nftsData.slice(0, seeMore.initialValue).map((item) => {
             return <Card key={item.id} item={item} />;
           })}
+          </AnimatePresence>
         </div>
-        <div className="load-more text-center">
-          <button className="mx-auto justify-center rounded-full bg-primary px-6 py-2 text-gray-800">
-            Load More
+        <div className="text-center flex justify-center gap-4">
+          <button
+            onClick={showMore}
+            className={`flex gap-2 items-center rounded-full px-4 justify-center py-2   ${
+              showingCondition.maxxed
+                ? disabledStyles
+                : "bg-primary hover:scale-[102%] hover:shadow-round hover:shadow-gray-400 text-gray-800"
+            }`}
+          >
+            {showingCondition.maxxed ? "All Loaded" : "Load More"}<BsArrowDownCircleFill className="text-green-700 w-6 h-6"  />
+          </button>
+          <button
+            onClick={showLess}
+            className={`flex gap-2  items-center rounded-full px-4 py-2
+            ${showingCondition.minned ? disabledStyles : "bg-gray-500 hover:shadow-round hover:shadow-primary"}`}
+          >
+            See Less <BsFillArrowUpCircleFill className="text-rose-600 w-6 h-6" />
           </button>
         </div>
       </div>
