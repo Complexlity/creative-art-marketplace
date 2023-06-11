@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import NavBar from "~/components/NavBar";
@@ -9,13 +9,17 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdPending, MdCancel } from "react-icons/md";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import type { IconType } from "react-icons";
+import {bidSchema} from "../../utils/schema"
 
 import { NFT } from "../../utils/nfts";
-import { people } from "~/utils/people";
-import { People } from "~/utils/people";
+import { people, People } from "~/utils/people";
+
 import { useNftsDataContext, generateNFTPrice } from "~/utils/DataContext";
 import { Modal, Button, Label, Checkbox, TextInput } from "flowbite-react";
 import CountDownComponent from "~/components/Countdown";
+import { AlertModal } from "../mint";
+import {useFormik} from 'formik'
+
 
 
 function pickRandomItems<T>(arr: T[], numOfItems: number) {
@@ -241,10 +245,14 @@ function RelatedItems({ relatedItems }: { relatedItems: NFT[] }) {
   );
 }
 
+
+
 type BuyOptions = "BUY_NOW" | "PLACE_BID"
-function Modals({nftData}: {nftData: NFT}) {
+function Modals({ nftData }: { nftData: NFT }) {
+  const [bought, setBought] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<BuyOptions | undefined>();
   const props = { openModal, setOpenModal };
+
   return (
     <>
       <div className="purchase-options flex gap-4">
@@ -280,7 +288,12 @@ function Modals({nftData}: {nftData: NFT}) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => props.setOpenModal(undefined)}>
+          <Button
+            onClick={() => {
+              props.setOpenModal((state) => undefined);
+              setBought(true);
+            }}
+          >
             I accept
           </Button>
           <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
@@ -289,7 +302,7 @@ function Modals({nftData}: {nftData: NFT}) {
         </Modal.Footer>
       </Modal>
       <Modal
-      dismissible
+        dismissible
         show={openModal === "PLACE_BID"}
         size="md"
         popup
@@ -297,35 +310,81 @@ function Modals({nftData}: {nftData: NFT}) {
       >
         <Modal.Header />
         <Modal.Body>
-          <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white font-ttramillas">
-              {nftData.name}
-            </h3>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="current_price" value="Current Price" />
-              </div>
-              <TextInput disabled id="current_price" placeholder="" required value={nftData.price} helperText={<>NOTE: Prices can fluctuate depending on the market </>} />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="your_bid" value="Enter your bid amount" />
-              </div>
-              <TextInput id="your_bid" type="number" required />
-            </div>
-
-              <div className="flex items-center gap-2">
-                <Checkbox id="remember" />
-                <Label htmlFor="remember">I understand the terms of bidding on this platform</Label>
-            </div>
-            <div className="w-full">
-              <Button>Submit</Button>
-            </div>
-
-          </div>
+          <BidInputForm nftData={nftData} setBought={setBought} setOpenModal={setOpenModal} />
         </Modal.Body>
       </Modal>
+      <AlertModal action={bought} setAction={setBought}>
+        <span>Thank You for Shopping at creative arts 😋</span>
+      </AlertModal>
     </>
   );
 }
+
+const BidInputForm = ({ nftData, setBought, setOpenModal}: {nftData: NFT, setBought: Dispatch<SetStateAction<boolean>>, setOpenModal: Dispatch<SetStateAction<BuyOptions | undefined>>}) => {
+  const { values, errors, touched, handleSubmit, handleBlur, handleChange} = useFormik({
+    initialValues: {
+      bid: 0,
+      understandTerms: []
+    },
+    validationSchema: bidSchema,
+    onSubmit: submitBid
+})
+console.log({errors, values})
+
+  function submitBid() {
+    setBought(true);
+    setOpenModal(undefined)
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <h3 className="font-ttramillas text-xl font-medium text-gray-900 dark:text-white">
+        {nftData.name}
+      </h3>
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="current_price" value="Current Price(ETH)" />
+        </div>
+        <input
+          disabled
+          id="current_price"
+          type="text"
+          placeholder="Type here"
+          className="input-bordered input-info input w-full"
+          value={nftData.price}
+        />
+        <small>NOTE: Prices can fluctuate depending on the market</small>
+      </div>
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="your_bid" value="Enter your bid amount" />
+        </div>
+        <input
+          className={`input-bordered input-info input w-full focus:outline-none ${errors.bid && touched.bid ? "input-error" : "input-success"}`}
+          name="bid"
+          type="number"
+          required
+          value={values.bid}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        <small className="text-red-400">{errors.bid && touched.bid ? errors.bid : ""}</small>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Checkbox id="remember" name="understandTerms" onChange={handleChange} value="terms" />
+        <Label htmlFor="remember">
+          I understand the terms of bidding on this platform
+        </Label>
+
+      </div>
+      <small className="text-red-400">{errors.understandTerms}</small>
+      <div className="w-full">
+        <Button onClick={submitBid}>Submit</Button>
+      </div>
+    </form>
+  );
+}
+
+
 export default NFTItem;

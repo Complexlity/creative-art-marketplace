@@ -8,36 +8,15 @@ import Footer from "~/components/Footer";
 import { MdGroups } from "react-icons/md";
 import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
-import { motion, AnimatePresence, useCycle } from "framer-motion";
+import { motion, AnimatePresence, } from "framer-motion";
 import Card from "~/components/Card";
 import { useFormik, } from "formik";
 import { schema } from "~/utils/schema";
 import { StaticImageData } from "next/image";
-import { generateRandomDate, useNftsDataContext } from "~/utils/DataContext";
-import { NFT } from "~/utils/nfts";
-import { nanoid } from "nanoid";
 import { Alert, Modal } from "flowbite-react";
 import CountDownComponent from "~/components/Countdown";
-import {useRouter} from 'next/router'
 
 
-
-
-function getCategory(category: string): string {
-  const categoryMap = {
-    "ART": 'Art',
-    "COL": 'Collectibles',
-    "GAM": 'Gaming',
-    "MUS": 'Music',
-    "EST": 'Real Estate',
-    "DOM": 'Domain Name',
-  }
-
-  //@ts-ignore
-  let cat = categoryMap[category]
-  if(!cat) cat = 'Art'
-  return cat
-}
 
 type WithChidren = {
   children: React.ReactNode;
@@ -401,7 +380,15 @@ console.log({image: typeof image})
           />
         </div>
       </form>
-      <AlertModal submitted={submitted} setSubmitted={setSubmitted}/>
+      <AlertModal action={submitted} setAction={setSubmitted}>
+      < span >
+              <p>
+                <span className="font-medium">Info alert!</span>
+                Congratulations you are going to be rich in{' '}
+                <CountDownComponent timeDifference={4000} /> s
+              </p>
+        </span >
+      </AlertModal>
     </>
   );
 }
@@ -520,26 +507,20 @@ function MethodOptions({ method, formik }: {
 }
 
 
-function AlertModal({ submitted, setSubmitted }: { submitted: boolean , setSubmitted: Dispatch<SetStateAction<boolean>> }) {
+export function AlertModal({children, action, setAction }: { children: React.ReactNode, action: boolean , setAction: Dispatch<SetStateAction<boolean>> }) {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const props = { openModal, setOpenModal };
 
   return (
     <>
         <Modal
-          show={submitted}
+          show={action}
         position={'top-center'}
         dismissible
         >
             <Alert color="success"
-             onDismiss={() => setSubmitted(false)}>
-            < span >
-              <p>
-                <span className="font-medium">Info alert!</span>
-                Congratulations you are going to be rich in{' '}
-                <CountDownComponent timeDifference={4000} /> s
-              </p>
-            </span >
+             onDismiss={() => setAction(false)}>
+            {children}
                   </Alert >
         </Modal>
     </>

@@ -30,3 +30,13 @@ export const schema = yup.object().shape({
 
   collections: yup.string().required("Choose a category"),
 });
+
+
+export const bidSchema = yup.object().shape({
+  bid: yup.number()
+  .required("Missing Or Invalid")
+  .moreThan(0, "Number must be greater than zero")
+    .nullable(),
+  understandTerms: yup.array().min(1, "Accept my terms 🙏")
+})
+

@@ -1,19 +1,24 @@
-import {NFT} from "~/utils/nfts"
+import { NFT } from "~/utils/nfts";
 import Link from "next/link";
-import Image from "next/image"
+import Image from "next/image";
 import ethereumImage from "../../public/icons/ethereum.png";
 import clockImage from "../../public/icons/clock.png";
 import CountDownComponent from "./Countdown";
 import { nanoid } from "nanoid";
-import defaultImage from '../../public/nfts/default.svg'
-import { useState, useEffect } from 'react'
+import defaultImage from "../../public/nfts/default.svg";
+import { useState, useEffect } from "react";
 
-
-export function Card({ item, fromInput }: { item?: Partial<NFT>, fromInput?: boolean }) {
-  const [isStaticImage, setStaticImage] = useState<boolean>(true)
+export function Card({
+  item,
+  fromInput,
+}: {
+  item?: Partial<NFT>;
+  fromInput?: boolean;
+}) {
+  const [isStaticImage, setStaticImage] = useState<boolean>(true);
   useEffect(() => {
-    if (fromInput) setStaticImage(false)
-  }, [])
+    if (fromInput) setStaticImage(false);
+  }, []);
   const defaultItem = {
     id: nanoid(5),
     name: "",
@@ -22,12 +27,11 @@ export function Card({ item, fromInput }: { item?: Partial<NFT>, fromInput?: boo
     category: "",
     description: "",
     endTime: 0,
-    creator: ""
-  }
+    creator: "",
+  };
 
-  const mergedItem = { ...defaultItem, ...item }
-  if (mergedItem.image === undefined) mergedItem.image = defaultImage
-
+  const mergedItem = { ...defaultItem, ...item };
+  if (mergedItem.image === undefined) mergedItem.image = defaultImage;
 
   return (
     <div
@@ -77,7 +81,7 @@ export function Card({ item, fromInput }: { item?: Partial<NFT>, fromInput?: boo
             </span>
           </p>
         </div>
-        <Link href={`/art/${mergedItem.id}`}>
+        <Link href={fromInput ?  "" : `/items/${mergedItem.id}`}>
           <button className="rounded-lg border border-primary px-4 py-3 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800 md:px-6">
             Place A Bid
           </button>
@@ -87,4 +91,4 @@ export function Card({ item, fromInput }: { item?: Partial<NFT>, fromInput?: boo
   );
 }
 
-export default Card
+export default Card;

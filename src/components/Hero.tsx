@@ -44,12 +44,14 @@ const Hero = () => {
               <span>Current bid</span>
             </p>
             <p className="flex justify-between font-bold text-white">
-              <span><CountDownComponent timeDifference={nftsData[0]!.endTime}/></span>
+              <span>
+                <CountDownComponent timeDifference={nftsData[0]!.endTime} />
+              </span>
               <span suppressHydrationWarning={true}>
                 {nftsData[0]?.price}ETH
               </span>
             </p>
-            <Link href={`/art/${nftsData[0]!.id}`} className="grid">
+            <Link href={`/items/${nftsData[0]!.id}`} className="grid">
               <button className="mt-1 rounded-lg border border-primary py-2 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800">
                 Place A Bid
               </button>
@@ -63,7 +65,7 @@ const Hero = () => {
           <Image
             suppressHydrationWarning={true}
             alt="Trending Image"
-            className="relative z-10 max-w-[500px] mx-auto h-full w-full rounded-2xl object-cover object-top"
+            className="relative z-10 mx-auto h-full w-full max-w-[500px] rounded-2xl object-cover object-top"
             src={nftsData[0]!.image}
             priority
             onLoad={setLoaded.bind(null, true)}
