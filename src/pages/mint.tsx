@@ -383,9 +383,8 @@ console.log({image: typeof image})
       <AlertModal action={submitted} setAction={setSubmitted}>
       < span >
               <p>
-                <span className="font-medium">Info alert!</span>
-                Congratulations you are going to be rich in{' '}
-                <CountDownComponent timeDifference={4000} /> s
+                <span className="font-medium">Congratulations!</span>
+                You are going to be rich!! ☺{' '}
               </p>
         </span >
       </AlertModal>
@@ -397,7 +396,7 @@ function MethodOptions({ method, formik }: {
   method: methodOptions, formik: any
 },) {
 
-  const { errors, touched, values, handleChange, handleSubmit, handleBlur } =
+  const { errors, touched, values, handleChange,  handleBlur } =
     formik;
   const priceErr = errors.price && touched.price
   const minBidErr = errors.minBid && touched.minBid
