@@ -163,7 +163,7 @@ function ExploreCards({nftsData} : { nftsData: NFT[]}) {
             className={`flex gap-2  items-center rounded-full px-4 py-2
             ${showingCondition.minned ? disabledStyles : "bg-gray-500 hover:shadow-round hover:shadow-primary"}`}
           >
-            See Less <BsFillArrowUpCircleFill className="text-rose-600 w-6 h-6" />
+            See Less <BsFillArrowUpCircleFill className="text-rose-700 w-6 h-6" />
           </button>
         </div>
       </div>

@@ -10,4 +10,6 @@
 10. Add Countdown ✔
 11. Add modal for purchase item ✔
 12. Fix card sizing on medium screens
-13. Optional add artists page and routing to artists page
+13. Sort items on explore page
+14. Add load more and see less buttons ✔
+15. Optional add artists page and routing to artists page

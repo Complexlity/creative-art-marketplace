@@ -39,7 +39,7 @@ export function Card({
     <motion.div
       initial={{opacity: 0, y: "100%"}}
     animate={{opacity: 1, y: 0}}
-    exit={{opacity: 0, y: "100%"}}
+    exit={{opacity: 0, y: "-100%"}}
     transition={{duration: .5}}
       suppressHydrationWarning={true}
       className=" mb-6 max-w-full space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
