@@ -10,10 +10,30 @@ import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion"
 import Card from "~/components/Card";
-import { useFormik, Field } from "formik";
+import { useFormik, } from "formik";
 import { schema } from "~/utils/schema";
 import { StaticImageData } from "next/image";
+import { generateRandomDate, useNftsDataContext } from "~/utils/DataContext";
+import { NFT } from "~/utils/nfts";
+import { nanoid } from "nanoid";
+import { Alert } from "flowbite-react";
+import CountDownComponent from "~/components/Countdown";
 
+function getCategory(category: string): string {
+  const categoryMap = {
+    "ART": 'Art',
+    "COL": 'Collectibles',
+    "GAM": 'Gaming',
+    "MUS": 'Music',
+    "EST": 'Real Estate',
+    "DOM": 'Domain Name',
+  }
+
+  //@ts-ignore
+  let cat = categoryMap[category]
+  if(!cat) cat = 'Art'
+  return cat
+}
 
 type WithChidren = {
   children: React.ReactNode;
@@ -77,19 +97,32 @@ const toggleColor = checked ? "bg-primary" : "";
       description: '',
       royalties: 0,
       collections: "SEL",
-      startDate:"",
-      endDate: "",
+      startDate: undefined,
+      endDate: undefined,
       isPrice: false,
     isMinBid: false,
 
     },
     onSubmit: values => {
       if(!image) return
-      
+      const newItem: NFT = {
+        id: nanoid(),
+        name: values.title,
+        price: values.price,
+        description: values.description,
+        creator: "John Doe",
+        image,
+        endTime: generateRandomDate(),
+        category: getCategory(values.collections)
+      }
+      const setNftsData = useNftsDataContext().setNftsData
+      const nftsData = useNftsDataContext().nftsData
+      setNftsData([...nftsData, newItem])
     },
     validationSchema: schema
   })
   const { errors, touched, values, handleChange, handleSubmit, handleBlur,  } = formik
+  console.log(touched)
 
 
 let royaltiesErr = errors.royalties && touched.royalties;
@@ -112,16 +145,16 @@ let collectionsErr = errors.royalties && touched.royalties;
 
   function submitForm(e: any) {
     e.preventDefault();
-    alert("Hello World");
+
   }
 
   return (
+    <>
     <form
       onSubmit={handleSubmit}
-      className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 pb-12 pt-8 text-white "
-    >
-      <div className="space-y-6">
+      className="mint-form grid gap-8 border-b-2 border-b-gray-300 px-4 pb-12 pt-8 text-white" >
 
+      <div className="space-y-6">
         <div className="upload-file grid gap-4">
           <label>Upload file</label>
           <div className={`grid content-center items-center gap-4 rounded-xl border-4 border-dotted px-4 py-8 ${imageError ? "border-red-400" : image ? "border-green-400" : "border-gray-600"}`}>
@@ -151,7 +184,6 @@ let collectionsErr = errors.royalties && touched.royalties;
             </div>
       <small className={`mx-auto ${imageError ? "text-red-400" : "text-green-400"}`}>{imageError ? imageError : image ?  "File Added Successfully!!" : ""}</small>
         </div>
-
         <div className="title mb-6 grid gap-2 text-gray-200">
           <label htmlFor="title" className="">
             Title
@@ -279,12 +311,13 @@ let collectionsErr = errors.royalties && touched.royalties;
           </p>
         </div>
         <div className="choose-collection grid gap-1 text-white">
-          <label htmlFor="">Choose collection</label>
+          <label htmlFor="collections">Choose collection</label>
           <p className="text-md text-gray-400">
             Unlock content after successful transaction.
           </p>
           <select
             id="collections"
+            name="collections"
             className={`my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary
              ${
                !touched.collections
@@ -342,25 +375,36 @@ let collectionsErr = errors.royalties && touched.royalties;
           Create Item
         </button>
       </div>
-
       <div className="preview-item hidden gap-4 self-start ">
         <label>Preview Item</label>
         <Card item={{image, name: values.title, price: (values.price || values.minBid), category: values.collections,   }} />
       </div>
-    </form>
+      </form>
+      <Alert color="success">
+         <span>
+        <p>
+          <span className="font-medium">
+            Info alert!
+          </span>
+          Change a few things up and try submitting again.
+          <CountDownComponent timeDifference={3}/>s...
+          </p>
+      </span>
+        </Alert>
+    </>
   );
 }
 
 function MethodOptions({ method, formik }: {
   method: methodOptions, formik: any
 },) {
+
   const { errors, touched, values, handleChange, handleSubmit, handleBlur } =
     formik;
   const priceErr = errors.price && touched.price
   const minBidErr = errors.minBid && touched.minBid
   values.isPrice = method == "FIXED_PRICE" ? true : false
   values.isMinBid = method == "TIMED_AUCTION" ? true : false
-
 
   return (
     <>
