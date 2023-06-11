@@ -2,7 +2,7 @@
 
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "~/components/Footer";
 import { MdGroups } from "react-icons/md";
@@ -16,7 +16,7 @@ import { StaticImageData } from "next/image";
 import { generateRandomDate, useNftsDataContext } from "~/utils/DataContext";
 import { NFT } from "~/utils/nfts";
 import { nanoid } from "nanoid";
-import { Alert } from "flowbite-react";
+import { Alert, Modal } from "flowbite-react";
 import CountDownComponent from "~/components/Countdown";
 import {useRouter} from 'next/router'
 
@@ -87,9 +87,6 @@ function MintForm() {
   const [checked, setChecked] = useState<boolean>(false);
   const [method, setMethod] = useState<methodOptions>("FIXED_PRICE");
   const [submitted, setSubmitted] = useState<boolean>(false)
-  const setNftsData = useNftsDataContext().setNftsData;
-  const nftsData = useNftsDataContext().nftsData;
-  const router = useRouter()
 
 
   const toggleChecked = () => {
@@ -115,27 +112,15 @@ function MintForm() {
       isMinBid: false,
 
     },
-    onSubmit: values => {
+    onSubmit: (values, {resetForm}) => {
       console.log("I am here")
       if (!image) {
         setImageError("NFT image not provided")
         return
       }
       setSubmitted(true)
-      const newItem: NFT = {
-        id: nanoid(),
-        name: values.title,
-        price: values.price,
-        description: values.description,
-        creator: "John Doe",
-        image,
-        endTime: generateRandomDate(),
-        category: getCategory(values.collections),
-      };
-      setNftsData([...nftsData, newItem]);
-    setTimeout(() => {
-    router.push("/explore");
-    }, 3000);
+      setImage(undefined)
+      resetForm()
     },
     validationSchema: schema
   })
@@ -416,7 +401,7 @@ console.log({image: typeof image})
           />
         </div>
       </form>
-      <AlertModal submitted={submitted} />
+      <AlertModal submitted={submitted} setSubmitted={setSubmitted}/>
     </>
   );
 }
@@ -535,19 +520,28 @@ function MethodOptions({ method, formik }: {
 }
 
 
-function AlertModal({ submitted }: {submitted: boolean}) {
+function AlertModal({ submitted, setSubmitted }: { submitted: boolean , setSubmitted: Dispatch<SetStateAction<boolean>> }) {
+  const [openModal, setOpenModal] = useState<string | undefined>();
+  const props = { openModal, setOpenModal };
+
   return (
     <>
-    {submitted ?       <Alert color="success">
-        < span >
-          <p>
-            <span className="font-medium">Info alert!</span>
-            Congratulations you are going to be rich in{' '}
-            <CountDownComponent timeDifference={4000} /> s
-
-          </p>
-        </span >
-      </Alert >: null}
+        <Modal
+          show={submitted}
+        position={'top-center'}
+        dismissible
+        >
+            <Alert color="success"
+             onDismiss={() => setSubmitted(false)}>
+            < span >
+              <p>
+                <span className="font-medium">Info alert!</span>
+                Congratulations you are going to be rich in{' '}
+                <CountDownComponent timeDifference={4000} /> s
+              </p>
+            </span >
+                  </Alert >
+        </Modal>
     </>
   )
 }

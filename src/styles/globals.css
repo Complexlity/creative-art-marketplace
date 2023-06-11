@@ -16,8 +16,9 @@
 
 .my-select {
   background-image: var(--bg-image) !important;
-  background-position: 10% 50%;
-  background-size: cover !important
+  background-position: 10% 50% !important;
+  background-size: cover !important;
+  background-repeat: repeat !important;
 }
 
 .my-select.error {

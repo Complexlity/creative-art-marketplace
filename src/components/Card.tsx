@@ -12,7 +12,7 @@ import { useState, useEffect } from 'react'
 export function Card({ item, fromInput }: { item?: Partial<NFT>, fromInput?: boolean }) {
   const [isStaticImage, setStaticImage] = useState<boolean>(true)
   useEffect(() => {
-    if (fromInput || typeof item!.image === 'string') setStaticImage(false)
+    if (fromInput) setStaticImage(false)
   }, [])
   const defaultItem = {
     id: nanoid(5),
@@ -34,13 +34,14 @@ export function Card({ item, fromInput }: { item?: Partial<NFT>, fromInput?: boo
       suppressHydrationWarning={true}
       className=" mb-6 max-w-full space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
     >
-      {isStaticImage ?
+      {isStaticImage ? (
         <Image
           suppressHydrationWarning={true}
-        alt={`${mergedItem.name} Image`}
-        className="my-card-image mx-auto aspect-square rounded-lg object-cover object-top"
+          alt={`${mergedItem.name} Image`}
+          className="my-card-image mx-auto aspect-square rounded-lg object-cover object-top"
           src={mergedItem!.image}
-      /> :
+        />
+      ) : (
         <Image
           suppressHydrationWarning={true}
           alt={`${mergedItem.name} Image`}
@@ -49,9 +50,12 @@ export function Card({ item, fromInput }: { item?: Partial<NFT>, fromInput?: boo
           width={300}
           height={300}
         />
-      }
-      <div className="flex justify-between font-semibold tracking-wide">
-        <p>{mergedItem!.name}</p>
+      )}
+      <div
+        suppressHydrationWarning={true}
+        className="flex justify-between font-semibold tracking-wide"
+      >
+        <p suppressHydrationWarning={true}>{mergedItem!.name}</p>
         <p className="flex items-center gap-1">
           <span>
             <Image
