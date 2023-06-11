@@ -35,12 +35,12 @@ export function Card({
   if (mergedItem.image === undefined) mergedItem.image = defaultImage;
 
   return (
-
     <motion.div
-      initial={{opacity: 0, y: "100%"}}
-    animate={{opacity: 1, y: 0}}
-    exit={{opacity: 0, y: "-100%"}}
-    transition={{duration: .5}}
+      layout
+      initial={{ opacity: 0, y: "100%" }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: "-100%" }}
+      transition={{ duration: 0.5 }}
       suppressHydrationWarning={true}
       className=" mb-6 max-w-full space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
     >
@@ -87,14 +87,13 @@ export function Card({
             </span>
           </p>
         </div>
-        <Link href={fromInput ?  "" : `/items/${mergedItem.id}`}>
+        <Link href={fromInput ? "" : `/items/${mergedItem.id}`}>
           <button className="rounded-lg border border-primary px-4 py-3 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800 md:px-6">
             Place A Bid
           </button>
         </Link>
       </div>
     </motion.div>
-
   );
 }
 

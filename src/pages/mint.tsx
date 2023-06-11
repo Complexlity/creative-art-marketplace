@@ -8,15 +8,13 @@ import Footer from "~/components/Footer";
 import { MdGroups } from "react-icons/md";
 import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
-import { motion, AnimatePresence, } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import Card from "~/components/Card";
-import { useFormik, } from "formik";
+import { useFormik } from "formik";
 import { schema } from "~/utils/schema";
 import { StaticImageData } from "next/image";
 import { Alert, Modal } from "flowbite-react";
 import CountDownComponent from "~/components/Countdown";
-
-
 
 type WithChidren = {
   children: React.ReactNode;
@@ -24,7 +22,6 @@ type WithChidren = {
 type methodOptions = "FIXED_PRICE" | "TIMED_AUCTION" | "OPEN_BIDS";
 
 const Mint: NextPage = () => {
-
   return (
     <>
       <Head>
@@ -58,15 +55,12 @@ export function HeroHeader({ children }: WithChidren) {
   );
 }
 
-
-
 function MintForm() {
-  const [image, setImage] = useState<StaticImageData>()
-  const [imageError, setImageError] = useState<string>()
+  const [image, setImage] = useState<StaticImageData>();
+  const [imageError, setImageError] = useState<string>();
   const [checked, setChecked] = useState<boolean>(false);
   const [method, setMethod] = useState<methodOptions>("FIXED_PRICE");
-  const [submitted, setSubmitted] = useState<boolean>(false)
-
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const toggleChecked = () => {
     setChecked(!checked);
@@ -77,50 +71,52 @@ function MintForm() {
     setMethod(value);
   };
 
-  const formik  = useFormik({
+  const formik = useFormik({
     initialValues: {
       title: "",
       price: 0,
       minBid: 0,
-      description: '',
+      description: "",
       royalties: 0,
       collections: "SEL",
       startDate: undefined,
       endDate: undefined,
       isPrice: false,
       isMinBid: false,
-
     },
-    onSubmit: (values, {resetForm}) => {
-      console.log("I am here")
+    onSubmit: (values, { resetForm }) => {
+      console.log("I am here");
       if (!image) {
-        setImageError("NFT image not provided")
-        return
+        setImageError("NFT image not provided");
+        return;
       }
-      setSubmitted(true)
-      setImage(undefined)
-      resetForm()
+      setSubmitted(true);
+      setImage(undefined);
+      resetForm();
     },
-    validationSchema: schema
-  })
-  const { errors, touched, values, handleChange, handleSubmit, handleBlur, } = formik
+    validationSchema: schema,
+  });
+  const { errors, touched, values, handleChange, handleSubmit, handleBlur } =
+    formik;
   const toggleColor = checked ? "bg-primary" : "";
-let royaltiesErr = errors.royalties && touched.royalties;
-let titleErr = errors.title && touched.title;
-let descriptionErr = errors.description && touched.description;
-let collectionsErr = errors.royalties && touched.royalties;
-console.log({image: typeof image})
+  let royaltiesErr = errors.royalties && touched.royalties;
+  let titleErr = errors.title && touched.title;
+  let descriptionErr = errors.description && touched.description;
+  let collectionsErr = errors.royalties && touched.royalties;
+  console.log({ image: typeof image });
   function showImage(e: any) {
-    const file = e.target.files[0]
-    console.log(file)
-    if(file.size > (5000 * 1024)) {
-      console.log("File too large")
-      setImageError("File Too Large")
-      return
+    const file = e.target.files[0];
+    console.log(file);
+    if (file.size > 5000 * 1024) {
+      console.log("File too large");
+      setImageError("File Too Large");
+      return;
     }
-    let fileUrl = URL.createObjectURL(e.target.files[0]) as unknown as StaticImageData
+    let fileUrl = URL.createObjectURL(
+      e.target.files[0]
+    ) as unknown as StaticImageData;
     setImage(fileUrl);
-    setImageError('')
+    setImageError("");
   }
 
   return (
@@ -367,6 +363,7 @@ console.log({image: typeof image})
             className="submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800"
           />
         </div>
+
         <div className="preview-item hidden gap-4 self-start ">
           <label>Preview Item</label>
           <Card
@@ -379,35 +376,40 @@ console.log({image: typeof image})
             fromInput={true}
           />
         </div>
+
       </form>
       <AlertModal action={submitted} setAction={setSubmitted}>
-      < span >
-              <p>
-                <span className="font-medium">Congratulations!</span>
-                You are going to be rich!! ☺{' '}
-              </p>
-        </span >
+        <span>
+          <p>
+            <span className="font-medium">Congratulations!</span>
+            You are going to be rich!! ☺{" "}
+          </p>
+        </span>
       </AlertModal>
     </>
   );
 }
 
-function MethodOptions({ method, formik }: {
-  method: methodOptions, formik: any
-},) {
-
-  const { errors, touched, values, handleChange,  handleBlur } =
-    formik;
-  const priceErr = errors.price && touched.price
-  const minBidErr = errors.minBid && touched.minBid
-  values.isPrice = method == "FIXED_PRICE" ? true : false
-  values.isMinBid = method == "TIMED_AUCTION" ? true : false
+function MethodOptions({
+  method,
+  formik,
+}: {
+  method: methodOptions;
+  formik: any;
+}) {
+  const { errors, touched, values, handleChange, handleBlur } = formik;
+  const priceErr = errors.price && touched.price;
+  const minBidErr = errors.minBid && touched.minBid;
+  values.isPrice = method == "FIXED_PRICE" ? true : false;
+  values.isMinBid = method == "TIMED_AUCTION" ? true : false;
 
   return (
     <>
+    <LayoutGroup>
       <AnimatePresence>
         {method == "FIXED_PRICE" && (
           <motion.div
+            layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.3 } }}
             exit={{ opacity: 0, transition: { duration: 0.3 } }}
@@ -420,7 +422,13 @@ function MethodOptions({ method, formik }: {
               type="number"
               id="price"
               className={`block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary
-               ${!touched.price ? "border-gray-600" : priceErr ? "border-red-400" : "border-green-400"}`}
+               ${
+                 !touched.price
+                   ? "border-gray-600"
+                   : priceErr
+                   ? "border-red-400"
+                   : "border-green-400"
+               }`}
               placeholder="Enter price for item"
               required
               value={values.price}
@@ -437,6 +445,7 @@ function MethodOptions({ method, formik }: {
         {method == "TIMED_AUCTION" && (
           <>
             <motion.div
+            layout
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.3 } }}
               exit={{ opacity: 0, transition: { duration: 0.3 } }}
@@ -449,7 +458,11 @@ function MethodOptions({ method, formik }: {
                 type="number"
                 id="minBid"
                 className={`block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary ${
-                  !touched.minBid ? "border-gray-600" : minBidErr ? "border-red-400" : "border-green-400"
+                  !touched.minBid
+                    ? "border-gray-600"
+                    : minBidErr
+                    ? "border-red-400"
+                    : "border-green-400"
                 }`}
                 placeholder="Enter minimum bid"
                 required
@@ -463,6 +476,7 @@ function MethodOptions({ method, formik }: {
             </motion.div>
 
             <motion.div
+            layout
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -474,12 +488,12 @@ function MethodOptions({ method, formik }: {
                   type="date"
                   name="startDate"
                   id="startDate"
-                  className={`date-picker w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primaryfocus:ring-primary
+                  className={`date-picker focus:border-primaryfocus:ring-primary w-full   rounded-lg border-2  border-gray-600 bg-transparent p-2 text-sm text-white placeholder-gray-500
                   ${touched.endData && values.endDate ? ".success" : ""}
                   `}
-                value={values.startDate}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                  value={values.startDate}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
               </div>
               <div className="mb-6 grid gap-2 text-gray-200">
@@ -500,30 +514,33 @@ function MethodOptions({ method, formik }: {
           </>
         )}
       </AnimatePresence>
-      {method == "OPEN_BIDS" && null}
+      <AnimatePresence>{method == "OPEN_BIDS" && null}</AnimatePresence>
+      </LayoutGroup>
     </>
   );
 }
 
-
-export function AlertModal({children, action, setAction }: { children: React.ReactNode, action: boolean , setAction: Dispatch<SetStateAction<boolean>> }) {
+export function AlertModal({
+  children,
+  action,
+  setAction,
+}: {
+  children: React.ReactNode;
+  action: boolean;
+  setAction: Dispatch<SetStateAction<boolean>>;
+}) {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const props = { openModal, setOpenModal };
 
   return (
     <>
-        <Modal
-          show={action}
-        position={'top-center'}
-        dismissible
-        >
-            <Alert color="success"
-             onDismiss={() => setAction(false)}>
-            {children}
-                  </Alert >
-        </Modal>
+      <Modal show={action} position={"top-center"} dismissible>
+        <Alert color="success" onDismiss={() => setAction(false)}>
+          {children}
+        </Alert>
+      </Modal>
     </>
-  )
+  );
 }
 
 export default Mint;

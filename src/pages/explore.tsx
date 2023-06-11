@@ -3,8 +3,9 @@ import NavBar from "~/components/NavBar";
 import { HeroHeader } from "./mint";
 import { Card } from "~/components/Card";
 import { useNftsDataContext } from "~/utils/DataContext";
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { NFT } from "~/utils/nfts";
+import useDebounce from "~/utils/useDebounce";
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
@@ -30,6 +31,9 @@ type SeeMore = {
   max: number
 }
 
+type Search = string | number | readonly string[] | undefined
+
+
 function ExploreCards({nftsData} : { nftsData: NFT[]}) {
   const [seeMore, setSeeMore] = useState<SeeMore>({
     initialValue: 6,
@@ -40,8 +44,7 @@ function ExploreCards({nftsData} : { nftsData: NFT[]}) {
     maxxed: false,
     minned: true
   })
-
-  function showMore() {
+function showMore() {
     if(showingCondition.maxxed) return
     if(showingCondition.minned) setShowingCondition({...showingCondition, minned: false})
     const { initialValue, step, max, } = seeMore
@@ -54,8 +57,7 @@ function ExploreCards({nftsData} : { nftsData: NFT[]}) {
     setSeeMore({ ...seeMore, initialValue: next })
 
   }
-
-  function showLess() {
+function showLess() {
   if (showingCondition.minned) return;
   if (showingCondition.maxxed) {
     setShowingCondition(() =>{
@@ -76,27 +78,57 @@ function ExploreCards({nftsData} : { nftsData: NFT[]}) {
 
   }
 
+  const [search, setSearch] = useState<Search>('')
+  const debouncedSearch = useDebounce(search, 500)
+  const [displayedData, setDisplayedData] = useState(nftsData)
+  useEffect(() => {
+    searchByName(debouncedSearch)
+  }, [debouncedSearch])
+
+  useEffect(() => {
+    if (displayedData.length <= 6) {
+      setShowingCondition({minned: true, maxxed: true})
+    }
+    else  {
+      setShowingCondition({ ...showingCondition, maxxed: false });
+    setSeeMore({
+    initialValue: 6,
+    step: 3,
+    max: displayedData.length,
+  })
+    }
+  }, [displayedData])
+
+  function searchByName(searchValue: string) {
+    if (searchValue.length > 0) {
+      setDisplayedData(nftsData.filter((data) => {
+        return data.name.toLowerCase().includes(searchValue.toLowerCase())
+      })
+      )
+    }
+    else {
+      setDisplayedData(nftsData)
+
+    }
+  }
+
+console.log({displayedData, data:{...seeMore, ...showingCondition}})
   const disabledStyles = "bg-gray-400 hover:scale-[100%] hover:shadow-none text-blue-900 opacity-[60%] cursor-not-allowed"
-  console.log({seeMore, showingCondition})
   return (
     <section className="grid gap-12 border-b-2 border-b-gray-300 pb-12 pt-8">
       <div className="filters grid items-center gap-4 md:grid-cols-4">
-        <div className="relative w-full self-end">
+        <div className="relative flex w-full self-end">
+          <div className="pointer-events-none absolute inset-y-0 right-[2px] flex  items-center">
+            <AiOutlineSearch className="white h-6 w-6" />
+          </div>
           <input
             type="search"
-            id="search-dropdown"
-            className=" z-20 block w-full rounded-lg border-2 border-gray-600 border-l-gray-700 bg-transparent px-2  py-2 text-sm  text-white placeholder-gray-400 ring-blue-500 focus:border-primary focus:outline-none"
-            placeholder="Search Items here...."
-            required
+            id="email-address-icon"
+            className="block w-full rounded-lg border-2 border-gray-600 bg-transparent p-2 text-sm text-gray-200 placeholder:text-gray-300  focus:border-primary focus:ring-primary"
+            placeholder="Search Nft..."
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
           />
-          <button
-            type="submit"
-            className="absolute
-            bottom-0 right-0 top-0
-            flex items-center justify-center  rounded-r-lg border bg-primary px-4 font-medium hover:bg-yellow-300 focus:outline-none  focus:ring-4 focus:ring-yellow-300 md:px-3"
-          >
-            <AiOutlineSearch className="h-6 w-6 text-gray-800" />
-          </button>
         </div>
 
         <select
@@ -107,10 +139,11 @@ function ExploreCards({nftsData} : { nftsData: NFT[]}) {
           <option disabled value="SEL">
             All Categories
           </option>
-          <option value="DIG">Digital Art</option>
-          <option value="COL">Collectibles</option>
-          <option value="GAM">Gaming </option>
           <option value="MUS">Music</option>
+          <option value="GAM">Gaming </option>
+          <option value="EST">Real Estate</option>
+          <option value="ART">Digital Art</option>
+          <option value="COL">Collectibles</option>
         </select>
         <select
           id="buy-now"
@@ -142,28 +175,34 @@ function ExploreCards({nftsData} : { nftsData: NFT[]}) {
           className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           <AnimatePresence>
-          {nftsData.slice(0, seeMore.initialValue).map((item) => {
-            return <Card key={item.id} item={item} />;
-          })}
+            {displayedData.slice(0, seeMore.initialValue).map((item) => {
+              return <Card key={item.id} item={item} />;
+            })}
           </AnimatePresence>
         </div>
-        <div className="text-center flex justify-center gap-4">
+        <div className="flex justify-center gap-4 text-center">
           <button
             onClick={showMore}
-            className={`flex gap-2 items-center rounded-full px-4 justify-center py-2   ${
+            className={`flex items-center justify-center gap-2 rounded-full px-4 py-2   ${
               showingCondition.maxxed
                 ? disabledStyles
-                : "bg-primary hover:scale-[102%] hover:shadow-round hover:shadow-gray-400 text-gray-800"
+                : "bg-primary text-gray-800 hover:scale-[102%] hover:shadow-round hover:shadow-gray-400"
             }`}
           >
-            {showingCondition.maxxed ? "All Loaded" : "Load More"}<BsArrowDownCircleFill className="text-green-700 w-6 h-6"  />
+            Load More
+            <BsArrowDownCircleFill className="h-6 w-6 text-green-700" />
           </button>
           <button
             onClick={showLess}
-            className={`flex gap-2  items-center rounded-full px-4 py-2
-            ${showingCondition.minned ? disabledStyles : "bg-gray-500 hover:shadow-round hover:shadow-primary"}`}
+            className={`flex items-center  gap-2 rounded-full px-4 py-2
+            ${
+              showingCondition.minned
+                ? disabledStyles
+                : "bg-gray-500 hover:shadow-round hover:shadow-primary"
+            }`}
           >
-            See Less <BsFillArrowUpCircleFill className="text-rose-700 w-6 h-6" />
+            See Less{" "}
+            <BsFillArrowUpCircleFill className="h-6 w-6 text-rose-700" />
           </button>
         </div>
       </div>
