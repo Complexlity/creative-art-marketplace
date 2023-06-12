@@ -26,5 +26,6 @@ module.exports = {
   },
   plugins: [require("flowbite/plugin"),
   require("daisyui"),
+  require("@xpd/tailwind-3dtransforms")
 ],
 };

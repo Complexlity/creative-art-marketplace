@@ -6,13 +6,15 @@ const WeeklyArtists = () => {
   const people = useNftsDataContext().peopleData.slice(0, 5)
 
   return (
-    <section className="mb-32 md:mb-40">
-      <h2 className=" text-center text-4xl md:text-5xl text-white">
+    <section className="mb-32 md:mb-40 px-1">
+      <header className='tracking-wide mb-8'>
+        <h2 className=" text-center text-4xl md:text-5xl text-white">
         <span className="relative">Artists
-        <hr className="absolute w-full  left-1/2 right-1/2 translate-x-[-50%] bg-primary md:p-[.1rem] p-[.06rem]" />
+        <hr className="absolute w-full top-[100%] sm:top-[calc(100%+2px)] left-1/2 right-1/2 translate-x-[-50%] bg-primary md:p-[.07rem] p-[.06rem]" />
         </span> Of The{" "}
         <span className=" text-primary">Week</span>
       </h2>
+      </header>
       <ul className="honeycomb" lang="es">
         {people.map((item, index) => {
           const [firstName, LastName] = item.name.split(' ')
@@ -23,31 +25,7 @@ const WeeklyArtists = () => {
           </div>
         </li>
         })}
-        {/* <li className="honeycomb-cell">
-          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
-          <div className="honeycomb-cell__title">CryptoKittyQ</div>
-        </li>
-        <li className="honeycomb-cell">
-          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
-          <div className="honeycomb-cell__title">RoboRarity</div>
-        </li>
-        <li className="honeycomb-cell">
-          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
-          <div className="honeycomb-cell__title">
-            GalacticGaz<small>No vidrio</small>
-          </div>
-        </li>
-        <li className="honeycomb-cell">
-          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
-          <div className="honeycomb-cell__title">
-            ElecEag<small>1 de repuesto</small>
-          </div>
-        </li>
-        <li className="honeycomb-cell">
-          <Image alt="Artist Profile Image" className="honeycomb-cell__image" src={nftImage}/>
-          <div className="honeycomb-cell__title">NeonNar</div>
-        </li>
-        <li className="honeycomb-cell honeycomb__placeholder"></li> */}
+       
       </ul>
     </section>
   );

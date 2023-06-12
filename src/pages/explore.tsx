@@ -9,7 +9,7 @@ import useDebounce from "~/utils/useDebounce";
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 
 const Explore = () => {
@@ -225,8 +225,8 @@ console.log({displayedData, data:{...seeMore, ...showingCondition}})
           suppressHydrationWarning={true}
           className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
-          <AnimatePresence>
-            {displayedData.slice(0, seeMore.initialValue).map((item) => {
+        <AnimatePresence  >
+              {displayedData.slice(0, seeMore.initialValue).map((item) => {
               return <Card key={item.id} item={item} />;
             })}
           </AnimatePresence>

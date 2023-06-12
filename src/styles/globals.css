@@ -44,7 +44,7 @@
   position:absolute;
 }
 
-.method-card:focus, {
+.method-card:focus {
   border-color: white;
   border-width:2px;
   scale:101%;
@@ -87,6 +87,7 @@
 
 
 section {
+  margin-top: 5rem;
   margin-bottom: 3rem;
 }
 
