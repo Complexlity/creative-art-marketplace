@@ -135,7 +135,7 @@ function MobileMenu() {
       <motion.div
         animate={isOpen ? "open" : "closed"}
         variants={variants}
-        className={`dropdown_menu absolute right-2 top-[60px] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden rounded-lg  bg-gray-400/50 px-2 py-2 text-lg opacity-0 backdrop-blur-sm transition-[height] duration-[.2s] sm:right-4 lg:hidden `}
+        className={`dropdown_menu absolute right-0  top-[calc(100%+2px)] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden rounded-lg  bg-gray-400/50 px-2 py-2 text-lg opacity-0 backdrop-blur-sm transition-[height] duration-[.2s] sm:right-4 lg:hidden `}
       >
         <Link href="/">
           <motion.li
