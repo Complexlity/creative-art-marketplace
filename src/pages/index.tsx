@@ -16,13 +16,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="main" suppressHydrationWarning>
-        <div suppressHydrationWarning  className="mx-auto max-w-[1400px] overflow-x-hidden px-2 md:px-4">
+        <div suppressHydrationWarning  className="mx-auto max-w-[1200px]  px-2 md:px-4">
         <NavBar />
-          <Hero />
+          <div className="overflow-x-hidden">
+            <Hero />
           <UniqueArt />
           <WeeklyArtists />
           <Subscribe />
           <Footer />
+          </div>
         </div>
       </div>
     </>

@@ -1,19 +1,42 @@
 import Link from "next/link";
 import Image from "next/image";
-import {useRouter} from 'next/router'
-import { useState } from "react";
-import logo from '../../public/icons/logo.png'
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import logo from "../../public/icons/logo.png";
 import { Spin as Hamburger } from "hamburger-react";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-
-
 const NavBar = () => {
-  const routePath = useRouter().pathname
-  const activeLink = "border-b-2 border-primary"
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  const routePath = useRouter().pathname;
+  const activeLink = "border-b-2 border-primary";
+  console.log("I am scrolling")
+
+  const changeBackground = () => {
+    console.log("I am scrolling")
+    if (window.scrollY >= 90) {
+      setIsScrolling(true);
+      return;
+    }
+    setIsScrolling(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", changeBackground);
+
+    return () => {
+      window.removeEventListener("scroll", changeBackground);
+    };
+  }, [window.scrollY]);
+
+
   return (
-    <nav className="flex items-center justify-between text-white">
+    <nav
+      className={`px-2 md:px-4 sticky top-[10px] text-xl z-[100] flex py-1 md:py-2 items-center justify-between text-white
+        ${isScrolling ? "rounded-full bg-[#17233a] top-[.5rem] opacity-[90%] backdrop-blur-sm shadow-sm shadow-primary" : ""}`}
+    >
       <Link href="/" className="flex items-center gap-1 text-3xl">
         <Image src={logo} className="h-6 w-6" alt="Creative logo" />
         <p className="logo-text">
@@ -21,15 +44,17 @@ const NavBar = () => {
         </p>
       </Link>
       <ul className="hidden list-none items-center gap-8 lg:flex">
-        <Link href="/"><li className={routePath === "/" ? activeLink : ""}>
-          Home
-        </li></Link>
-        <Link href="/mint"><li className={routePath === "/mint" ? activeLink : ""}>
-          Mint
-        </li></Link>
-        <Link href="/explore"><li className={routePath === "/explore" ? activeLink : ""}>
-          Explore
-        </li></Link>
+        <Link href="/">
+          <li className={routePath === "/" ? activeLink : ""}>Home</li>
+        </Link>
+        <Link href="/mint">
+          <li className={routePath === "/mint" ? activeLink : ""}>Mint</li>
+        </Link>
+        <Link href="/explore">
+          <li className={routePath === "/explore" ? activeLink : ""}>
+            Explore
+          </li>
+        </Link>
       </ul>
       <div className="hidden lg:block">
         <ConnectButton accountStatus={"full"} showBalance={true} />
@@ -47,7 +72,7 @@ const variants = {
   closed: {
     opacity: 0,
     scale: 0,
-       transition: { when: "afterChildren", },
+    transition: { when: "afterChildren" },
   },
 };
 
@@ -63,19 +88,28 @@ const oneVariants = {
   },
 };
 const twoVariants = {
-  open: { opacity: 1, x: 0 , transition: { delay: .3, duration: .3} },
-  closed: { opacity: 0, x: "100%", transition: {
-    delay: .3, duration: .3
-  }
-  }
-}
+  open: { opacity: 1, x: 0, transition: { delay: 0.3, duration: 0.3 } },
+  closed: {
+    opacity: 0,
+    x: "100%",
+    transition: {
+      delay: 0.3,
+      duration: 0.3,
+    },
+  },
+};
 
 const threeVariants = {
-  open: { opacity: 1, x: 0, transtion: { delay: .2, duration: .3} },
-  closed: { opacity: 0, x: "-100%", transition: {
-    delay: .2, duration: .3
-  } }
-}
+  open: { opacity: 1, x: 0, transtion: { delay: 0.2, duration: 0.3 } },
+  closed: {
+    opacity: 0,
+    x: "-100%",
+    transition: {
+      delay: 0.2,
+      duration: 0.3,
+    },
+  },
+};
 const fourVariants = {
   open: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.3 } },
   closed: {
@@ -88,29 +122,28 @@ const fourVariants = {
   },
 };
 
-
-
 function MobileMenu() {
-       const [isOpen, setIsOpen] = useState<boolean>(false);
-       const routePath = useRouter().pathname
-  const activeMobileLink = "border-primary border-y-2"
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const routePath = useRouter().pathname;
+  const activeMobileLink = "border-primary border-y-2";
 
   return (
     <>
       <div className="lg:hidden">
         <Hamburger toggled={isOpen} toggle={setIsOpen} />
       </div>
-     <motion.div
+      <motion.div
         animate={isOpen ? "open" : "closed"}
         variants={variants}
-        className={`lg:hidden dropdown_menu absolute right-2 top-[60px] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden  rounded-lg bg-gray-400/50 px-2 py-2 text-lg opacity-0 backdrop-blur-sm transition-[height] duration-[.2s] sm:right-4 `}
+        className={`dropdown_menu absolute right-2 top-[60px] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden rounded-lg  bg-gray-400/50 px-2 py-2 text-lg opacity-0 backdrop-blur-sm transition-[height] duration-[.2s] sm:right-4 lg:hidden `}
       >
         <Link href="/">
           <motion.li
             variants={oneVariants}
             className={`flex items-center justify-center rounded-lg
-py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/" ? activeMobileLink : ""
-              }`}
+py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
+              routePath === "/" ? activeMobileLink : ""
+            }`}
           >
             Home
           </motion.li>
@@ -120,8 +153,9 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/" ? act
           <motion.li
             variants={twoVariants}
             className={`flex items-center justify-center rounded-lg
-py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/mint" ? activeMobileLink : ""
-              }`}
+py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
+              routePath === "/mint" ? activeMobileLink : ""
+            }`}
           >
             Mint
           </motion.li>
@@ -131,14 +165,18 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/mint" ?
           <motion.li
             variants={threeVariants}
             className={`flex items-center justify-center rounded-lg
-py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/explore" ? activeMobileLink : ""
-              }`}
+py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
+              routePath === "/explore" ? activeMobileLink : ""
+            }`}
           >
             Explore
           </motion.li>
         </Link>
         <hr className="mx-auto w-4/5" />
-        <motion.div variants={fourVariants} className="mt-4 grid justify-center py-2">
+        <motion.div
+          variants={fourVariants}
+          className="mt-4 grid justify-center py-2"
+        >
           <ConnectButton
             accountStatus={{
               smallScreen: "avatar",
@@ -147,7 +185,6 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${routePath === "/explore
           />
         </motion.div>
       </motion.div>
-
     </>
   );
 }

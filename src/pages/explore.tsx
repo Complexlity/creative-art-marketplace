@@ -212,7 +212,7 @@ console.log({displayedData, data:{...seeMore, ...showingCondition}})
           value={priceRange}
           onChange={(e) => setPriceRange(e.target.value)}
         >
-          <option disabled value="all">
+          <option value="all">
             Price
           </option>
           <option value="cheap">{`Cheap (< 1ETH)`}</option>
