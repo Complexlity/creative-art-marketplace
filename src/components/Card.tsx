@@ -42,7 +42,7 @@ export function Card({
       exit={{ opacity: 0, y: "-100%" }}
       transition={{ duration: 0.5 }}
       suppressHydrationWarning={true}
-      className=" mb-6 max-w-full space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
+      className="mx-auto mb-6 w-full max-w-[500px] space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
     >
       {isStaticImage ? (
         <Image
