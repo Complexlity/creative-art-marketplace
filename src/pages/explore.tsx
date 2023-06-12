@@ -11,6 +11,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
 import { AnimatePresence } from 'framer-motion'
 
+
 const Explore = () => {
   const nftsData = useNftsDataContext().nftsData;
   return (
@@ -80,10 +81,14 @@ function showLess() {
 
   const [search, setSearch] = useState<Search>('')
   const debouncedSearch = useDebounce(search, 500)
+  const [priceRange, setPriceRange] = useState<string>('all')
+  const [category, setCategory] = useState("default")
+  const [expiryDate, setExpiryDate] = useState('0')
   const [displayedData, setDisplayedData] = useState(nftsData)
+
   useEffect(() => {
-    searchByName(debouncedSearch)
-  }, [debouncedSearch])
+    setDisplayedData(aggregateQuery(debouncedSearch, category, expiryDate, priceRange))
+  }, [debouncedSearch, category, expiryDate, priceRange])
 
   useEffect(() => {
     if (displayedData.length <= 6) {
@@ -99,16 +104,58 @@ function showLess() {
     }
   }, [displayedData])
 
-  function searchByName(searchValue: string) {
-    if (searchValue.length > 0) {
-      setDisplayedData(nftsData.filter((data) => {
-        return data.name.toLowerCase().includes(searchValue.toLowerCase())
-      })
-      )
-    }
-    else {
-      setDisplayedData(nftsData)
+const timeInMilliseconds = (hours: number) => hours * 60 * 60 * 1000
 
+  function aggregateQuery(search: string, category: string, date: string, priceRange: string) {
+    const dateNum = Number(date)
+    const items = [...nftsData]
+    const newItems = []
+    for (let i = 0; i < items.length; i++){
+      let curr = items[i] as NFT
+      if (searchByName(curr, search) && searchByCategory(curr, category) && searchByDate(curr, dateNum) && searchByPrice(curr, priceRange )) {
+        newItems.push(curr)
+      }
+    }
+    return newItems
+  }
+
+  function searchByName(item: NFT, searchString: string) {
+    const itemName = item.name.toLowerCase()
+    searchString = searchString.toLowerCase()
+    if(!searchString) return true
+    return itemName.includes(searchString)
+  }
+
+  function searchByCategory(item: NFT, category: string) {
+    const itemCategory = item.category.toLowerCase()
+    category = category.toLowerCase()
+    if (category === 'default') return true
+    return itemCategory === category
+  }
+
+  function searchByDate(item: NFT, date: number) {
+    switch (date) {
+      case 24:
+        return item.endTime < timeInMilliseconds(24)
+      case 48:
+        return item.endTime >= timeInMilliseconds(24) && item.endTime < timeInMilliseconds(48)
+      case 49:
+        return item.endTime >= timeInMilliseconds(48)
+      default:
+        return true
+    }
+  }
+
+  function searchByPrice(item: NFT, priceRange: string) {
+    switch (priceRange) {
+      case 'cheap':
+        return item.price < 1
+      case 'affordable':
+        return item.price  >= 1 && item.price < 3
+      case 'costly':
+        return item.price > 3
+      default:
+        return true
     }
   }
 
@@ -133,40 +180,44 @@ console.log({displayedData, data:{...seeMore, ...showingCondition}})
 
         <select
           id="categories"
-          className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
-          defaultValue={"SEL"}
+        className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
         >
-          <option disabled value="SEL">
+          <option value="default">
             All Categories
           </option>
-          <option value="MUS">Music</option>
-          <option value="GAM">Gaming </option>
-          <option value="EST">Real Estate</option>
-          <option value="ART">Digital Art</option>
-          <option value="COL">Collectibles</option>
+          <option value="music">Music</option>
+          <option value="gaming">Gaming </option>
+          <option value="real estate">Real Estate</option>
+          <option value="art">Digital Art</option>
+          <option value="collectibles">Collectibles</option>
         </select>
         <select
-          id="buy-now"
+          id="expiry-time"
           className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
-          defaultValue={"SEL"}
+          value={expiryDate}
+          onChange={(e) => setExpiryDate(e.target.value)}
         >
-          <option disabled value="SEL">
-            Status
+          <option  value="0">
+            Expiry Time
           </option>
-          <option value="DIG">Buy now</option>
-          <option value="COL">On Auction</option>
-          <option value="GAM">has Offers</option>
+          <option value="24">{`< 24 hours`}</option>
+          <option value="48">24 - 48hours</option>
+          <option value="49">{`> 48hours`}</option>
         </select>
         <select
           id="items-type"
           className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
-          defaultValue={"SEL"}
+          value={priceRange}
+          onChange={(e) => setPriceRange(e.target.value)}
         >
-          <option disabled value="SEL">
-            Items Type
+          <option disabled value="all">
+            Price
           </option>
-          <option value="DIG">Single Item</option>
-          <option value="COL">Bundles</option>
+          <option value="cheap">{`Cheap (< 1ETH)`}</option>
+          <option value="affordable">{`Affordable (1 - 3 ETH)`}</option>
+          <option value="costly">{`Costly (> 3ETH)`}</option>
         </select>
       </div>
       <div className="cards">

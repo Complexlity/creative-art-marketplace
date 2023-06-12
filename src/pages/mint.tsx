@@ -85,7 +85,6 @@ function MintForm() {
       isMinBid: false,
     },
     onSubmit: (values, { resetForm }) => {
-      console.log("I am here");
       if (!image) {
         setImageError("NFT image not provided");
         return;
@@ -103,12 +102,12 @@ function MintForm() {
   let titleErr = errors.title && touched.title;
   let descriptionErr = errors.description && touched.description;
   let collectionsErr = errors.royalties && touched.royalties;
-  console.log({ image: typeof image });
+
   function showImage(e: any) {
     const file = e.target.files[0];
-    console.log(file);
+
     if (file.size > 5000 * 1024) {
-      console.log("File too large");
+
       setImageError("File Too Large");
       return;
     }

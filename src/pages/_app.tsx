@@ -12,6 +12,7 @@ import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import NftsDataContextProvider  from "../utils/DataContext";
+import React from "react";
 
 const apiKey = process.env.ALCHEMY_ID as string;
 
@@ -46,12 +47,23 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       >
         <ThirdwebProvider activeChain={activeChain}>
           <NftsDataContextProvider>
-            <Component {...pageProps} />
+            <SafeHydrate>
+              <Component {...pageProps} />
+            </SafeHydrate>
           </NftsDataContextProvider>
         </ThirdwebProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );
 };
+
+
+function SafeHydrate({ children }: {children: React.ReactNode}) {
+  return (
+    <div suppressHydrationWarning>
+      {typeof window === "undefined" ? null : children}
+    </div>
+  );
+}
 
 export default MyApp;

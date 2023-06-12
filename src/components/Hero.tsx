@@ -6,9 +6,6 @@ import CountDownComponent from "./Countdown";
 
 const Hero = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
-  // let idx = randomNumberGenerator.next().value
-  // console.log({data: nftsData[idx!]})
-  // if(!idx) idx = 0
   const nftsData = useNftsDataContext().nftsData;
 
   return (

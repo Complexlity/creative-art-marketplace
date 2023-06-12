@@ -329,7 +329,6 @@ const BidInputForm = ({ nftData, setBought, setOpenModal}: {nftData: NFT, setBou
     validationSchema: bidSchema,
     onSubmit: submitBid
 })
-console.log({errors, values})
 
   function submitBid() {
     setBought(true);

@@ -14,22 +14,22 @@ function shuffleArray<T>(array: T[]) {
 export function generateNFTPrice() {
   // Define the range of possible values for NFT cost
   const minPrice = 0.01; // Minimum cost in ETH
-  const maxPrice = 1; // Maximum cost in ETH
+  const maxPrice = 5; // Maximum cost in ETH
   // Generate a random value within the range
   const randomPrice = Math.random() * (maxPrice - minPrice) + minPrice;
   return Number(randomPrice.toFixed(2));
 }
 
 export function generateRandomDate() {
-  const sevenDays = 5 * 24 * 60 * 60 * 1000; // 5 days in milliseconds
+  const sevenDays = 120 * 60 * 60 * 1000; // 5 days in milliseconds
   const randomTime = Math.floor(Math.random() * sevenDays); // Random time within the range
   return randomTime;
 }
 
-// console.log({partialNFTsData})
+
 const randomNftsData = shuffleArray(partialNFTsData);
 const randomPeopleData = shuffleArray(people)
-// console.log({randomNftsData})
+
 
 const nftsData: NFT[] = randomNftsData.map((item) => {
   item.endTime = generateRandomDate()

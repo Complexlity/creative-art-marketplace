@@ -32,7 +32,7 @@ const NavBar = () => {
         </li></Link>
       </ul>
       <div className="hidden lg:block">
-        <ConnectButton />
+        <ConnectButton accountStatus={"full"} showBalance={true} />
       </div>
 
       <MobileMenu />
