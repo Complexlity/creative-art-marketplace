@@ -11,11 +11,11 @@ const NavBar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
 
   const routePath = useRouter().pathname;
-  const activeLink = "border-b-2 border-primary";
-  
+  const activeLink = "border-b-2 border-primary hover:border-white";
+
 
   const changeBackground = () => {
-  
+
     if (window.scrollY >= 90) {
       setIsScrolling(true);
       return;
@@ -45,13 +45,13 @@ const NavBar = () => {
       </Link>
       <ul className="hidden list-none items-center gap-8 lg:flex">
         <Link href="/">
-          <li className={routePath === "/" ? activeLink : ""}>Home</li>
+          <li className={`${routePath === "/" ? activeLink : ""} hover:text-primary `}>Home</li>
         </Link>
         <Link href="/mint">
-          <li className={routePath === "/mint" ? activeLink : ""}>Mint</li>
+          <li className={`${routePath === "/mint" ? activeLink : ""} hover:text-primary`}>Mint</li>
         </Link>
         <Link href="/explore">
-          <li className={routePath === "/explore" ? activeLink : ""}>
+          <li className={`${routePath === "/explore" ? activeLink : ""} hover:text-primary`}>
             Explore
           </li>
         </Link>
