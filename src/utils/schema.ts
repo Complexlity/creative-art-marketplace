@@ -23,7 +23,7 @@ export const schema = yup.object().shape({
   description: yup.string().required("Provide a description of you NFT"),
   royalties: yup
     .number()
-    .required("Missing Or Invalid (must be integer greater between 0 and 70")
+    .required("Provide a number (must be integer greater between 0 and 70")
   .moreThan(0, "Number must be greater than zero")
     .nullable()
     .max(70, "Item cannot exceed 70%"),
@@ -34,9 +34,11 @@ export const schema = yup.object().shape({
 
 export const bidSchema = yup.object().shape({
   bid: yup.number()
-  .required("Missing Or Invalid")
+  .required("Please provide a number")
   .moreThan(0, "Number must be greater than zero")
     .nullable(),
-  understandTerms: yup.array().min(1, "Accept my terms 🙏")
+    termsAndConditions: yup
+    .bool()
+    .oneOf([true], 'You need to accept the terms and conditions'),
 })
 

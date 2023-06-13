@@ -7,6 +7,8 @@
   --bg-image: url("/backgrounds/bg.png");
   --font-header: url("/TT\ Ramillas\ Trial\ Variable\ Roman.ttf");
   --font-text: url("/Roboto-Regular.ttf");
+  --toastify-color-progress-dark: #d2f55e !important;
+  --toastify-color-dark: #1f2937 !important;
 }
 
 .main {

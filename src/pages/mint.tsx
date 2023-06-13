@@ -14,7 +14,9 @@ import { useFormik } from "formik";
 import { schema } from "~/utils/schema";
 import { StaticImageData } from "next/image";
 import { Alert, Modal } from "flowbite-react";
-import CountDownComponent from "~/components/Countdown";
+import {AiOutlineClose} from 'react-icons/ai'
+import { ToastContainer, toast } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 
 type WithChidren = {
   children: React.ReactNode;
@@ -377,14 +379,7 @@ function MintForm() {
         </div>
 
       </form>
-      <AlertModal action={submitted} setAction={setSubmitted}>
-        <span>
-          <p>
-            <span className="font-medium">Congratulations!</span>
-            You are going to be rich!! ☺{" "}
-          </p>
-        </span>
-      </AlertModal>
+      <ToastContainer />
     </>
   );
 }
@@ -519,27 +514,6 @@ function MethodOptions({
   );
 }
 
-export function AlertModal({
-  children,
-  action,
-  setAction,
-}: {
-  children: React.ReactNode;
-  action: boolean;
-  setAction: Dispatch<SetStateAction<boolean>>;
-}) {
-  const [openModal, setOpenModal] = useState<string | undefined>();
-  const props = { openModal, setOpenModal };
 
-  return (
-    <>
-      <Modal show={action} position={"top-center"} dismissible>
-        <Alert color="success" onDismiss={() => setAction(false)}>
-          {children}
-        </Alert>
-      </Modal>
-    </>
-  );
-}
 
 export default Mint;

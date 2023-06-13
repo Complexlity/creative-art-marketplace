@@ -39,7 +39,7 @@ export function Card({
       layout
       initial={{ opacity: 0, y: "100%" }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, x: "-100%" }}
+      exit={{ opacity: 0, x: "-100%", transition: {duration: 0.4} }}
       transition={{ duration: 0.5 }}
       suppressHydrationWarning={true}
       className="mx-auto mb-6 w-full max-w-[500px] space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
@@ -88,7 +88,7 @@ export function Card({
           </p>
         </div>
         <Link href={fromInput ? "" : `/items/${mergedItem.id}`}>
-          <motion.button whileHover={{scale: 1.01}} whileTap={{scale: 0.95}} className="rounded-lg border border-primary px-4 py-3 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800 md:px-6">
+          <motion.button whileHover={{scale: 1.1, backgroundColor: "#d2f55e", color: "#1f2937"}} whileTap={{scale: 0.98}} className="rounded-lg border border-primary px-4 py-3 font-bold text-primary ease-in md:px-6">
             Place A Bid
           </motion.button>
         </Link>

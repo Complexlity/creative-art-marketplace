@@ -12,10 +12,10 @@ const NavBar = () => {
 
   const routePath = useRouter().pathname;
   const activeLink = "border-b-2 border-primary";
-  console.log("I am scrolling")
+  
 
   const changeBackground = () => {
-    console.log("I am scrolling")
+  
     if (window.scrollY >= 90) {
       setIsScrolling(true);
       return;
