@@ -1,6 +1,6 @@
-import Footer from "~/components/General/Footer";
-import NavBar from "~/components/General/NavBar";
-import Header  from "~/components/General/Header";
+import Footer from "~/components/Universal/Footer";
+import NavBar from "~/components/Universal/NavBar";
+import Header  from "~/components/Universal/Header";
 import CardsContainer from "~/components/Explore/CardsContainer"
 
 const Explore = () => {

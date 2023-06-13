@@ -1,10 +1,10 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import NavBar from "~/components/General/NavBar";
+import NavBar from "~/components/Universal/NavBar";
 import Hero from '~/components/Home/Hero'
 import UniqueArt from "~/components/Home/UniqueArt";
 import Subscribe from "~/components/Home/Subscribe";
-import Footer from "~/components/General/Footer";
+import Footer from "~/components/Universal/Footer";
 import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
 
 const Home: NextPage = () => {

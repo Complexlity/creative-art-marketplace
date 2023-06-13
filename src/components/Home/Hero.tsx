@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useNftsDataContext } from "~/contexts/DataContext";
-import CountDownComponent from "~/components/General/Countdown";
+import CountDownComponent from "~/components/Universal/Countdown";
 import {motion} from 'framer-motion'
 
 const Hero = () => {

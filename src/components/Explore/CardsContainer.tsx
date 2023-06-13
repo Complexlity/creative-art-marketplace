@@ -1,4 +1,4 @@
-import { Card } from "~/components/General/Card";
+import { Card } from "~/components/Universal/Card";
 import {useEffect, useState} from 'react'
 import { NFT } from "~/data/nfts";
 import useDebounce from "~/hooks/useDebounce";

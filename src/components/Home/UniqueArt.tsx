@@ -1,7 +1,7 @@
 
 import { NFT } from "~/data/nfts";
 import { useNftsDataContext } from "~/contexts/DataContext";
-import Card from "~/components/General/Card"
+import Card from "~/components/Universal/Card"
 import {motion} from 'framer-motion'
 
 const UniqueArt = () => {

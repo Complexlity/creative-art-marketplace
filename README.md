@@ -1,28 +1,48 @@
-# Create T3 App
+# Creative Arts NFT MarketPlace
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#what-does-it-do">What does it do?</a></li>
+        <li><a href="#who-is-it-for">Who is it for?</a></li>
+        <li><a href="#why-did-you-build-it">Why did you build it?</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#screenshots-of-the-live-application">Screenshots Of the Live Application</a>
+    </li>
+    <li></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-## What's next? How do I make an app with this?
+## About the project
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+### What does it do?
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+  The Creativearts marketplace is a offers a wide range of functionalities. It lets user have access to many categories of NFTS by made by other user and are able to bid to purchase them. With it's decentralized nature, it helps users own the application by having the ability to add a new item to the marketplace when they would want to without needing any permission to do so
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Who is it for?
 
-## Learn More
+  The site has been build to be accessible by artists, lovers of art and as well as anyone looking to express the business side. Artist can now showcase and monetize their artworks as well as auction and make them limited items.
+  Lovers of art can now go neck to neck to acquire their favorite art in a bidding format which would only accepted by the creator of the NFT (artists). This makes the value of an item decided by the users and users alone with no central agancy involved
+  On the business end, people can now purchase super unique items in their early stages of minting, market and sell them for profit. It's a market place for all
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### Why did you build it?
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
-## How do I deploy this?
+## Screenshots Of The Live Project
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+
+## Live Demo
+
+The working of the project can be [Here](https://creative-art-marketplace.vercel.app)
+
+## Technologies Used
+
+### Nextjs

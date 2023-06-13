@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import NavBar from "~/components/General/NavBar";
-import Footer from "~/components/General/Footer";
-import { Card } from "~/components/General/Card";
+import NavBar from "~/components/Universal/NavBar";
+import Footer from "~/components/Universal/Footer";
+import { Card } from "~/components/Universal/Card";
 import { MdVerified } from "react-icons/md";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdPending, MdCancel } from "react-icons/md";
@@ -17,7 +17,7 @@ import { people, People } from "~/data/people";
 import { useNftsDataContext, } from "~/contexts/DataContext";
 import { generateRandomNFTPrice, pickRandomItems} from '~/utils/utitlities'
 import { Modal, Button, Label, Checkbox,  } from "flowbite-react";
-import CountDownComponent from "~/components/General/Countdown";
+import CountDownComponent from "~/components/Universal/Countdown";
 import {useFormik} from 'formik'
 import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";

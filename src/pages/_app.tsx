@@ -1,3 +1,4 @@
+import React from "react";
 import { type AppType } from "next/dist/shared/lib/utils";
 import "@rainbow-me/rainbowkit/styles.css";
 import "~/styles/globals.css";
@@ -12,7 +13,6 @@ import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import NftsDataContextProvider  from "../contexts/DataContext";
-import React from "react";
 import merge from 'lodash.merge'
 
 const apiKey = process.env.ALCHEMY_ID as string;

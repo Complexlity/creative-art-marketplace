@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MdGroups } from "react-icons/md";
 import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
-import Card from "~/components/General/Card";
+import Card from "~/components/Universal/Card";
 import { useFormik } from "formik";
 import { schema } from "~/utils/schemas";
 import { StaticImageData } from "next/image";
