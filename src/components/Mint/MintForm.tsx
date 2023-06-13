@@ -42,7 +42,6 @@ export default function MintForm() {
           setImageError("NFT image not provided");
           return;
         }
-        setSubmitted(true);
         setImage(undefined);
         resetForm();
       },

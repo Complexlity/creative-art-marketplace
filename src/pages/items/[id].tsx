@@ -1,27 +1,27 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import NavBar from "~/components/NavBar";
-import Footer from "~/components/Footer";
-import { Card } from "~/components/Card";
+import NavBar from "~/components/General/NavBar";
+import Footer from "~/components/General/Footer";
+import { Card } from "~/components/General/Card";
 import { MdVerified } from "react-icons/md";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdPending, MdCancel } from "react-icons/md";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import type { IconType } from "react-icons";
-import {bidSchema} from "../../utils/schema"
+import {bidSchema} from "~/utils/schema"
 
-import { NFT } from "../../utils/nfts";
+import { NFT } from "~/utils/nfts";
 import { people, People } from "~/utils/people";
 
 import { useNftsDataContext, generateNFTPrice } from "~/utils/DataContext";
 import { Modal, Button, Label, Checkbox, TextInput } from "flowbite-react";
-import CountDownComponent from "~/components/Countdown";
+import CountDownComponent from "~/components/General/Countdown";
 // import { AlertModal } from "../mint";
 import {useFormik} from 'formik'
 import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 
 
 
@@ -41,7 +41,7 @@ function pickRandomItems<T>(arr: T[], numOfItems: number) {
 function NFTItem() {
   const router = useRouter();
   const nftsData = useNftsDataContext().nftsData;
-  const id = router.query.nftId;
+  const id = router.query.id;
   const randomPeople = pickRandomItems(people, 4) as People[];
   const nftData = nftsData.find((item) => id === item.id) as NFT;
   let relatedItems = nftsData.filter((item) => id !== item.id);
@@ -338,7 +338,6 @@ const BidInputForm = ({ nftData, setOpenModal}: {nftData: NFT, setOpenModal: Dis
   const { values, errors, touched, handleSubmit, handleBlur, handleChange} = useFormik({
   initialValues:{...initialValues},
     onSubmit: (values, { resetForm }) => {
-      console.log("I am submitting again")
       notifyBid()
       setInitialValues({...initialValues})
       setOpenModal(undefined)
@@ -346,9 +345,6 @@ const BidInputForm = ({ nftData, setOpenModal}: {nftData: NFT, setOpenModal: Dis
     validationSchema: bidSchema,
   })
 const notifyBid = () => toast("Bid submit successful. We will get back to you shortly ☺")
-
-
-console.log(errors)
 
   return (
     <>

@@ -35,7 +35,7 @@ const NavBar = () => {
   return (
     <nav
       className={`px-2 md:px-4 sticky top-[10px] text-xl z-[100] flex py-1 md:py-2 items-center justify-between text-white
-        ${isScrolling ? "rounded-full bg-[#17233a] top-[.5rem] opacity-[90%] backdrop-blur-sm shadow-sm shadow-primary" : ""}`}
+        ${isScrolling ? "rounded-full top-[.5rem] opacity-[90%] backdrop-blur-md shadow-sm shadow-primary" : ""}`}
     >
       <Link href="/" className="flex items-center gap-1 text-3xl">
         <Image src={logo} className="h-6 w-6" alt="Creative logo" />

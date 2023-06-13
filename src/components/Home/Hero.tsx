@@ -54,8 +54,8 @@ const Hero = () => {
             </p>
             <Link href={`/items/${nftsData[0]!.id}`} className="grid">
               <motion.button
-              whileHover={{scale: 1.01}}
-              whileTap={{scale: 0.95}}
+              whileHover={{scale: 1.03}}
+              whileTap={{scale: 0.98}}
               className="mt-1 rounded-lg border border-primary py-2 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800">
                 Place A Bid
               </motion.button>
