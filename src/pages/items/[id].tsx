@@ -9,15 +9,15 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdPending, MdCancel } from "react-icons/md";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import type { IconType } from "react-icons";
-import {bidSchema} from "~/utils/schema"
+import {bidSchema} from "~/utils/schemas"
 
-import { NFT } from "~/utils/nfts";
-import { people, People } from "~/utils/people";
+import { NFT } from "~/data/nfts";
+import { people, People } from "~/data/people";
 
-import { useNftsDataContext, generateNFTPrice } from "~/utils/DataContext";
-import { Modal, Button, Label, Checkbox, TextInput } from "flowbite-react";
+import { useNftsDataContext, } from "~/contexts/DataContext";
+import { generateRandomNFTPrice, pickRandomItems} from '~/utils/utitlities'
+import { Modal, Button, Label, Checkbox,  } from "flowbite-react";
 import CountDownComponent from "~/components/General/Countdown";
-// import { AlertModal } from "../mint";
 import {useFormik} from 'formik'
 import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
@@ -25,18 +25,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 
 
-function pickRandomItems<T>(arr: T[], numOfItems: number) {
-  const result = [];
-  const arrCopy = [...arr]; // make a copy of the original array to avoid modifying it
 
-  for (let i = 0; i < numOfItems; i++) {
-    const randomIndex = Math.floor(Math.random() * arrCopy.length);
-    result.push(arrCopy[randomIndex]); // add the randomly selected item to the result array
-    arrCopy.splice(randomIndex, 1); // remove the selected item from the copy of the array
-  }
-
-  return result;
-}
 
 function NFTItem() {
   const router = useRouter();
@@ -81,6 +70,8 @@ function getStatusText(status: BidStatus) {
   return { checkColor, statusText, StatusIcon };
 }
 
+
+
 function getRandomStatus(): BidStatus | undefined {
   let statuses: BidStatus[] = ["ACCEPTED", "PENDING", "REJECTED"];
   return statuses[Math.floor(Math.random() * statuses.length)];
@@ -121,7 +112,7 @@ function Bids({ status, person }: { status?: BidStatus; person: People }) {
           {statusText}
           {": "}
           <span className="font-bold tracking-wider text-white">
-            {generateNFTPrice()}ETH
+            {generateRandomNFTPrice()}ETH
           </span>
         </p>
         <p>
@@ -254,7 +245,7 @@ type BuyOptions = "BUY_NOW" | "PLACE_BID"
 function Modals({ nftData }: { nftData: NFT }) {
   const [openModal, setOpenModal] = useState<BuyOptions | undefined>();
   const props = { openModal, setOpenModal };
-  
+
 
   const notify = () => toast("Thank you for shopping at creative arts 😁")
 
@@ -394,7 +385,7 @@ const notifyBid = () => toast("Bid submit successful. We will get back to you sh
         <Button type="submit">Submit</Button>
       </div>
     </form>
-    
+
     </>
   );
 }

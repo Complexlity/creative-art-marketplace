@@ -1,4 +1,4 @@
-import { NFT } from "~/utils/nfts";
+import { NFT } from "~/data/nfts";
 import Link from "next/link";
 import Image from "next/image";
 import ethereumImage from "/public/icons/ethereum.png";

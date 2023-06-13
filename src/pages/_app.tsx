@@ -1,5 +1,4 @@
 import { type AppType } from "next/dist/shared/lib/utils";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
 import "@rainbow-me/rainbowkit/styles.css";
 import "~/styles/globals.css";
 import {
@@ -12,7 +11,7 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import NftsDataContextProvider  from "../utils/DataContext";
+import NftsDataContextProvider  from "../contexts/DataContext";
 import React from "react";
 import merge from 'lodash.merge'
 
@@ -35,7 +34,6 @@ const wagmiConfig = createConfig({
   publicClient,
 });
 
-const activeChain = "ethereum";
 
 const myCustomTheme: Theme = merge(darkTheme(), {
   colors: {
@@ -59,11 +57,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           theme={myCustomTheme}
           coolMode
         >
-          <ThirdwebProvider activeChain={activeChain}>
             <NftsDataContextProvider>
               <Component {...pageProps} />
             </NftsDataContextProvider>
-          </ThirdwebProvider>
         </RainbowKitProvider>
       </WagmiConfig>
     </SafeHydrate>

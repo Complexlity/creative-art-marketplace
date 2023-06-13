@@ -4,7 +4,7 @@ import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
 import Card from "~/components/General/Card";
 import { useFormik } from "formik";
-import { schema } from "~/utils/schema";
+import { schema } from "~/utils/schemas";
 import { StaticImageData } from "next/image";
 import MethodOptions, {type Methods} from './MethodOptions'
 
@@ -13,17 +13,17 @@ export default function MintForm() {
     const [imageError, setImageError] = useState<string>();
     const [checked, setChecked] = useState<boolean>(false);
     const [method, setMethod] = useState<Methods>("FIXED_PRICE");
-    
+
 
     const toggleChecked = () => {
       setChecked(!checked);
     };
-  
+
     const toggleOptions = (e: any) => {
       const value = e.target.value.toUpperCase();
       setMethod(value);
     };
-  
+
     const formik = useFormik({
       initialValues: {
         title: "",
@@ -54,12 +54,12 @@ export default function MintForm() {
     let titleErr = errors.title && touched.title;
     let descriptionErr = errors.description && touched.description;
     let collectionsErr = errors.royalties && touched.royalties;
-  
+
     function showImage(e: any) {
       const file = e.target.files[0];
-  
+
       if (file.size > 5000 * 1024) {
-  
+
         setImageError("File Too Large");
         return;
       }
@@ -69,7 +69,7 @@ export default function MintForm() {
       setImage(fileUrl);
       setImageError("");
     }
-  
+
     return (
       <>
         <form
@@ -126,7 +126,7 @@ export default function MintForm() {
                 type="text"
                 id="title"
                 className={`block w-full rounded-lg   border-2  bg-transparent p-2 text-sm text-gray-200 placeholder-gray-500 focus:border-primary focus:ring-primary
-  
+
    ${
      !touched.title
        ? "border-gray-600"
@@ -314,7 +314,7 @@ export default function MintForm() {
               className="submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800"
             />
           </div>
-  
+
           <div className="preview-item hidden gap-4 self-start ">
             <label>Preview Item</label>
             <Card
@@ -327,7 +327,7 @@ export default function MintForm() {
               fromInput={true}
             />
           </div>
-  
+
         </form>
       </>
     );

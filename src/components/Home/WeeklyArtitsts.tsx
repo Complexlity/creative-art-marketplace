@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useNftsDataContext } from '~/utils/DataContext';
+import { useNftsDataContext } from '~/contexts/DataContext';
 
 const WeeklyArtists = () => {
   const people = useNftsDataContext().peopleData.slice(0, 5)
@@ -24,7 +24,7 @@ const WeeklyArtists = () => {
           </div>
         </li>
         })}
-       
+
       </ul>
     </section>
   );

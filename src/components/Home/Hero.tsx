@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useNftsDataContext } from "~/utils/DataContext";
+import { useNftsDataContext } from "~/contexts/DataContext";
 import CountDownComponent from "~/components/General/Countdown";
 import {motion} from 'framer-motion'
 

@@ -1,19 +1,19 @@
 import { StaticImageData } from "next/dist/client/image";
-import image1 from "../../public/nfts/1.png";
-import image2 from "../../public/nfts/2.png";
-import image3 from "../../public/nfts/3.png";
-import image4 from "../../public/nfts/4.png";
-import image5 from "../../public/nfts/5.png";
-import image6 from "../../public/nfts/6.png";
-import image7 from "../../public/nfts/7.png";
-import image8 from "../../public/nfts/8.png";
-import image9 from "../../public/nfts/9.png";
-import image10 from "../../public/nfts/10.png";
-import image11 from "../../public/nfts/11.png";
-import image12 from "../../public/nfts/12.png";
-import image13 from "../../public/nfts/13.png";
-import image14 from "../../public/nfts/14.png";
-import image15 from "../../public/nfts/15.png";
+import image1 from "/public/nfts/1.png";
+import image2 from "/public/nfts/2.png";
+import image3 from "/public/nfts/3.png";
+import image4 from "/public/nfts/4.png";
+import image5 from "/public/nfts/5.png";
+import image6 from "/public/nfts/6.png";
+import image7 from "/public/nfts/7.png";
+import image8 from "/public/nfts/8.png";
+import image9 from "/public/nfts/9.png";
+import image10 from "/public/nfts/10.png";
+import image11 from "/public/nfts/11.png";
+import image12 from "/public/nfts/12.png";
+import image13 from "/public/nfts/13.png";
+import image14 from "/public/nfts/14.png";
+import image15 from "/public/nfts/15.png";
 
 
 

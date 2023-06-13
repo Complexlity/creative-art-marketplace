@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useNftsDataContext } from "~/utils/DataContext";
+import { useNftsDataContext } from "~/contexts/DataContext";
 import { motion } from 'framer-motion'
 
 const Subscribe = () => {
@@ -51,7 +51,7 @@ const Subscribe = () => {
             className="input-bordered input mb-6 w-full max-w-[50ch] bg-slate-700 text-white hover:border-2 hover:border-white focus:border-2 focus:border-primary md:rounded-r-none"
           />
           <
-            
+
             motion.button whileHover={{scale: 1.01}} whileTap={{scale: 0.95}} className="mx-auto block rounded-lg bg-primary px-11 py-3 font-bold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:inline md:h-12  md:rounded-l-none md:px-4 md:py-2  ">
             Subscribe
           </motion.button>

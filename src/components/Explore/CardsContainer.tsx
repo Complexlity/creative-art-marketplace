@@ -1,12 +1,12 @@
 import { Card } from "~/components/General/Card";
 import {useEffect, useState} from 'react'
-import { NFT } from "~/utils/nfts";
-import useDebounce from "~/utils/useDebounce";
+import { NFT } from "~/data/nfts";
+import useDebounce from "~/hooks/useDebounce";
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
 import { AnimatePresence } from 'framer-motion'
-import { useNftsDataContext } from "~/utils/DataContext";
+import { useNftsDataContext } from "~/contexts/DataContext";
 
 type SeeMore = {
     initialValue: number,
@@ -32,14 +32,14 @@ export default function CardsContainer() {
       if(showingCondition.maxxed) return
       if(showingCondition.minned) setShowingCondition({...showingCondition, minned: false})
       const { initialValue, step, max, } = seeMore
-  
+
       let next = initialValue + step
       if(next >= max){
         next = max
         setShowingCondition({...showingCondition, maxxed: true})
       }
       setSeeMore({ ...seeMore, initialValue: next })
-  
+
     }
   function showLess() {
     if (showingCondition.minned) return;
@@ -48,31 +48,31 @@ export default function CardsContainer() {
         return { ...showingCondition, maxxed: false }
       });
     }
-  
+
     const { initialValue, step } = seeMore;
     let prev = initialValue - step;
-  
+
     if (prev <= 6) {
       setShowingCondition(() => {
         return { ...showingCondition, minned: true }});
       prev = 6;
     }
-  
+
     setSeeMore({ ...seeMore, initialValue: prev });
-  
+
     }
-  
+
     const [search, setSearch] = useState<Search>('')
     const debouncedSearch = useDebounce(search, 500)
     const [priceRange, setPriceRange] = useState<string>('all')
     const [category, setCategory] = useState("default")
     const [expiryDate, setExpiryDate] = useState('0')
     const [displayedData, setDisplayedData] = useState(nftsData)
-  
+
     useEffect(() => {
       setDisplayedData(aggregateQuery(debouncedSearch, category, expiryDate, priceRange))
     }, [debouncedSearch, category, expiryDate, priceRange])
-  
+
     useEffect(() => {
       if (displayedData.length <= 6) {
         setShowingCondition({minned: true, maxxed: true})
@@ -86,9 +86,9 @@ export default function CardsContainer() {
     })
       }
     }, [displayedData])
-  
+
   const timeInMilliseconds = (hours: number) => hours * 60 * 60 * 1000
-  
+
     function aggregateQuery(search: string, category: string, date: string, priceRange: string) {
       const dateNum = Number(date)
       const items = [...nftsData]
@@ -101,21 +101,21 @@ export default function CardsContainer() {
       }
       return newItems
     }
-  
+
     function searchByName(item: NFT, searchString: string) {
       if(!searchString) return true
       const itemName = item.name.toLowerCase()
       searchString = searchString.toLowerCase()
       return itemName.includes(searchString)
     }
-  
+
     function searchByCategory(item: NFT, category: string) {
       if (category === 'default') return true
       const itemCategory = item.category.toLowerCase()
       category = category.toLowerCase()
       return itemCategory === category
     }
-  
+
     function searchByDate(item: NFT, date: number) {
       switch (date) {
         case 24:
@@ -128,7 +128,7 @@ export default function CardsContainer() {
           return true
       }
     }
-  
+
     function searchByPrice(item: NFT, priceRange: string) {
       switch (priceRange) {
         case 'cheap':
@@ -141,7 +141,7 @@ export default function CardsContainer() {
           return true
       }
     }
-  
+
     const disabledStyles = "bg-gray-400 hover:scale-[100%] hover:shadow-none text-blue-900 opacity-[60%] cursor-not-allowed"
     return (
       <section className="grid gap-12 border-b-2 border-b-gray-300 pb-12 pt-8">
@@ -159,7 +159,7 @@ export default function CardsContainer() {
               value={search}
             />
           </div>
-  
+
           <select
             id="categories"
           className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
@@ -242,4 +242,4 @@ export default function CardsContainer() {
       </section>
     );
   }
-  
+

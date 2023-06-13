@@ -1,6 +1,4 @@
 import * as yup from 'yup'
-const FILE_SIZE = 100 * 1024;
-const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/webp", "image/png", "image/svg"];
 
 export const schema = yup.object().shape({
   title: yup.string().required("Provide a title to your NFT"),

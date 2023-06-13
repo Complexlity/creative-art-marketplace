@@ -1,5 +1,6 @@
 import Image from "next/image";
 import logoImg from '/public/icons/complex.png'
+import Link from "next/link";
 const Footer = () => {
   return (
     <>
@@ -35,9 +36,11 @@ const Footer = () => {
       <footer className="footer border-t border-base-300 px-10 py-4 text-white flex justify-between">
         <div className="grid-flow-col items-center ">
 
-          <Image src={logoImg} width={32} height={32} alt="" />
+          <Link href="https://complexlity.vercel.app">
+            <Image src={logoImg} width={32} height={32} alt="" />
+          </Link>
           <p>
-            Complexlity
+            <Link href="https://github.com/complexlity" className="hover:text-underline hover:decoration-primary">Complexlity</Link>
             <br />
             Building the web since 1902
           </p>

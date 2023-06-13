@@ -1,6 +1,6 @@
 
-import { NFT } from "~/utils/nfts";
-import { useNftsDataContext } from "~/utils/DataContext";
+import { NFT } from "~/data/nfts";
+import { useNftsDataContext } from "~/contexts/DataContext";
 import Card from "~/components/General/Card"
 import {motion} from 'framer-motion'
 
