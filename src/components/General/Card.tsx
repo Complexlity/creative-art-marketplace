@@ -1,13 +1,13 @@
 import { NFT } from "~/utils/nfts";
 import Link from "next/link";
 import Image from "next/image";
-import ethereumImage from "../../public/icons/ethereum.png";
-import clockImage from "../../public/icons/clock.png";
+import ethereumImage from "/public/icons/ethereum.png";
+import clockImage from "/public/icons/clock.png";
 import CountDownComponent from "./Countdown";
 import { nanoid } from "nanoid";
-import defaultImage from "../../public/nfts/default.svg";
+import defaultImage from "/public/nfts/default.svg";
 import { useState, useEffect } from "react";
-import {motion, AnimatePresence} from 'framer-motion'
+import {motion,} from 'framer-motion'
 
 export function Card({
   item,

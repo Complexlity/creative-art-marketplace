@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useNftsDataContext } from "../utils/DataContext";
+import { useNftsDataContext } from "~/utils/DataContext";
 import { motion } from 'framer-motion'
 
 const Subscribe = () => {
@@ -66,7 +66,7 @@ const Subscribe = () => {
             alt="Nft Image"
           />
           <Image
-            className=" hover:scale-[40%] transition-all duration-1000  transform  ease-in-out two relative top-[50px] z-10 aspect-square w-5/12 rounded-lg object-cover object-top opacity-[60%]"
+            className="two transition-all duration-1000  transform  ease-in-out two relative top-[50px] z-10 aspect-square w-5/12 rounded-lg object-cover object-top opacity-[60%]"
             src={nftsData[10]!.image}
             alt="Nft Image"
           />

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useNftsDataContext } from "~/utils/DataContext";
-import CountDownComponent from "./Countdown";
+import CountDownComponent from "~/components/General/Countdown";
 import {motion} from 'framer-motion'
 
 const Hero = () => {
@@ -53,9 +53,12 @@ const Hero = () => {
               </span>
             </p>
             <Link href={`/items/${nftsData[0]!.id}`} className="grid">
-              <button className="mt-1 rounded-lg border border-primary py-2 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800">
+              <motion.button
+              whileHover={{scale: 1.01}}
+              whileTap={{scale: 0.95}}
+              className="mt-1 rounded-lg border border-primary py-2 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800">
                 Place A Bid
-              </button>
+              </motion.button>
             </Link>
           </div>
           <div

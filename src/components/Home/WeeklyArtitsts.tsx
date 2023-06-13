@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import nftImage from '../../public/nft-1.jpg'
 import { useNftsDataContext } from '~/utils/DataContext';
 
 const WeeklyArtists = () => {
