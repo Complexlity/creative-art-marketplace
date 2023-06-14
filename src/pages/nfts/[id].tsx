@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import NavBar from "~/components/Universal/NavBar";
 import Footer from "~/components/Universal/Footer";
@@ -7,7 +7,8 @@ import { people, People } from "~/data/people";
 import { useNftsDataContext, } from "~/contexts/DataContext";
 import { RelatedItems } from "~/components/nfts/RelatedItems";
 import NftDetails from '~/components/nfts/NftDetails'
-import {pickRandomItems} from '~/utils/randoms'
+import { pickRandomItems } from '~/utils/randoms'
+import Head from "next/head";
 
 
 
@@ -24,12 +25,22 @@ function NFTItem() {
   relatedItems = pickRandomItems(relatedItems, 6) as NFT[];
 
   return (
-    <div className="main space-y-12 px-6 text-white">
-      <NavBar />
-      <NftDetails nftData={nftData} randomPeople={randomPeople} />
-      <RelatedItems relatedItems={relatedItems} />
-      <Footer />
-    </div>
+    <>
+      <Head>
+        <title>{nftData.name} | Creative Art Marketplace</title>
+        <meta
+          name="description"
+          content="A place for all to discover, create and purchase unique NFTs"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className="main space-y-12 px-6 text-white">
+        <NavBar />
+        <NftDetails nftData={nftData} randomPeople={randomPeople} />
+        <RelatedItems relatedItems={relatedItems} />
+        <Footer />
+      </div>
+    </>
   );
 }
 
