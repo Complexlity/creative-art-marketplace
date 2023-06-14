@@ -1,7 +1,7 @@
 import { NFT } from "~/data/nfts";
 import Card from "../Universal/Card";
 
-export function RelatedItems({ relatedItems }: { relatedItems: NFT[] }) {
+export default function RelatedItems({ relatedItems }: { relatedItems: NFT[] }) {
   return (
     <section className="related-items grid gap-12 text-center">
       <h2 className="relative  text-3xl tracking-wide md:text-4xl">
