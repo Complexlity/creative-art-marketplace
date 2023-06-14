@@ -13,15 +13,13 @@
       </ul>
     </li>
     <li>
-      <a href="#screenshots-of-the-live-application">Screenshots Of the Live Application</a>
+      <a href="#screenshots-of-the-live-project">Screenshots of the Live Application</a>
       <ul>
       <li><a href="#home-page">Home</a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
+      <li><a href="#explore">Explore</a></li>
+      <li><a href="#mint">Mint</a></li>
+      <li><a href="#nft-details">NFT details</a></li>
+        <li><a href="#responsiveness">Responsiveness</a></li>
       </ul>
     </li>
     <li>
@@ -33,7 +31,7 @@
     <li><a href="#framer-motion">Framer-motion</a></li>
     <li><a href="#rainbow-kit">Rainbow Kit</a></li>
     <li><a href="#formik-and-yup">Formik & Yup</a></li>
-    <li><a href="#other-technologies">Other Technologies</li>
+    <li><a href="#other-librariess">Other Libraries</li>
     </ul>
     </li>
     <li><a href="#installation-and-setup-instruction">Installation and Setup Instructions</a></li>
@@ -61,51 +59,34 @@
 
 ### Home Page
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
-    <source src="./readme-videos//home.webm" type="video/webm">
-  </video>
-</figure>
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/a3c7a811-a857-4fae-ba80-77ada711edea
 
 It 4 unique sections. Hero, Unique arts, Artists of the week and Subscribe to newsletter
 
 
 ### Explore
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
-    <source src="./readme-videos/explore.webm" type="video/webm">
-  </video>
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/b85788f5-9e1a-4525-8548-4afffb010e45
 
 This track contains all nfts available in the market. You could also filter the items depending on your requirements. By price, date, type, and item name
 
 ### Mint
 
-</figure><figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
-    <source src="./readme-videos/mint.webm" type="video/webm">
-  </video>
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/2d0dee1d-a386-4856-a760-f577995bd534
 
 This contains a form where you could add a new item to the market. It makes use of well described form validation to improve the user experience and help users with non-technical background be able to access the site with ease
 
 ### NFT Details
 
-</figure><figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
-    <source src="./readme-videos/nftDetails.webm" type="video/webm">
-  </video>
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/b234a70c-4858-4609-9a49-c69a8860ff38
 
 Clicking on an item would take you to the item's page where you would be able to purchase an item or submit a bid for it as well as items relating to the one you're currently on
 
 ### Responsiveness
 
-</figure><figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
-    <source src="./readme-videos/mobile.webm" type="video/webm">
-  </video>
-</figure>
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/54923294-e191-4d18-9d05-b7bdf277a657
 
-All pages are fully responsive and interactive ranging from small to large screen sized
+All pages are fully responsive and interactive ranging from small to large screen sizes
 
 ## Live Demo
 
