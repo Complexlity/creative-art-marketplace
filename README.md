@@ -35,7 +35,20 @@
     </ul>
     </li>
     <li><a href="#installation-and-setup-instruction">Installation and Setup Instructions</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li>
+    <a href="#challenges-faced">Challenges Faced</a>
+    <ul>
+      <li><a href="#installation"></a><li>
+      <li><a href="#hydration-errors"></a><li>
+      <li><a href="#search-and-filter"></a><li>
+      <li><a href="#form-validation"></a><li>
+      <li><a href="#animation"></a><li>
+    </ul>
+    </li>
+    <li><a href="#future-plans">Future Plans</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a>
+    Special thanks to the
+    </li>
   </ol>
 </details>
 
@@ -53,6 +66,11 @@
 
 ### Why did you build it?
 
+  I built this project with the aim of creating a marketplace which would very easy to accessed by people from all careers and backgrounds. It's open nature would make it so everyone can express their artistic and business self in they way they want while being in control of all their returns, sales,and purchases
+
+  I also built this to improve my skill in from end development which I've have been learning for some months now. I believe from the challenges and experiences encountered while doing it, I would be able to transfer them into a new project and build something even bigger and better in the nearest future
+
+  And lastly, I just joined angelhack not too long ago and I saw this as a challenge to see how far I can go and how much I have learnt in my field of technology (React/Next) to put my most efforts into it and see how much value I can come up with
 
 
 ## Screenshots Of The Live Project

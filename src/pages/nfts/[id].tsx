@@ -5,7 +5,7 @@ import Footer from "~/components/Universal/Footer";
 import { NFT } from "~/data/nfts";
 import { people, People } from "~/data/people";
 import { useNftsDataContext } from "~/contexts/NftsDataContext";
-import RelatedItems  from "~/components/Nfts/RelatedItems";
+import RelatedItems  from "../../components/Nfts/RelatedItems";
 import NftDetails from "~/components/Nfts/NftDetails";
 import { pickRandomItems } from "~/utils/randoms";
 import Head from "next/head";
