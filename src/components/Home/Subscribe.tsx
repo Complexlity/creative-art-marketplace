@@ -9,34 +9,34 @@ const Subscribe = () => {
       <div className="fan-cards hidden md:grid">
         <div className="grid grid-cols-3">
           <Image
-            className="five stack ml-32 w-48  rotate-[50deg] rounded-lg opacity-[50%] "
+            className="five stack ml-32 w-48  rotate-[50deg] rounded-lg opacity-[80%] "
             src={nftsData[4]!.image}
             alt="Nft Image"
           />
           <Image
-            className="one stack -ml-32  w-48 rotate-[-50deg] rounded-lg opacity-[50%]"
+            className="one stack -ml-32  w-48 rotate-[-50deg] rounded-lg opacity-[80%]"
             src={nftsData[5]!.image}
             alt="Nft Image"
           />
           <Image
-            className="four z-5 stack ml-20 w-48 rotate-[20deg] rounded-lg opacity-[70%]  "
+            className="four z-5 stack ml-20 w-48 rotate-[20deg] rounded-lg opacity-[60%]  "
             src={nftsData[6]!.image}
             alt="Nft Image"
           />
           <Image
-            className="three stack z-10 w-48 rounded-lg opacity-[80%] "
+            className="three stack z-10 w-48 rounded-lg opacity-[70%] "
             src={nftsData[7]!.image}
             alt="Nft Image"
           />
           <Image
-            className="two z-5 stack -ml-20 w-48 rotate-[-20deg] rounded-lg opacity-[70%] "
+            className="two z-5 stack -ml-20 w-48 rotate-[-20deg] rounded-lg opacity-[60%] "
             src={nftsData[8]!.image}
             alt="Nft Image"
           />
         </div>
       </div>
       <div className="main-form z-50 grid gap-4 text-center text-white md:text-start">
-        <h2 className="mx-auto mb-2 max-w-[18ch] text-5xl font-bold md:m-0">
+        <h2 className="mx-auto mb-2 max-w-[18ch] text-4xl md:text-5xl font-bold md:m-0">
           Subscribe and <span className="text-primary">get our updates </span>{" "}
           every week
         </h2>
