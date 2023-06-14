@@ -14,6 +14,15 @@
     </li>
     <li>
       <a href="#screenshots-of-the-live-application">Screenshots Of the Live Application</a>
+      <ul>
+      <li><a href="#home-page">Home</a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      </ul>
     </li>
     <li>
     <a href="#technologies-used">Technologies Used </a>
@@ -50,7 +59,53 @@
 
 ## Screenshots Of The Live Project
 
+### Home Page
 
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" >
+    <source src="./readme-videos//home.webm" type="video/webm">
+  </video>
+</figure>
+
+It 4 unique sections. Hero, Unique arts, Artists of the week and Subscribe to newsletter
+
+
+### Explore
+
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" >
+    <source src="./readme-videos/explore.webm" type="video/webm">
+  </video>
+
+This track contains all nfts available in the market. You could also filter the items depending on your requirements. By price, date, type, and item name
+
+### Mint
+
+</figure><figure class="video_container">
+  <video controls="true" allowfullscreen="true" >
+    <source src="./readme-videos/mint.webm" type="video/webm">
+  </video>
+
+This contains a form where you could add a new item to the market. It makes use of well described form validation to improve the user experience and help users with non-technical background be able to access the site with ease
+
+### NFT Details
+
+</figure><figure class="video_container">
+  <video controls="true" allowfullscreen="true" >
+    <source src="./readme-videos/nftDetails.webm" type="video/webm">
+  </video>
+
+Clicking on an item would take you to the item's page where you would be able to purchase an item or submit a bid for it as well as items relating to the one you're currently on
+
+### Responsiveness
+
+</figure><figure class="video_container">
+  <video controls="true" allowfullscreen="true" >
+    <source src="./readme-videos/mobile.webm" type="video/webm">
+  </video>
+</figure>
+
+All pages are fully responsive and interactive ranging from small to large screen sized
 
 ## Live Demo
 
@@ -93,23 +148,32 @@ I used these two libraries together to create top notch form validation with des
 ## Installation and Setup Instructions
 
 1. Clone the repository
-```
+
+```javscript
 git clone https://github.com/Complexlity/creative-art-marketplace
 ```
+
 2. Install Dependencies
-```
+
+```javascript
 npm install
 ```
+
 3. Run Local Server
-```
+
+```javascript
 npm run dev
 ```
+
 4. Connect wallet button
+
 Inorder to make the connect wallet work. You need to add two environmental variables
+
 - WALLET_CONNECT_PROJECT_ID - You can get a free project id at [Wallet Connect Cloud](https://cloud.walletconnect.com/)
 - ALCHEMY_ID - You alchemy account api key. If you don't have one, Create a new [Alchemy Account](https://alchemy.com/?r=e68b2f77-7fc7-4ef7-8e9c-cdfea869b9b5) to [get a key]((https://docs.alchemy.com/docs/alchemy-quickstart-guide#1key-create-an-alchemy-key))
 
 ## Challenges Faced
+
 Through building this project, I came across a lot of road block which tended to create some unforgettable knowledge. Some of which include:
 
 ### Installation

@@ -6,7 +6,7 @@ import UniqueArt from "~/components/Home/UniqueArt";
 import Subscribe from "~/components/Home/Subscribe";
 import Footer from "~/components/Universal/Footer";
 import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
-import { ToastContainer } from 'react-toastify'
+
 
 const Home: NextPage = () => {
   return (

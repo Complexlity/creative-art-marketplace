@@ -5,8 +5,8 @@ import Footer from "~/components/Universal/Footer";
 import { NFT } from "~/data/nfts";
 import { people, People } from "~/data/people";
 import { useNftsDataContext } from "~/contexts/NftsDataContext";
-import { RelatedItems } from "~/components/nfts/RelatedItems";
-import NftDetails from "~/components/nfts/NftDetails";
+import { RelatedItems } from "~/components/Nfts/RelatedItems";
+import NftDetails from "~/components/Nfts/NftDetails";
 import { pickRandomItems } from "~/utils/randoms";
 import Head from "next/head";
 
@@ -29,11 +29,16 @@ function NFTItem() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="main space-y-12 px-6 text-white">
-        <NavBar />
-        <NftDetails nftData={nftData} randomPeople={randomPeople} />
-        <RelatedItems relatedItems={relatedItems} />
-        <Footer />
+      <div className="main">
+        <div
+          suppressHydrationWarning
+          className="mx-auto max-w-[1200px]  px-6 text-white"
+        >
+          <NavBar />
+          <NftDetails nftData={nftData} randomPeople={randomPeople} />
+          <RelatedItems relatedItems={relatedItems} />
+          <Footer />
+        </div>
       </div>
     </>
   );
