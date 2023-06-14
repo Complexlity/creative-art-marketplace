@@ -15,7 +15,19 @@
     <li>
       <a href="#screenshots-of-the-live-application">Screenshots Of the Live Application</a>
     </li>
-    <li></li>
+    <li>
+    <a href="#technologies-used">Technologies Used </a>
+    <ul>
+    <li><a href="#nextjs">Nextjs</a></li>
+    <li><a href="#tailwindcss">TailwindCSS</a></li>
+    <li><a href="#daisyui-and-flowbite">DaisyUi & Flowbite</a></li>
+    <li><a href="#framer-motion">Framer-motion</a></li>
+    <li><a href="#rainbow-kit">Rainbow Kit</a></li>
+    <li><a href="#formik-and-yup">Formik & Yup</a></li>
+    <li><a href="#other-technologies">Other Technologies</li>
+    </ul>
+    </li>
+    <li><a href="#installation-and-setup-instruction">Installation and Setup Instructions</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -39,10 +51,96 @@
 ## Screenshots Of The Live Project
 
 
+
 ## Live Demo
 
 The working of the project can be [Here](https://creative-art-marketplace.vercel.app)
 
 ## Technologies Used
 
-### Nextjs
+### [Nextjs](https://nextjs.org/)
+
+The project was bootstrap using Nextjs which is a meta framework build on top of react. It provides out of the box features like routing, server-side rendering and creating backend apis
+
+### [TailwindCSS](https://tailwindcss.com/)
+
+TailwindCSS has been used to style the site. It offers out of the box utility classes as well as make it easy to create a consistent design system with it's [colors](https://tailwindcss.com/docs/customizing-colors), it's consistent spacing values
+
+### [DaisyUI](https://daisyui.com/) and [Flowbite](https://flowbite.com/)
+
+These two are component libraries built on tailwind. They come with beautifully style components. They are built on tailwind so this make them easy to customize(colors, size, etc) to my preference
+
+### [Framer-motion](https://www.framer.com/motion/)
+
+This was used to add animations to my elements. Elements animated on the site include buttons, cards and mobile navigation bar
+
+### [Rainbow Kit](https://www.rainbowkit.com/)
+
+This is a library offers a wid range of options to customize the components as well as interact with the blockchain. For this challenge, I only made use of the connect wallet button which can be visible on the navigation bar
+
+### [Formik](https://formik.org/) and [Yup](https://www.npmjs.com/package/yup)
+
+I used these two libraries together to create top notch form validation with descriptive errors to give feedback to the user.
+
+### Other Libraries
+
+- [react-toastify](https://fkhadra.github.io/react-toastify/installation): Used to create toast messages
+- [react-icons](https://react-icons.github.io/react-icons/search): Used to get svg icons from a variety of libraries
+- [react-countdown](https://www.npmjs.com/package/react-countdown): Used to create the countdown timer seen no the cards
+- [nanoid](https://www.npmjs.com/package/nanoid): Used to generate a random ids
+
+
+## Installation and Setup Instructions
+
+1. Clone the repository
+```
+git clone https://github.com/Complexlity/creative-art-marketplace
+```
+2. Install Dependencies
+```
+npm install
+```
+3. Run Local Server
+```
+npm run dev
+```
+4. Connect wallet button
+Inorder to make the connect wallet work. You need to add two environmental variables
+- WALLET_CONNECT_PROJECT_ID - You can get a free project id at [Wallet Connect Cloud](https://cloud.walletconnect.com/)
+- ALCHEMY_ID - You alchemy account api key. If you don't have one, Create a new [Alchemy Account](https://alchemy.com/?r=e68b2f77-7fc7-4ef7-8e9c-cdfea869b9b5) to [get a key]((https://docs.alchemy.com/docs/alchemy-quickstart-guide#1key-create-an-alchemy-key))
+
+## Challenges Faced
+Through building this project, I came across a lot of road block which tended to create some unforgettable knowledge. Some of which include:
+
+### Installation
+
+I wrote an [application](https://github.com/Complexlity/project-inits/blob/main/next-tailwind.sh) which I have always used install tailwind and nextjs. It turns out it does not support the newer version of the nextjs cli. I eventually installed with the new nextjs cli and it now has the option to install with tailwind
+
+### Hydration Errors
+
+I learnt to understand more in-depth how Nextjs works. It builds on the server and then on the client. While doing that, it compares both versions for strict equality. I built a lot of [random generators](/src/utils/randoms.ts) and this make me encounter hydration errors when I run the developement server
+I solve this by adding `suppressHydrationWarning` on the elements that hand thes random values. It didn't totally solve it but for the most part. The ultimate solution is to perform these random and shuffling functions on an `api` routes or on it's own separate server (like an express server). This ensures that the result sent to nextjs is consistent both on the server hydration and the client one
+
+### Search and Filter
+
+On the [Explore Page](https://creative-art-marketplace.vercel.app/explore). I needed to be able to sort/filter the nfts shown on the page. It turned out it was a bit more complicated than I thought. After doing some research, I came up with the following ways to make it work
+
+- Create a [debounce hook](/src/hooks/useDebounce.ts). In the previous mode, it tends to sort the items on every key stroke. This is flawed as the user could still be typing. The debounce hooks helps to prevent searching until a certain time has passed since the last character input (i.e the user has stopped typing). I have used 500ms as the wait time
+- Aggregate Query: I also created three more filter options. Filter by item category, by items price, by expriy date(time). In order to make these work, I created an `aggregateQuery` function to run whenever either the search text changes or these filter items changes. It passes the items through all the query functions and only returns the items that are true after all these process
+
+### Form Validation
+
+I initially started to build out a form validation. It go complicated fast as I tried to validate on many different occasion (touched, out-of-focus, on submit, etc). I learned about the [formik](https://formik.org/) library which has these many form function in-built. I learnt how to integrate this package in my work flow. I also needed to validate the user schema somehow. I had two options [zod](https://zod.dev/)(which I have used a few times) and [yup](https://www.npmjs.com/package/yup). I ended up using yup to gain a new learning experience. You can find the functions on [Schemas](/src/utils/schemas.ts) file
+
+### Animation
+
+And to improve the aesthetics of the website, I wanted to add some minimal animations. I look up two animation libraries: [GSAP](https://greensock.com/gsap/) and [Framer-motion](https://www.framer.com/motion/). I tried to use GSAP but it didn't integrate well with my project(perhaps I didn't learn enough to understand how to). I ended up reaching for framer motion which I've used in the [past](https://complexlity-memory-game.netlify.app/). I ran into an error of triggering exit animations which I was ablt to solve in this new project using `AnimatePresence` element
+
+## Future Plans
+
+I planned to add an artists page where you could see artist who have their work on the site as well as individual artist page which would show only their on works and a few more details. I would try to work on that as well as try to create a mini express server to remove the hydration errors.
+At the moment, I have little experience building the backend with solidity or put the data on ipfs but these are two ways I think of as ways to go about adding the actual backend to the site.
+
+
+
+

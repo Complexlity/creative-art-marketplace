@@ -28,7 +28,7 @@ export default function BidInputForm({
       validationSchema: bidSchema,
     });
   const notifyBid = () =>
-    toast("Bid submit successful. We will get back to you shortly ☺");
+    toast("Bid submit successful. We will get back to you shortly 🤗");
 
   return (
     <>

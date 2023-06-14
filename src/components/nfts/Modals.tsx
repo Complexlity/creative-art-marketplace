@@ -1,10 +1,11 @@
 import { Button, Modal } from "flowbite-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer} from "react-toastify";
 import { NFT } from "~/data/nfts";
 import BidInputForm from "./BidInputForm";
 import "react-toastify/dist/ReactToastify.css";
+
 
 export type BuyOptions = "BUY_NOW" | "PLACE_BID";
 export function Modals({ nftData }: { nftData: NFT }) {
@@ -82,6 +83,7 @@ export function Modals({ nftData }: { nftData: NFT }) {
         autoClose={3000}
         closeOnClick
         theme="dark"
+        pauseOnHover={false}
       />
     </>
   );

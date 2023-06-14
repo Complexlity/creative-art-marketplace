@@ -7,6 +7,9 @@ import { useFormik } from "formik";
 import { schema } from "~/utils/schemas";
 import { StaticImageData } from "next/image";
 import MethodOptions, {type Methods} from './MethodOptions'
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function MintForm() {
     const [image, setImage] = useState<StaticImageData>();
@@ -23,6 +26,8 @@ export default function MintForm() {
       const value = e.target.value.toUpperCase();
       setMethod(value);
     };
+
+  const notifyMint = () => toast("Successfully Minted New NFT");
 
     const formik = useFormik({
       initialValues: {
@@ -42,6 +47,7 @@ export default function MintForm() {
           setImageError("NFT image not provided");
           return;
         }
+        notifyMint()
         setImage(undefined);
         resetForm();
       },
@@ -327,8 +333,14 @@ export default function MintForm() {
               fromInput={true}
             />
           </div>
-
         </form>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          closeOnClick
+          theme="dark"
+          pauseOnHover={false}
+        />
       </>
     );
   }

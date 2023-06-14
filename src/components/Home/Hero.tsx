@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useNftsDataContext } from "~/contexts/DataContext";
+import { useNftsDataContext } from "~/contexts/NftsDataContext";
 import CountDownComponent from "~/components/Universal/Countdown";
 import { motion } from "framer-motion";
 
@@ -10,7 +10,7 @@ const Hero = () => {
   const nftsData = useNftsDataContext().nftsData;
 
   return (
-    <section className="mb-24 px-1 py-6 md:grid md:grid-cols-2">
+    <section className="mb-24 px-1 py-2 md:py-6 md:grid md:grid-cols-2">
       <div className=" mb-6 space-y-8 text-center text-white  md:max-w-[60ch] md:text-start">
         <h1 className=" text-6xl">
           Discover and Collect The Best NFTs{" "}

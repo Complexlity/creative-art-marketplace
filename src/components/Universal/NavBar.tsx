@@ -47,13 +47,13 @@ const NavBar = () => {
         <Link href="/">
           <li className={`${routePath === "/" ? activeLink : ""} hover:text-primary `}>Home</li>
         </Link>
-        <Link href="/mint">
-          <li className={`${routePath === "/mint" ? activeLink : ""} hover:text-primary`}>Mint</li>
-        </Link>
         <Link href="/explore">
           <li className={`${routePath === "/explore" ? activeLink : ""} hover:text-primary`}>
             Explore
           </li>
+        </Link>
+        <Link href="/mint">
+          <li className={`${routePath === "/mint" ? activeLink : ""} hover:text-primary`}>Mint</li>
         </Link>
       </ul>
       <div className="hidden lg:block">
@@ -158,6 +158,18 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
             Home
           </motion.li>
         </Link>
+            <Link href="/explore">
+              {" "}
+              <motion.li
+                variants={threeVariants}
+                className={`flex items-center justify-center rounded-lg
+    py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
+                  routePath === "/explore" ? activeMobileLink : ""
+                }`}
+              >
+                Explore
+              </motion.li>
+            </Link>
         <Link href="/mint">
           {" "}
           <motion.li
@@ -168,18 +180,6 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
             }`}
           >
             Mint
-          </motion.li>
-        </Link>
-        <Link href="/explore">
-          {" "}
-          <motion.li
-            variants={threeVariants}
-            className={`flex items-center justify-center rounded-lg
-py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
-              routePath === "/explore" ? activeMobileLink : ""
-            }`}
-          >
-            Explore
           </motion.li>
         </Link>
         <hr className="mx-auto w-4/5" />

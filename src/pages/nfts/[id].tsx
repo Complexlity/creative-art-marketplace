@@ -4,16 +4,11 @@ import NavBar from "~/components/Universal/NavBar";
 import Footer from "~/components/Universal/Footer";
 import { NFT } from "~/data/nfts";
 import { people, People } from "~/data/people";
-import { useNftsDataContext, } from "~/contexts/DataContext";
+import { useNftsDataContext } from "~/contexts/NftsDataContext";
 import { RelatedItems } from "~/components/nfts/RelatedItems";
-import NftDetails from '~/components/nfts/NftDetails'
-import { pickRandomItems } from '~/utils/randoms'
+import NftDetails from "~/components/nfts/NftDetails";
+import { pickRandomItems } from "~/utils/randoms";
 import Head from "next/head";
-
-
-
-
-
 
 function NFTItem() {
   const router = useRouter();
