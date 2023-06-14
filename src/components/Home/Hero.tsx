@@ -3,15 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useNftsDataContext } from "~/contexts/DataContext";
 import CountDownComponent from "~/components/Universal/Countdown";
-import {motion} from 'framer-motion'
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const nftsData = useNftsDataContext().nftsData;
 
   return (
-    <section className="mb-24 py-6 md:grid md:grid-cols-2 px-1">
-      <div className=" mb-6 space-y-8 text-center text-white  md:text-start md:max-w-[60ch]">
+    <section className="mb-24 px-1 py-6 md:grid md:grid-cols-2">
+      <div className=" mb-6 space-y-8 text-center text-white  md:max-w-[60ch] md:text-start">
         <h1 className=" text-6xl">
           Discover and Collect The Best NFTs{" "}
           <span className="text-primary">Digital Art.</span>
@@ -23,9 +23,10 @@ const Hero = () => {
         </p>
         <div className="flex justify-center gap-4 font-bold md:justify-start">
           <motion.button
-          whileHover={{scale: 1.01}}
-          whileTap={{scale: 0.95}}
-          className=" rounded-lg bg-primary px-5 py-2 text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:px-11 md:py-3">
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.95 }}
+            className=" rounded-lg bg-primary px-5 py-2 text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:px-11 md:py-3"
+          >
             Explore Now
           </motion.button>
           <button className="">
@@ -52,11 +53,12 @@ const Hero = () => {
                 {nftsData[0]?.price}ETH
               </span>
             </p>
-            <Link href={`/items/${nftsData[0]!.id}`} className="grid">
+            <Link href={`/nfts/${nftsData[0]!.id}`} className="grid">
               <motion.button
-              whileHover={{scale: 1.03}}
-              whileTap={{scale: 0.98}}
-              className="mt-1 rounded-lg border border-primary py-2 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800">
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                className="mt-1 rounded-lg border border-primary py-2 font-bold text-primary transition-all duration-[.2s] ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800"
+              >
                 Place A Bid
               </motion.button>
             </Link>
