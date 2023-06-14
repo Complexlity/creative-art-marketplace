@@ -47,7 +47,7 @@
     </li>
     <li><a href="#future-plans">Future Plans</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a>
-    Special thanks to the
+    Special thanks to the entire angelhack team for organizing this challenge as well as [this](https://www.figma.com/file/vnkguspCOJQue9YaFQ18IF/NFT-Marketplace-(Community)?type=design&node-id=0-1) design for inspiration on how to structure some parts of the site
     </li>
   </ol>
 </details>
@@ -171,6 +171,9 @@ Inorder to make the connect wallet work. You need to add two environmental varia
 - WALLET_CONNECT_PROJECT_ID - You can get a free project id at [Wallet Connect Cloud](https://cloud.walletconnect.com/)
 - ALCHEMY_ID - You alchemy account api key. If you don't have one, Create a new [Alchemy Account](https://alchemy.com/?r=e68b2f77-7fc7-4ef7-8e9c-cdfea869b9b5) to [get a key]((https://docs.alchemy.com/docs/alchemy-quickstart-guide#1key-create-an-alchemy-key))
 
+5. Navigate to [http://localhost:3000/](http://localhost:3000/).
+NOTE: You might see some 'hydration' errors but you can ignore them. See [Hydration Errors](#hydration-errors)
+
 ## Challenges Faced
 
 Through building this project, I came across a lot of road block which tended to create some unforgettable knowledge. Some of which include:
@@ -181,8 +184,8 @@ I wrote an [application](https://github.com/Complexlity/project-inits/blob/main/
 
 ### Hydration Errors
 
-I learnt to understand more in-depth how Nextjs works. It builds on the server and then on the client. While doing that, it compares both versions for strict equality. I built a lot of [random generators](/src/utils/randoms.ts) and this make me encounter hydration errors when I run the developement server
-I solve this by adding `suppressHydrationWarning` on the elements that hand thes random values. It didn't totally solve it but for the most part. The ultimate solution is to perform these random and shuffling functions on an `api` routes or on it's own separate server (like an express server). This ensures that the result sent to nextjs is consistent both on the server hydration and the client one
+I learnt to understand more in-depth how Nextjs works. It builds on the server and then on the client. While doing that, it compares both versions for strict equality. I built a lot of [random generators](/src/utils/randoms.ts)(because I felt the site would look less static if you content is generated at random) and this made me encounter hydration errors when I run the developement server
+I solved this by adding `suppressHydrationWarning` on the elements that rener these random values. It didn't totally solve it but for the most part. The ultimate solution is to perform these random and shuffling functions on an `api` route or on it's own separate server (like an express server). This ensures that the result sent to nextjs is consistent both on the server hydration and the client one
 
 ### Search and Filter
 
