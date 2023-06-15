@@ -47,7 +47,6 @@
     </li>
     <li><a href="#future-plans">Future Plans</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a>
-    Special thanks to the entire angelhack team for organizing this challenge as well as [this](https://www.figma.com/file/vnkguspCOJQue9YaFQ18IF/NFT-Marketplace-(Community)?type=design&node-id=0-1) design for inspiration on how to structure some parts of the site
     </li>
   </ol>
 </details>
@@ -217,6 +216,10 @@ I looked up two animation libraries: [GSAP](https://greensock.com/gsap/) and [Fr
 I planned to add an artists page where you could see artist who have their work on the site as well as individual artist page which would show only their on works and a few more details. I would work on that as well as create a mini express server to remove the hydration errors.
 At the moment, I have little experience building the backend with solidity or put the data on ipfs but these are two ways I think of as ways to go about adding the actual backend to the site.
 
+## Acknowledgements
 
+Special thanks to the angelhack team for making this a huge learning experience for me. I look forward to the themes of future challenges
+
+All shout out to [this figma design](https://www.figma.com/file/vnkguspCOJQue9YaFQ18IF/NFT-Marketplace-(Community)?type=design&node-id=0-1) for inspiration on how to structure some parts of the site
 
 
