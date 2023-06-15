@@ -77,32 +77,31 @@
 
 ### Home Page
 
-https://github.com/Complexlity/creative-art-marketplace/assets/105590967/a3c7a811-a857-4fae-ba80-77ada711edea
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/a3c7a811-a857-4fae-ba80-77ada711edea.mp4
 
 It 4 unique sections. Hero, Unique arts, Artists of the week and Subscribe to newsletter
 
 
 ### Explore
 
-https://github.com/Complexlity/creative-art-marketplace/assets/105590967/b85788f5-9e1a-4525-8548-4afffb010e45
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/b85788f5-9e1a-4525-8548-4afffb010e45.mp4
 
 This track contains all nfts available in the market. You could also filter the items depending on your requirements. By price, date, type, and item name
 
 ### Mint
 
-https://github.com/Complexlity/creative-art-marketplace/assets/105590967/2d0dee1d-a386-4856-a760-f577995bd534
-
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/2d0dee1d-a386-4856-a760-f577995bd534.mp4
 This contains a form where you could add a new item to the market. It makes use of well described form validation to improve the user experience and help users with non-technical background be able to access the site with ease
 
 ### NFT Details
 
-https://github.com/Complexlity/creative-art-marketplace/assets/105590967/b234a70c-4858-4609-9a49-c69a8860ff38
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/b234a70c-4858-4609-9a49-c69a8860ff38.mp4
 
 Clicking on an item would take you to the item's page where you would be able to purchase an item or submit a bid for it as well as items relating to the one you're currently on
 
 ### Responsiveness
 
-https://github.com/Complexlity/creative-art-marketplace/assets/105590967/54923294-e191-4d18-9d05-b7bdf277a657
+https://github.com/Complexlity/creative-art-marketplace/assets/105590967/54923294-e191-4d18-9d05-b7bdf277a657.mp4
 
 All pages are fully responsive and interactive ranging from small to large screen sizes
 
