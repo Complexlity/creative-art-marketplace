@@ -185,8 +185,9 @@ I wrote an [application](https://github.com/Complexlity/project-inits/blob/main/
 
 I learnt to understand more in-depth how Nextjs works. It builds on the server and then on the client. While doing that, it compares both versions for strict equality.
 
-I built a lot of [random generators](/src/utils/randoms.ts) (because I felt the site would look less static if you content is generated at random) and this made me encounter hydration errors when I run the developement server
-I solved this by adding `suppressHydrationWarning` on the elements that rener these random values. It didn't totally solve it but for the most part.
+I built a lot of [random generators](/src/utils/randoms.ts) (because I felt the site would look less static if you content is generated at random) and this made me encounter hydration errors when I run the developement server.
+
+I solved this by adding `suppressHydrationWarning` on the elements that render these random values. It didn't totally solve it but for the most part.
 
 The ultimate solution is to perform these random and shuffling functions on an `api` route or on it's own separate server (like an express server). This ensures that the result sent to nextjs is consistent both on the server hydration and the client one
 
