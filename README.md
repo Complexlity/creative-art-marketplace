@@ -38,11 +38,11 @@
     <li>
     <a href="#challenges-faced">Challenges Faced</a>
     <ul>
-      <li><a href="#installation"></a><li>
-      <li><a href="#hydration-errors"></a><li>
-      <li><a href="#search-and-filter"></a><li>
-      <li><a href="#form-validation"></a><li>
-      <li><a href="#animation"></a><li>
+      <li><a href="#installation"></a>Installation  <li>
+      <li><a href="#hydration-errors"></a>Hydration Errors<li>
+      <li><a href="#search-and-filter"></a>Search And Filter<li>
+      <li><a href="#form-validation"></a>Form Validation<li>
+      <li><a href="#animation"></a>Animation<li>
     </ul>
     </li>
     <li><a href="#future-plans">Future Plans</a></li>
