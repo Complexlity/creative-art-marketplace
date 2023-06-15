@@ -91,6 +91,7 @@ This track contains all nfts available in the market. You could also filter the 
 ### Mint
 
 https://github.com/Complexlity/creative-art-marketplace/assets/105590967/2d0dee1d-a386-4856-a760-f577995bd534.mp4
+
 This contains a form where you could add a new item to the market. It makes use of well described form validation to improve the user experience and help users with non-technical background be able to access the site with ease
 
 ### NFT Details
