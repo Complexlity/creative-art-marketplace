@@ -22,13 +22,14 @@ const Hero = () => {
           and NFTs today and take control of your digital assets with confidence
         </p>
         <div className="flex justify-center gap-4 font-bold md:justify-start">
-          <motion.button
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.95 }}
-            className=" rounded-lg bg-primary px-5 py-2 text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:px-11 md:py-3"
-          >
-            Explore Now
-          </motion.button>
+          <Link href="/explore">
+            <motion.button
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.95 }}
+              className=" rounded-lg bg-primary px-5 py-2 text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:px-11 md:py-3"
+            >Explore Now
+            </motion.button>
+          </Link>
           <button className="">
             <span className="py-1 text-xl hover:border-b-4 hover:border-primary">
               Learn More

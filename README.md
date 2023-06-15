@@ -108,7 +108,7 @@ All pages are fully responsive and interactive ranging from small to large scree
 
 ## Live Demo
 
-The working of the project can be [Here](https://creative-art-marketplace.vercel.app)
+See the application working [LIVE!](https://creative-art-marketplace.vercel.app)
 
 ## Technologies Used
 
