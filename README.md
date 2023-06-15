@@ -184,8 +184,12 @@ I wrote an [application](https://github.com/Complexlity/project-inits/blob/main/
 
 ### Hydration Errors
 
-I learnt to understand more in-depth how Nextjs works. It builds on the server and then on the client. While doing that, it compares both versions for strict equality. I built a lot of [random generators](/src/utils/randoms.ts)(because I felt the site would look less static if you content is generated at random) and this made me encounter hydration errors when I run the developement server
-I solved this by adding `suppressHydrationWarning` on the elements that rener these random values. It didn't totally solve it but for the most part. The ultimate solution is to perform these random and shuffling functions on an `api` route or on it's own separate server (like an express server). This ensures that the result sent to nextjs is consistent both on the server hydration and the client one
+I learnt to understand more in-depth how Nextjs works. It builds on the server and then on the client. While doing that, it compares both versions for strict equality.
+
+I built a lot of [random generators](/src/utils/randoms.ts) (because I felt the site would look less static if you content is generated at random) and this made me encounter hydration errors when I run the developement server
+I solved this by adding `suppressHydrationWarning` on the elements that rener these random values. It didn't totally solve it but for the most part.
+
+The ultimate solution is to perform these random and shuffling functions on an `api` route or on it's own separate server (like an express server). This ensures that the result sent to nextjs is consistent both on the server hydration and the client one
 
 ### Search and Filter
 
@@ -196,15 +200,21 @@ On the [Explore Page](https://creative-art-marketplace.vercel.app/explore). I ne
 
 ### Form Validation
 
-I initially started to build out a form validation. It go complicated fast as I tried to validate on many different occasion (touched, out-of-focus, on submit, etc). I learned about the [formik](https://formik.org/) library which has these many form function in-built. I learnt how to integrate this package in my work flow. I also needed to validate the user schema somehow. I had two options [zod](https://zod.dev/)(which I have used a few times) and [yup](https://www.npmjs.com/package/yup). I ended up using yup to gain a new learning experience. You can find the functions on [Schemas](/src/utils/schemas.ts) file
+I initially started to build out a form validation. It got complicated fast as I tried to validate on many different occasion (touched, out-of-focus, on submit, etc).
+
+I learned about the [formik](https://formik.org/) library which has these many form function in-built. I learnt how to integrate this package in my work flow. I also needed to validate the user schema somehow.
+
+I had two options [zod](https://zod.dev/)(which I have used a few times) and [yup](https://www.npmjs.com/package/yup). I ended up using yup to gain a new learning experience. You can find the functions on [Schemas](/src/utils/schemas.ts) file
 
 ### Animation
 
-And to improve the aesthetics of the website, I wanted to add some minimal animations. I look up two animation libraries: [GSAP](https://greensock.com/gsap/) and [Framer-motion](https://www.framer.com/motion/). I tried to use GSAP but it didn't integrate well with my project(perhaps I didn't learn enough to understand how to). I ended up reaching for framer motion which I've used in the [past](https://complexlity-memory-game.netlify.app/). I ran into an error of triggering exit animations which I was ablt to solve in this new project using `AnimatePresence` element
+And to improve the aesthetics of the website, I wanted to add some minimal animations.
+
+I looked up two animation libraries: [GSAP](https://greensock.com/gsap/) and [Framer-motion](https://www.framer.com/motion/). I tried to use GSAP but it didn't integrate well with my project(perhaps I didn't learn enough to understand how to). I ended up reaching for framer motion which I've used in the [past](https://complexlity-memory-game.netlify.app/). I ran into an error of triggering exit animations which I was able to solve in this new project using `AnimatePresence` element
 
 ## Future Plans
 
-I planned to add an artists page where you could see artist who have their work on the site as well as individual artist page which would show only their on works and a few more details. I would try to work on that as well as try to create a mini express server to remove the hydration errors.
+I planned to add an artists page where you could see artist who have their work on the site as well as individual artist page which would show only their on works and a few more details. I would work on that as well as create a mini express server to remove the hydration errors.
 At the moment, I have little experience building the backend with solidity or put the data on ipfs but these are two ways I think of as ways to go about adding the actual backend to the site.
 
 
