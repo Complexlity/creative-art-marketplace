@@ -174,11 +174,12 @@ Inorder to make the connect wallet work. You need to add two environmental varia
 - ALCHEMY_ID - You alchemy account api key. If you don't have one, Create a new [Alchemy Account](https://alchemy.com/?r=e68b2f77-7fc7-4ef7-8e9c-cdfea869b9b5) to [get a key]((https://docs.alchemy.com/docs/alchemy-quickstart-guide#1key-create-an-alchemy-key))
 
 5. Navigate to [http://localhost:3000/](http://localhost:3000/).
-NOTE: You might see some 'hydration' errors but you can ignore them. See [Hydration Errors](#hydration-errors)
+NOTE: You might see some 'hydration' errors but you can ignore them.
+See [Hydration Errors](#hydration-errors)
 
 ## Challenges Faced
 
-Through building this project, I came across a lot of road block which tended to create some unforgettable knowledge. Some of which include:
+Through building this project, I came across a lot of road blocks which tended to create some good knowledge and experience for me. Some of which include:
 
 ### Installation
 
@@ -192,7 +193,7 @@ I built a lot of [random generators](/src/utils/randoms.ts) (because I felt the 
 
 I solved this by adding `suppressHydrationWarning` on the elements that render these random values. It didn't totally solve it but for the most part.
 
-The ultimate solution is to perform these random and shuffling functions on an `api` route or on it's own separate server (like an express server). This ensures that the result sent to nextjs is consistent both on the server hydration and the client one
+The ultimate solution is to perform these random and shuffling functions on an `api` route or on it's own separate server (like an express server). This ensures that the result sent to nextjs is consistent both on the server hydration and the client one or just use static data (without any random generation)
 
 ### Search and Filter
 
@@ -224,6 +225,6 @@ At the moment, I have little experience building the backend with solidity or pu
 
 Special thanks to the angelhack team for making this a huge learning experience for me. I look forward to the themes of future challenges
 
-All shout out to [this figma design](https://www.figma.com/file/vnkguspCOJQue9YaFQ18IF/NFT-Marketplace-(Community)?type=design&node-id=0-1) for inspiration on how to structure some parts of the site
+Also, shoutout to [this figma design](https://www.figma.com/file/vnkguspCOJQue9YaFQ18IF/NFT-Marketplace-(Community)?type=design&node-id=0-1) for inspiration on how to structure some parts of the site
 
 
