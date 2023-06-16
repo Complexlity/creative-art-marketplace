@@ -14,6 +14,7 @@ import image12 from "/public/nfts/12.png";
 import image13 from "/public/nfts/13.png";
 import image14 from "/public/nfts/14.png";
 import image15 from "/public/nfts/15.png";
+import { generateRandomNFTPrice, generateRandomTimeDifference } from "~/utils/randoms";
 
 
 
@@ -176,5 +177,10 @@ let partialNFTsData: Partial<NFT>[] = [
 ];
 
 
-// const randomNumberGenerator = yieldNumber(nftsData.length);
-export { partialNFTsData };
+const nftsData: NFT[] = partialNFTsData.map((item) => {
+  item.endTime = generateRandomTimeDifference();
+  item.price = generateRandomNFTPrice();
+  return item as NFT;
+});
+
+export { nftsData };

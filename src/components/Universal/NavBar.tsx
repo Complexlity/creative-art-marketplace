@@ -143,6 +143,7 @@ useEffect(() => {
         <Hamburger toggled={isOpen} toggle={setIsOpen} />
       </div>
       <motion.div
+        initial={false}
         animate={openState}
         variants={variants}
         className={`dropdown_menu absolute right-0  top-[calc(100%+5px)] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden rounded-lg  bg-gray-400/60 backdrop-blur-sm px-2 py-2 text-lg sm:right-4 lg:hidden `}

@@ -1,21 +1,14 @@
 import React from "react";
-import { useRouter } from "next/router";
 import NavBar from "~/components/Universal/NavBar";
 import Footer from "~/components/Universal/Footer";
 import { NFT } from "~/data/nfts";
 import { people, People } from "~/data/people";
-import { useNftsDataContext } from "~/contexts/NftsDataContext";
+
 import RelatedItems  from "~/components/nfts/RelatedItems";
 import NftDetails from "~/components/nfts/NftDetails";
-import { generateRandomNFTPrice, generateRandomTimeDifference, pickRandomItems } from "~/utils/randoms";
+import {  pickRandomItems } from "~/utils/randoms";
 import Head from "next/head";
-import { partialNFTsData } from "~/data/nfts";
-
-const nftsData: NFT[] = partialNFTsData.map((item) => {
-  item.endTime = generateRandomTimeDifference();
-  item.price = generateRandomNFTPrice();
-  return item as NFT;
-});
+import { nftsData } from "~/data/nfts";
 
 
 export const getStaticPaths = () => {

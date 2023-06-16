@@ -5,22 +5,14 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import { partialNFTsData, NFT } from "~/data/nfts";
+import { nftsData as initialNftsData, NFT } from "~/data/nfts";
 import { People, people } from "~/data/people";
 import {
   shuffleArray,
-  generateRandomTimeDifference,
-  generateRandomNFTPrice,
 } from "~/utils/randoms";
 
-const randomNftsData = shuffleArray(partialNFTsData);
+const nftsData = shuffleArray(initialNftsData);
 const randomPeopleData = shuffleArray(people);
-
-const nftsData: NFT[] = randomNftsData.map((item) => {
-  item.endTime = generateRandomTimeDifference();
-  item.price = generateRandomNFTPrice();
-  return item as NFT;
-});
 
 let peopleData = randomPeopleData;
 export type GlobalNftsData = {
