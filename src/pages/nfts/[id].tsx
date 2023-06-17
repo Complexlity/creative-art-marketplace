@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "~/components/Universal/NavBar";
 import Footer from "~/components/Universal/Footer";
 import { NFT } from "~/data/nfts";
@@ -9,6 +9,8 @@ import NftDetails from "~/components/nfts/NftDetails";
 import {  pickRandomItems } from "~/utils/randoms";
 import Head from "next/head";
 import { nftsData } from "~/data/nfts";
+import { useRouter } from "next/router";
+import { useNftsDataContext } from "~/contexts/NftsDataContext";
 
 
 export const getStaticPaths = () => {
@@ -23,11 +25,14 @@ export function getStaticProps({ params }: { params: any }) {
 
   return { props: { nftData } }
 }
-// const router = useRouter();
-// const nftsData = useNftsDataContext().nftsData;
-// const nftData = nftsData.find((item) => id === item.id) as NFT;
-// const id = router.query.id;
-function NFTItem({ nftData}: { nftData: NFT}) {
+
+function NFTItem({ nftData }: { nftData: NFT }) {
+  if (typeof window !== 'undefined') {
+    const router = useRouter();
+    const id = router.query.id;
+    const nftsData = useNftsDataContext().nftsData;
+    nftData = nftsData.find((item) => id === item.id) as NFT;
+  }
   const randomPeople = pickRandomItems(people, 4) as People[];
   let relatedItems = nftsData.filter((item) => nftData.id !== item.id);
   relatedItems = pickRandomItems(relatedItems, 6) as NFT[];
