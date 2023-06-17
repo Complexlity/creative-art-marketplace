@@ -18,15 +18,23 @@ type Search = string | number | readonly string[] | undefined;
 
 export default function CardsContainer() {
   const nftsData = useNftsDataContext().nftsData;
+  const [search, setSearch] = useState<Search>("");
+  const debouncedSearch = useDebounce(search, 500);
+  const [priceRange, setPriceRange] = useState<string>("all");
+  const [category, setCategory] = useState("default");
+  const [expiryDate, setExpiryDate] = useState("0");
+  const [displayedData, setDisplayedData] = useState(nftsData);
   const [seeMore, setSeeMore] = useState<SeeMore>({
     initialValue: 6,
     step: 3,
-    max: nftsData.length,
+    max: displayedData.length,
   });
   const [showingCondition, setShowingCondition] = useState({
     maxxed: false,
     minned: true,
   });
+
+
   function showMore() {
     if (showingCondition.maxxed) return;
     if (showingCondition.minned)
@@ -61,12 +69,7 @@ export default function CardsContainer() {
     setSeeMore({ ...seeMore, initialValue: prev });
   }
 
-  const [search, setSearch] = useState<Search>("");
-  const debouncedSearch = useDebounce(search, 500);
-  const [priceRange, setPriceRange] = useState<string>("all");
-  const [category, setCategory] = useState("default");
-  const [expiryDate, setExpiryDate] = useState("0");
-  const [displayedData, setDisplayedData] = useState(nftsData);
+
 
   useEffect(() => {
     setDisplayedData(
