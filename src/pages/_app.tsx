@@ -1,4 +1,5 @@
 import React from "react";
+import { Analytics } from '@vercel/analytics/react';
 import { type AppType } from "next/dist/shared/lib/utils";
 import "@rainbow-me/rainbowkit/styles.css";
 import "~/styles/globals.css";
@@ -50,14 +51,15 @@ const myCustomTheme: Theme = merge(darkTheme(), {
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <SafeHydrate>
-      <WagmiConfig config={wagmiConfig}>
-        <RainbowKitProvider chains={chains} theme={myCustomTheme} coolMode>
-          <NftsDataContextProvider>
-            <Component {...pageProps} />
-          </NftsDataContextProvider>
-        </RainbowKitProvider>
-      </WagmiConfig>
-    </SafeHydrate>
+        <WagmiConfig config={wagmiConfig}>
+          <RainbowKitProvider chains={chains} theme={myCustomTheme} coolMode>
+            <NftsDataContextProvider>
+              <Component {...pageProps} />
+                <Analytics/>
+            </NftsDataContextProvider>
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </SafeHydrate>
   );
 };
 
