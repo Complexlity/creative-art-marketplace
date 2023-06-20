@@ -50,16 +50,18 @@ const myCustomTheme: Theme = merge(darkTheme(), {
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
+    <>
     <SafeHydrate>
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains} theme={myCustomTheme} coolMode>
             <NftsDataContextProvider>
               <Component {...pageProps} />
-                <Analytics/>
             </NftsDataContextProvider>
           </RainbowKitProvider>
         </WagmiConfig>
       </SafeHydrate>
+      <Analytics/>
+      </>
   );
 };
 
