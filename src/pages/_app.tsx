@@ -59,14 +59,14 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           name="description"
           content="A place to discover, create and buy exclusive NFTs."
         />
-        <meta property="og:title" content="CreativeArts Marketplace" />
+        <meta property="og:title" content="CreativeArt Marketplace" />
         <meta
           property="og:description"
           content="A place to discover, create and buy exclusive NFTs."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="." />
-        <meta property="og:site_name" content="CreativeArts Marketplace" />
+        <meta property="og:site_name" content="CreativeArt Marketplace" />
 
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
