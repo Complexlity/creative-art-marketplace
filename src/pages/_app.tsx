@@ -1,20 +1,23 @@
-import React from "react";
-import { Analytics } from '@vercel/analytics/react';
-import { type AppType } from "next/dist/shared/lib/utils";
-import "@rainbow-me/rainbowkit/styles.css";
-import "~/styles/globals.css";
 import {
-  getDefaultWallets,
   RainbowKitProvider,
-  darkTheme,
   Theme,
+  darkTheme,
+  getDefaultWallets,
 } from "@rainbow-me/rainbowkit";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
+import "@rainbow-me/rainbowkit/styles.css";
+import { Analytics } from '@vercel/analytics/react';
+import merge from "lodash.merge";
+import { type AppType } from "next/dist/shared/lib/utils";
+import Head from "next/head";
+import React from "react";
+import { WagmiConfig, configureChains, createConfig } from "wagmi";
+import { arbitrum, mainnet, optimism, polygon } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import "~/styles/globals.css";
+import ogImage from '../../public/og.png';
 import NftsDataContextProvider from "../contexts/NftsDataContext";
-import merge from "lodash.merge";
+
 
 const apiKey = process.env.ALCHEMY_ID as string;
 
@@ -51,7 +54,10 @@ const myCustomTheme: Theme = merge(darkTheme(), {
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
-    <SafeHydrate>
+      <Head>
+        <meta property="og:image" content='/og.png' />
+      </Head>
+      <SafeHydrate>
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains} theme={myCustomTheme} coolMode>
             <NftsDataContextProvider>
@@ -60,8 +66,8 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           </RainbowKitProvider>
         </WagmiConfig>
       </SafeHydrate>
-      <Analytics/>
-      </>
+      <Analytics />
+    </>
   );
 };
 
