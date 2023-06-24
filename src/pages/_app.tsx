@@ -67,13 +67,14 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="." />
         <meta property="og:site_name" content="CreativeArt Marketplace" />
-
+        <meta
+          property="og:image"
+          content="https://creative-art-marketplace.vercel.app/og.png"
+        />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:type" content="image/png" />
-        <meta property="og:image" content="/og.png" />
         <meta property="og:locale" content="en_US" />
-
       </Head>
       <SafeHydrate>
         <WagmiConfig config={wagmiConfig}>
