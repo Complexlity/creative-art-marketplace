@@ -66,7 +66,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="." />
-        <meta property="og:site_name" content="CreativeArt Marketplace" />
+        <meta property="og:site_name" content="CreativeArts Marketplace" />
 
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
