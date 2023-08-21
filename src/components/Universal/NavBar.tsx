@@ -6,6 +6,8 @@ import logo from "/public/icons/logo.png";
 import { Spin as Hamburger } from "hamburger-react";
 import { motion } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { UserButton } from "@clerk/nextjs";
+import AuthButton from "./AuthButton";
 
 const NavBar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
@@ -57,7 +59,8 @@ const NavBar = () => {
         </Link>
       </ul>
       <div className="hidden lg:block">
-        <ConnectButton accountStatus={"full"} showBalance={true} />
+        <AuthButton />
+        {/* <ConnectButton accountStatus={"full"} showBalance={true} /> */}
       </div>
 
       <MobileMenu />
@@ -188,12 +191,13 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
           variants={fourVariants}
           className="mt-4 grid justify-center py-2"
         >
-          <ConnectButton
+          {/* <ConnectButton
             accountStatus={{
               smallScreen: "avatar",
               largeScreen: "full",
             }}
-          />
+          /> */}
+          <AuthButton />
         </motion.div>
       </motion.div>
     </>

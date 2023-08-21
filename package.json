@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.23.2",
+    "@clerk/themes": "^1.7.5",
     "@rainbow-me/rainbowkit": "^1.0.1",
     "@types/lodash.merge": "^4.6.7",
     "@types/react-icons": "^3.0.0",
