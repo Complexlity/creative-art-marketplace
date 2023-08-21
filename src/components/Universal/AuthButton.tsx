@@ -1,5 +1,4 @@
 import {
-  ClerkProvider,
   SignedIn,
   SignedOut,
   SignInButton,
@@ -24,7 +23,7 @@ export default function AuthButton() {
           afterSignUpUrl={pathname}
           afterSignInUrl={pathname}
         >
-          <button className="cursor-pointer rounded-full bg-primary px-8 py-1 text-gray-800">
+          <button className="cursor-pointer font-bold rounded-full bg-primary px-8 py-1 text-gray-800">
             Sign In
           </button>
         </SignInButton>
