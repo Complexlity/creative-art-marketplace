@@ -35,7 +35,7 @@ export function Modals({ nftData }: { nftData: NFT }) {
         </motion.button>
       </div>
       <Modal
-        className="backdrop-blur"
+        className="custom-modal z-[110] h-screen backdrop-blur"
         dismissible
         show={openModal === "BUY_NOW"}
         onClose={() => props.setOpenModal(undefined)}
@@ -67,6 +67,7 @@ export function Modals({ nftData }: { nftData: NFT }) {
         </Modal.Footer>
       </Modal>
       <Modal
+        className="custom-modal z-[110] h-screen backdrop-blur"
         dismissible
         show={openModal === "PLACE_BID"}
         size="md"

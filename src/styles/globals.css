@@ -11,6 +11,11 @@
   --toastify-color-dark: #1f2937 !important;
 }
 
+.custom-modal > div {
+  display: grid;
+  align-items: center;
+}
+
 .main {
   background-color: #111827;
   background-image: var(--bg-image)
