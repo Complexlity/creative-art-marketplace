@@ -38,12 +38,21 @@ function getStatusText(status: BidStatus) {
 export default function Bids({
   status,
   person,
+  type
 }: {
   status?: BidStatus;
   person: People;
+  type: "bids" | "history"
 }) {
-  if (!status) status = "ACCEPTED";
-  const { checkColor, statusText, StatusIcon } = getStatusText(status);
+  if(type === 'history'){
+    if(status == "PENDING" || !status) status = "ACCEPTED"
+  }
+
+  if(type == 'bids') status = "PENDING"
+
+  
+
+  const { checkColor, statusText, StatusIcon } = getStatusText(status!);
   return (
     <div className="flex gap-4">
       <div className="bidder-image relative h-12  w-12 rounded-full border-2 border-white">

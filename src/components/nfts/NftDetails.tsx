@@ -4,19 +4,23 @@ import Image from "next/image";
 import CountDownComponent from "../Universal/Countdown";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
-import Bids from "./Bids";
+
 import { Modals } from "./Modals";
 import { People, people } from "~/data/people";
-import { getRandomStatus } from "./Bids";
+import HistoryBids from "./HistoryBids";
+
 
 export default function NftDetails({
   nftData,
-  randomPeople,
+  randomBidsPeople,
+  randomHistoryPeople,
 }: {
   nftData: NFT | undefined;
-  randomPeople: People[];
+  randomBidsPeople: People[];
+  randomHistoryPeople: People[];
 }) {
   const nftImage = pickRandomItems(people, 1)[0]?.image.src;
+
 
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;
@@ -73,27 +77,10 @@ export default function NftDetails({
             <p className="font-semibold tracking-widest">{nftData.creator}</p>
           </div>
         </div>
-        <div className="mb-2 mt-4 flex gap-4 filter">
-          <div
-            tabIndex={0}
-            className="cursor-pointer rounded-md border-2 border-gray-300 px-5 py-[.05rem] hover:border-white focus:outline-2  "
-          >
-            Bids
-          </div>
-          <div
-            tabIndex={0}
-            className="cursor-pointer rounded-md border-2 border-gray-500 px-5 py-[.05rem] text-gray-400 hover:border-white focus:outline-2"
-          >
-            History
-          </div>
-        </div>
-        <div suppressHydrationWarning={true} className="bids mb-8 grid gap-2.5">
-          {randomPeople.map((person, id) => {
-            return <Bids key={id} person={person} status={getRandomStatus()} />;
-          })}
-        </div>
+        <HistoryBids randomBidsPeople={randomBidsPeople} randomHistoryPeople={randomHistoryPeople}/>
         <Modals nftData={nftData} />
       </div>
     </section>
   );
 }
+

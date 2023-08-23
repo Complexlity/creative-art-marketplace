@@ -33,7 +33,9 @@ function NFTItem({ nftData }: { nftData: NFT }) {
     const nftsData = useNftsDataContext().nftsData;
     nftData = nftsData.find((item) => id === item.id) as NFT;
   }
-  const randomPeople = pickRandomItems(people, 4) as People[];
+  const randomBidsPeople = pickRandomItems(people, 4) as People[];
+  const randomHistoryPeople = pickRandomItems(people, 4) as People[];
+
   let relatedItems = nftsData.filter((item) => nftData.id !== item.id);
   relatedItems = pickRandomItems(relatedItems, 6) as NFT[];
 
@@ -53,7 +55,7 @@ function NFTItem({ nftData }: { nftData: NFT }) {
           className="mx-auto max-w-[1200px]  px-6 text-white"
         >
           <NavBar />
-          <NftDetails nftData={nftData} randomPeople={randomPeople} />
+          <NftDetails nftData={nftData} randomBidsPeople={randomBidsPeople} randomHistoryPeople={randomHistoryPeople} />
           <RelatedItems relatedItems={relatedItems} />
           <Footer />
         </div>
