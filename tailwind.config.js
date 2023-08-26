@@ -1,15 +1,24 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ["class"],
   content: [
-     "./node_modules/flowbite-react/**/*.js",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-
-    // Or if using `src` directory:
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   theme: {
+    fontFamily: {
+      ttramillas: ["ttramillas", "sans-serif"],
+      roboto: ["roboto", "sans-serif"],
+    },
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
         primary: "#d2f55e",
@@ -18,14 +27,26 @@ module.exports = {
         "3xl": "0 30px 200px -5px rgba(0, 0, 0, 0.3)",
         round: "0 0 5px 3px rgb(0 0 0 / 0.25)",
       },
-    },
-    fontFamily: {
-      ttramillas: ["ttramillas", "sans-serif"],
-      roboto: ["roboto", "sans-serif"],
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
   },
-  plugins: [require("flowbite/plugin"),
-  require("daisyui"),
-  require("@xpd/tailwind-3dtransforms")
-],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("flowbite/plugin"),
+    require("daisyui"),
+    require("@xpd/tailwind-3dtransforms"),
+  ],
 };

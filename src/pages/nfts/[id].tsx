@@ -11,6 +11,7 @@ import Head from "next/head";
 import { nftsData } from "~/data/nfts";
 import { useRouter } from "next/router";
 import { useNftsDataContext } from "~/contexts/NftsDataContext";
+import Comments from "~/components/nfts/Comments";
 
 
 export const getStaticPaths = () => {
@@ -56,6 +57,7 @@ function NFTItem({ nftData }: { nftData: NFT }) {
         >
           <NavBar />
           <NftDetails nftData={nftData} randomBidsPeople={randomBidsPeople} randomHistoryPeople={randomHistoryPeople} />
+          <Comments />
           <RelatedItems relatedItems={relatedItems} />
           <Footer />
         </div>
