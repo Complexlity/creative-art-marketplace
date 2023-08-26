@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
-
+import TextareaAutosize from "react-textarea-autosize";
+import { SendHorizontal } from 'lucide-react';
 
 
 interface CommentsProps {
@@ -15,16 +16,18 @@ const Comments: FC<CommentsProps> = ({}) => {
         Comments
         <span className="absolute bottom-[-.3rem] right-[50%] h-[.15rem] w-[20%] max-w-[180px] translate-x-[50%] bg-primary"></span>
       </h2>
-      <div >
+      <div className='flex text-2xl gap-2 justify-between items-center' >
           {/* User Avatar */}
           <Avatar>
-  <AvatarImage src="https://github.com/shadcn.png" />
+  <AvatarImage src="/people/5.webp" />
   <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          
-
-        {/* Auto sizeable text area */}
-        {/* Comment Buttton */}
+          {/* Auto sizeable text area */}
+          <TextareaAutosize placeholder='Add Comments' className="w-full rounded-lg   border-1  border-gray-600 bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary placeholder:text-white"/>
+          {/* Comment Buttton */}
+          <button>
+          <SendHorizontal className='text-primary hover:fill-primary'/>
+          </button>
       </div>
       {/* Comments */}
       <div>
