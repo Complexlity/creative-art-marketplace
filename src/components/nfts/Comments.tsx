@@ -14,22 +14,22 @@ interface CommentsProps {
 
 const comments = [
   {
-    content: "Hello world",
+    content: "consectetur adipisicing elit. Quibusdam, earum! Neque, magnam fuga. Distinctio deleniti animi ea ducimus rem tempora.",
     createdAt: generateRandomDate(),
     user: pickRandomItems(people, 1)[0]!
   },
   {
-    content: "This item is very good",
+    content: "Lorem ipsum dolor sit amet.",
     createdAt: generateRandomDate(),
     user: pickRandomItems(people, 1)[0]!
   },
   {
-    content: "I will keep using this for my daily activities",
+    content: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus harum repellat recusandae",
     createdAt: generateRandomDate(),
     user: pickRandomItems(people, 1)[0]!
   },
   {
-    content: "I want you to understand how I work",
+    content: "assumenda adipisci a veniam placeat praesentium quam aliquid expedita dolore ipsam, eius repellat laboriosam sunt.",
     createdAt: generateRandomDate(),
     user: pickRandomItems(people, 1)[0]!
   },
@@ -68,21 +68,20 @@ const Comments: FC<CommentsProps> = ({}) => {
               return a.createdAt.raw - b.createdAt.raw;
             })
             .map((comment) => (
-              <div className="grid gap-2   rounded-md p-2 shadow shadow-gray-400">
-                <div className="font-2xl flex items-center gap-2 text-white">
+              <div className="grid gap-2 rounded-md p-2 shadow shadow-gray-400">
+                <div className="font-2xl flex items-center gap-4 text-gray-200">
                   {/* User Avatar  + User Name*/}
-                  <div className="flex items-center gap-2">
+
                     <Avatar>
                       {/* @ts-expect-error src should be string */}
                       <AvatarImage src={comment.user.image} />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
-                    {comment.user.name}
-                  </div>
+                  <span className="text-white font-semibold">{comment.user.name}</span>
                   {/* Time  */}
-                  <span>{formatDate(comment.createdAt.raw)}</span>
+                  <span className="text-gray-400">{formatDate(comment.createdAt.raw)}</span>
                 </div>
-                <div className="text-start">
+                <div className="text-start text-base text-gray-200">
                   {/* Comment */}
                   {comment.content}
                 </div>
