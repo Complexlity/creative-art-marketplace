@@ -19,8 +19,8 @@ export function Modals({ nftData }: { nftData: NFT }) {
       <div className="purchase-options flex gap-4">
         <motion.button
           onClick={() => setOpenModal("BUY_NOW")}
-          className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:shadow-round hover:shadow-gray-400"
-          whileHover={{ scale: 1.05 }}
+          className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:shadow-round hover:shadow-gray-600"
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           Buy Now
@@ -28,7 +28,7 @@ export function Modals({ nftData }: { nftData: NFT }) {
         <motion.button
           onClick={() => props.setOpenModal("PLACE_BID")}
           className="rounded-full bg-gray-500 px-6 py-2 hover:shadow-round hover:shadow-primary"
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           Place a bid
