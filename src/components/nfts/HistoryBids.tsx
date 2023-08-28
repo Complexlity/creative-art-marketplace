@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { getRandomStatus } from "./Bids";
 import Bids from "./Bids";
 import { People } from "~/data/people";
+import { pickFromArray } from "~/utils/randoms";
+import { BidStatus } from "./NftDetails";
 
 type Tab = "bids" | 'history'
 
-export default function HistoryBids({randomBidsPeople, randomHistoryPeople}: {randomBidsPeople: People[]; randomHistoryPeople: People[]}) {
+export default function HistoryBids({ randomBidsPeople, randomHistoryPeople }: { randomBidsPeople: (People & { status: BidStatus })[]; randomHistoryPeople: (People & { status: BidStatus })[]}) {
     const [activeTab, setActiveTab] = useState<Tab>('bids');
     const randomPeople = activeTab === 'bids' ? randomBidsPeople : randomHistoryPeople
     function getBorderColor(Tab: Tab){
@@ -33,9 +34,9 @@ export default function HistoryBids({randomBidsPeople, randomHistoryPeople}: {ra
         </div>
         <div suppressHydrationWarning={true} className="history-bids bids mb-8 grid gap-2.5">
           {randomPeople.map((person, id) => {
-            return <Bids key={id} person={person} status={getRandomStatus()} type={activeTab}/>;
+            return <Bids key={id} person={person} />;
           })}
         </div>
-        </> 
+        </>
         )
 }

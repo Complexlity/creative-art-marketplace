@@ -4,14 +4,9 @@ import { generateRandomDate, generateRandomNFTPrice, pickFromArray } from "~/uti
 import { IconType } from "react-icons";
 import { MdCancel, MdPending } from "react-icons/md";
 import { IoMdCheckmarkCircle } from "react-icons/io";
+import type { BidStatus } from './NftDetails'
 
 
-type BidStatus = "PENDING" | "ACCEPTED" | "REJECTED";
-let statuses: BidStatus[] = ["ACCEPTED", "PENDING", "REJECTED"];
-
-export function getRandomStatus() {
-  return pickFromArray(statuses)
-}
 
 function getStatusText(status: BidStatus) {
   let checkColor: string, statusText: string, StatusIcon: IconType;
@@ -36,23 +31,15 @@ function getStatusText(status: BidStatus) {
 }
 
 export default function Bids({
-  status,
   person,
-  type
 }: {
-  status?: BidStatus;
-  person: People;
-  type: "bids" | "history"
+  person: People & {status: BidStatus};
 }) {
-  if(type === 'history'){
-    if(status == "PENDING" || !status) status = "ACCEPTED"
-  }
-
-  if(type == 'bids') status = "PENDING"
 
 
 
-  const { checkColor, statusText, StatusIcon } = getStatusText(status!);
+
+  const { checkColor, statusText, StatusIcon } = getStatusText(person.status);
   return (
     <div className="flex gap-4">
       <div className="bidder-image relative h-12  w-12 rounded-full border-2 border-white">

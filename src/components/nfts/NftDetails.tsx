@@ -1,13 +1,20 @@
 import { NFT } from "~/data/nfts";
-import { getRandomNumber, pickRandomItems } from "~/utils/randoms";
+import { getRandomNumber, pickFromArray, pickRandomItems } from "~/utils/randoms";
 import Image from "next/image";
 import CountDownComponent from "../Universal/Countdown";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
 
 import { Modals } from "./Modals";
-import { People, people } from "~/data/people";
+import { type People, people } from "~/data/people";
 import HistoryBids from "./HistoryBids";
+
+export type BidStatus = "PENDING" | "ACCEPTED" | "REJECTED";
+let statuses: BidStatus[] = ["ACCEPTED", "REJECTED"];
+
+export function getRandomStatus() {
+  return pickFromArray(statuses);
+}
 
 
 export default function NftDetails({
@@ -21,6 +28,16 @@ export default function NftDetails({
 }) {
   const nftImage = pickRandomItems(people, 1)[0]?.image.src;
 
+  const newRandomHistoryPeople = randomHistoryPeople.map((person) => {
+    // @ts-expect-error
+    person.status = getRandomStatus();
+    return person as People & { status: BidStatus };
+  });
+  const newRandomBidsPeople = randomBidsPeople.map(person => {
+    // @ts-expect-error
+    person.status = 'PENDING'
+    return person as People & {status: BidStatus}
+})
 
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;
@@ -77,7 +94,7 @@ export default function NftDetails({
             <p className="font-semibold tracking-widest">{nftData.creator}</p>
           </div>
         </div>
-        <HistoryBids randomBidsPeople={randomBidsPeople} randomHistoryPeople={randomHistoryPeople}/>
+        <HistoryBids randomBidsPeople={newRandomBidsPeople} randomHistoryPeople={newRandomHistoryPeople}/>
         <Modals nftData={nftData} />
       </div>
     </section>
