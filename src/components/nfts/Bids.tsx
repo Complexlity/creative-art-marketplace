@@ -50,7 +50,7 @@ export default function Bids({
 
   if(type == 'bids') status = "PENDING"
 
-  
+
 
   const { checkColor, statusText, StatusIcon } = getStatusText(status!);
   return (
@@ -76,7 +76,7 @@ export default function Bids({
           <span className="font-bold tracking-wider text-white">
             {person.name}
           </span>{" "}
-          at {generateRandomDate()}
+          at {generateRandomDate().formatted}
         </p>
       </div>
     </div>

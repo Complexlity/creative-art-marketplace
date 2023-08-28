@@ -49,7 +49,7 @@ export function generateRandomDate() {
   const minutes = String(randomDate.getMinutes()).padStart(2, "0"); // get the minutes and pad it with a leading zero if necessary
   const ampm = randomDate.getHours() < 12 ? "AM" : "PM"; // get the AM/PM indicator
 
-  return `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
+  return { raw: randomDate, formatted: `${month}/${day}/${year} ${hours}:${minutes} ${ampm}` };
 }
 
 export function getRandomNumber(n: number) {
