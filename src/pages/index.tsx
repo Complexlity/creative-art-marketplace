@@ -25,7 +25,7 @@ const Home: NextPage = () => {
           className="mx-auto max-w-[1200px]  px-2 md:px-4"
         >
           <NavBar />
-          <div className="overflow-x-hidden">
+          <div suppressHydrationWarning className="overflow-x-hidden">
             <Hero />
             <UniqueArt />
             <WeeklyArtists />

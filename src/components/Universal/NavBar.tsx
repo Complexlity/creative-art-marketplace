@@ -60,7 +60,6 @@ const NavBar = () => {
       </ul>
       <div className="hidden lg:block">
         <AuthButton />
-        {/* <ConnectButton accountStatus={"full"} showBalance={true} /> */}
       </div>
 
       <MobileMenu />

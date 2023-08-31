@@ -1,11 +1,10 @@
 import { Button, Modal } from "flowbite-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { toast, ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { NFT } from "~/data/nfts";
 import BidInputForm from "./BidInputForm";
 import "react-toastify/dist/ReactToastify.css";
-
 
 export type BuyOptions = "BUY_NOW" | "PLACE_BID";
 export function Modals({ nftData }: { nftData: NFT }) {
@@ -19,8 +18,8 @@ export function Modals({ nftData }: { nftData: NFT }) {
       <div className="purchase-options flex gap-4">
         <motion.button
           onClick={() => setOpenModal("BUY_NOW")}
-          className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:shadow-round hover:shadow-gray-600"
-          whileHover={{ scale: 1.02 }}
+          className="rounded-full bg-primary px-6 py-2 font-bold text-gray-800 hover:shadow-round hover:shadow-gray-400"
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
         >
           Buy Now
@@ -28,14 +27,14 @@ export function Modals({ nftData }: { nftData: NFT }) {
         <motion.button
           onClick={() => props.setOpenModal("PLACE_BID")}
           className="rounded-full bg-gray-500 px-6 py-2 hover:shadow-round hover:shadow-primary"
-          whileHover={{ scale: 1.02 }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
         >
           Place a bid
         </motion.button>
       </div>
       <Modal
-        className="custom-modal z-[110] h-screen backdrop-blur"
+        className="backdrop-blur"
         dismissible
         show={openModal === "BUY_NOW"}
         onClose={() => props.setOpenModal(undefined)}
@@ -67,7 +66,6 @@ export function Modals({ nftData }: { nftData: NFT }) {
         </Modal.Footer>
       </Modal>
       <Modal
-        className="custom-modal z-[110] h-screen backdrop-blur"
         dismissible
         show={openModal === "PLACE_BID"}
         size="md"
