@@ -1,13 +1,11 @@
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import logo from "/public/icons/logo.png";
-import { Spin as Hamburger } from "hamburger-react";
 import { motion } from "framer-motion";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { UserButton } from "@clerk/nextjs";
+import { Spin as Hamburger } from "hamburger-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import AuthButton from "./AuthButton";
+import logo from "/public/icons/logo.png";
 
 const NavBar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
