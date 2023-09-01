@@ -37,7 +37,7 @@ const comments = [
 const Comments: FC<CommentsProps> = ({}) => {
 
     return (
-      <section className="comments grid gap-6 text-center">
+      <section className="comments grid gap-6 text-center max-w-[800px] mx-auto ">
         <h2 className="relative  text-3xl tracking-wide md:text-4xl">
           Comments
           <span className="absolute bottom-[-.3rem] right-[50%] h-[.15rem] w-[20%] max-w-[180px] translate-x-[50%] bg-primary"></span>
