@@ -1,4 +1,3 @@
-import "@rainbow-me/rainbowkit/styles.css";
 import { Analytics } from '@vercel/analytics/react';
 import { type AppType } from "next/dist/shared/lib/utils";
 import Head from "next/head";
@@ -36,7 +35,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <SafeHydrate>
         <ClerkProvider
           appearance={{
-            
+
           }}
            {...pageProps}
         >

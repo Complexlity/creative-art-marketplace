@@ -56,7 +56,7 @@ const Comments: FC<CommentsProps> = ({}) => {
           />
           {/* Comment Buttton */}
           <button>
-            <SendHorizontal className="text-primary hover:fill-primary" />
+            <SendHorizontal className="text-primary hover:outline-primary" />
           </button>
         </div>
         {/* Comments */}
