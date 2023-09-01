@@ -3,7 +3,7 @@ import { NFT } from "~/data/nfts";
 import type {BuyOptions} from './Legacy_Modals'
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import { Button, Checkbox, Label } from "flowbite-react";
+// import { Button, Checkbox, Label } from "flowbite-react";
 import { bidSchema } from "~/utils/schemas";
 
 export default function Legacy_BidInputForm({

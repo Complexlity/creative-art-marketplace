@@ -29,5 +29,5 @@
     "**/*.cjs",
     "**/*.mjs"
   ],
-  "exclude": ["node_modules", "schema.ts", "nfts/*.tsx"]
+  "exclude": ["node_modules", "schema.ts", "nfts/*.tsx", "Legacy*.ts"]
 }
