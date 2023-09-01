@@ -5,10 +5,10 @@ import CountDownComponent from "../Universal/Countdown";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
 
-import { Modals } from "./Modals";
+
 import { type People, people } from "~/data/people";
 import HistoryBids from "./HistoryBids";
-import { Modals2 } from "./Modals2";
+import { Modals } from "./Modals";
 
 export type BidStatus = "PENDING" | "ACCEPTED" | "REJECTED";
 let statuses: BidStatus[] = ["ACCEPTED", "REJECTED"];
@@ -97,7 +97,6 @@ export default function NftDetails({
         </div>
         <HistoryBids randomBidsPeople={newRandomBidsPeople} randomHistoryPeople={newRandomHistoryPeople}/>
         <Modals nftData={nftData} />
-        <Modals2/>
       </div>
     </section>
   );
