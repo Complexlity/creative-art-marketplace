@@ -13,3 +13,4 @@
 13. Sort items on explore page ✔
 14. Add load more and see less buttons ✔
 15. Optional add artists page and routing to artists page
+16. Remove daisyui footer. Create custom footer component

@@ -52,6 +52,7 @@
     "@typescript-eslint/parser": "^5.59.6",
     "@xpd/tailwind-3dtransforms": "^1.0.3",
     "autoprefixer": "^10.4.14",
+    "daisyui": "^3.6.4",
     "eslint": "^8.40.0",
     "eslint-config-next": "^13.4.2",
     "hamburger-react": "^2.5.0",
