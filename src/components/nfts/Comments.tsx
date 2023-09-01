@@ -52,7 +52,7 @@ const Comments: FC<CommentsProps> = ({}) => {
           {/* Auto sizeable text area */}
           <TextareaAutosize
             placeholder="Add Comment..."
-            className="border-1 w-full   rounded-lg  border-gray-600 bg-transparent p-2 text-sm text-white  placeholder:italic placeholder:text-gray-300 focus:border-primary focus:ring-primary"
+            className="border-1 w-full border-2   rounded-lg  !border-gray-600 bg-transparent p-2 text-sm text-white  placeholder:italic placeholder:text-gray-300 focus-visible:outline-primary focus:outline-primary focus-visible:border-primary focus- !focus:!border-none focus:ring-primary"
           />
           {/* Comment Buttton */}
           <button>
