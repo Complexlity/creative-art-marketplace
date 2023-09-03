@@ -10,19 +10,47 @@ import MethodOptions, {type Methods} from './MethodOptions'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import supabase from '~/../supabase'
-
+import {  useAuth } from '@clerk/nextjs'
+import supabaseClient from "~/../supabase";
+import { useUploadThing } from "~/utils/uploadthing"
+import { useRouter } from "next/navigation";
 
 export default function MintForm() {
-    console.log(supabase)
-    const [image, setImage] = useState<StaticImageData>();
+  const router = useRouter()
+  const { getToken, userId } = useAuth()
+  const [image, setImage] = useState<File>();
+  const [imageUrl, setImageUrl] = useState('')
     const [imageError, setImageError] = useState<string>();
     const [checked, setChecked] = useState<boolean>(false);
     const [method, setMethod] = useState<Methods>("FIXED_PRICE");
-    const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [loadingMessage, setLoadingMessage] = useState("")
 
     const toggleChecked = () => {
       setChecked(!checked);
     };
+ const { startUpload } = useUploadThing("imageUploader", {
+   onClientUploadComplete: () => {
+
+   },
+   onUploadError: () => {
+     alert("error occurred while uploading");
+     throw new Error("something went wrong while uploading")
+   },
+   onUploadBegin: () => {
+    //  alert("upload has begun");
+   },
+ });
+
+
+
+  const getSupabase = async () => {
+      const supabaseAccessToken = await getToken({
+        template: "supabase",
+      });
+    const supabase = await supabaseClient(supabaseAccessToken);
+    return supabase
+    }
 
     const toggleOptions = (e: any) => {
       const value = e.target.value.toUpperCase();
@@ -45,19 +73,45 @@ export default function MintForm() {
         isMinBid: false,
       },
       onSubmit: async (values, { resetForm }) => {
+        if (!userId) {
+          toast("Pleas Login")
+          return
+        }
         if (!image) {
           setImageError("NFT image not provided");
           return;
         }
+        setIsLoading(true)
+        setLoadingMessage("Getting Supabase...")
+        const supabase = await getSupabase()
+        if (!supabase) return toast("Not Authenticated")
+        setLoadingMessage("Uploading Image...")
+        let uploadError;
 
+        const res = await startUpload([image!]).catch((err) => uploadError = err)
+        const fileUrl = res![0].fileUrl;
+
+        if (uploadError) {
+          toast("Could not upload file")
+          setIsLoading(false)
+          console.log(uploadError)
+          return
+        }
+        setLoadingMessage("Uploading Nft Details...")
         const { data, error } = await supabase
         .from("nft")
-        .insert([{ name: values.title, price:  values.price || values.minBid, image: "https://uploadthing.com/f/f261d012-f841-4905-91ae-2f94b4d05688_iconic-dp.jpg", creator: "Complexlity", description: values.description, category: values.collections }])
+        .insert([{ name: values.title, price:  values.price || values.minBid, image: fileUrl, creator: userId , description: values.description, category: values.collections }])
         .select()
         if (data) {
+          setLoadingMessage("Completed")
           notifyMint()
           setImage(undefined);
           resetForm();
+          setLoadingMessage("")
+          setImage(undefined)
+          setImageUrl('')
+          setIsLoading(false)
+          router.push('/explore')
         }
         else if (error) {
           console.log(error)
@@ -86,8 +140,10 @@ export default function MintForm() {
       }
       let fileUrl = URL.createObjectURL(
         e.target.files[0]
-      ) as unknown as StaticImageData;
-      setImage(fileUrl);
+      );
+
+      setImage(file);
+      setImageUrl(fileUrl)
       setImageError("");
     }
 
@@ -104,7 +160,7 @@ export default function MintForm() {
                 className={`grid content-center items-center gap-4 rounded-xl border-4 border-dotted px-4 py-8 ${
                   imageError
                     ? "border-red-400"
-                    : image
+                    : imageUrl
                     ? "border-green-400"
                     : "border-gray-600"
                 }`}
@@ -134,7 +190,7 @@ export default function MintForm() {
               >
                 {imageError
                   ? imageError
-                  : image
+                  : imageUrl
                   ? "File Added Successfully!!"
                   : ""}
               </small>
@@ -332,8 +388,8 @@ export default function MintForm() {
             <input
               disabled={isLoading}
               type="submit"
-              value="Create Item"
-              className={`submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800 ${isLoading ? "opacity-80" : ""}`}
+              value={isLoading ? loadingMessage : "Create Item"}
+              className={`submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800 ${isLoading ? "opacity-50" : ""}`}
             />
           </div>
 
@@ -341,7 +397,7 @@ export default function MintForm() {
             <label>Preview Item</label>
             <Card
               item={{
-                image,
+                image: imageUrl as unknown as StaticImageData,
                 name: values.title,
                 price: values.price || values.minBid,
                 category: values.collections,
