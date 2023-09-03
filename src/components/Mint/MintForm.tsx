@@ -9,14 +9,16 @@ import { StaticImageData } from "next/image";
 import MethodOptions, {type Methods} from './MethodOptions'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import supabase from '~/../supabase'
 
 
 export default function MintForm() {
+    console.log(supabase)
     const [image, setImage] = useState<StaticImageData>();
     const [imageError, setImageError] = useState<string>();
     const [checked, setChecked] = useState<boolean>(false);
     const [method, setMethod] = useState<Methods>("FIXED_PRICE");
-
+    const [isLoading, setIsLoading] = useState(false)
 
     const toggleChecked = () => {
       setChecked(!checked);
@@ -42,14 +44,27 @@ export default function MintForm() {
         isPrice: false,
         isMinBid: false,
       },
-      onSubmit: (values, { resetForm }) => {
+      onSubmit: async (values, { resetForm }) => {
         if (!image) {
           setImageError("NFT image not provided");
           return;
         }
-        notifyMint()
-        setImage(undefined);
-        resetForm();
+
+        const { data, error } = await supabase
+        .from("nft")
+        .insert([{ name: values.title, price:  values.price || values.minBid, image: "https://uploadthing.com/f/f261d012-f841-4905-91ae-2f94b4d05688_iconic-dp.jpg", creator: "Complexlity", description: values.description, category: values.collections }])
+        .select()
+        if (data) {
+          notifyMint()
+          setImage(undefined);
+          resetForm();
+        }
+        else if (error) {
+          console.log(error)
+          toast("Something Went Wrong", {
+          })
+
+        }
       },
       validationSchema: schema,
     });
@@ -98,7 +113,7 @@ export default function MintForm() {
                 <div className="text-center">
                   <label
                     htmlFor="nft"
-                    className="inline rounded-full bg-primary px-6 py-1 text-gray-800"
+                    className="inline rounded-full bg-primary px-6 py-1 text-gray-800 cursor-pointer"
                   >
                     Browse
                   </label>
@@ -315,9 +330,10 @@ export default function MintForm() {
               </small>
             </div>
             <input
+              disabled={isLoading}
               type="submit"
               value="Create Item"
-              className="submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800"
+              className={`submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800 ${isLoading ? "opacity-80" : ""}`}
             />
           </div>
 
