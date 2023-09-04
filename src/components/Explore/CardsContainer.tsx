@@ -7,9 +7,6 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill } from "react-icons/bs";
 import { AnimatePresence } from "framer-motion";
 import { useNftsDataContext } from "~/contexts/NftsDataContext";
-import { useQuery } from '@tanstack/react-query'
-import supabaseClient from "~/../supabase";
-import { useAuth } from "@clerk/nextjs";
 
 type SeeMore = {
   initialValue: number;
@@ -19,15 +16,8 @@ type SeeMore = {
 
 type Search = string | number | readonly string[] | undefined;
 
-
-
-
-export default function CardsContainer() {
-  const { getToken, userId } = useAuth();
-  const { data: nfts, isLoading } = useQuery({queryKey: ['posts'], queryFn: getNfts})
-  // const supabase = useSupabase();
-
-  const nftsData = useNftsDataContext().nftsData;
+export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
+  // const nftsData = useNftsDataContext().nftsData;
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
   const [priceRange, setPriceRange] = useState<string>("all");
@@ -43,20 +33,6 @@ export default function CardsContainer() {
     maxxed: false,
     minned: true,
   });
-const getSupabase = async () => {
-  const supabaseAccessToken = await getToken({
-    template: "supabase",
-  });
-  const supabase = await supabaseClient(supabaseAccessToken);
-  return supabase;
-};
-  async function getNfts() {
-    const supabase = await getSupabase()
-    let { data: nfts, error } = await supabase.from("nft").select("*");
-    console.log(nfts)
-    return nfts
-}
-
 
   function showMore() {
     if (showingCondition.maxxed) return;
@@ -91,8 +67,6 @@ const getSupabase = async () => {
 
     setSeeMore({ ...seeMore, initialValue: prev });
   }
-
-
 
   useEffect(() => {
     setDisplayedData(
@@ -185,79 +159,70 @@ const getSupabase = async () => {
     "bg-gray-400 hover:scale-[100%] hover:shadow-none text-blue-900 opacity-[60%] cursor-not-allowed";
   return (
     <>
-      {nfts ?
-        <div className="text-white text-2xl">I fetched</div>
-        : null
-      }
-      {
-        isLoading ?
-          <div>Loading</div>
-          : null
-      }
-    <section className="grid gap-12 border-b-2 border-b-gray-300 pb-12 pt-8">
-      <div className="filters grid items-center gap-4 md:grid-cols-4">
-        <div className="relative flex w-full self-end">
-          <div className="pointer-events-none absolute inset-y-0 right-[2px] flex  items-center">
-            <AiOutlineSearch className="white h-6 w-6" />
+      <section className="grid gap-12 border-b-2 border-b-gray-300 pb-12 pt-8">
+        <div className="filters grid items-center gap-4 md:grid-cols-4">
+          <div className="relative flex w-full self-end">
+            <div className="pointer-events-none absolute inset-y-0 right-[2px] flex  items-center">
+              <AiOutlineSearch className="white h-6 w-6" />
+            </div>
+            <input
+              type="search"
+              id="email-address-icon"
+              className="block w-full rounded-lg border-2 border-gray-600 bg-transparent p-2 text-sm text-gray-200 placeholder:text-gray-300  focus:border-primary focus:ring-primary"
+              placeholder="Search Nft..."
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+            />
           </div>
-          <input
-            type="search"
-            id="email-address-icon"
-            className="block w-full rounded-lg border-2 border-gray-600 bg-transparent p-2 text-sm text-gray-200 placeholder:text-gray-300  focus:border-primary focus:ring-primary"
-            placeholder="Search Nft..."
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
-          />
-        </div>
 
-        <select
-          id="categories"
-          className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="default">All Categories</option>
-          <option value="music">Music</option>
-          <option value="gaming">Gaming </option>
-          <option value="real estate">Real Estate</option>
-          <option value="art">Digital Art</option>
-          <option value="collectibles">Collectibles</option>
-        </select>
-        <select
-          id="expiry-time"
-          className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
-          value={expiryDate}
-          onChange={(e) => setExpiryDate(e.target.value)}
-        >
-          <option value="0">Expiry Time</option>
-          <option value="24">{`< 24 hours`}</option>
-          <option value="48">24 - 48hours</option>
-          <option value="49">{`> 48hours`}</option>
-        </select>
-        <select
-          id="items-type"
-          className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
-          value={priceRange}
-          onChange={(e) => setPriceRange(e.target.value)}
-        >
-          <option value="all">Price</option>
-          <option value="cheap">{`Cheap (< 1ETH)`}</option>
-          <option value="affordable">{`Affordable (1 - 3 ETH)`}</option>
-          <option value="costly">{`Costly (> 3ETH)`}</option>
-        </select>
-      </div>
-      <div className="cards">
-        <div
-          suppressHydrationWarning={true}
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-        >
-          <AnimatePresence>
-            {displayedData.slice(0, seeMore.initialValue).map((item) => {
-              return <Card key={item.id} item={item} />;
-            })}
-          </AnimatePresence>
+          <select
+            id="categories"
+            className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="default">All Categories</option>
+            <option value="music">Music</option>
+            <option value="gaming">Gaming </option>
+            <option value="real estate">Real Estate</option>
+            <option value="art">Digital Art</option>
+            <option value="collectibles">Collectibles</option>
+          </select>
+          <select
+            id="expiry-time"
+            className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+            value={expiryDate}
+            onChange={(e) => setExpiryDate(e.target.value)}
+          >
+            <option value="0">Expiry Time</option>
+            <option value="24">{`< 24 hours`}</option>
+            <option value="48">24 - 48hours</option>
+            <option value="49">{`> 48hours`}</option>
+          </select>
+          <select
+            id="items-type"
+            className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+            value={priceRange}
+            onChange={(e) => setPriceRange(e.target.value)}
+          >
+            <option value="all">Price</option>
+            <option value="cheap">{`Cheap (< 1ETH)`}</option>
+            <option value="affordable">{`Affordable (1 - 3 ETH)`}</option>
+            <option value="costly">{`Costly (> 3ETH)`}</option>
+          </select>
         </div>
-        <div className="flex justify-center gap-4 text-center">
+        <div className="cards">
+          <div
+            suppressHydrationWarning={true}
+            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          >
+            <AnimatePresence>
+              {displayedData.slice(0, seeMore.initialValue).map((item) => {
+                return <Card key={item.id} item={item} />;
+              })}
+            </AnimatePresence>
+          </div>
+          {/* <div className="flex justify-center gap-4 text-center">
           <button
             onClick={showMore}
             className={`flex items-center justify-center gap-2 rounded-full px-4 py-2   ${
@@ -281,9 +246,9 @@ const getSupabase = async () => {
             See Less{" "}
             <BsFillArrowUpCircleFill className="h-6 w-6 text-rose-700" />
           </button>
+        </div> */}
         </div>
-      </div>
       </section>
-      </>
+    </>
   );
 }

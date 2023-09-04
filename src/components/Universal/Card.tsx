@@ -16,9 +16,9 @@ export function Card({
   item?: Partial<NFT>;
   fromInput?: boolean;
 }) {
-  const [isStaticImage, setStaticImage] = useState<boolean>(true);
+  const [isStaticImage, setStaticImage] = useState<boolean>(false);
   useEffect(() => {
-    if (fromInput) setStaticImage(false);
+    if (!fromInput) setStaticImage(false);
   }, []);
   const defaultItem = {
     id: nanoid(5),
@@ -55,12 +55,12 @@ export function Card({
         <Image
           suppressHydrationWarning={true}
           alt={`${mergedItem.name} Image`}
-          className="my-card-image mx-auto aspect-square rounded-lg object-cover object-top"
+          className="my-card-image mx-auto aspect-square rounded-lg object-cover object-top w-full"
           src={mergedItem!.image}
           width={300}
           height={300}
         />
-      )}
+       )}
       <div
         suppressHydrationWarning={true}
         className="flex justify-between font-semibold tracking-wide"

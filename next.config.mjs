@@ -7,7 +7,10 @@
 const config = {
   reactStrictMode: true,
   experimental: {
-    esmExternals: false
+    esmExternals: false,
+  },
+  images: {
+    domains: ["uploadthing.com"],
   },
 
   /**
