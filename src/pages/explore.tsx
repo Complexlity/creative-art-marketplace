@@ -9,27 +9,11 @@ import { useQuery } from '@tanstack/react-query'
 import supabaseClient from "~/../supabase";
 import { useAuth } from "@clerk/nextjs";
 import { NFT } from "~/data/nfts";
+import useGetNfts from "~/hooks/useGetNfts";
 
 
 const Explore = () => {
-  const { getToken, userId } = useAuth();
-  const { data: nfts, isLoading } = useQuery({
-    queryKey: ["posts"],
-    queryFn: getNfts,
-  });
-const getSupabase = async () => {
-  const supabaseAccessToken = await getToken({
-    template: "supabase",
-  });
-  const supabase = await supabaseClient(supabaseAccessToken);
-  return supabase;
-};
-async function getNfts() {
-  const supabase = await getSupabase();
-  let { data: nfts, error } = await supabase.from("nft").select("*");
-
-  return nfts as unknown as NFT[];
-}
+  const { data: nfts, isLoading } = useGetNfts()
   return (
     <>
       <Head>

@@ -1,12 +1,10 @@
-import { Card } from "~/components/Universal/Card";
 import { useEffect, useState } from "react";
+import { Card } from "~/components/Universal/Card";
 import { NFT } from "~/data/nfts";
 import useDebounce from "~/hooks/useDebounce";
 
-import { AiOutlineSearch } from "react-icons/ai";
-import { BsArrowDownCircleFill, BsFillArrowUpCircleFill } from "react-icons/bs";
 import { AnimatePresence } from "framer-motion";
-import { useNftsDataContext } from "~/contexts/NftsDataContext";
+import { AiOutlineSearch } from "react-icons/ai";
 
 type SeeMore = {
   initialValue: number;
@@ -17,7 +15,6 @@ type SeeMore = {
 type Search = string | number | readonly string[] | undefined;
 
 export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
-  // const nftsData = useNftsDataContext().nftsData;
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
   const [priceRange, setPriceRange] = useState<string>("all");
