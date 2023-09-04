@@ -20,3 +20,12 @@ export function formatDate(date: Date | string, type = "relative") {
   return dayjs(date).fromNow();
 }
 
+export const getCategory = {
+  "COL": "Collectibles",
+  "ART": "art",
+  "GAM": "gaming",
+    'MUS': "music",
+  "EST": "real estate",
+  "DOM":"domain names"
+}
+

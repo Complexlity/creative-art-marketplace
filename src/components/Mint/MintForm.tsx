@@ -169,7 +169,7 @@ export default function MintForm() {
                 <div className="text-center">
                   <label
                     htmlFor="nft"
-                    className="inline rounded-full bg-primary px-6 py-1 text-gray-800 cursor-pointer"
+                    className="inline cursor-pointer rounded-full bg-primary px-6 py-1 text-gray-800"
                   >
                     Browse
                   </label>
@@ -346,12 +346,12 @@ export default function MintForm() {
                 <option disabled value="SEL">
                   Select Collection
                 </option>
-                <option value="ART">Digital Art</option>
-                <option value="COL">Collectibles</option>
-                <option value="GAM">Gaming </option>
-                <option value="MUS">Music</option>
-                <option value="EST">Real Estate</option>
-                <option value="DOM">Domain Names</option>
+                <option value="art">Digital Art</option>
+                <option value="collectibles">Collectibles</option>
+                <option value="gaming">Gaming </option>
+                <option value="music">Music</option>
+                <option value="estate">Real Estate</option>
+                <option value="domain">Domain Names</option>
               </select>
               <small className="text-red-400">
                 {errors.collections && touched.collections
@@ -389,7 +389,9 @@ export default function MintForm() {
               disabled={isLoading}
               type="submit"
               value={isLoading ? loadingMessage : "Create Item"}
-              className={`submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800 ${isLoading ? "opacity-50" : ""}`}
+              className={`submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800 ${
+                isLoading ? "opacity-50" : ""
+              }`}
             />
           </div>
 

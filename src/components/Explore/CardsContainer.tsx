@@ -5,6 +5,8 @@ import useDebounce from "~/hooks/useDebounce";
 
 import { AnimatePresence } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
+import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
+import { getCategory } from "~/utils/libs";
 
 type SeeMore = {
   initialValue: number;
@@ -118,8 +120,10 @@ export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
 
   function searchByCategory(item: NFT, category: string) {
     if (category === "default") return true;
-    const itemCategory = item.category.toLowerCase();
-    category = category.toLowerCase();
+    let itemCategory = item.category
+    
+    // itemCategory = getCategory[itemCategory].toLowerCase();
+    // category = category.toLowerCase();
     return itemCategory === category;
   }
 
@@ -181,9 +185,10 @@ export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
             <option value="default">All Categories</option>
             <option value="music">Music</option>
             <option value="gaming">Gaming </option>
-            <option value="real estate">Real Estate</option>
+            <option value="estate">Real Estate</option>
             <option value="art">Digital Art</option>
             <option value="collectibles">Collectibles</option>
+            <option value="domain">Domain Names</option>
           </select>
           <select
             id="expiry-time"
@@ -219,7 +224,7 @@ export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
               })}
             </AnimatePresence>
           </div>
-          {/* <div className="flex justify-center gap-4 text-center">
+          <div className="flex justify-center gap-4 text-center">
           <button
             onClick={showMore}
             className={`flex items-center justify-center gap-2 rounded-full px-4 py-2   ${
@@ -243,7 +248,7 @@ export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
             See Less{" "}
             <BsFillArrowUpCircleFill className="h-6 w-6 text-rose-700" />
           </button>
-        </div> */}
+        </div>
         </div>
       </section>
     </>
