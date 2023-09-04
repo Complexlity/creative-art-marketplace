@@ -17,6 +17,8 @@ type SeeMore = {
 type Search = string | number | readonly string[] | undefined;
 
 export default function CardsContainer() {
+
+  
   const nftsData = useNftsDataContext().nftsData;
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);

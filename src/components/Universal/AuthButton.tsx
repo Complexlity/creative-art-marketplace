@@ -4,6 +4,7 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/nextjs";
+import { truncate } from "fs";
 
 import { usePathname } from "next/navigation";
 
@@ -14,7 +15,7 @@ export default function AuthButton() {
     <>
       <SignedIn>
         {/* Mount the UserButton component */}
-        <UserButton afterSignOutUrl={pathname} />
+        <UserButton showName={true} afterSignOutUrl={pathname} />
       </SignedIn>
       <SignedOut>
         {/* Signed out users get sign in button */}
