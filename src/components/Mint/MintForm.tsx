@@ -9,7 +9,7 @@ import { StaticImageData } from "next/image";
 import MethodOptions, {type Methods} from './MethodOptions'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import supabase from '~/../supabase'
+
 import {  useAuth } from '@clerk/nextjs'
 import supabaseClient from "~/../supabase";
 import { useUploadThing } from "~/utils/uploadthing"

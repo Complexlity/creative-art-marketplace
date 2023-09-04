@@ -3,8 +3,11 @@ import NavBar from "~/components/Universal/NavBar";
 import Header  from "~/components/Universal/Header";
 import CardsContainer from "~/components/Explore/CardsContainer"
 import Head from "next/head";
+import useSupabase from "~/hooks/useSupabase";
+import { useQuery } from '@tanstack/react-query'
 
 const Explore = () => {
+  
   return (
     <>
       <Head>

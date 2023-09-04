@@ -7,6 +7,9 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill } from "react-icons/bs";
 import { AnimatePresence } from "framer-motion";
 import { useNftsDataContext } from "~/contexts/NftsDataContext";
+import { useQuery } from '@tanstack/react-query'
+import supabaseClient from "~/../supabase";
+import { useAuth } from "@clerk/nextjs";
 
 type SeeMore = {
   initialValue: number;
@@ -16,9 +19,14 @@ type SeeMore = {
 
 type Search = string | number | readonly string[] | undefined;
 
-export default function CardsContainer() {
 
-  
+
+
+export default function CardsContainer() {
+  const { getToken, userId } = useAuth();
+  const { data: nfts, isLoading } = useQuery({queryKey: ['posts'], queryFn: getNfts})
+  // const supabase = useSupabase();
+
   const nftsData = useNftsDataContext().nftsData;
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
@@ -35,6 +43,19 @@ export default function CardsContainer() {
     maxxed: false,
     minned: true,
   });
+const getSupabase = async () => {
+  const supabaseAccessToken = await getToken({
+    template: "supabase",
+  });
+  const supabase = await supabaseClient(supabaseAccessToken);
+  return supabase;
+};
+  async function getNfts() {
+    const supabase = await getSupabase()
+    let { data: nfts, error } = await supabase.from("nft").select("*");
+    console.log(nfts)
+    return nfts
+}
 
 
   function showMore() {
@@ -163,6 +184,16 @@ export default function CardsContainer() {
   const disabledStyles =
     "bg-gray-400 hover:scale-[100%] hover:shadow-none text-blue-900 opacity-[60%] cursor-not-allowed";
   return (
+    <>
+      {nfts ?
+        <div className="text-white text-2xl">I fetched</div>
+        : null
+      }
+      {
+        isLoading ?
+          <div>Loading</div>
+          : null
+      }
     <section className="grid gap-12 border-b-2 border-b-gray-300 pb-12 pt-8">
       <div className="filters grid items-center gap-4 md:grid-cols-4">
         <div className="relative flex w-full self-end">
@@ -252,6 +283,7 @@ export default function CardsContainer() {
           </button>
         </div>
       </div>
-    </section>
+      </section>
+      </>
   );
 }

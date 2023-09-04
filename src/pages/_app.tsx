@@ -6,7 +6,11 @@ import "~/styles/globals.css";
 import NftsDataContextProvider from "../contexts/NftsDataContext";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const queryClient = new QueryClient()
@@ -37,9 +41,12 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <SafeHydrate>
         <ClerkProvider appearance={{}} {...pageProps}>
           <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
+
           <NftsDataContextProvider>
             <Component {...pageProps} />
           </NftsDataContextProvider>
+              </Hydrate>
           </QueryClientProvider>
         </ClerkProvider>
       </SafeHydrate>
