@@ -10,14 +10,11 @@ import { getAllNfts, getSingleNft } from "~/utils/queries";
 
 
 export const getStaticPaths = async () => {
-
   const nftsData = await getAllNfts() as NFT[]
-  console.log(nftsData)
   const paths = nftsData.map((item) => ({
   // @ts-expect-error Slug not a property of NFT
     params: {slug: item.slug}
 }))
-  console.log(paths)
   return {paths, fallback: true}
 }
 
