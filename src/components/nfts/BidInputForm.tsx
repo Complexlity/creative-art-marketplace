@@ -14,6 +14,12 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { useQuery } from "@tanstack/react-query";
+
+import { useAuth } from "@clerk/nextjs";
+import { supabaseWithClient as supabaseClient } from "~/../supabase";
+import { NFT } from "~/data/nfts";
+import useSupabase from "~/hooks/useSupabaseWithAuth";
 
 
 const formSchema = z.object({
@@ -28,6 +34,8 @@ const formSchema = z.object({
 
 export default function BidInputForm2({ setOpen, price }: {setOpen: Dispatch<SetStateAction<boolean>>, price: number}) {
   const formRef = useRef(null)
+  const supabase = useSupabase()
+
    const form = useForm<z.infer<typeof formSchema>>({
      resolver: zodResolver(formSchema),
      defaultValues: {

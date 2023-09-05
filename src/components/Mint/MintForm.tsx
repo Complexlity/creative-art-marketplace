@@ -11,13 +11,16 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import {  useAuth } from '@clerk/nextjs'
-import supabaseClient from "~/../supabase";
+
 import { useUploadThing } from "~/utils/uploadthing"
 import { useRouter } from "next/navigation";
+import useSupabase from "~/hooks/useSupabaseWithAuth";
+import slugify from "slugify";
 
 export default function MintForm() {
+  const { userId } = useAuth()
   const router = useRouter()
-  const { getToken, userId } = useAuth()
+  const supabase = useSupabase()
   const [image, setImage] = useState<File>();
   const [imageUrl, setImageUrl] = useState('')
     const [imageError, setImageError] = useState<string>();
@@ -44,13 +47,7 @@ export default function MintForm() {
 
 
 
-  const getSupabase = async () => {
-      const supabaseAccessToken = await getToken({
-        template: "supabase",
-      });
-    const supabase = await supabaseClient(supabaseAccessToken);
-    return supabase
-    }
+
 
     const toggleOptions = (e: any) => {
       const value = e.target.value.toUpperCase();
@@ -81,10 +78,8 @@ export default function MintForm() {
           setImageError("NFT image not provided");
           return;
         }
-        setIsLoading(true)
-        setLoadingMessage("Getting Supabase...")
-        const supabase = await getSupabase()
         if (!supabase) return toast("Not Authenticated")
+        setIsLoading(true)
         setLoadingMessage("Uploading Image...")
         let uploadError;
 
@@ -98,9 +93,10 @@ export default function MintForm() {
           return
         }
         setLoadingMessage("Uploading Nft Details...")
+        const slug = slugify(values.title)
         const { data, error } = await supabase
         .from("nft")
-        .insert([{ name: values.title, price:  values.price || values.minBid, image: fileUrl, creator: userId , description: values.description, category: values.collections }])
+        .insert([{ name: values.title, price:  values.price || values.minBid, image: fileUrl, creator: userId , description: values.description, category: values.collections, slug: slug }])
         .select()
         if (data) {
           setLoadingMessage("Completed")
