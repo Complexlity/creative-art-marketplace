@@ -1,14 +1,8 @@
-import Footer from "~/components/Universal/Footer";
-import NavBar from "~/components/Universal/NavBar";
-import Header  from "~/components/Universal/Header";
-import CardsContainer from "~/components/Explore/CardsContainer"
 import Head from "next/head";
-import useSupabase from "~/hooks/useSupabase";
-import { useQuery } from '@tanstack/react-query'
-
-import supabaseClient from "~/../supabase";
-import { useAuth } from "@clerk/nextjs";
-import { NFT } from "~/data/nfts";
+import CardsContainer from "~/components/Explore/CardsContainer";
+import Footer from "~/components/Universal/Footer";
+import Header from "~/components/Universal/Header";
+import NavBar from "~/components/Universal/NavBar";
 import useGetNfts from "~/hooks/useGetNfts";
 
 

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import useSupabase from "~/hooks/useSupabase";
 import { useQuery } from "@tanstack/react-query";
 
-import supabaseClient from "~/../supabase";
+import { supabaseWithClient as supabaseClient } from "~/../supabase";
 import { useAuth } from "@clerk/nextjs";
 import { NFT } from "~/data/nfts";
 

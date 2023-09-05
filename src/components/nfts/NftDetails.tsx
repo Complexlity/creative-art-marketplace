@@ -1,44 +1,20 @@
-import { NFT } from "~/data/nfts";
-import { getRandomNumber, pickFromArray, pickRandomItems } from "~/utils/randoms";
 import Image from "next/image";
-import CountDownComponent from "../Universal/Countdown";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
+import { NFT } from "~/data/nfts";
+import { getRandomNumber } from "~/utils/randoms";
+import CountDownComponent from "../Universal/Countdown";
 
-
-import { type People, people } from "~/data/people";
-import HistoryBids from "./HistoryBids";
 import { Modals } from "./Modals";
-
-export type BidStatus = "PENDING" | "ACCEPTED" | "REJECTED";
-let statuses: BidStatus[] = ["ACCEPTED", "REJECTED"];
-
-export function getRandomStatus() {
-  return pickFromArray(statuses);
-}
-
 
 export default function NftDetails({
   nftData,
-  randomBidsPeople,
-  randomHistoryPeople,
+
 }: {
   nftData: NFT | undefined;
-  randomBidsPeople: People[];
-  randomHistoryPeople: People[];
-}) {
-  const nftImage = pickRandomItems(people, 1)[0]?.image.src;
 
-  const newRandomHistoryPeople = randomHistoryPeople.map((person) => {
-    // @ts-expect-error
-    person.status = getRandomStatus();
-    return person as People & { status: BidStatus };
-  });
-  const newRandomBidsPeople = randomBidsPeople.map(person => {
-    // @ts-expect-error
-    person.status = 'PENDING'
-    return person as People & {status: BidStatus}
-})
+}) {
+
 
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;
@@ -50,6 +26,8 @@ export default function NftDetails({
           alt="NFT Image"
           className="h-full w-full rounded-xl object-cover object-top"
           src={nftData.image}
+          width={500}
+          height={500}
         />
       </div>
       <div className="item-descriptions mb-8 grid gap-4 md:-m-2">
@@ -88,14 +66,14 @@ export default function NftDetails({
                 width={500}
                 height={500}
                 className="h-full w-full rounded-full object-cover object-top "
-                src={nftImage!}
+                src={nftData.image}
                 alt=""
               />
             </div>
             <p className="font-semibold tracking-widest">{nftData.creator}</p>
           </div>
         </div>
-        <HistoryBids randomBidsPeople={newRandomBidsPeople} randomHistoryPeople={newRandomHistoryPeople}/>
+        {/* <HistoryBids randomBidsPeople={newRandomBidsPeople} randomHistoryPeople={newRandomHistoryPeople}/> */}
         <Modals nftData={nftData} />
       </div>
     </section>

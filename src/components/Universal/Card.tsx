@@ -29,6 +29,7 @@ export function Card({
     description: "",
     endTime: 0,
     creator: "",
+    slug: ''
   };
 
   const mergedItem = { ...defaultItem, ...item };
@@ -44,14 +45,14 @@ export function Card({
       suppressHydrationWarning={true}
       className="mx-auto mb-6 w-full max-w-[500px] space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
     >
-      {isStaticImage ? (
+      {/* {isStaticImage ? (
         <Image
           suppressHydrationWarning={true}
           alt={`${mergedItem.name} Image`}
           className="my-card-image mx-auto aspect-square rounded-lg object-cover object-top"
           src={mergedItem!.image}
         />
-      ) : (
+      ) : ( */}
         <Image
           suppressHydrationWarning={true}
           alt={`${mergedItem.name} Image`}
@@ -60,7 +61,7 @@ export function Card({
           width={300}
           height={300}
         />
-       )}
+       {/* )} */}
       <div
         suppressHydrationWarning={true}
         className="flex justify-between font-semibold tracking-wide"
@@ -87,7 +88,7 @@ export function Card({
             </span>
           </p>
         </div>
-        <Link href={fromInput ? "" : `/nfts/${mergedItem.id}`}>
+        <Link href={`/nfts/${mergedItem.slug}`}>
           <motion.button
             whileHover={{
               scale: 1.1,
