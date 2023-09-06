@@ -6,6 +6,10 @@ import { getRandomNumber } from "~/utils/randoms";
 import CountDownComponent from "../Universal/Countdown";
 
 import { Modals } from "./Modals";
+import { useQuery } from "@tanstack/react-query";
+import { type User } from "@clerk/nextjs/dist/types/server/clerkClient";
+import { createFactory } from "react";
+
 
 export default function NftDetails({
   nftData,
@@ -18,6 +22,19 @@ export default function NftDetails({
 
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;
+  const { data: creatorDetails } = useQuery({
+    queryKey: [nftData.creator],
+    queryFn: async () => {
+      const res = await fetch("/api/bid", {
+        method: "POST",
+        body: nftData.creator,
+      });
+      const result = await res.json()
+      return result.user as User
+    },
+  });
+
+
 
   return (
     <section className="my-grid item-details mx-auto grid  max-w-[500px] gap-4 md:max-w-full md:grid-cols-2 md:gap-12">
@@ -66,11 +83,11 @@ export default function NftDetails({
                 width={500}
                 height={500}
                 className="h-full w-full rounded-full object-cover object-top "
-                src={nftData.image}
+                src={creatorDetails?.imageUrl ?? ""}
                 alt=""
               />
             </div>
-            <p className="font-semibold tracking-widest">{nftData.creator}</p>
+            <p className="font-semibold tracking-widest">{creatorDetails?.firstName}</p>
           </div>
         </div>
         {/* <HistoryBids randomBidsPeople={newRandomBidsPeople} randomHistoryPeople={newRandomHistoryPeople}/> */}

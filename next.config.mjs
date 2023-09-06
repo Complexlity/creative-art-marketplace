@@ -10,7 +10,7 @@ const config = {
     esmExternals: false,
   },
   images: {
-    domains: ["uploadthing.com"],
+    domains: ["uploadthing.com", "img.clerk.com"],
   },
 
   /**
