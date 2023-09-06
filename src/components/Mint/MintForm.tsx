@@ -93,7 +93,11 @@ export default function MintForm() {
           return
         }
         setLoadingMessage("Uploading Nft Details...")
-        const slug = slugify(values.title)
+        const slug = slugify(values.title, {
+          replacement: '-',
+          lower: true,
+          trim: true
+        })
         const { data, error } = await supabase
         .from("nft")
         .insert([{ name: values.title, price:  values.price || values.minBid, image: fileUrl, creator: userId , description: values.description, category: values.collections, slug: slug }])

@@ -7,10 +7,13 @@ import Head from "next/head";
 import Comments from "~/components/nfts/Comments";
 import NftDetails from "~/components/nfts/NftDetails";
 import { getAllNfts, getSingleNft } from "~/utils/queries";
+import useCurrentPage from "~/hooks/useCurrentPage";
+import { useRouter } from "next/router";
 
 
 export const getStaticPaths = async () => {
   const nftsData = await getAllNfts() as NFT[]
+  console.log(nftsData)
   const paths = nftsData.map((item) => ({
   // @ts-expect-error Slug not a property of NFT
     params: {slug: item.slug}
@@ -20,20 +23,15 @@ export const getStaticPaths = async () => {
 
 export async function getStaticProps({ params }: { params: {slug: string} }) {
   const singlePost = await getSingleNft(params.slug)
-  console.log(singlePost)
   return {props: {singlePost}}
 }
 
-function NFTItem({ singlePost, params }: {singlePost: NFT, params: {slug: string}}) {
-  const { data: nftData } = useQuery({
-    queryKey: ['nftData'],
-    queryFn: async () => {
-      const { data } = await getSingleNft(params.slug)
-      return data
-    },
-    initialData:  singlePost
-  })
-  console.log(nftData)
+function NFTItem({ singlePost }: { singlePost: NFT }) {
+  const router = useRouter()
+  const slug = router.query.slug as string
+  const { data } = useCurrentPage({ slug, singlePost })
+  const nftData = data as unknown as NFT
+
   return (
     <>
       <Head>

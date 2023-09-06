@@ -1,11 +1,12 @@
 import { useAuth } from "@clerk/nextjs";
+import { SupabaseClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { supabaseWithClient as supabaseClient } from "~/../supabase";
 // import { NFT } from "~/data/nfts";
 
 const useSupabase = () => {
   const { getToken, userId } = useAuth();
-  const [supabase, setSupabase] = useState<any>();
+  const [supabase, setSupabase] = useState<SupabaseClient | null>(null);
 
 
     useEffect(() => {
@@ -18,7 +19,7 @@ const useSupabase = () => {
     setSupabase(supabase);
 
         } catch (err) {
-          setSupabase(null)
+          console.log(err)
         }
       }
       getSupabase();
