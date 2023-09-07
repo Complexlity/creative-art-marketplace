@@ -7,9 +7,12 @@ import {
 import { truncate } from "fs";
 
 import { usePathname } from "next/navigation";
+import useCurrentUser from "~/hooks/useCurrentUser";
 
 export default function AuthButton() {
   const pathname = usePathname()
+  // This is here to sync the user with supabase after sign up
+  const { data: user } = useCurrentUser({})
 
   return (
     <>

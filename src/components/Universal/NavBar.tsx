@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AuthButton from "./AuthButton";
 import logo from "/public/icons/logo.png";
+import useCurrentUser from "~/hooks/useCurrentUser";
 
 const NavBar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
@@ -13,6 +14,7 @@ const NavBar = () => {
   const routePath = useRouter().pathname;
   const activeLink = "border-b-2 border-primary hover:border-white";
 
+  
 
   const changeBackground = () => {
 

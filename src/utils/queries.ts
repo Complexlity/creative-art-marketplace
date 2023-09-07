@@ -11,6 +11,12 @@ export async function getAllNfts() {
 }
 
 export async function getBids() {
-let { data: bids, error } = await supabase.from("bids").select("*");
+  let { data: bids, error } = await supabase.from("bids").select(`
+      "*",
+      placer (
+        "*"
+      )
+    `);
+  console.log(bids)
 return bids
 }

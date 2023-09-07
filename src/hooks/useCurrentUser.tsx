@@ -7,7 +7,7 @@ import { resourceLimits } from 'worker_threads';
 type useCurrentUserProps =
   {
   userId?: string | null
-  } 
+  }
 
 type User = {
   username: string | null,
@@ -28,7 +28,13 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
   return useQuery({
     queryKey: [userOrAuthUserId],
     queryFn: async (): Promise<User> => {
-        if(!userOrAuthUserId) throw new Error("Can't perform this process or Not authenticated")
+      if (!userOrAuthUserId) {
+        return {
+          username: null,
+          userId: null,
+          imageUrl: null
+        }
+      }
       const { data: users, error: fetchError } = await supabase.from('users').select('*').eq('userId', userOrAuthUserId)
       if (users && users.length > 0) {
 
@@ -45,16 +51,16 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
         const { data: newUser, error: createError } = await supabase
         .from('users')
         .insert([
-          { username :userName(user), imageUrl: user.imageUrl, userId: authUserId },
+          { username :userName(user), imageUrl: user.imageUrl, userId: userOrAuthUserId },
         ])
         .select("*")
         return newUser![0] as unknown as User
       }
       else {
         return {
-          username:userName(user) ?? null,
-          userId: userOrAuthUserId ?? null,
-          imageUrl: user.imageUrl ?? null
+          username:userName(user),
+          userId: userOrAuthUserId,
+          imageUrl: user.imageUrl
         }
       }
     }

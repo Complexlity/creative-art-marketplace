@@ -7,6 +7,8 @@ import CountDownComponent from "../Universal/Countdown";
 
 import useCurrentUser from "~/hooks/useCurrentUser";
 import { Modals } from "./Modals";
+import { useQuery } from "@tanstack/react-query";
+import { getBids } from "~/utils/queries";
 
 
 export default function NftDetails({
@@ -17,6 +19,10 @@ export default function NftDetails({
 
 }) {
 
+  const { data: bids, isLoading: isFetchingBids } = useQuery({
+    queryKey: ["bids"],
+    queryFn: getBids
+  });
 
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;
@@ -75,10 +81,11 @@ export default function NftDetails({
                 alt=""
               />
             </div>
-            <p className="font-semibold tracking-widest">{creatorDetails?.firstName}</p>
+            <p className="font-semibold tracking-widest">{creatorDetails?.username}</p>
           </div>
         </div>
-        {/* <HistoryBids randomBidsPeople={newRandomBidsPeople} randomHistoryPeople={newRandomHistoryPeople}/> */}
+        {isFetchingBids ? "Fetching bids...." : "Fetched bids"}
+        {/* {<HistoryBids bids={bids}} />} */}
         <Modals nftData={nftData} />
       </div>
     </section>

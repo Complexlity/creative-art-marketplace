@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Bids from "./Bids";
-import { People } from "~/data/people";
-import { BidStatus } from "./NftDetails";
 
 type Tab = "bids" | 'history'
-
-export default function HistoryBids({ randomBidsPeople, randomHistoryPeople }: { randomBidsPeople: (People & { status: BidStatus })[]; randomHistoryPeople: (People & { status: BidStatus })[]}) {
+type HistoryBidsProps = {
+  bids: any
+}
+export default function HistoryBids({ bids}: HistoryBidsProps) {
     const [activeTab, setActiveTab] = useState<Tab>('bids');
-    const randomPeople = activeTab === 'bids' ? randomBidsPeople : randomHistoryPeople
+    const randomPeople = activeTab === 'bids' 
     function getBorderColor(Tab: Tab){
       if(Tab === activeTab) return 'border-primary border-[2.5px]'
       return 'border-gray-500'
