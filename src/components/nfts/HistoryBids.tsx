@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Bids from "./Bids";
 import { People } from "~/data/people";
-import { pickFromArray } from "~/utils/randoms";
 import { BidStatus } from "./NftDetails";
 
 type Tab = "bids" | 'history'

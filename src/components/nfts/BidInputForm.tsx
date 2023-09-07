@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { useAuth, useClerk } from "@clerk/nextjs";
+import { useAuth, useClerk, useUser } from "@clerk/nextjs";
 import useSupabase from "~/hooks/useSupabaseWithAuth";
 import { usePathname } from "next/navigation";
 import useCurrentPage from "~/hooks/useCurrentPage";
@@ -32,7 +32,8 @@ const formSchema = z.object({
 
 export default function BidInputForm2({ setOpen, price }: { setOpen: Dispatch<SetStateAction<boolean>>, price: number }) {
   const pathname = usePathname()
-  const clerk = useClerk()
+  const {user
+} = useUser()
   const currentPathname = pathname.split('/').pop()!
   const { data } = useCurrentPage({ slug: currentPathname })
   const nftData = data as unknown as NFT
@@ -57,6 +58,12 @@ export default function BidInputForm2({ setOpen, price }: { setOpen: Dispatch<Se
     if(nftData.creator === userId) return toast ("Cannot bid for your own item")
      setIsBidding(true)
      try {
+
+const { data: inserttedUser, error: userInputError } = await supabase
+  .from("users")
+  .insert([{ name: user?.username, imageUrl: user?.imageUrl, userId: userId }])
+  .select();
+
 const { data, error } = await supabase
   .from("bids")
   .insert([{ placer: userId, nftSlug: currentPathname }])
