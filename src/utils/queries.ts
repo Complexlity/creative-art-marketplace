@@ -10,13 +10,13 @@ export async function getAllNfts() {
   return nft as unknown as NFT[]
 }
 
-export async function getBids() {
+export async function getBids(slug: string) {
   let { data: bids, error } = await supabase.from("bids").select(`
       "*",
       placer (
         "*"
       )
-    `);
+    `).eq('nftSlug', slug);
   console.log(bids)
 return bids
 }

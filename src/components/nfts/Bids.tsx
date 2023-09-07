@@ -4,24 +4,25 @@ import { generateRandomDate, generateRandomNFTPrice, pickFromArray } from "~/uti
 import { IconType } from "react-icons";
 import { MdCancel, MdPending } from "react-icons/md";
 import { IoMdCheckmarkCircle } from "react-icons/io";
-import type { BidStatus } from './NftDetails'
 
+
+type BidStatus = 'rejected' | 'pending' | 'accepted'
 
 
 function getStatusText(status: BidStatus) {
   let checkColor: string, statusText: string, StatusIcon: IconType;
   switch (status) {
-    case "REJECTED":
+    case "rejected":
       checkColor = "text-red-500";
       statusText = "Bid rejected";
       StatusIcon = MdCancel;
       break;
-    case "PENDING":
+    case "pending":
       checkColor = "text-amber-300";
       statusText = "Pending bid";
       StatusIcon = MdPending;
       break;
-    case "ACCEPTED":
+    case "accepted":
       checkColor = "text-green-500";
       statusText = "Bid accepted";
       StatusIcon = IoMdCheckmarkCircle;
@@ -31,22 +32,24 @@ function getStatusText(status: BidStatus) {
 }
 
 export default function Bids({
-  person,
+  bid,
 }: {
-  person: People & {status: BidStatus};
+  bid: any
 }) {
 
 
 
+  const { checkColor, statusText, StatusIcon } = getStatusText(bid.status);
 
-  const { checkColor, statusText, StatusIcon } = getStatusText(person.status);
   return (
     <div className="flex gap-4">
-      <div className="bidder-image relative h-12  w-12 rounded-full border-2 border-white">
+      <div className="bidder-image relative h-12  w-12 rounded-full border-2 border-white aspect-square">
         <StatusIcon className={`absolute -bottom-1 -right-1 ${checkColor}`} />
         <Image
           className="h-full w-full rounded-full object-cover object-top"
-          src={person.image}
+          width={300}
+          height={300}
+          src={bid.placer.imageUrl}
           alt=""
         />
       </div>
@@ -55,15 +58,15 @@ export default function Bids({
           {statusText}
           {": "}
           <span className="font-bold tracking-wider text-white">
-            {generateRandomNFTPrice()}ETH
+            {bid.amount}ETH
           </span>
         </p>
         <p>
           by{" "}
           <span className="font-bold tracking-wider text-white">
-            {person.name}
+            {bid.placer.username}
           </span>{" "}
-          at {generateRandomDate().formatted}
+          at {bid.updated_at}
         </p>
       </div>
     </div>

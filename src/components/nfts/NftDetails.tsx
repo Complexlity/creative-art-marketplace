@@ -9,6 +9,8 @@ import useCurrentUser from "~/hooks/useCurrentUser";
 import { Modals } from "./Modals";
 import { useQuery } from "@tanstack/react-query";
 import { getBids } from "~/utils/queries";
+import HistoryBids from "./HistoryBids";
+import { usePathname } from "next/navigation";
 
 
 export default function NftDetails({
@@ -19,9 +21,13 @@ export default function NftDetails({
 
 }) {
 
+  const pathname = usePathname()
+const currentPathname = pathname.split('/').pop()!
   const { data: bids, isLoading: isFetchingBids } = useQuery({
     queryKey: ["bids"],
-    queryFn: getBids
+    queryFn: async () => {
+      return await getBids(currentPathname)
+    }
   });
 
   if (!nftData)
@@ -84,8 +90,9 @@ export default function NftDetails({
             <p className="font-semibold tracking-widest">{creatorDetails?.username}</p>
           </div>
         </div>
-        {isFetchingBids ? "Fetching bids...." : "Fetched bids"}
-        {/* {<HistoryBids bids={bids}} />} */}
+        {isFetchingBids
+          ? "Fetching bids...."
+          : <HistoryBids bids={bids} />}
         <Modals nftData={nftData} />
       </div>
     </section>

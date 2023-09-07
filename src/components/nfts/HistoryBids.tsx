@@ -5,13 +5,17 @@ type Tab = "bids" | 'history'
 type HistoryBidsProps = {
   bids: any
 }
-export default function HistoryBids({ bids}: HistoryBidsProps) {
-    const [activeTab, setActiveTab] = useState<Tab>('bids');
-    const randomPeople = activeTab === 'bids' 
-    function getBorderColor(Tab: Tab){
-      if(Tab === activeTab) return 'border-primary border-[2.5px]'
-      return 'border-gray-500'
-    }
+export default function HistoryBids({ bids: allBids}: HistoryBidsProps) {
+  console.log(allBids)
+  const [activeTab, setActiveTab] = useState<Tab>('bids');
+  function getBorderColor(Tab: Tab){
+    if(Tab === activeTab) return 'border-primary border-[2.5px]'
+    return 'border-gray-500'
+  }
+  const history = allBids.filter((bid: any) => bid.status !== "pending")
+  const bids = allBids.filter((bid: any) => bid.status === 'pending')
+  const bidsOrHistory = activeTab === 'bids' ? bids : history
+  console.log(bidsOrHistory)
     return (
 
         <>
@@ -32,8 +36,8 @@ export default function HistoryBids({ bids}: HistoryBidsProps) {
           </div>
         </div>
         <div suppressHydrationWarning={true} className="history-bids bids mb-8 grid gap-2.5">
-          {randomPeople.map((person, id) => {
-            return <Bids key={id} person={person} />;
+          {bidsOrHistory.map((bid: any) => {
+            return <Bids key={bid.id} bid={bid} />;
           })}
         </div>
         </>
