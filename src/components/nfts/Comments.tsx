@@ -6,6 +6,11 @@ import { generateRandomDate, pickRandomItems } from '~/utils/randoms';
 import { people } from '~/data/people';
 import { formatDate } from '~/utils/libs';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import useCurrentPage from '~/hooks/useCurrentPage';
+import { NFT } from '~/data/nfts';
+import useCurrentUser from '~/hooks/useCurrentUser';
+import Image from 'next/image';
 
 
 interface CommentsProps {
@@ -35,9 +40,14 @@ const comments = [
   },
 ]
 const Comments: FC<CommentsProps> = ({}) => {
-
+const router = useRouter();
+const slug = router.query.slug as string;
+const { data } = useCurrentPage({ slug });
+  const nftData = data as unknown as NFT;
+  const { data: user } = useCurrentUser({ userId: nftData.creator })
+  console.log(user)
     return (
-      <section className="comments grid gap-6 text-center max-w-[800px] mx-auto ">
+      <section className="comments mx-auto grid max-w-[800px] gap-6 text-center ">
         <h2 className="relative  text-3xl tracking-wide md:text-4xl">
           Comments
           <span className="absolute bottom-[-.3rem] right-[50%] h-[.15rem] w-[20%] max-w-[180px] translate-x-[50%] bg-primary"></span>
@@ -45,14 +55,20 @@ const Comments: FC<CommentsProps> = ({}) => {
 
         <div className="flex items-center justify-between gap-2 text-2xl">
           {/* User Avatar */}
-          <Avatar>
-            <AvatarImage src="/people/5.webp" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <div className="creator-image relative h-12 w-12  rounded-full border-2 border-white aspect-square">
+            <Image
+              width={500}
+              height={500}
+              className="h-full w-full rounded-full object-cover object-top "
+              src={user?.imageUrl ?? ""}
+              alt=""
+            />
+          </div>
+
           {/* Auto sizeable text area */}
           <TextareaAutosize
             placeholder="Add Comment..."
-            className="border-1 w-full border-2   rounded-lg  !border-gray-600 bg-transparent p-2 text-sm text-white  placeholder:italic placeholder:text-gray-300 focus-visible:outline-primary focus:outline-primary focus-visible:border-primary focus- !focus:!border-none focus:ring-primary"
+            className="border-1 focus- !focus:!border-none   w-full  rounded-lg border-2 !border-gray-600 bg-transparent p-2  text-sm text-white placeholder:italic placeholder:text-gray-300 focus:outline-primary focus:ring-primary focus-visible:border-primary focus-visible:outline-primary"
           />
           {/* Comment Buttton */}
           <button>
@@ -72,14 +88,18 @@ const Comments: FC<CommentsProps> = ({}) => {
                 <div className="font-2xl flex items-center gap-4 text-gray-200">
                   {/* User Avatar  + User Name*/}
 
-                    <Avatar>
-                      {/* @ts-expect-error src should be string */}
-                      <AvatarImage src={comment.user.image} />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                  <span className="text-white font-semibold">{comment.user.name}</span>
+                  <Avatar>
+                    {/* @ts-expect-error src should be string */}
+                    <AvatarImage src={comment.user.image} />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <span className="font-semibold text-white">
+                    {comment.user.name}
+                  </span>
                   {/* Time  */}
-                  <span className="text-gray-400">{formatDate(comment.createdAt.raw)}</span>
+                  <span className="text-gray-400">
+                    {formatDate(comment.createdAt.raw)}
+                  </span>
                 </div>
                 <div className="text-start text-base text-gray-200">
                   {/* Comment */}

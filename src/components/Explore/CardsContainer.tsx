@@ -17,6 +17,7 @@ type SeeMore = {
 type Search = string | number | readonly string[] | undefined;
 
 export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
+  console.log({ data: nftsData })
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
   const [priceRange, setPriceRange] = useState<string>("all");
@@ -121,7 +122,7 @@ export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
   function searchByCategory(item: NFT, category: string) {
     if (category === "default") return true;
     let itemCategory = item.category
-    
+
     // itemCategory = getCategory[itemCategory].toLowerCase();
     // category = category.toLowerCase();
     return itemCategory === category;

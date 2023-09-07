@@ -9,6 +9,7 @@ import { Modals } from "./Modals";
 import { useQuery } from "@tanstack/react-query";
 import { type User } from "@clerk/nextjs/dist/types/server/clerkClient";
 import { createFactory } from "react";
+import useCurrentUser from "~/hooks/useCurrentUser";
 
 
 export default function NftDetails({
@@ -22,17 +23,7 @@ export default function NftDetails({
 
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;
-  const { data: creatorDetails } = useQuery({
-    queryKey: [nftData.creator],
-    queryFn: async () => {
-      const res = await fetch("/api/bid", {
-        method: "POST",
-        body: nftData.creator,
-      });
-      const result = await res.json()
-      return result.user as User
-    },
-  });
+  const { data: creatorDetails } = useCurrentUser({ userId:nftData.creator })
 
 
 
