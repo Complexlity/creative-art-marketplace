@@ -9,10 +9,6 @@ import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
 import { useUser } from "@clerk/nextjs";
 
 const Home: NextPage = () => {
-  const { user } = useUser()
-  console.log(user)
-
-  console.log(user?.username)
   return (
     <>
       <Head>

@@ -4,9 +4,10 @@ import { FC } from 'react'
 import { AiOutlineConsoleSql } from 'react-icons/ai';
 import { supabaseWithoutClient as supabase } from 'supabase';
 import { resourceLimits } from 'worker_threads';
-interface useCurrentUserProps {
+type useCurrentUserProps =
+  {
   userId?: string | null
-}
+  } 
 
 type User = {
   username: string | null,
@@ -17,18 +18,18 @@ type User = {
 
 const useCurrentUser = ({ userId }: useCurrentUserProps) => {
   let authUserId: string | null | undefined;
-  console.log(userId)
   if (!userId) {
     authUserId = useAuth().userId
   }
   const userOrAuthUserId = userId ?? authUserId
+
   const userName = (user: any) => user.username ?? user.firstName ?? user.lastName
+
   return useQuery({
     queryKey: [userOrAuthUserId],
     queryFn: async (): Promise<User> => {
-
+        if(!userOrAuthUserId) throw new Error("Can't perform this process or Not authenticated")
       const { data: users, error: fetchError } = await supabase.from('users').select('*').eq('userId', userOrAuthUserId)
-      console.log({users, fetchError})
       if (users && users.length > 0) {
 
         return users[0] as unknown as User
