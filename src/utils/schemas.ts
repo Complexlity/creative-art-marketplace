@@ -37,6 +37,6 @@ export const bidSchema = yup.object().shape({
     .nullable(),
     termsAndConditions: yup
     .bool()
-    .oneOf([true], 'You need to accept the terms and conditions'),
+    .oneOf([true], 'You need to accept the terms and conditions '),
 })
 
