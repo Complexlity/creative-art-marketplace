@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getBids } from "~/utils/queries";
 import HistoryBids from "./HistoryBids";
 import { usePathname } from "next/navigation";
+import useNftBids from "~/hooks/useNftBids";
 
 
 export default function NftDetails({
@@ -23,12 +24,7 @@ export default function NftDetails({
 
   const pathname = usePathname()
 const currentPathname = pathname.split('/').pop()!
-  const { data: bids, isLoading: isFetchingBids } = useQuery({
-    queryKey: ["bids"],
-    queryFn: async () => {
-      return await getBids(currentPathname)
-    }
-  });
+  const { data: bids, isLoading: isFetchingBids } = useNftBids({currentPathname})
 
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;

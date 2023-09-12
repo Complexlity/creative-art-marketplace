@@ -19,6 +19,7 @@ import useSupabase from "~/hooks/useSupabaseWithAuth";
 import { usePathname } from "next/navigation";
 import useCurrentPage from "~/hooks/useCurrentPage";
 import { NFT } from "~/data/nfts";
+import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   itemPrice: z.number().positive().optional(),
@@ -36,11 +37,12 @@ export default function BidInputForm2({
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>;
   price: number;
-}) {
+  }) {
+  const queryClient = useQueryClient()
   const pathname = usePathname();
-  const { user } = useUser();
   const currentPathname = pathname.split("/").pop()!;
-  const { data } = useCurrentPage({ slug: currentPathname });
+  const { user } = useUser();
+const { data } = useCurrentPage({ slug: currentPathname });
   const nftData = data as unknown as NFT;
 
   const { userId } = useAuth();
@@ -63,20 +65,15 @@ export default function BidInputForm2({
       return toast("Cannot bid for your own item");
     setIsBidding(true);
     try {
-      const { data: inserttedUser, error: userInputError } = await supabase
-        .from("users")
-        .insert([
-          { name: user?.username, imageUrl: user?.imageUrl, userId: userId },
-        ])
-        .select();
-
+      console.log(values)
       const { data, error } = await supabase
         .from("bids")
-        .insert([{ placer: userId, slug: currentPathname }])
+        .insert([{ placer: userId, slug: currentPathname, amount: values.bid ?? values.itemPrice }])
         .select();
 
       if (error) throw error;
       toast("Bid submit successful. We will get back to you shortly 🤗");
+      queryClient.invalidateQueries({ queryKey: [`bids-${currentPathname}`] })
       form.reset();
       setIsBidding(false);
       setOpen(false);
