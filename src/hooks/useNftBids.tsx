@@ -7,7 +7,7 @@ currentPathname: string
 
 function useNftBids({ currentPathname }: useNftBidsProps) {
   return useQuery({
-    queryKey: [`bids-${currentPathname}`],
+    queryKey: ["bids", currentPathname],
     queryFn: async () => {
       return await getBids(currentPathname)
     }

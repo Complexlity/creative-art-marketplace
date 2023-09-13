@@ -73,7 +73,7 @@ const { data } = useCurrentPage({ slug: currentPathname });
 
       if (error) throw error;
       toast("Bid submit successful. We will get back to you shortly 🤗");
-      queryClient.invalidateQueries({ queryKey: [`bids-${currentPathname}`] })
+      queryClient.invalidateQueries({ queryKey: ["bids", currentPathname] })
       form.reset();
       setIsBidding(false);
       setOpen(false);

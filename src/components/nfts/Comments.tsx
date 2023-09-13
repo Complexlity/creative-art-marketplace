@@ -61,7 +61,7 @@ const Comments: FC<CommentsProps> = ({}) => {
   const [comment, setComment] = useState("");
   const currentPathname = pathname.split("/").pop()!;
   const { data: comments, isLoading: isLoadingComments } = useQuery({
-    queryKey: ["comments"],
+    queryKey: ["comments", pathname],
     queryFn: async () => {
       return await getComments(pathname);
     },
