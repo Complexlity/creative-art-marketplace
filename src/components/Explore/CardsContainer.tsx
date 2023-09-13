@@ -17,7 +17,6 @@ type SeeMore = {
 type Search = string | number | readonly string[] | undefined;
 
 export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
-  console.log({ data: nftsData })
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
   const [priceRange, setPriceRange] = useState<string>("all");

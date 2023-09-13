@@ -65,7 +65,6 @@ const { data } = useCurrentPage({ slug: currentPathname });
       return toast("Cannot bid for your own item");
     setIsBidding(true);
     try {
-      console.log(values)
       const { data, error } = await supabase
         .from("bids")
         .insert([{ placer: userId, slug: currentPathname, amount: values.bid ?? values.itemPrice }])
@@ -78,7 +77,6 @@ const { data } = useCurrentPage({ slug: currentPathname });
       setIsBidding(false);
       setOpen(false);
     } catch (error) {
-      console.log(error);
       toast("Something Went Wrong");
       setIsBidding(false);
     }

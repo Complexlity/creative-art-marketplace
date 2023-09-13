@@ -6,7 +6,6 @@ type HistoryBidsProps = {
   bids: any
 }
 export default function HistoryBids({ bids: allBids}: HistoryBidsProps) {
-  console.log(allBids)
   const [activeTab, setActiveTab] = useState<Tab>('bids');
   function getBorderColor(Tab: Tab){
     if(Tab === activeTab) return 'border-primary border-[2.5px]'
@@ -15,7 +14,6 @@ export default function HistoryBids({ bids: allBids}: HistoryBidsProps) {
   const history = allBids.filter((bid: any) => bid.status !== "pending")
   const bids = allBids.filter((bid: any) => bid.status === 'pending')
   const bidsOrHistory = activeTab === 'bids' ? bids : history
-  console.log(bidsOrHistory)
     return (
 
         <>

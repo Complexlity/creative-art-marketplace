@@ -89,7 +89,7 @@ export default function MintForm() {
         if (uploadError) {
           toast("Could not upload file")
           setIsLoading(false)
-          console.log(uploadError)
+
           return
         }
         setLoadingMessage("Uploading Nft Details...")
@@ -114,7 +114,6 @@ export default function MintForm() {
           router.push('/explore')
         }
         else if (error) {
-          console.log(error)
           toast("Something Went Wrong", {
           })
 

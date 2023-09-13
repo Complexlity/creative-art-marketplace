@@ -31,12 +31,12 @@ export async function getComments(slug: string) {
     .select(
       `
     "*",
-    user (
+    users (
       "*"
     )
     `
     )
-    .eq("slug", slug);
-
+    .eq("slug", slug)
+  .order('created_at', {ascending: false})
   return comments;
 }
