@@ -1,3 +1,4 @@
+import { Database } from "supabase_types";
 import { supabaseWithoutClient as supabase } from "~/../supabase";
 import { NFT } from "~/data/nfts";
 export async function getSingleNft(slug: string) {
@@ -38,6 +39,6 @@ export async function getComments(slug: string) {
     )
     .eq("slug", slug)
     .order('created_at', { ascending: false })
-  console.log(comments)
-  return comments;
+
+  return comments as ;
 }

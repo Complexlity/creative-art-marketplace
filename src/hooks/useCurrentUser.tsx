@@ -3,7 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react'
 import { AiOutlineConsoleSql } from 'react-icons/ai';
 import { supabaseWithoutClient as supabase } from 'supabase';
+import { Database } from 'supabase_types';
 import { resourceLimits } from 'worker_threads';
+import { User } from 'lucide-react';
 type useCurrentUserProps =
   {
   userId?: string | null
@@ -23,7 +25,7 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
   }
   const userOrAuthUserId = userId ?? authUserId
 
-  const userName = (user: any) => user.username ?? user.firstName ?? user.lastName
+  const userName = (user: User) => user.username
 
   return useQuery({
     queryKey: [userOrAuthUserId],
@@ -46,13 +48,19 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
         body: userId,
       });
       const result = await res.json()
-      const user = result.user
+      const user = result.user as User
+      if (!user) return {
+          username:null,
+          userId: '',
+          imageUrl: ''
+
+      }
       if (authUserId) {
         const { data: newUser, error: createError } = await supabase
         .from('users')
-        .insert([
-          { username :userName(user), imageUrl: user.imageUrl, user_Id: userOrAuthUserId },
-        ])
+        .insert(
+          [{ username :userName(user)!, imageUrl: user.imageUrl!, user_id: userOrAuthUserId! }],
+        )
         .select("*")
         return newUser![0] as unknown as User
       }
