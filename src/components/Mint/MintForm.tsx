@@ -89,6 +89,7 @@ export default function MintForm() {
         if (uploadError) {
           toast("Could not upload file")
           setIsLoading(false)
+          setLoadingMessage('')
 
           return
         }
@@ -116,6 +117,9 @@ export default function MintForm() {
         else if (error) {
           toast("Something Went Wrong", {
           })
+          console.log(error)
+          setIsLoading(false)
+          setLoadingMessage('')
 
         }
       },

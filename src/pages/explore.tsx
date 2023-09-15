@@ -4,15 +4,25 @@ import CardsContainer from "~/components/Explore/CardsContainer";
 import Footer from "~/components/Universal/Footer";
 import Header from "~/components/Universal/Header";
 import NavBar from "~/components/Universal/NavBar";
+import { NFT } from "~/data/nfts";
 import { getAllNfts } from "~/utils/queries";
 
+export async function getStaticProps() {
+  const serverNfts = await getAllNfts()
+  return { props: { serverNfts } };
+}
+
+type ExploreProps = {
+  serverNfts: NFT[]
+}
 
 
-const Explore = () => {
+const Explore = ({serverNfts}: ExploreProps) => {
 
   const { data: nfts, isLoading } = useQuery({
     queryKey: ["nfts"],
     queryFn: getAllNfts,
+    initialData:serverNfts
   });
   return (
     <>

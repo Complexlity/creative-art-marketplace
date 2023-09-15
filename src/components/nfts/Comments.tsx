@@ -152,6 +152,8 @@ function CreateComment() {
       .select();
     if (error) {
       toast("Something Went Wrong");
+      console.log(error)
+      setIsCommenting(false);
       return;
     }
     setIsCommenting(false);
@@ -188,7 +190,7 @@ function CreateComment() {
         {/* Comment Buttton */}
         <button type="submit" disabled={isCommenting}>
           {isCommenting ? (
-            <Loader2 className="h-5 w-5 animate-spin text-zinc-500" />
+            <Loader2 className="text-primary h-8 w-8 animate-spin" />
           ) : (
             <SendHorizontal className="text-primary hover:outline-primary" />
           )}

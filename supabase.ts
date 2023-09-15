@@ -6,9 +6,10 @@
 // const supabase = createClient(supabaseUrl, supabaseKey);
 // console.log(supabase)
 import { createClient } from "@supabase/supabase-js";
+import { Database } from "supabase_types";
 
 export const supabaseWithClient = async (supabaseAccessToken: any) => {
-  const supabase = createClient(
+  const supabase = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_KEY!,
     {
@@ -20,7 +21,7 @@ export const supabaseWithClient = async (supabaseAccessToken: any) => {
   return supabase;
 };
 
-export const supabaseWithoutClient = createClient(
+export const supabaseWithoutClient = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_KEY!,
   );
