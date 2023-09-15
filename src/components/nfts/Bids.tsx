@@ -38,7 +38,6 @@ export default function Bids({
 }) {
 
 
-
   const { checkColor, statusText, StatusIcon } = getStatusText(bid.status);
 
   return (
@@ -49,7 +48,7 @@ export default function Bids({
           className="h-full w-full rounded-full object-cover object-top"
           width={300}
           height={300}
-          src={bid.placer.imageUrl}
+          src={bid.users.imageUrl}
           alt=""
         />
       </div>
@@ -64,7 +63,7 @@ export default function Bids({
         <p>
           by{" "}
           <span className="font-bold tracking-wider text-white">
-            {bid.placer.username}
+            {bid.users.username}
           </span>{" "}
           at {bid.updated_at}
         </p>

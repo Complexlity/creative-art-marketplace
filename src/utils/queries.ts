@@ -16,7 +16,7 @@ export async function getBids(slug: string) {
     .select(
       `
       "*",
-      placer (
+      users (
         "*"
       )
     `
@@ -37,6 +37,7 @@ export async function getComments(slug: string) {
     `
     )
     .eq("slug", slug)
-  .order('created_at', {ascending: false})
+    .order('created_at', { ascending: false })
+  console.log(comments)
   return comments;
 }

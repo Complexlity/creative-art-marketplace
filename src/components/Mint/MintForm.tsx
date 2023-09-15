@@ -101,7 +101,7 @@ export default function MintForm() {
         })
         const { data, error } = await supabase
         .from("nft")
-        .insert([{ name: values.title, price:  values.price || values.minBid, image: fileUrl, creator: userId , description: values.description, category: values.collections, slug: slug }])
+        .insert([{ name: values.title, price:  values.price || values.minBid, image: fileUrl, user_id: userId , description: values.description, category: values.collections, slug: slug }])
         .select()
         if (data) {
           setLoadingMessage("Completed")

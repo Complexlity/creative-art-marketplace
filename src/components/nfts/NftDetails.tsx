@@ -28,7 +28,7 @@ const currentPathname = pathname.split('/').pop()!
 
   if (!nftData)
     return <div>NFT wasn't found because typescript was shouting</div>;
-  const { data: creatorDetails } = useCurrentUser({ userId:nftData.creator })
+  const { data: creatorDetails } = useCurrentUser({ userId:nftData.user_id })
 
 
 

@@ -61,13 +61,13 @@ const { data } = useCurrentPage({ slug: currentPathname });
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     if (!supabase || !userId) return toast("Not Autheticated");
-    if (nftData.creator === userId)
+    if (nftData.user_id === userId)
       return toast("Cannot bid for your own item");
     setIsBidding(true);
     try {
       const { data, error } = await supabase
         .from("bids")
-        .insert([{ placer: userId, slug: currentPathname, amount: values.bid ?? values.itemPrice }])
+        .insert([{ user_id: userId, slug: currentPathname, amount: values.bid ?? values.itemPrice }])
         .select();
 
       if (error) throw error;

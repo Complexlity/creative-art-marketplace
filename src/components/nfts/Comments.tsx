@@ -146,7 +146,7 @@ function CreateComment() {
         content: comment,
         upvotes: [],
         downvotes: [],
-        userId: user?.id,
+        user_id: user.id,
         slug: currentPathname,
       })
       .select();

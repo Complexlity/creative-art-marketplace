@@ -35,7 +35,7 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
           imageUrl: null
         }
       }
-      const { data: users, error: fetchError } = await supabase.from('users').select('*').eq('userId', userOrAuthUserId)
+      const { data: users, error: fetchError } = await supabase.from('users').select('*').eq('user_id', userOrAuthUserId)
       if (users && users.length > 0) {
 
         return users[0] as unknown as User
@@ -51,7 +51,7 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
         const { data: newUser, error: createError } = await supabase
         .from('users')
         .insert([
-          { username :userName(user), imageUrl: user.imageUrl, userId: userOrAuthUserId },
+          { username :userName(user), imageUrl: user.imageUrl, user_Id: userOrAuthUserId },
         ])
         .select("*")
         return newUser![0] as unknown as User
