@@ -5,7 +5,7 @@ import { AiOutlineConsoleSql } from 'react-icons/ai';
 import { supabaseWithoutClient as supabase } from 'supabase';
 import { Database } from 'supabase_types';
 import { resourceLimits } from 'worker_threads';
-import { User } from 'lucide-react';
+
 type useCurrentUserProps =
   {
   userId?: string | null
@@ -39,8 +39,12 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
       }
       const { data: users, error: fetchError } = await supabase.from('users').select('*').eq('user_id', userOrAuthUserId)
       if (users && users.length > 0) {
-
-        return users[0] as unknown as User
+        const user = users[0]!
+        return {
+          username: user.username,
+          userId: user.user_id,
+          imageUrl: user.imageUrl
+        }
 
       }
       const res = await fetch("/api/current_user", {

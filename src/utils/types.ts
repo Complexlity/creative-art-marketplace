@@ -8,3 +8,9 @@ export type NftBid = Database["public"]["Tables"]["bids"]["Row"];
 export type NftUser = Database["public"]["Tables"]["users"]["Row"];
 
 export type Nft = Database["public"]["Tables"]["nfts"]["Row"];
+
+export type Prettify<T> = {
+  [K in keyof T]: T[K]
+} & {}
+
+export type WithUser<T> = Prettify<T & { users: NftUser }>;

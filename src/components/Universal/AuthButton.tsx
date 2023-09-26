@@ -4,11 +4,10 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/nextjs";
-import { truncate } from "fs";
 
 import { usePathname } from "next/navigation";
-import useCurrentUser from "~/hooks/useCurrentUser";
-
+import { Mail } from "lucide-react";
+import MailButton from "./MailButton";
 export default function AuthButton() {
   const pathname = usePathname()
   // This is here to sync the user with supabase after sign up
@@ -18,7 +17,9 @@ export default function AuthButton() {
     <>
       <SignedIn>
         {/* Mount the UserButton component */}
+
         <UserButton showName={true} afterSignOutUrl={pathname} />
+        <MailButton />
       </SignedIn>
       <SignedOut>
         {/* Signed out users get sign in button */}
