@@ -1,12 +1,11 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import NavBar from "~/components/Universal/NavBar";
-import Hero from '~/components/Home/Hero'
+import NavBar from "~/components/Universal/nav/nav/NavBar";
+import Hero from "~/components/Home/Hero";
 import UniqueArt from "~/components/Home/UniqueArt";
 import Subscribe from "~/components/Home/Subscribe";
 import Footer from "~/components/Universal/Footer";
 import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
-import { useUser } from "@clerk/nextjs";
 
 const Home: NextPage = () => {
   return (
@@ -31,7 +30,6 @@ const Home: NextPage = () => {
             <WeeklyArtists />
             <Subscribe />
             <Footer />
-
           </div>
         </div>
       </div>

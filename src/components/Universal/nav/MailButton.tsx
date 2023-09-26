@@ -1,5 +1,6 @@
-import { FC } from 'react'
-import { Mail, Check, X } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query';
+import { Mail } from 'lucide-react';
+import { FC } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -8,13 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { useQuery } from '@tanstack/react-query';
 import { getPendingBids } from '~/utils/queries';
 
-import { useAuth, useUser } from '@clerk/nextjs';
-import useCurrentUser from '~/hooks/useCurrentUser';
-import { Nft, NftBid, Prettify, WithUser } from '~/utils/types';
-import useNftBids from '~/hooks/useNftBids';
+import { useAuth } from '@clerk/nextjs';
+import BidMessage from './BidMessage';
 
 
 interface MailButtonProps {
@@ -53,7 +51,7 @@ console.log(pendingBids)
             <div className=" rounded-xl grid gap-4">
               {
                 pendingBids?.map(bid => (
-                  <BidMail bid={bid} />
+                  <BidMessage bid={bid} />
                 ))
               }
             </div>
@@ -62,29 +60,6 @@ console.log(pendingBids)
       </DialogContent>
     </Dialog>
   );
-}
-
-type BidMailProps = {
-  bid: (WithUser<NftBid> & { nfts: Nft })
-}
-
-function BidMail({bid}: BidMailProps) {
-  return (
-    <div className="flex text-black gap-4 items-center border-b-2 border-amber-100">
-      <span>{bid.users.username}</span>
-      <span>{bid.nfts.name}</span>
-      <span>{bid.amount}ETH</span>
-      <span>{bid.nfts.price}ETH</span>
-      <div className="flex justify-self-end ml-auto gap-2 items-center">
-        <div className="rounded-full p-1 hover:bg-green-200 hover:cursor-pointer">
-        <Check className="text-green-500" />
-        </div>
-        <div className="p-1 rounded-full hover:bg-red-200 hover:cursor-pointer">
-        <X className="text-red-500"/>
-        </div>
-      </div>
-    </div>
-  )
 }
 
 

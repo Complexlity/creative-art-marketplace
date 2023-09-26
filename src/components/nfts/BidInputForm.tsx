@@ -1,5 +1,8 @@
+import { useAuth, useUser } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -14,12 +17,9 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { useAuth, useClerk, useUser } from "@clerk/nextjs";
-import useSupabase from "~/hooks/useSupabaseWithAuth";
-import { usePathname } from "next/navigation";
 import useCurrentPage from "~/hooks/useCurrentPage";
-import { NFT } from "~/data/nfts";
-import { useQueryClient } from "@tanstack/react-query";
+import useSupabase from "~/hooks/useSupabaseWithAuth";
+import { Nft } from "~/utils/types";
 
 const formSchema = z.object({
   itemPrice: z.number().positive().optional(),
@@ -43,7 +43,8 @@ export default function BidInputForm2({
   const currentPathname = pathname.split("/").pop()!;
   const { user } = useUser();
 const { data } = useCurrentPage({ slug: currentPathname });
-  const nftData = data as unknown as NFT;
+  const nftData = data as unknown as Nft;
+
 
   const { userId } = useAuth();
   const formRef = useRef(null);

@@ -1,5 +1,5 @@
 import Footer from "~/components/Universal/Footer";
-import NavBar from "~/components/Universal/NavBar";
+import NavBar from "~/components/Universal/nav/NavBar";
 import { NFT } from "~/data/nfts";
 
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
@@ -12,27 +12,25 @@ import { useRouter } from "next/router";
 import { clerkClient } from "@clerk/nextjs";
 import { User } from "@clerk/nextjs/dist/types/server";
 
-
 export const getStaticPaths = async () => {
-  const nftsData = await getAllNfts() as NFT[]
+  const nftsData = (await getAllNfts()) as NFT[];
   const paths = nftsData.map((item) => ({
-  // @ts-expect-error Slug not a property of NFT
-    params: {slug: item.slug}
-}))
-  return {paths, fallback: true}
-}
+    // @ts-expect-error Slug not a property of NFT
+    params: { slug: item.slug },
+  }));
+  return { paths, fallback: true };
+};
 
-export async function getStaticProps({ params }: { params: {slug: string} }) {
-  const singlePost = await getSingleNft(params.slug)
-  return {props: {singlePost}}
+export async function getStaticProps({ params }: { params: { slug: string } }) {
+  const singlePost = await getSingleNft(params.slug);
+  return { props: { singlePost } };
 }
 
 function NFTItem({ singlePost }: { singlePost: NFT }) {
-  const router = useRouter()
-  const slug = router.query.slug as string
-  const { data } = useCurrentPage({ slug, singlePost })
-  const nftData = data as unknown as NFT
-
+  const router = useRouter();
+  const slug = router.query.slug as string;
+  const { data } = useCurrentPage({ slug, singlePost });
+  const nftData = data as unknown as NFT;
 
   return (
     <>
@@ -50,7 +48,7 @@ function NFTItem({ singlePost }: { singlePost: NFT }) {
           className="mx-auto max-w-[1200px]  px-6 text-white"
         >
           <NavBar />
-          <NftDetails nftData={nftData}  />
+          <NftDetails nftData={nftData} />
           <Comments />
           {/* <RelatedItems relatedItems={relatedItems} /> */}
           <Footer />

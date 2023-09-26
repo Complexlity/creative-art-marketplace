@@ -67,7 +67,7 @@ export async function getPendingBids(id: string) {
     )
     `
     )
-    .eq("nfts.user_id", id);
+    .eq("nfts.user_id", id).eq('status', "pending");
   console.log(bids, error)
   return bids as unknown as (WithUser<NftBid> & {
     nfts: Nft

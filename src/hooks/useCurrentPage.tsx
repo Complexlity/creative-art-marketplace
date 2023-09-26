@@ -1,15 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
-import { FC } from 'react'
-import { NFT } from '~/data/nfts'
 import { getSingleNft } from '~/utils/queries'
+import { Nft } from '~/utils/types'
 
 interface useCurrentPageProps {
   slug: string,
-  singlePost?: NFT
+  singlePost?: Nft
 }
 
 const useCurrentPage = ({ slug, singlePost}: useCurrentPageProps) => {
-  return useQuery<{}, NFT>({
+  return useQuery<{}, Nft>({
     queryKey: [slug],
     queryFn: async () => {
         const nft = await getSingleNft(slug)
