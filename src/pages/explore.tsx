@@ -3,7 +3,7 @@ import Head from "next/head";
 import CardsContainer from "~/components/Explore/CardsContainer";
 import Footer from "~/components/Universal/Footer";
 import Header from "~/components/Universal/Header";
-import NavBar from "~/components/Universal/nav/NavBar";
+import NavBar from "~/components/Universal/navBar";
 import { NFT } from "~/data/nfts";
 import { getAllNfts } from "~/utils/queries";
 

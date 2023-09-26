@@ -27,9 +27,10 @@ export default function BidMessage({ bid }: BidMailProps) {
   const queryClient = useQueryClient();
   const { mutate: bidFeedback, isLoading } = useMutation({
 
-    mutationFn: async () => {
+    mutationFn: async (type: "accepted" | 'rejected') => {
+
       const {data, error} =  await supabase!.from('bids')
-        .update({ status: "accepted" })
+        .update({ status: type })
         .eq('id', bid.id)
         .select()
       if(error) throw new Error(error.message)
@@ -39,11 +40,13 @@ export default function BidMessage({ bid }: BidMailProps) {
       queryClient.invalidateQueries({ queryKey: ['pending-bids'] })
       console.log(data)
       setAcceptModal(false)
+      setRejectModal(false)
     },
     onError: (error) => {
       //@ts-ignore
       console.log(error?.message)
       setAcceptModal(false)
+      setRejectModal(false)
     }
   })
   const [acceptModal , setAcceptModal ] = useState(false)
@@ -73,14 +76,22 @@ export default function BidMessage({ bid }: BidMailProps) {
               <AlertDialogCancel className="bg-white text-black">
                 Cancel
               </AlertDialogCancel>
-              <AlertDialogAction disabled={isLoading} onClick={bidFeedback}>
-                {isLoading ? <Loader2 className="animate-spin duration-75 ease-linear" /> : "Continue"}
+              <AlertDialogAction
+                disabled={isLoading}
+                // @ts-ignore mutate function in button event
+                onClick={bidFeedback.bind(null, "accepted")}
+              >
+                {isLoading ? (
+                  <Loader2 className="animate-spin duration-75 ease-linear" />
+                ) : (
+                  "Continue"
+                )}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
         <AlertDialog open={rejectModal}>
-          <AlertDialogTrigger>
+          <AlertDialogTrigger onClick={setRejectModal.bind(null, true)}>
             <div className="rounded-full p-1 hover:cursor-pointer hover:bg-red-200">
               <X className="text-red-500" />
             </div>
@@ -95,7 +106,17 @@ export default function BidMessage({ bid }: BidMailProps) {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction>Continue</AlertDialogAction>
+              <AlertDialogAction
+                disabled={isLoading}
+                // @ts-ignore mutate function in button event
+                onClick={bidFeedback.bind(null, "rejected")}
+              >
+                {isLoading ? (
+                  <Loader2 className="animate-spin duration-75 ease-linear" />
+                ) : (
+                  "Continue"
+                )}
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

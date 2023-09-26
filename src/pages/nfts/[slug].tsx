@@ -1,5 +1,5 @@
 import Footer from "~/components/Universal/Footer";
-import NavBar from "~/components/Universal/nav/NavBar";
+import NavBar from "~/components/Universal/navBar";
 import { NFT } from "~/data/nfts";
 
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";

@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import NavBar from "~/components/Universal/nav/nav/NavBar";
+import NavBar from "~/components/Universal/nav/NavBar";
 import Hero from "~/components/Home/Hero";
 import UniqueArt from "~/components/Home/UniqueArt";
 import Subscribe from "~/components/Home/Subscribe";
