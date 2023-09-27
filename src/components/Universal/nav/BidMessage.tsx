@@ -15,6 +15,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSupabase from "~/hooks/useSupabaseWithAuth";
 import { useState } from "react";
+import { useAuth } from "@clerk/nextjs";
 
 
 type BidMailProps = {
@@ -26,31 +27,40 @@ type BidMailProps = {
 export default function BidMessage({ bid }: BidMailProps) {
   const supabase = useSupabase()
   const queryClient = useQueryClient();
+  const { userId } = useAuth()
   const [rejectModal , setRejectModal ] = useState(false)
 const [acceptModal, setAcceptModal] = useState(false)
   const { mutate: bidFeedback, isLoading: isReactingBid } = useMutation({
 
     mutationFn: async (type: "accepted" | 'rejected') => {
+      let bidMessage: string;
       if (type == 'accepted') {
         setAcceptModal(false)
+        bidMessage = `Your bid of ${bid.amount} for ${bid.nfts.name} was ACCEPTED!!`
       }
-      else setRejectModal(false)
+      else{
+        setRejectModal(false)
+        bidMessage = `Your bid of ${bid.amount} for ${bid.nfts.name} was REJECTED!!`
+    }
+      if (userId !== bid.nfts.user_id) {
+        alert('Cannot accept or reject bid. This is not your item')
+        throw new Error("unautorized")
+      }
+      const {data, error} =  await supabase!.from('bids')
+        .update({ status: type })
+        .eq('id', bid.id)
+        .select()
+      if(error) throw new Error(error.message)
 
-      const { data: messages, error } = await supabase!
-        .from("messages")
-        .insert([{ user_id: bid.users.user_id, content: "Why are you running" }])
-        .select();
-      
-      return "wow"
-      // const {data, error} =  await supabase!.from('bids')
-      //   .update({ status: type })
-      //   .eq('id', bid.id)
-      //   .select()
-      // if(error) throw new Error(error.message)
-      // return data
+      const { data: messages } = await supabase!
+      .from("messages")
+      .insert([{ user_id: bid.users.user_id, content: bidMessage }])
+      .select();
+      return data
     },
     onSuccess: async (data) => {
       queryClient.invalidateQueries({ queryKey: ['pending-bids'] })
+      queryClient.invalidateQueries({queryKey: ['messages']})
     },
     onError: (error) => {
       //@ts-ignore
