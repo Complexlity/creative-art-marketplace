@@ -3,6 +3,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { Mail } from "lucide-react";
 import PendingBidsButton from "./PendingBidsButton";
+import MessagesButton from "./MessagesButton";
 export default function AuthButton() {
   const pathname = usePathname();
   // This is here to sync the user with supabase after sign up
@@ -15,6 +16,7 @@ export default function AuthButton() {
 
         <UserButton showName={true} afterSignOutUrl={pathname} />
         <PendingBidsButton />
+        <MessagesButton/>
       </SignedIn>
       <SignedOut>
         {/* Signed out users get sign in button */}

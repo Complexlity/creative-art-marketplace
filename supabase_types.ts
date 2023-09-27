@@ -98,6 +98,37 @@ export interface Database {
           }
         ];
       };
+      messages: {
+        Row: {
+          content: string;
+          created_at: string;
+          id: number;
+          status: string;
+          user_id: string;
+        };
+        Insert: {
+          content: string;
+          created_at?: string;
+          id?: number;
+          status?: string;
+          user_id: string;
+        };
+        Update: {
+          content?: string;
+          created_at?: string;
+          id?: number;
+          status?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "messages_user_id_fkey";
+            columns: ["user_id"];
+            referencedRelation: "users";
+            referencedColumns: ["user_id"];
+          }
+        ];
+      };
       nfts: {
         Row: {
           category: string;
