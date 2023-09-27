@@ -47,7 +47,7 @@ const [acceptModal, setAcceptModal] = useState(false)
         throw new Error("unautorized")
       }
       const {data, error} =  await supabase!.from('bids')
-        .update({ status: type })
+        .update({ status: type, updatedAt: Date.now() })
         .eq('id', bid.id)
         .select()
       if(error) throw new Error(error.message)

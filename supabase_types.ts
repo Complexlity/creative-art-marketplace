@@ -14,7 +14,6 @@ export interface Database {
           amount: number;
           created_at: string;
           id: number;
-          message_status: string | null;
           slug: string;
           status: string;
           updated_at: string;
@@ -24,7 +23,6 @@ export interface Database {
           amount: number;
           created_at?: string;
           id?: number;
-          message_status?: string | null;
           slug: string;
           status?: string;
           updated_at?: string;
@@ -34,7 +32,6 @@ export interface Database {
           amount?: number;
           created_at?: string;
           id?: number;
-          message_status?: string | null;
           slug?: string;
           status?: string;
           updated_at?: string;
