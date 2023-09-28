@@ -52,9 +52,6 @@ export async function getComments(slug: string) {
 
 
 export async function getPendingBids(id: string) {
-  // let { data: bids, error } = await supabase.rpc('getUserBids')
-  console.log(id)
-  id = "user_2UtUVf6NX3m2B3WX7NXKNP579x7";
   let { data: bids, error } = await supabase
     .from("bids")
     .select(

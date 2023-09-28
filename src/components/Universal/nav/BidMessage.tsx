@@ -40,23 +40,26 @@ const [acceptModal, setAcceptModal] = useState(false)
       }
       else{
         setRejectModal(false)
-        bidMessage = `Your bid of ${bid.amount} for ${bid.nfts.name} was REJECTED!!`
+        bidMessage = `Your bid of ${bid.amount}ETH for ${bid.nfts.name} was REJECTED!!`
     }
       if (userId !== bid.nfts.user_id) {
         alert('Cannot accept or reject bid. This is not your item')
         throw new Error("unautorized")
       }
       const {data, error} =  await supabase!.from('bids')
-        .update({ status: type, updatedAt: Date.now() })
+        .update({ status: type, updated_at: new Date() })
         .eq('id', bid.id)
         .select()
-      if(error) throw new Error(error.message)
+      if (error) throw new Error(error.message)
 
-      const { data: messages } = await supabase!
-      .from("messages")
+
+      const { data: messages, error: messageError } = await supabase!
+        .from("messages")
+
       .insert([{ user_id: bid.users.user_id, content: bidMessage }])
-      .select();
-      return data
+        .select();
+      if (messageError) throw new Error(messageError.message)
+        return data
     },
     onSuccess: async (data) => {
       queryClient.invalidateQueries({ queryKey: ['pending-bids'] })
@@ -76,7 +79,7 @@ const [acceptModal, setAcceptModal] = useState(false)
       <span>{bid.nfts.price}ETH</span>
       <div className="ml-auto flex items-center gap-2 justify-self-end">
         {isReactingBid ? (
-          <Loader2 className="animate-spin duration-75 ease-in-out" />
+          <Loader2 className="animate-spin duration-1000 ease-in-out" />
         ) : (
           <>
             <AlertDialog open={acceptModal}>
