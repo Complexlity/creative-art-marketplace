@@ -1,18 +1,15 @@
 import Image from "next/image";
 import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
-import { NFT } from "~/data/nfts";
 import { getRandomNumber } from "~/utils/randoms";
 import CountDownComponent from "../Universal/Countdown";
 
-import useCurrentUser from "~/hooks/useCurrentUser";
-import { Modals } from "./Modals";
-import { useQuery } from "@tanstack/react-query";
-import { getBids } from "~/utils/queries";
-import HistoryBids from "./HistoryBids";
 import { usePathname } from "next/navigation";
+import useCurrentUser from "~/hooks/useCurrentUser";
 import useNftBids from "~/hooks/useNftBids";
 import { Nft } from "~/utils/types";
+import HistoryBids from "./HistoryBids";
+import Modals  from "./Modals";
 
 
 export default function NftDetails({

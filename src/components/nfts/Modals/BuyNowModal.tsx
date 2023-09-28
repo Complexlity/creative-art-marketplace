@@ -1,54 +1,16 @@
-// import { Button } from "~/components/ui/button";
-import { useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "~/components/ui/alert-dialog";
-
-import { motion } from "framer-motion";
-import { ToastContainer, toast } from "react-toastify";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "~/components/ui/dialog";
-import type { NFT } from "~/data/nfts";
-import BidInputForm from "./BidInputForm";
-import "react-toastify/dist/ReactToastify.css";
-import { Loader2 } from "lucide-react";
-import useSupabase from "~/hooks/useSupabaseWithAuth";
-import { useAuth } from "@clerk/nextjs";
-import { Nft } from "~/utils/types";
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction } from "~/components/ui/alert-dialog";
 import { useQueryClient } from "@tanstack/react-query";
+import { motion } from "framer-motion";
+import { Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import useSupabase from "~/hooks/useSupabaseWithAuth";
+import { Nft } from "~/utils/types";
+import { AlertDialogHeader, AlertDialogFooter } from "../../ui/alert-dialog";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useAuth } from "@clerk/nextjs";
 
-export function Modals({ nftData }: { nftData: Nft }) {
-  return (
-    <div className="flex gap-4">
-      <BuyNowModal nftData={nftData} />
-      <PlaceBidModal nftData={nftData} />
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        closeOnClick
-        theme="dark"
-        pauseOnHover={false}
-      />
-    </div>
-  );
-}
-
-function BuyNowModal({ nftData }: { nftData: Nft }) {
+export default function BuyNowModal({ nftData }: { nftData: Nft }) {
   const [open, setOpen] = useState(false)
   const supabase = useSupabase()
   const { userId } = useAuth()
@@ -70,7 +32,7 @@ function BuyNowModal({ nftData }: { nftData: Nft }) {
         .select();
 
       if (error) throw error;
-      toast("Bid submit successful. We will get back to you shortly 🤗");
+      toast(`Thank you for buying ${nftData.name} for ${nftData.price}`);
       queryClient.invalidateQueries({ queryKey: ["bids", currentPathname] })
       setOpen(false);
     } catch (error) {
@@ -125,26 +87,4 @@ function BuyNowModal({ nftData }: { nftData: Nft }) {
   );
 }
 
-function PlaceBidModal({ nftData }: { nftData: Nft }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <motion.button
-          className="rounded-full bg-gray-500 px-6 py-2 hover:shadow-round hover:shadow-primary"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Place a bid
-        </motion.button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>{nftData.name}</DialogTitle>
-          <DialogDescription>{nftData.description}</DialogDescription>
-        </DialogHeader>
-        <BidInputForm setOpen={setOpen} price={nftData.price} nftData={nftData} />
-      </DialogContent>
-    </Dialog>
-  );
-}
+
