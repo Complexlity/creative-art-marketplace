@@ -12,13 +12,14 @@ import { getBids } from "~/utils/queries";
 import HistoryBids from "./HistoryBids";
 import { usePathname } from "next/navigation";
 import useNftBids from "~/hooks/useNftBids";
+import { Nft } from "~/utils/types";
 
 
 export default function NftDetails({
   nftData,
 
 }: {
-  nftData: NFT | undefined;
+  nftData: Nft | undefined;
 
 }) {
 
@@ -27,7 +28,7 @@ const currentPathname = pathname.split('/').pop()!
   const { data: bids, isLoading: isFetchingBids } = useNftBids({currentPathname})
 
   if (!nftData)
-    return <div>NFT wasn't found because typescript was shouting</div>;
+    return <div>Not Found</div>;
   const { data: creatorDetails } = useCurrentUser({ userId:nftData.user_id })
 
 

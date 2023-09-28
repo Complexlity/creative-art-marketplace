@@ -31,19 +31,21 @@ const formSchema = z.object({
     .positive("Number must be greater than zero"),
 });
 
-export default function BidInputForm2({
+
+
+export default function BidInputForm({
   setOpen,
   price,
+  nftData
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>;
-  price: number;
+    price: number;
+  nftData: Nft
   }) {
   const queryClient = useQueryClient()
   const pathname = usePathname();
   const currentPathname = pathname.split("/").pop()!;
-  const { user } = useUser();
-const { data } = useCurrentPage({ slug: currentPathname });
-  const nftData = data as unknown as Nft;
+  
 
 
   const { userId } = useAuth();
@@ -58,7 +60,7 @@ const { data } = useCurrentPage({ slug: currentPathname });
       bid: undefined,
     },
   });
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+ async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     if (!supabase || !userId) return toast("Not Autheticated");
