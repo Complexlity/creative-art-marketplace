@@ -1,3 +1,5 @@
+import { useAuth } from "@clerk/nextjs";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Mail } from "lucide-react";
 import { FC } from "react";
 import {
@@ -11,6 +13,7 @@ import {
 
 import useMessages from "~/hooks/useMessages";
 import { Message } from "~/utils/types";
+import { supabaseWithClient as supabaseClient } from "supabase";
 
 
 interface MessagesButtonProps {}
@@ -18,7 +21,26 @@ type ReduceReturnType = { unreadMessages: Message[]; count: number }
 
 const MessagesButton: FC<MessagesButtonProps> = () => {
   const { data: messages } = useMessages()
-  if (!messages || messages.length === 0) return null;
+  const { getToken, userId } = useAuth()
+  const queryClient = useQueryClient()
+  const { mutate: readMessages } = useMutation({
+    mutationFn: async () => {
+      if (unreadMessages.length === 0) return;
+      const supabaseAccessToken = await getToken({
+        template: "supabase",
+      });
+      const supabase = await supabaseClient(supabaseAccessToken);
+      const { data, error } = await supabase
+        .from("messages")
+        .update({ status: "read" })
+        .eq("user_id", userId!)
+        .select();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["messages"]);
+    },
+  })
+  if (!messages || messages.length === 0) return <p></p>;
   const {
     unreadMessages,
     count,
@@ -32,14 +54,21 @@ const MessagesButton: FC<MessagesButtonProps> = () => {
     },
     { unreadMessages: [], count: 0 }
   );
+
+  
   return (
     <Dialog>
-      <DialogTrigger onClick={() => {console.log('hello')}}>
+      {/* @ts-ignore passing mutation to onclick */}
+      <DialogTrigger onClick={readMessages}>
         <div className="relative mx-auto w-fit rounded-full p-1 hover:bg-gray-700">
           <Mail />
-          <div className="min-h-4 min-w-4 absolute -top-[0px] left-[calc(100%-10px)] flex items-center  justify-center rounded-full bg-blue-400 px-1 text-xs">
+          {
+            count > 0 ?
+            <div className="min-h-4 min-w-4 absolute -top-[0px] left-[calc(100%-10px)] flex items-center  justify-center rounded-full bg-blue-400 px-1 text-xs">
             {count}
-          </div>
+              </div>
+              : null
+          }
         </div>
       </DialogTrigger>
       <DialogContent>
