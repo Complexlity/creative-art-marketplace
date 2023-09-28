@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { Mail } from "lucide-react";
 import { FC } from "react";
 import {
@@ -9,38 +8,37 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { getMessages } from "~/utils/queries";
 
-import { useAuth } from "@clerk/nextjs";
-import useSupabase from "~/hooks/useSupabaseWithAuth";
+import useMessages from "~/hooks/useMessages";
+import { Message } from "~/utils/types";
 
 
 interface MessagesButtonProps {}
+type ReduceReturnType = { unreadMessages: Message[]; count: number }
 
 const MessagesButton: FC<MessagesButtonProps> = () => {
-  const { userId } = useAuth();
-  const supabase = useSupabase()
-  if(!supabase) return null
-  const { data: messages } = useQuery({
-    queryKey: ["messages"],
-    queryFn: async () => {
-      let { data: messages, error } = await supabase!
-        .from("messages")
-        .select("*");
-        return messages
-    },
-  });
-
-
-  console.log(messages)
+  const { data: messages } = useMessages()
   if (!messages || messages.length === 0) return null;
+  const {
+    unreadMessages,
+    count,
+  }  = messages.reduce<ReduceReturnType>(
+    (acc, curr) => {
+      if (curr.status == "unread") {
+        acc.unreadMessages.push(curr);
+        acc.count++;
+      }
+      return acc;
+    },
+    { unreadMessages: [], count: 0 }
+  );
   return (
     <Dialog>
       <DialogTrigger onClick={() => {console.log('hello')}}>
         <div className="relative mx-auto w-fit rounded-full p-1 hover:bg-gray-700">
           <Mail />
           <div className="min-h-4 min-w-4 absolute -top-[0px] left-[calc(100%-10px)] flex items-center  justify-center rounded-full bg-blue-400 px-1 text-xs">
-            {messages.length}
+            {count}
           </div>
         </div>
       </DialogTrigger>

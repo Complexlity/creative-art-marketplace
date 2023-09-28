@@ -76,6 +76,7 @@ export async function getPendingBids(id: string) {
 }
 
 export async function getMessages(id: string) {
-  let { data: messages, error } = await supabase.from('messages').select("*")
+  let { data: messages, error } = await supabase.from('messages').select("*").eq('user_id', id)
+  console.log(messages, error)
   return messages
 }
