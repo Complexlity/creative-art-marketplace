@@ -49,23 +49,22 @@ const [acceptModal, setAcceptModal] = useState(false)
       const {data, error} =  await supabase!.from('bids')
         .update({ status: type, updated_at: new Date() })
         .eq('id', bid.id)
-        .select()
       if (error) throw new Error(error.message)
 
 
       const { data: messages, error: messageError } = await supabase!
         .from("messages")
+        .insert([{ user_id: bid.users.user_id, content: bidMessage }])
 
-      .insert([{ user_id: bid.users.user_id, content: bidMessage }])
-        .select();
       if (messageError) throw new Error(messageError.message)
-        return data
+        return
     },
     onSuccess: async (data) => {
       queryClient.invalidateQueries({ queryKey: ['pending-bids'] })
       queryClient.invalidateQueries({queryKey: ['messages']})
     },
     onError: (error) => {
+      console.log(error)
       //@ts-ignore
       console.log(error?.message)
     }
