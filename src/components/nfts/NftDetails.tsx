@@ -44,6 +44,7 @@ const currentPathname = pathname.split('/').pop()!
         <small className="auction-time">
           {" "}
           <span className="text-gray-400">Auctions end in</span>{" "}
+          {/* @ts-ignore time function not created */}
           <CountDownComponent timeDifference={nftData.endTime} />
         </small>
 

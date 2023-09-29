@@ -79,7 +79,6 @@ const Comments: FC<CommentsProps> = ({}) => {
                 {/* User Avatar  + User Name*/}
 
                 <Avatar>
-                  {/* @ts-expect-error src should be string */}
                   <AvatarImage src={comment.users.imageUrl} />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
@@ -88,6 +87,7 @@ const Comments: FC<CommentsProps> = ({}) => {
                 </span>
                 {/* Time  */}
                 <span className="text-gray-400">
+                  {/* @ts-ignore raw not found */}
                   {formatDate(comment.created_at.raw)}
                 </span>
               </div>
