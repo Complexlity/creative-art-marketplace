@@ -64,7 +64,6 @@ const [acceptModal, setAcceptModal] = useState(false)
       queryClient.invalidateQueries({queryKey: ['messages']})
     },
     onError: (error) => {
-      console.log(error)
       //@ts-ignore
       console.log(error?.message)
     }
