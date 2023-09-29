@@ -1,4 +1,4 @@
-import { NFT } from "~/data/nfts";
+
 import Link from "next/link";
 import Image from "next/image";
 import ethereumImage from "/public/icons/ethereum.png";
@@ -9,12 +9,12 @@ import defaultImage from "/public/nfts/default.svg";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Nft } from "~/utils/types";
-
+import type { NFT } from "~/data/nfts";
 export function Card({
   item,
   fromInput,
 }: {
-  item?: Nft;
+  item?: Nft | NFT;
   fromInput?: boolean;
 }) {
   const [isStaticImage, setStaticImage] = useState<boolean>(false);
