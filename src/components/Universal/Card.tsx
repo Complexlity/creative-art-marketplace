@@ -8,12 +8,13 @@ import { nanoid } from "nanoid";
 import defaultImage from "/public/nfts/default.svg";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Nft } from "~/utils/types";
 
 export function Card({
   item,
   fromInput,
 }: {
-  item?: Partial<NFT>;
+  item?: Nft;
   fromInput?: boolean;
 }) {
   const [isStaticImage, setStaticImage] = useState<boolean>(false);
