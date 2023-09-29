@@ -9,8 +9,7 @@ export async function getSingleNft(slug: string) {
     "*"
   )`).eq("slug", slug);
   const nft = data![0];
-  console.log(nft)
-  return nft!
+  return nft! as unknown as WithUser<Nft>
 }
 
 
@@ -71,7 +70,6 @@ export async function getPendingBids(id: string) {
     `
     )
     .eq("nfts.user_id", id).eq('status', "pending");
-  console.log(bids, error)
   return bids as unknown as (WithUser<NftBid> & {
     nfts: Nft
   }) []
@@ -79,6 +77,5 @@ export async function getPendingBids(id: string) {
 
 export async function getMessages(id: string) {
   let { data: messages, error } = await supabase.from('messages').select("*").eq('user_id', id)
-  console.log(messages, error)
   return messages
 }

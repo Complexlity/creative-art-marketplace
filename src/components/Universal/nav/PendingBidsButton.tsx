@@ -25,7 +25,7 @@ const PendingBidsButton: FC<PendingBidsButtonProps> = () => {
       return data;
     },
   });
-  console.log(pendingBids);
+  
   if(!pendingBids || pendingBids.length === 0) return null
   return (
     <Dialog>
