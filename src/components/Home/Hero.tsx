@@ -54,7 +54,7 @@ const Hero = () => {
                 {nftsData[0]?.price}ETH
               </span>
             </p>
-            <Link href={`/nfts/${nftsData[0]!.id}`} className="grid">
+            <Link href={``} className="grid">
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
