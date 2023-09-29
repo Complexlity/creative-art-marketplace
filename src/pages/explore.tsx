@@ -18,9 +18,10 @@ type ExploreProps = {
 
 const Explore = ({ serverNfts }: ExploreProps) => {
   const { data: nfts, isLoading } = useQuery({
-    queryKey: ["nfts"],
-    queryFn: getAllNfts,
-    initialData: serverNfts,
+    queryKey: [`nfts`],
+    queryFn: async () => {
+      return await getAllNfts();
+    },
   });
   return (
     <>

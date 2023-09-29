@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Card } from "~/components/Universal/Card";
-import { NFT } from "~/data/nfts";
 import useDebounce from "~/hooks/useDebounce";
 
 import { AnimatePresence } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
 import { getCategory } from "~/utils/libs";
+import { Nft } from "~/utils/types";
 
 type SeeMore = {
   initialValue: number;
@@ -16,7 +16,7 @@ type SeeMore = {
 
 type Search = string | number | readonly string[] | undefined;
 
-export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
+export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
   const [priceRange, setPriceRange] = useState<string>("all");
@@ -98,11 +98,11 @@ export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
     const items = [...nftsData];
     const newItems = [];
     for (let i = 0; i < items.length; i++) {
-      let curr = items[i] as NFT;
+      let curr = items[i] as Nft;
       if (
         searchByName(curr, search) &&
         searchByCategory(curr, category) &&
-        searchByDate(curr, dateNum) &&
+        // searchByDate(curr, dateNum) &&
         searchByPrice(curr, priceRange)
       ) {
         newItems.push(curr);
@@ -111,14 +111,14 @@ export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
     return newItems;
   }
 
-  function searchByName(item: NFT, searchString: string) {
+  function searchByName(item: Nft, searchString: string) {
     if (!searchString) return true;
     const itemName = item.name.toLowerCase();
     searchString = searchString.toLowerCase();
     return itemName.includes(searchString);
   }
 
-  function searchByCategory(item: NFT, category: string) {
+  function searchByCategory(item: Nft, category: string) {
     if (category === "default") return true;
     let itemCategory = item.category
 
@@ -127,23 +127,23 @@ export default function CardsContainer({ nftsData }: { nftsData: NFT[] }) {
     return itemCategory === category;
   }
 
-  function searchByDate(item: NFT, date: number) {
-    switch (date) {
-      case 24:
-        return item.endTime < timeInMilliseconds(24);
-      case 48:
-        return (
-          item.endTime >= timeInMilliseconds(24) &&
-          item.endTime < timeInMilliseconds(48)
-        );
-      case 49:
-        return item.endTime >= timeInMilliseconds(48);
-      default:
-        return true;
-    }
-  }
+  // function searchByDate(item: Nft, date: number) {
+  //   switch (date) {
+  //     case 24:
+  //       return item.endTime < timeInMilliseconds(24);
+  //     case 48:
+  //       return (
+  //         item.endTime >= timeInMilliseconds(24) &&
+  //         item.endTime < timeInMilliseconds(48)
+  //       );
+  //     case 49:
+  //       return item.endTime >= timeInMilliseconds(48);
+  //     default:
+  //       return true;
+  //   }
+  // }
 
-  function searchByPrice(item: NFT, priceRange: string) {
+  function searchByPrice(item: Nft, priceRange: string) {
     switch (priceRange) {
       case "cheap":
         return item.price < 1;
