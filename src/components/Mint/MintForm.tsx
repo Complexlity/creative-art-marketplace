@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import useSupabase from "~/hooks/useSupabaseWithAuth";
 import slugify from "slugify";
 import { Nft } from "~/utils/types";
+import { NFT } from "~/data/nfts";
 
 export default function MintForm() {
   const { userId } = useAuth()
@@ -407,7 +408,7 @@ export default function MintForm() {
                 name: values.title,
                 price: values.price || values.minBid,
                 category: values.collections,
-              } as unknown as Nft}
+              } as unknown as NFT}
               fromInput={true}
             />
           </div>

@@ -89,7 +89,7 @@ export function Card({
             </span>
           </p>
         </div>
-        <Link href={`/nfts/${mergedItem.slug}`}>
+        <Link href={mergedItem.slug ? `/nfts/${mergedItem.slug}`: ""}>
           <motion.button
             whileHover={{
               scale: 1.1,
