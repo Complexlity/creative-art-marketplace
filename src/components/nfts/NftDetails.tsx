@@ -5,18 +5,17 @@ import { getRandomNumber } from "~/utils/randoms";
 import CountDownComponent from "../Universal/Countdown";
 
 import { usePathname } from "next/navigation";
-import useCurrentUser from "~/hooks/useCurrentUser";
 import useNftBids from "~/hooks/useNftBids";
-import { Nft } from "~/utils/types";
+import type { Nft, WithUser } from "~/utils/types";
 import HistoryBids from "./HistoryBids";
-import Modals  from "./Modals";
+import Modals from "./Modals";
 
 
 export default function NftDetails({
   nftData,
 
 }: {
-  nftData: Nft | undefined;
+  nftData: WithUser<Nft> | undefined;
 
 }) {
 
@@ -26,7 +25,7 @@ const currentPathname = pathname.split('/').pop()!
 
   if (!nftData)
     return <div>Not Found</div>;
-  const { data: creatorDetails } = useCurrentUser({ userId:nftData.user_id })
+
 
 
 
@@ -77,11 +76,11 @@ const currentPathname = pathname.split('/').pop()!
                 width={500}
                 height={500}
                 className="h-full w-full rounded-full object-cover object-top "
-                src={creatorDetails?.imageUrl ?? ""}
+                src={nftData.users.imageUrl ?? ""}
                 alt=""
               />
             </div>
-            <p className="font-semibold tracking-widest">{creatorDetails?.username}</p>
+            <p className="font-semibold tracking-widest">{nftData.users.username}</p>
           </div>
         </div>
         {isFetchingBids

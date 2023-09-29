@@ -36,6 +36,7 @@ export default function BuyNowModal({ nftData }: { nftData: Nft }) {
       queryClient.invalidateQueries({ queryKey: ["bids", currentPathname] })
       setOpen(false);
     } catch (error) {
+      console.log(error)
       toast("Something Went Wrong");
     }
     finally {

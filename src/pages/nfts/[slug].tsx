@@ -9,9 +9,9 @@ import NftDetails from "~/components/nfts/NftDetails";
 import { getAllNfts, getSingleNft } from "~/utils/queries";
 import useCurrentPage from "~/hooks/useCurrentPage";
 import { useRouter } from "next/router";
-import { clerkClient } from "@clerk/nextjs";
+import { clerkClient,  } from "@clerk/nextjs";
 import { User } from "@clerk/nextjs/dist/types/server";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 
 export const getStaticPaths = async () => {
   const nftsData = await getAllNfts();
@@ -26,11 +26,11 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
   return { props: { singlePost } };
 }
 
-function NFTItem({ singlePost }: { singlePost: Nft }) {
+function NFTItem({ singlePost }: { singlePost: WithUser<Nft> }) {
   const router = useRouter();
   const slug = router.query.slug as string;
   const { data } = useCurrentPage({ slug, singlePost });
-  const nftData = data as unknown as Nft;
+  const nftData = data as unknown as WithUser<Nft>;
 
   return (
     <>

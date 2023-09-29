@@ -3,8 +3,13 @@ import { Nft, NftBid, NftComment, WithUser } from "./types";
 
 
 export async function getSingleNft(slug: string) {
-  const { data } = await supabase.from("nfts").select().eq("slug", slug);
+  const { data } = await supabase.from("nfts").select(`
+  "*",
+  users (
+    "*"
+  )`).eq("slug", slug);
   const nft = data![0];
+  console.log(nft)
   return nft!
 }
 

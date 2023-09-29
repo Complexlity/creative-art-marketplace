@@ -4,6 +4,9 @@ import { generateRandomDate, generateRandomNFTPrice, pickFromArray } from "~/uti
 import { IconType } from "react-icons";
 import { MdCancel, MdPending } from "react-icons/md";
 import { IoMdCheckmarkCircle } from "react-icons/io";
+import { usePathname } from "next/navigation";
+import useCurrentPage from "~/hooks/useCurrentPage";
+import type { Nft, WithUser } from "~/utils/types";
 
 
 type BidStatus = 'rejected' | 'pending' | 'accepted'
@@ -37,7 +40,10 @@ export default function Bids({
   bid: any
 }) {
 
-
+const pathname = usePathname()
+  const currentPathname = pathname.split('/').pop()!
+  const { data } = useCurrentPage({ slug: currentPathname })
+  const nftData = data as unknown as WithUser<Nft>;
   const { checkColor, statusText, StatusIcon } = getStatusText(bid.status);
 
   return (
@@ -63,7 +69,7 @@ export default function Bids({
         <p>
           by{" "}
           <span className="font-bold tracking-wider text-white">
-            {bid.users.username}
+            {bid.status === 'pending' ? bid.users.username : nftData.users.username}
           </span>{" "}
           at {bid.updated_at}
         </p>
