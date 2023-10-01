@@ -23,31 +23,6 @@ import { generateRandomDate, pickRandomItems } from "~/utils/randoms";
 
 interface CommentsProps {}
 
-const comments = [
-  {
-    content:
-      "consectetur adipisicing elit. Quibusdam, earum! Neque, magnam fuga. Distinctio deleniti animi ea ducimus rem tempora.",
-    createdAt: generateRandomDate(),
-    user: pickRandomItems(people, 1)[0]!,
-  },
-  {
-    content: "Lorem ipsum dolor sit amet.",
-    createdAt: generateRandomDate(),
-    user: pickRandomItems(people, 1)[0]!,
-  },
-  {
-    content:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus harum repellat recusandae",
-    createdAt: generateRandomDate(),
-    user: pickRandomItems(people, 1)[0]!,
-  },
-  {
-    content:
-      "assumenda adipisci a veniam placeat praesentium quam aliquid expedita dolore ipsam, eius repellat laboriosam sunt.",
-    createdAt: generateRandomDate(),
-    user: pickRandomItems(people, 1)[0]!,
-  },
-];
 const Comments: FC<CommentsProps> = ({}) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -60,6 +35,7 @@ const Comments: FC<CommentsProps> = ({}) => {
     },
   });
 
+  if(comments) console.log(comments)
   return (
     <section className="comments mx-auto grid max-w-[800px] gap-6 text-center ">
       <h2 className="relative  text-3xl tracking-wide md:text-4xl">
