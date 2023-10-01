@@ -64,7 +64,7 @@ const Comments: FC<CommentsProps> = ({}) => {
                 {/* Time  */}
                 <span className="text-gray-400">
                   {/* @ts-ignore raw not found */}
-                  {formatDate(comment.created_at.raw)}
+                  {formatDate(comment.created_at)}
                 </span>
               </div>
               <div className="text-start text-base text-gray-200">
