@@ -36,7 +36,7 @@ const [acceptModal, setAcceptModal] = useState(false)
       let bidMessage: string;
       if (type == 'accepted') {
         setAcceptModal(false)
-        bidMessage = `Your bid of ${bid.amount} for ${bid.nfts.name} was ACCEPTED!!`
+        bidMessage = `Your bid of ${bid.amount}ETH for ${bid.nfts.name} was ACCEPTED!!`
       }
       else{
         setRejectModal(false)

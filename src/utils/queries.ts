@@ -52,7 +52,7 @@ export async function getComments(slug: string) {
     .eq("slug", slug)
     .order('created_at', { ascending: false })
   if (error) throw new Error(error.message)
-  
+
   return comments as unknown as WithUser<NftComment>[]
 }
 
@@ -72,6 +72,7 @@ export async function getPendingBids(id: string) {
     `
     )
     .eq("nfts.user_id", id).eq('status', "pending");
+    console.log(bids)
   return bids as unknown as (WithUser<NftBid> & {
     nfts: Nft
   }) []
