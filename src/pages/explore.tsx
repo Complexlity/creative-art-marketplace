@@ -6,6 +6,7 @@ import Header from "~/components/Universal/Header";
 import NavBar from "~/components/Universal/nav/NavBar";
 import { NFT } from "~/data/nfts";
 import { getAllNfts } from "~/utils/queries";
+import { Nft, WithUser } from "~/utils/types";
 
 export async function getStaticProps() {
   const serverNfts = await getAllNfts();
@@ -13,15 +14,16 @@ export async function getStaticProps() {
 }
 
 type ExploreProps = {
-  serverNfts: NFT[];
+  serverNfts: Nft[];
 };
 
 const Explore = ({ serverNfts }: ExploreProps) => {
-  const { data: nfts, isLoading } = useQuery({
+  const { data: nfts } = useQuery <{}, Nft[]>({
     queryKey: [`nfts`],
     queryFn: async () => {
       return await getAllNfts();
     },
+    initialData: serverNfts
   });
   return (
     <>
@@ -34,11 +36,8 @@ const Explore = ({ serverNfts }: ExploreProps) => {
         <div className="mx-auto max-w-[1200px] px-4 text-white md:px-8">
           <NavBar />
           <Header>Explore</Header>
-          {isLoading ? (
-            "Loading Nfts"
-          ) : nfts ? (
+          {/* @ts-ignore query giving differnet type */}
             <CardsContainer nftsData={nfts} />
-          ) : null}
           <Footer />
         </div>
       </div>
