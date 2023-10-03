@@ -4,23 +4,25 @@ import { MdVerified } from "react-icons/md";
 import { getRandomNumber } from "~/utils/randoms";
 import CountDownComponent from "../Universal/Countdown";
 
+import { useAuth } from "@clerk/nextjs";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
+import { supabaseWithoutClient as supabase, supabaseWithClient as supabaseClient } from "supabase";
 import useNftBids from "~/hooks/useNftBids";
 import type { Nft, WithUser } from "~/utils/types";
 import HistoryBids from "./HistoryBids";
 import Modals from "./Modals";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
-import { useAuth } from "@clerk/nextjs";
-import useSupabase from "~/hooks/useSupabaseWithAuth";
-import { supabaseWithoutClient as supabase, supabaseWithClient as supabaseClient } from "supabase";
-import { useMemo } from "react";
+import LikeButton from "./LikeButton";
+import { getLikes } from "~/utils/queries";
+import { useEffect, useState } from "react";
 
 export default function NftDetails({
   nftData,
+  initialLikes
 
 }: {
   nftData: WithUser<Nft> | undefined;
-
+  initialLikes: unknown[]
 }) {
 
   const pathname = usePathname()
@@ -29,42 +31,11 @@ export default function NftDetails({
   const queryClient = new QueryClient()
 
 const currentPathname = pathname.split('/').pop()!
-  const { data: bids, isLoading: isFetchingBids } = useNftBids({currentPathname})
+  const { data: bids, isLoading: isFetchingBids } = useNftBids({ currentPathname })
 
   if (!nftData)
-    return <div>Not Found</div>;
+  return <div>Not Found</div>;
 
-  const { data: likes } = useQuery({
-    queryKey: ['likes', nftData.slug],
-    queryFn: async () => {
-      const { data: likes, error } = await supabase.from('nft_likes').select('*').eq('nft_slug', nftData.slug)
-      return likes
-    }
-  })
-
-  console.log(likes)
-  const likedByMe = !!likes?.find(obj => obj.user_id === userId)
-
-  const { mutate: likePost } = useMutation({
-    mutationKey: ['like-post'],
-    mutationFn: async () => {
-      const supabaseAccessToken = await getToken({
-        template: "supabase",
-      });
-      const supabase = await supabaseClient(supabaseAccessToken);
-      const { data, error } = await supabase.from('nft_likes').insert({
-        user_id: userId,
-        nft_slug: nftData.slug
-      }).select()
-      if(error) console.log(error)
-      return data
-    },
-    onSuccess: (data) => {
-      console.log("I was a success")
-      console.log(data)
-      queryClient.invalidateQueries(['likes', nftData.slug])
-    }
-  })
 
 
   return (
@@ -99,13 +70,10 @@ const currentPathname = pathname.split('/').pop()!
           <div className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700 duration-300 hover:-translate-y-1">
             <AiFillEye /> {getRandomNumber(1000)}
           </div>
-          <div
-            // @ts-ignore cannot pass handler for ts reasons
-            onClick={likePost}
-            className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700 duration-300 hover:-translate-y-1 hover:cursor-pointer"
-          >
-            <AiFillHeart fill={likedByMe ? `#be123c` : ""} /> {likes?.length}
-          </div>
+          <LikeButton
+          initialLikes={initialLikes}
+          />
+
         </div>
         <p className="item-description text-gray-400"> {nftData.description}</p>
 

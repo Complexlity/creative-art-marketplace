@@ -82,3 +82,11 @@ export async function getMessages(id: string) {
   let { data: messages, error } = await supabase.from('messages').select("*").eq('user_id', id)
   return messages
 }
+
+export async function getLikes(slug: string) {
+  const { data: likes, error } = await supabase
+    .from("nft_likes")
+    .select("*")
+    .eq("nft_slug", slug);
+  return likes;
+}

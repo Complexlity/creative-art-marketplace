@@ -6,7 +6,7 @@ import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import Head from "next/head";
 import Comments from "~/components/nfts/Comments";
 import NftDetails from "~/components/nfts/NftDetails";
-import { getAllNfts, getSingleNft } from "~/utils/queries";
+import { getAllNfts, getLikes, getSingleNft } from "~/utils/queries";
 import useCurrentPage from "~/hooks/useCurrentPage";
 import { useRouter } from "next/router";
 import { clerkClient,  } from "@clerk/nextjs";
@@ -23,10 +23,11 @@ export const getStaticPaths = async () => {
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
   const singlePost = await getSingleNft(params.slug);
-  return { props: { singlePost } };
+  const initialLikes = await getLikes(params.slug)
+  return { props: { singlePost,initialLikes } };
 }
 
-function NFTItem({ singlePost }: { singlePost: WithUser<Nft> }) {
+function NFTItem({ singlePost, initialLikes }: { singlePost: WithUser<Nft>, initialLikes: unknown[] }) {
   const router = useRouter();
   const slug = router.query.slug as string;
   const { data } = useCurrentPage({ slug, singlePost });
@@ -48,7 +49,7 @@ function NFTItem({ singlePost }: { singlePost: WithUser<Nft> }) {
           className="mx-auto max-w-[1200px]  px-6 text-white"
         >
           <NavBar />
-          <NftDetails nftData={nftData} />
+          <NftDetails nftData={nftData} initialLikes={initialLikes} />
           <Comments />
           {/* <RelatedItems relatedItems={relatedItems} /> */}
           <Footer />
