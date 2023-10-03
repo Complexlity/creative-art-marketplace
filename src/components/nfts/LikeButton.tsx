@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { supabaseWithClient as supabaseClient } from "supabase";
 import { getLikes } from "~/utils/queries";
+import { Like } from '~/utils/types'
 
 type LikeButtonProps = {
-  initialLikes: unknown[]
+  initialLikes: Like[]
 }
 
 
@@ -20,7 +21,6 @@ const LikeButton = ({
   const { userId, getToken } = useAuth()
   const [likesAmt, setLikesAmt] = useState(initialLikes.length)
   const [likedByMe, setLikedByMe] = useState(!!initialLikes.find(obj => obj.user_id === userId))
-
     const { data: likes } = useQuery({
       queryKey: [`likes-${currentPathname}`],
       queryFn: async () => await getLikes(currentPathname),
@@ -30,62 +30,67 @@ const LikeButton = ({
 
 
   useEffect(() => {
-    setLikedByMe(!!initialLikes?.find((obj) => obj.user_id === userId));
-    setLikesAmt(initialLikes.length)
-    }, [initialLikes, userId]);
-  console.log(initialLikes)
-  console.log(likedByMe)
+      setLikedByMe(!!likes?.find((obj) => obj.user_id === userId));
+      setLikesAmt(likes!.length)
+    }, [likes, initialLikes, userId ]);
+
 
 
   const queryClient = useQueryClient()
 
-    const { mutate: likePost } = useMutation({
-      mutationKey: ["like-post"],
-      mutationFn: async () => {
-        const supabaseAccessToken = await getToken({
-          template: "supabase",
-        });
-        const supabase = await supabaseClient(supabaseAccessToken);
-        console.log(likedByMe)
-        if (likedByMe) {
-          console.log("I am here")
-          const { data, error } = await supabase
-            .from("nft_likes")
-            .insert({
-              user_id: userId,
-              nft_slug: currentPathname,
-            })
-            .select();
-          if (error) console.log(error);
-          console.log(data)
-          return data;
-        } else {
-          console.log("I am here")
-          const { data, error } = await supabase
-            .from("nft_likes")
-            .delete()
-            .eq("user_id", userId)
-            .eq("nft_slug", currentPathname);
-          if (error) console.log(error);
-          console.log(data)
-          return data;
-        }
-      },
-      onMutate: () => {
-        console.log(likesAmt)
-        console.log(likedByMe)
+  const { mutate: likePost } = useMutation({
+    mutationKey: ["like-post"],
+    mutationFn: async () => {
+      const supabaseAccessToken = await getToken({
+        template: "supabase",
+      });
+      const supabase = await supabaseClient(supabaseAccessToken);
+      if (!userId) {
+        return
+      }
+      if (likedByMe) {
+        console.log("I am here")
+        const { data, error } = await supabase
+          .from("nft_likes")
+          .insert({
+            user_id: userId,
+            nft_slug: currentPathname,
+          })
+          .select();
+        if (error) throw new Error("Something went wrong");
+        return data;
+      } else {
+        console.log("I am here")
+        const { data, error } = await supabase
+          .from("nft_likes")
+          .delete()
+          .eq("user_id", userId)
+          .eq("nft_slug", currentPathname);
+        if (error) throw new Error("Something went wrong");
+        return data;
+      }
+    },
+    onMutate: () => {
+      if (!userId || !likes) return
         if (likedByMe) {
           setLikesAmt(likesAmt - 1)
         }
         else setLikesAmt(likesAmt + 1)
         setLikedByMe((prev) => !prev)
+
       },
       onSuccess: (data) => {
-        console.log("I was a success");
-        console.log(data);
         queryClient.invalidateQueries([`likes-${currentPathname}`]);
-        console.log(likesAmt)
+    },
+    onError: () => {
+        if (likedByMe) {
+          setLikesAmt(likesAmt - 1)
+        }
+        else setLikesAmt(likesAmt + 1)
+        setLikedByMe((prev) => !prev)
+
       },
+
     });
 
   return (

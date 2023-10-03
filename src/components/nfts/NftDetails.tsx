@@ -9,7 +9,7 @@ import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { supabaseWithoutClient as supabase, supabaseWithClient as supabaseClient } from "supabase";
 import useNftBids from "~/hooks/useNftBids";
-import type { Nft, WithUser } from "~/utils/types";
+import type { Nft, WithUser, Like } from "~/utils/types";
 import HistoryBids from "./HistoryBids";
 import Modals from "./Modals";
 import LikeButton from "./LikeButton";
@@ -22,7 +22,7 @@ export default function NftDetails({
 
 }: {
   nftData: WithUser<Nft> | undefined;
-  initialLikes: unknown[]
+  initialLikes: Like[]
 }) {
 
   const pathname = usePathname()
