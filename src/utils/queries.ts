@@ -90,3 +90,13 @@ export async function getLikes(slug: string) {
     .eq("nft_slug", slug);
   return likes;
 }
+
+
+export async function getViewsCount(slug: string) {
+  const { data: views, error } = await supabase
+    .from('nft_views')
+    .select("*")
+    .eq('nft_slug', slug)
+  if(!views || views.length === 0) return null
+  return views[0]!.views_count
+}

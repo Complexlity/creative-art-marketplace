@@ -1,40 +1,64 @@
 import Image from "next/image";
-import { AiFillEye, AiFillHeart, AiFillPicture } from "react-icons/ai";
+import { AiFillEye, AiFillPicture } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
 import { getRandomNumber } from "~/utils/randoms";
 import CountDownComponent from "../Universal/Countdown";
 
-import { useAuth } from "@clerk/nextjs";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
-import { supabaseWithoutClient as supabase, supabaseWithClient as supabaseClient } from "supabase";
 import useNftBids from "~/hooks/useNftBids";
-import type { Nft, WithUser, Like } from "~/utils/types";
+import type { Like, Nft, WithUser } from "~/utils/types";
 import HistoryBids from "./HistoryBids";
-import Modals from "./Modals";
 import LikeButton from "./LikeButton";
-import { getLikes } from "~/utils/queries";
-import { useEffect, useState } from "react";
+import Modals from "./Modals";
+import { supabaseWithoutClient as supabase } from "supabase";
+import { getViewsCount } from "~/utils/queries";
 
 export default function NftDetails({
   nftData,
-  initialLikes
+  initialLikes,
+  viewsCount
 
 }: {
   nftData: WithUser<Nft> | undefined;
-  initialLikes: Like[]
+    initialLikes: Like[];
+    viewsCount: number
 }) {
 
   const pathname = usePathname()
-  const { userId, getToken } = useAuth()
-  // const supabase = useSupabase()
-  const queryClient = new QueryClient()
+
 
 const currentPathname = pathname.split('/').pop()!
   const { data: bids, isLoading: isFetchingBids } = useNftBids({ currentPathname })
 
   if (!nftData)
   return <div>Not Found</div>;
+  const { data: viewsUpdate } = useQuery({
+    queryKey: [`views-${nftData.slug}`],
+    queryFn: async () => {
+      if (viewsCount === null) {
+        const { data, error } = await supabase.from('nft_views').insert({
+          'views_count': 1,
+          'nft_slug': nftData.slug,
+        }).select()
+        console.log(data)
+      }
+      else {
+        const { data, error } = await supabase.from('nft_views').update({
+          'views_count': viewsCount + 1
+        }).eq('nft_slug', nftData.slug).select()
+      }
+    },
+    refetchOnWindowFocus: false,
+  })
+
+
+  const { data: views } = useQuery({
+    queryFn: async () => {
+     return await getViewsCount(nftData.slug)
+    },
+    initialData: viewsCount ?? 1,
+  })
 
 
 
@@ -68,7 +92,7 @@ const currentPathname = pathname.split('/').pop()!
             <AiFillPicture /> {nftData.category}
           </div>
           <div className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700 duration-300 hover:-translate-y-1">
-            <AiFillEye /> {getRandomNumber(1000)}
+            <AiFillEye /> {views}
           </div>
           <LikeButton
           initialLikes={initialLikes}
