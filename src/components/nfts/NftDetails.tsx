@@ -41,7 +41,7 @@ const currentPathname = pathname.split('/').pop()!
           'views_count': 1,
           'nft_slug': nftData.slug,
         }).select()
-        console.log(data)
+        
       }
       else {
         const { data, error } = await supabase.from('nft_views').update({

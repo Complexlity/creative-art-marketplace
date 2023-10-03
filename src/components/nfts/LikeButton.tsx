@@ -50,7 +50,6 @@ const LikeButton = ({
         throw new Error("User not found")
       }
       if (likedByMe) {
-        console.log("I am here")
         const { data, error } = await supabase
           .from("nft_likes")
           .insert({
