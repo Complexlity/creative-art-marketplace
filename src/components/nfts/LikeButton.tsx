@@ -45,8 +45,8 @@ const LikeButton = ({
         template: "supabase",
       });
       const supabase = await supabaseClient(supabaseAccessToken);
-      if (!userId) {
-        return
+      if (!userId || !supabase) {
+        throw new Error("User not found")
       }
       if (likedByMe) {
         console.log("I am here")
@@ -60,7 +60,6 @@ const LikeButton = ({
         if (error) throw new Error("Something went wrong");
         return data;
       } else {
-        console.log("I am here")
         const { data, error } = await supabase
           .from("nft_likes")
           .delete()
@@ -71,6 +70,7 @@ const LikeButton = ({
       }
     },
     onMutate: () => {
+
       if (!userId || !likes) return
         if (likedByMe) {
           setLikesAmt(likesAmt - 1)
