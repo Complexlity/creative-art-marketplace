@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AiFillHeart } from "react-icons/ai";
+import { toast } from "react-toastify";
 import { supabaseWithClient as supabaseClient } from "supabase";
 import { getLikes } from "~/utils/queries";
 import { Like } from '~/utils/types'
@@ -71,7 +72,6 @@ const LikeButton = ({
     },
     onMutate: () => {
 
-      if (!userId || !likes) return
         if (likedByMe) {
           setLikesAmt(likesAmt - 1)
         }
@@ -88,7 +88,6 @@ const LikeButton = ({
         }
         else setLikesAmt(likesAmt + 1)
         setLikedByMe((prev) => !prev)
-
       },
 
     });
