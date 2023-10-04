@@ -104,7 +104,12 @@ export default function MintForm() {
         const { data, error } = await supabase
         .from("nft")
         .insert([{ name: values.title, price:  values.price || values.minBid, image: fileUrl, user_id: userId , description: values.description, category: values.collections, slug: slug }])
-        .select()
+          .select()
+        const { data: viewCount, } = await supabase.from('nft_views').insert({
+          nft_slug: slug,
+          views_count: 0
+        })
+      
         if (data) {
           setLoadingMessage("Completed")
           notifyMint()
