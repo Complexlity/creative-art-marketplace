@@ -21,7 +21,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
   const singlePost = await getSingleNft(params.slug);
   const initialLikes = await getLikes(params.slug)
   const viewsCount = await getViewsCount(params.slug)
-  
+
   return { props: { singlePost,initialLikes, viewsCount } };
 }
 

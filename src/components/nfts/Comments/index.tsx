@@ -20,6 +20,7 @@ import useSupabase from "~/hooks/useSupabaseWithAuth";
 import { formatDate } from "~/utils/libs";
 import { getComments } from "~/utils/queries";
 import { generateRandomDate, pickRandomItems } from "~/utils/randoms";
+import CommentInput from "./CommentInput";
 
 interface CommentsProps {}
 
@@ -35,7 +36,6 @@ const Comments: FC<CommentsProps> = ({}) => {
     },
   });
 
-  if(comments) console.log(comments)
   return (
     <section className="comments mx-auto grid max-w-[800px] gap-6 text-center ">
       <h2 className="relative  text-3xl tracking-wide md:text-4xl">
@@ -43,7 +43,7 @@ const Comments: FC<CommentsProps> = ({}) => {
         <span className="absolute bottom-[-.3rem] right-[50%] h-[.15rem] w-[20%] max-w-[180px] translate-x-[50%] bg-primary"></span>
       </h2>
 
-      <CreateComment />
+      <CommentInput />
       {/* Comments */}
 
       {isLoadingComments ? <p>I'm Fetching for comments</p> : null}
@@ -73,13 +73,11 @@ const Comments: FC<CommentsProps> = ({}) => {
               </div>
               <div className="flex items-center gap-2">
                 {/* Upvote button + count */}
-                <span className="flex gap-1">
+
                   <ArrowBigUp /> 24
-                </span>
-                {/* Downvote button + Count */}
-                <span className="flex gap-1">
-                  <ArrowBigDown /> 24
-                </span>
+
+                {/* Downvote button */}
+                  <ArrowBigDown />
               </div>
             </div>
           ))}
@@ -102,78 +100,6 @@ const Comments: FC<CommentsProps> = ({}) => {
   );
 };
 
-function CreateComment() {
-  const pathname = usePathname();
-  const currentPathname = pathname.split("/").pop()!;
-  const { user } = useUser();
-  const queryClient = useQueryClient();
-  const supabase = useSupabase();
-  const [comment, setComment] = useState("");
-  const [isCommenting, setIsCommenting] = useState(false);
-  async function createComment(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (!comment || !supabase || !user) {
-      return;
-    }
-    setIsCommenting(true);
-    const { data: newComment, error } = await supabase
-      .from("comments")
-      .insert({
-        content: comment,
-        upvotes: [],
-        downvotes: [],
-        user_id: user.id,
-        slug: currentPathname,
-      })
-      .select();
-    if (error) {
-      toast("Something Went Wrong");
-      console.log(error)
-      setIsCommenting(false);
-      return;
-    }
-    setIsCommenting(false);
-    setComment("");
-    toast("Comment Insert Success");
-    queryClient.invalidateQueries({
-      queryKey: [`comments-${currentPathname}`],
-    });
-  }
-  if (!user) return null;
-  return (
-    <div className="flex items-center justify-between gap-2 text-2xl">
-      {/* User Avatar */}
-      <div className="creator-image relative aspect-square h-12  w-12 rounded-full border-2 border-white">
-        <Image
-          width={500}
-          height={500}
-          className="h-full w-full rounded-full object-cover object-top "
-          src={user.imageUrl!}
-          alt=""
-        />
-      </div>
 
-      <form className="flex w-full gap-2" action="" onSubmit={createComment}>
-        {/* Auto sizeable text area */}
-        <TextareaAutosize
-          value={comment}
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-          placeholder="Add Comment..."
-          className="border-1 focus- !focus:!border-none   w-full  rounded-lg border-2 !border-gray-600 bg-transparent p-2  text-sm text-white placeholder:italic placeholder:text-gray-300 focus:outline-primary focus:ring-primary focus-visible:border-primary focus-visible:outline-primary"
-        />
-        {/* Comment Buttton */}
-        <button type="submit" disabled={isCommenting}>
-          {isCommenting ? (
-            <Loader2 className="text-primary h-8 w-8 animate-spin" />
-          ) : (
-            <SendHorizontal className="text-primary hover:outline-primary" />
-          )}
-        </button>
-      </form>
-    </div>
-  );
-}
 
 export default Comments;
