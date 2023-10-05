@@ -21,6 +21,7 @@ import { formatDate } from "~/utils/libs";
 import { getComments } from "~/utils/queries";
 import { generateRandomDate, pickRandomItems } from "~/utils/randoms";
 import CommentInput from "./CommentInput";
+import CommentVotes from "./CommentVotes";
 
 interface CommentsProps {}
 
@@ -71,14 +72,7 @@ const Comments: FC<CommentsProps> = ({}) => {
                 {/* Comment */}
                 {comment.content}
               </div>
-              <div className="flex items-center gap-2">
-                {/* Upvote button + count */}
-
-                  <ArrowBigUp /> 24
-
-                {/* Downvote button */}
-                  <ArrowBigDown />
-              </div>
+              <CommentVotes />
             </div>
           ))}
         </div>
