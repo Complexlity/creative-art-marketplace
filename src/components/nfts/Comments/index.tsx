@@ -1,25 +1,14 @@
-import { useUser } from "@clerk/nextjs";
-import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import {
-  ArrowBigDown,
-  ArrowBigUp,
-  ChevronDown,
-  SendHorizontal,
-  Loader2,
+  ChevronDown
 } from "lucide-react";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
-import { FC, FormEvent, FormEventHandler, useState } from "react";
-import TextareaAutosize from "react-textarea-autosize";
-import { toast } from "react-toastify";
+import { FC } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { people } from "~/data/people";
-import useSupabase from "~/hooks/useSupabaseWithAuth";
 import { formatDate } from "~/utils/libs";
 import { getComments } from "~/utils/queries";
-import { generateRandomDate, pickRandomItems } from "~/utils/randoms";
 import CommentInput from "./CommentInput";
 import CommentVotes from "./CommentVotes";
 
@@ -72,7 +61,7 @@ const Comments: FC<CommentsProps> = ({}) => {
                 {/* Comment */}
                 {comment.content}
               </div>
-              <CommentVotes />
+              <CommentVotes commentId={comment.id} />
             </div>
           ))}
         </div>
