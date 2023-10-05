@@ -18,3 +18,4 @@ export type Prettify<T> = {
 export type WithUser<T> = Prettify<T & { users: NftUser }>;
 
 export type Like = Database['public']['Tables']['nft_likes']['Row']
+export type ViewCount = Database['public']['Tables']['nft_views']['Row']

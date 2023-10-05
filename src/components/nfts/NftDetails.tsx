@@ -7,7 +7,7 @@ import CountDownComponent from "../Universal/Countdown";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import useNftBids from "~/hooks/useNftBids";
-import type { Like, Nft, WithUser } from "~/utils/types";
+import type { Like, Nft, ViewCount, WithUser } from "~/utils/types";
 import HistoryBids from "./HistoryBids";
 import LikeButton from "./LikeButton";
 import Modals from "./Modals";
@@ -36,18 +36,21 @@ const currentPathname = pathname.split('/').pop()!
   const { data: viewsUpdate } = useQuery({
     queryKey: [`views-${nftData.slug}`],
     queryFn: async () => {
+      let addedColumn: ViewCount[] | null
       if (viewsCount === null) {
         const { data, error } = await supabase.from('nft_views').insert({
           'views_count': 1,
           'nft_slug': nftData.slug,
         }).select()
-        
+        addedColumn = data
       }
       else {
         const { data, error } = await supabase.from('nft_views').update({
           'views_count': viewsCount + 1
         }).eq('nft_slug', nftData.slug).select()
+        addedColumn = data
       }
+      return addedColumn
     },
     refetchOnWindowFocus: false,
   })
