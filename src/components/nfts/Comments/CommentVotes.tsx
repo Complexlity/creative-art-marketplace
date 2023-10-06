@@ -10,7 +10,7 @@ import { cn } from "~/utils/libs";
 import { CommentVotes, VoteType } from "~/utils/types";
 
 interface CommentVotesProps {
-  commentId: number;
+  commentId: number
 }
 
 
