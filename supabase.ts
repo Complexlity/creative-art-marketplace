@@ -1,6 +1,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "supabase_types";
+import { Prettify } from "~/utils/types";
 
 export const supabaseWithClient = async (supabaseAccessToken: any) => {
   const supabase = createClient<Database>(

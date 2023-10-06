@@ -25,7 +25,7 @@ const Comments: FC<CommentsProps> = ({}) => {
       return await getComments(currentPathname);
     },
   });
-
+if(comments) console.log(comments)
   return (
     <section className="comments mx-auto grid max-w-[800px] gap-6 text-center ">
       <h2 className="relative  text-3xl tracking-wide md:text-4xl">
