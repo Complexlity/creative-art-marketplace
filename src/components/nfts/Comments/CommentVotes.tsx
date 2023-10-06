@@ -7,12 +7,13 @@ import {
   supabaseWithClient as supabaseClient,
 } from "supabase";
 import { cn } from "~/utils/libs";
+import { CommentVotes, VoteType } from "~/utils/types";
 
 interface CommentVotesProps {
   commentId: number;
 }
 
-type VoteType = "up" | "down";
+
 
 const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
   const queryClient = useQueryClient();
@@ -32,7 +33,7 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
         .select("*")
         .eq("comment", commentId);
 
-      return votes;
+      return votes as unknown as CommentVotes[];
     },
   });
 
@@ -47,7 +48,7 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
       let count = 0;
 
       for (let i = 0; i < comment_votes.length; i++) {
-        const curr = comment_votes[i];
+        const curr = comment_votes[i]!;
         if (curr.user === userId) {
           vote = curr.type;
         }
