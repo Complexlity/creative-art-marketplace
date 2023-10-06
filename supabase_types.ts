@@ -52,6 +52,43 @@ export interface Database {
           }
         ];
       };
+      comment_votes: {
+        Row: {
+          comment: number;
+          created_at: string;
+          id: number;
+          type: string;
+          user: string;
+        };
+        Insert: {
+          comment: number;
+          created_at?: string;
+          id?: number;
+          type: string;
+          user: string;
+        };
+        Update: {
+          comment?: number;
+          created_at?: string;
+          id?: number;
+          type?: string;
+          user?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "comment_votes_comment_fkey";
+            columns: ["comment"];
+            referencedRelation: "comments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "comment_votes_user_fkey";
+            columns: ["user"];
+            referencedRelation: "users";
+            referencedColumns: ["user_id"];
+          }
+        ];
+      };
       comments: {
         Row: {
           content: string;
