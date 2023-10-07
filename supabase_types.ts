@@ -58,21 +58,21 @@ export interface Database {
           created_at: string;
           id: number;
           type: string;
-          user: string;
+          voter_id: string;
         };
         Insert: {
           comment: number;
           created_at?: string;
           id?: number;
           type: string;
-          user: string;
+          voter_id: string;
         };
         Update: {
           comment?: number;
           created_at?: string;
           id?: number;
           type?: string;
-          user?: string;
+          voter_id?: string;
         };
         Relationships: [
           {
@@ -82,8 +82,8 @@ export interface Database {
             referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "comment_votes_user_fkey";
-            columns: ["user"];
+            foreignKeyName: "comment_votes_voter_id_fkey";
+            columns: ["voter_id"];
             referencedRelation: "users";
             referencedColumns: ["user_id"];
           }

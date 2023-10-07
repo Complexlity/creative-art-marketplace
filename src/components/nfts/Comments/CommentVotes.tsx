@@ -49,7 +49,7 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
 
       for (let i = 0; i < comment_votes.length; i++) {
         const curr = comment_votes[i]!;
-        if (curr.user === userId) {
+        if (curr.voter_id === userId) {
           vote = curr.type;
         }
         if (curr.type === "up") {
@@ -67,10 +67,12 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
     newVoteType: VoteType;
     previousVoteType: VoteType | null;
   };
+  console.log(comment_votes)
 
   const { mutate: vote } = useMutation({
     mutationFn: async (data: VoteUpdateType) => {
       const { newVoteType, previousVoteType } = data;
+      console.log(data)
       const supabaseAccessToken = await getToken({
         template: "supabase",
       });
@@ -79,22 +81,37 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
       if (!userId || !supabase) {
         return comment_votes;
       }
-
       if (previousVoteType) {
-        const { data: newVotes, error } = await supabase
+        if (previousVoteType !== newVoteType) {
+
+          const { data: newVotes, error } = await supabase
           .from("comment_votes")
           .update({ type: newVoteType })
-          .eq("user", userId)
+          .eq("voter_id", userId)
           .eq("comment", commentId)
-          .select();
 
-        if (error) throw new Error(error.message);
+
+          if (error) throw new Error(error.message);
+        }
+        else {
+
+          const { data: newVotes, error } = await supabase
+          .from("comment_votes")
+          .delete()
+          .eq("voter_id", userId)
+          .eq("comment", commentId)
+
+
+          if (error) throw new Error(error.message);
+
+        }
       } else {
+
         const { data: newVotes, error } = await supabase
           .from("comment_votes")
           .insert({
             type: newVoteType,
-            user: userId,
+            voter_id: userId,
             comment: commentId,
           });
         if (error) throw new Error(error.message);
@@ -102,23 +119,21 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
     },
     onMutate: async ({ newVoteType, previousVoteType }) => {
       const oldVoteCount = voteCount;
-      if (newVoteType == previousVoteType) {
-        setMyVote(null);
-        setVoteCount(voteCount - 1);
-        return;
+      if (newVoteType === previousVoteType) {
+        setMyVote(null)
+        if (newVoteType === 'up') setVoteCount(oldVoteCount - 1)
+        else if(newVoteType === 'down') setVoteCount(oldVoteCount + 1)
       }
-      if (newVoteType === "up") {
-        setVoteCount(voteCount + 2);
+      else {
+        setMyVote(newVoteType)
+        if (newVoteType === 'up') setVoteCount(oldVoteCount + (previousVoteType ? 2 : 1))
+        else if (newVoteType === 'down') setVoteCount(oldVoteCount - (previousVoteType ? 2 : 1 ))
       }
-
-      if (newVoteType === "down") {
-        setVoteCount(voteCount - 2);
-      }
-      setMyVote(newVoteType);
 
       return { oldVoteCount };
     },
     onError: (err, { newVoteType, previousVoteType }, context) => {
+      
       setMyVote(previousVoteType);
       setVoteCount(context?.oldVoteCount!);
     },
@@ -136,7 +151,7 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
         className={cn({
           "cursor-pointer transition-all duration-75 hover:scale-[115%] hover:text-green-400":
             userId,
-          "fill-green-400 text-green-400 hover:!scale-[100%]": myVote === "up",
+          "fill-green-400 text-green-400": myVote === "up",
         })}
         onClick={() => {
           if (userId) {
@@ -154,7 +169,7 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
         className={cn({
           "cursor-pointer transition-all duration-75 hover:scale-[110%] hover:text-red-400":
             userId,
-          "fill-red-400 text-red-400 hover:!scale-[100%]": myVote === "down",
+          "fill-red-400 text-red-400": myVote === "down",
         })}
         onClick={() => {
           if (userId) {
