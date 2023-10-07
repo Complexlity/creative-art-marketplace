@@ -67,12 +67,12 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
     newVoteType: VoteType;
     previousVoteType: VoteType | null;
   };
-  console.log(comment_votes)
+
 
   const { mutate: vote } = useMutation({
     mutationFn: async (data: VoteUpdateType) => {
       const { newVoteType, previousVoteType } = data;
-      console.log(data)
+      
       const supabaseAccessToken = await getToken({
         template: "supabase",
       });
@@ -133,7 +133,7 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
       return { oldVoteCount };
     },
     onError: (err, { newVoteType, previousVoteType }, context) => {
-      
+
       setMyVote(previousVoteType);
       setVoteCount(context?.oldVoteCount!);
     },

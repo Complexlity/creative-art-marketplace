@@ -16,7 +16,7 @@ export async function getSingleNft(slug: string) {
 
 export async function getAllNfts() {
   const { data: nfts, error } = await supabase.from("nfts").select();
-  console.log(error, nfts)
+  
   if(error) throw new Error(error.message)
   return nfts!
 }
