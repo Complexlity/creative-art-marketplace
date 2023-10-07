@@ -40,7 +40,7 @@ const Comments: FC<CommentsProps> = ({}) => {
       {comments ? (
         <div className="grid gap-2">
           {comments.map((comment) => (
-            <div className="grid gap-2 rounded-md p-2 shadow shadow-gray-400">
+            <div key={comment.id} className="grid gap-2 rounded-md p-2 shadow shadow-gray-400">
               <div className="font-2xl flex items-center gap-4 text-gray-200">
                 {/* User Avatar  + User Name*/}
 
