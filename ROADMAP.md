@@ -7,20 +7,26 @@ This document outlines the planned features and improvements for our project. Th
 ### Features
 
 1. **Add post likes and views count on page**
-   - Users can see the number of likes and views for each post on its dedicated page.
-   - Implement backend logic to track and display likes and views accurately.
+   - Users can see the number of likes and views for each post on its dedicated page. ✔
+   - Implement backend logic to track and display likes and views accurately. ✔
 
 2. **Add upvote and downvote to comments**
-   - Users can upvote or downvote comments on posts.
-   - Implement voting functionality and calculate comment scores.
+   - Users can upvote or downvote comments on posts. ✔
+   - Implement voting functionality and calculate comment scores. ✔
 
-3. **Add Art types (fixed price, timed, open bids)**
+3. **View More Comments Button**
+   - Users can only see a fixed amount of comments on page load
+   - View more button all the comments
+   - Put comments in it's own scrollable div
+   
+
+4. **Add Art types (fixed price, timed, open bids)**
    - Introduce different art listing options for artists:
      - Fixed Price: Artists can set a fixed price for their artwork.
      - Timed Auction: Artists can run time-limited auctions for their artwork.
      - Open Bids: Artists can accept bids from potential buyers.
 
-4. **Improve card UI**
+5. **Improve card UI**
    - Enhance the visual design and usability of cards displaying posts and artwork.
    - Focus on improving the overall user experience.
 
