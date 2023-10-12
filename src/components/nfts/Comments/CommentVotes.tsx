@@ -72,7 +72,7 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
   const { mutate: vote } = useMutation({
     mutationFn: async (data: VoteUpdateType) => {
       const { newVoteType, previousVoteType } = data;
-      
+
       const supabaseAccessToken = await getToken({
         template: "supabase",
       });
@@ -141,8 +141,6 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
       queryClient.invalidateQueries({ queryKey: [`comment_votes`, commentId] });
     },
   });
-
-  if (!comment_votes) return null;
 
   return (
     <div className="flex items-center gap-2">
