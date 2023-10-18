@@ -26,7 +26,7 @@ const Comments: FC<CommentsProps> = ({}) => {
     },
   });
 
-  function toggleCommentLength(e: MouseEventHandler<HTMLButtonElement>) {
+  function toggleCommentLength() {
     if (shownComments === 4) {
       setShownComments(comments!.length);
     } else {
@@ -79,6 +79,7 @@ const Comments: FC<CommentsProps> = ({}) => {
       ) : (
         <div>There Are No Comments. Go Home</div>
       )}
+      <button></button>
 
       {comments && comments?.length > 4 ? (
         <motion.button
