@@ -6,8 +6,14 @@ import UniqueArt from "~/components/Home/UniqueArt";
 import Subscribe from "~/components/Home/Subscribe";
 import Footer from "~/components/Universal/Footer";
 import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
+import { useNftsDataContext } from "~/contexts/NftsDataContext";
+import useNfts from "~/hooks/useNfts";
 
 const Home: NextPage = () => {
+  const nftsData = useNftsDataContext().nftsData;
+  let { data: nfts } = useNfts({});
+  const sortedNfts = nfts?.sort((a, b) => a.price - b.price);
+
   return (
     <>
       <Head>
@@ -25,8 +31,8 @@ const Home: NextPage = () => {
         >
           <NavBar />
           <div suppressHydrationWarning className="overflow-x-hidden">
-            <Hero />
-            <UniqueArt />
+            <Hero sortedNfts={sortedNfts} />
+            <UniqueArt sortedNfts={sortedNfts} />
             <WeeklyArtists />
             <Subscribe />
             <Footer />

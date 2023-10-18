@@ -4,10 +4,18 @@ import Link from "next/link";
 import { useNftsDataContext } from "~/contexts/NftsDataContext";
 import CountDownComponent from "~/components/Universal/Countdown";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import useNfts from "~/hooks/useNfts";
+import { Nft } from "~/utils/types";
 
-const Hero = () => {
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const nftsData = useNftsDataContext().nftsData;
+
+type HeroProps = {
+  sortedNfts?: Nft[]
+}
+
+const Hero = ({ sortedNfts: nftsData }: HeroProps) => {
+  if(!nftsData) return null
+  const [loaded, setLoaded] = useState<boolean>(false)
 
   return (
     <section className="mb-24 px-1 py-2 md:py-6 md:grid md:grid-cols-2">
@@ -48,13 +56,15 @@ const Hero = () => {
             </p>
             <p className="flex justify-between font-bold text-white">
               <span>
+
+                {/* @ts-expect-error Endtime not found */}
                 <CountDownComponent timeDifference={nftsData[0]!.endTime} />
               </span>
               <span suppressHydrationWarning={true}>
                 {nftsData[0]?.price}ETH
               </span>
             </p>
-            <Link href={``} className="grid">
+            <Link href={`/nfts/${nftsData[0]!.slug}`} className="grid">
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
@@ -66,15 +76,18 @@ const Hero = () => {
           </div>
           <div
             className={`${
-              loaded ? "" : "hidden"
+              loaded && nftsData[0] && nftsData[0].image ? "" : "hidden"
             } gradient absolute right-[43%] top-[30%] h-[50%] w-1/2 rotate-45 rounded-full shadow-3xl shadow-primary`}
           ></div>
           <Image
+            width={20}
+            height={20}
             suppressHydrationWarning={true}
             alt="Trending Image"
             className="relative z-10 mx-auto h-full w-full max-w-[500px] rounded-2xl object-cover object-top"
             src={nftsData[0]!.image}
             priority
+            unoptimized
             onLoad={setLoaded.bind(null, true)}
           />
         </div>

@@ -5,6 +5,7 @@ import Footer from "~/components/Universal/Footer";
 import Header from "~/components/Universal/Header";
 import NavBar from "~/components/Universal/nav/NavBar";
 import { NFT } from "~/data/nfts";
+import useNfts from "~/hooks/useNfts";
 import { getAllNfts } from "~/utils/queries";
 import { Nft, WithUser } from "~/utils/types";
 
@@ -18,13 +19,9 @@ type ExploreProps = {
 };
 
 const Explore = ({ serverNfts }: ExploreProps) => {
-  const { data: nfts } = useQuery <{}, Nft[]>({
-    queryKey: [`nfts`],
-    queryFn: async () => {
-      return await getAllNfts();
-    },
-    initialData: serverNfts
-  });
+  const { data: nfts } = useNfts({ serverNfts })
+
+  
   return (
     <>
       <Head>

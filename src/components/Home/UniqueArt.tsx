@@ -6,11 +6,16 @@ import Link from "next/link";
 import { Nft } from "~/utils/types";
 import { NFT } from "~/data/nfts";
 
-const UniqueArt = () => {
-  const nftsData = useNftsDataContext().nftsData;
+type Props = {
+  sortedNfts? :Nft[]
+}
+
+const UniqueArt = ({ sortedNfts: nftsData}: Props) => {
+if(!nftsData) return null
+
   let cards = [];
   for (let i = 1; i < 4; i++) {
-    const item = nftsData[i] as NFT;
+    const item = nftsData[i] as Nft
     cards.push(<Card key={item.id} item={item} />);
   }
 

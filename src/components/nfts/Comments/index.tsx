@@ -1,30 +1,38 @@
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import {
-  ChevronDown
-} from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, MouseEventHandler, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { formatDate } from "~/utils/libs";
 import { getComments } from "~/utils/queries";
 import CommentInput from "./CommentInput";
 import CommentVotes from "./CommentVotes";
 
-interface CommentsProps {}
+type CommentsProps = {}
 
 const Comments: FC<CommentsProps> = ({}) => {
   const router = useRouter();
   const pathname = usePathname();
   const currentPathname = pathname.split("/").pop()!;
   const slug = router.query.slug as string;
+  const [shownComments, setShownComments] = useState(4);
+
   const { data: comments, isLoading: isLoadingComments } = useQuery({
     queryKey: [`comments-${currentPathname}`],
     queryFn: async () => {
       return await getComments(currentPathname);
     },
   });
+
+  function toggleCommentLength(e: MouseEventHandler<HTMLButtonElement>) {
+    if (shownComments === 4) {
+      setShownComments(comments!.length);
+    } else {
+      setShownComments(4);
+    }
+  }
 
   return (
     <section className="comments mx-auto grid max-w-[800px] gap-6 text-center ">
@@ -39,8 +47,11 @@ const Comments: FC<CommentsProps> = ({}) => {
       {isLoadingComments ? <p>I'm Fetching for comments</p> : null}
       {comments ? (
         <div className="grid gap-2">
-          {comments.map((comment) => (
-            <div key={comment.id} className="grid gap-2 rounded-md p-2 shadow shadow-gray-400">
+          {comments.slice(0, shownComments).map((comment) => (
+            <div
+              key={comment.id}
+              className="grid gap-2 rounded-md p-2 shadow shadow-gray-400"
+            >
               <div className="font-2xl flex items-center gap-4 text-gray-200">
                 {/* User Avatar  + User Name*/}
 
@@ -71,12 +82,24 @@ const Comments: FC<CommentsProps> = ({}) => {
 
       {comments && comments?.length > 4 ? (
         <motion.button
+          onClick={toggleCommentLength}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="flex gap-2 justify-self-start rounded-full bg-primary px-3 py-1 text-gray-900 hover:shadow-round hover:shadow-gray-600"
         >
+          {
+            shownComments === 4
+              ?
+              <>
           <ChevronDown />
           View More Comments
+              </>
+              :
+              <>
+          <ChevronUp />
+          Show Less Comments
+              </>
+        }
         </motion.button>
       ) : null}
     </section>
@@ -84,5 +107,4 @@ const Comments: FC<CommentsProps> = ({}) => {
 };
 
 
-
-export default Comments;
+export default Comments
