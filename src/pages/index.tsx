@@ -8,6 +8,7 @@ import Footer from "~/components/Universal/Footer";
 import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
 import { useNftsDataContext } from "~/contexts/NftsDataContext";
 import useNfts from "~/hooks/useNfts";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Home: NextPage = () => {
   const nftsData = useNftsDataContext().nftsData;

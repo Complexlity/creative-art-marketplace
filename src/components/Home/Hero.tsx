@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useNftsDataContext } from "~/contexts/NftsDataContext";
+import { useState } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import CountDownComponent from "~/components/Universal/Countdown";
-import { motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
-import useNfts from "~/hooks/useNfts";
 import { Nft } from "~/utils/types";
+import "react-loading-skeleton/dist/skeleton.css";
 
 
 type HeroProps = {
@@ -14,7 +13,6 @@ type HeroProps = {
 }
 
 const Hero = ({ sortedNfts: nftsData }: HeroProps) => {
-  if(!nftsData) return null
   const [loaded, setLoaded] = useState<boolean>(false)
 
   return (
@@ -47,7 +45,7 @@ const Hero = ({ sortedNfts: nftsData }: HeroProps) => {
         <CountingDiv className="hidden md:-ml-12 md:flex" />
       </div>
 
-      <div className="">
+      {nftsData ? <div className="">
         <div className="relative mx-auto h-[400px] w-[80%] max-w-[350px] ">
           <div className="absolute left-[20%] right-0 top-[85%] z-20 mx-auto grid w-[220px] scale-[80%] gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2 md:left-[40%] md:mx-4 lg:scale-[100%]">
             <p className="flex justify-between text-primary">
@@ -75,9 +73,8 @@ const Hero = ({ sortedNfts: nftsData }: HeroProps) => {
             </Link>
           </div>
           <div
-            className={`${
-              loaded && nftsData[0] && nftsData[0].image ? "" : "hidden"
-            } gradient absolute right-[43%] top-[30%] h-[50%] w-1/2 rotate-45 rounded-full shadow-3xl shadow-primary`}
+            className={`${loaded && nftsData[0] && nftsData[0].image ? "" : "hidden"
+              } gradient absolute right-[43%] top-[30%] h-[50%] w-1/2 rotate-45 rounded-full shadow-3xl shadow-primary`}
           ></div>
           <Image
             width={20}
@@ -92,6 +89,8 @@ const Hero = ({ sortedNfts: nftsData }: HeroProps) => {
           />
         </div>
       </div>
+        : <FeaturedSkeleton />
+      }
       <CountingDiv className="mx-auto mt-32 flex md:hidden" />
     </section>
   );
@@ -126,5 +125,21 @@ function CountingDiv({ className }: Props) {
     </div>
   );
 }
+
+function FeaturedSkeleton() {
+  return (
+    <SkeletonTheme baseColor="#172554" highlightColor="hsl(74deg, 89%, 76%)">
+      <div className="">
+        <div className="relative mx-auto h-[400px] w-[80%] max-w-[350px] ">
+          <Skeleton className="h-full w-full !rounded-3xl" />
+          <div className="absolute left-[20%]  right-0 top-[85%] z-20 mx-auto grid min-h-[120px] w-[220px] scale-[80%] gap-2 rounded-2xl md:left-[40%] md:mx-4  lg:scale-[100%]">
+            <Skeleton className="!h-full !w-full !rounded-2xl" />
+          </div>
+        </div>
+      </div>
+    </SkeletonTheme>
+  );
+}
+
 
 export default Hero;

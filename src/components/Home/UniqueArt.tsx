@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Nft } from "~/utils/types";
 import { NFT } from "~/data/nfts";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 type Props = {
   sortedNfts? :Nft[]
