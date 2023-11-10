@@ -4,19 +4,22 @@ import { usePathname } from "next/navigation";
 import { Mail } from "lucide-react";
 import PendingBidsButton from "./PendingBidsButton";
 import MessagesButton from "./MessagesButton";
+import CurrencyButton from "./CurrencyButton";
 export default function AuthButton() {
   const pathname = usePathname();
-  // This is here to sync the user with supabase after sign up
-  // const { data: user } = useCurrentUser({})
 
   return (
     <>
       <SignedIn>
         {/* Mount the UserButton component */}
-
-        <UserButton showName={true} afterSignOutUrl={pathname} />
+        <div className="lg:flex gap-4 grid">
+          <div className="flex gap-4">
         <PendingBidsButton />
-        <MessagesButton/>
+          <MessagesButton />
+          <CurrencyButton />
+          </div>
+        <UserButton showName={true} afterSignOutUrl={pathname} />
+        </div>
       </SignedIn>
       <SignedOut>
         {/* Signed out users get sign in button */}

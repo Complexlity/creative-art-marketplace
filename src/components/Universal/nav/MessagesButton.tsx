@@ -1,6 +1,6 @@
 import { useAuth } from "@clerk/nextjs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Mail } from "lucide-react";
+import { Mail, Bell } from "lucide-react";
 import { FC } from "react";
 import {
   Dialog,
@@ -55,13 +55,14 @@ const MessagesButton: FC<MessagesButtonProps> = () => {
     { unreadMessages: [], count: 0 }
   );
 
-  
+
   return (
     <Dialog>
       {/* @ts-ignore passing mutation to onclick */}
       <DialogTrigger onClick={readMessages}>
         <div className="relative mx-auto w-fit rounded-full p-1 hover:bg-gray-700">
-          <Mail />
+          <Bell />
+
           {
             count > 0 ?
             <div className="min-h-4 min-w-4 absolute -top-[0px] left-[calc(100%-10px)] flex items-center  justify-center rounded-full bg-blue-400 px-1 text-xs">

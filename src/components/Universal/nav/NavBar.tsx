@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AuthButton from "./AuthButton";
 import logo from "/public/icons/logo.png";
-import useCurrentUser from "~/hooks/useCurrentUser";
 
 const NavBar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
@@ -190,12 +189,6 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
           variants={fourVariants}
           className="mt-4 grid justify-center py-2"
         >
-          {/* <ConnectButton
-            accountStatus={{
-              smallScreen: "avatar",
-              largeScreen: "full",
-            }}
-          /> */}
           <AuthButton />
         </motion.div>
       </motion.div>

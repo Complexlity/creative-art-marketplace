@@ -275,6 +275,7 @@ export interface Database {
           imageUrl: string;
           user_id: string;
           username: string;
+          game_currency: number;
         };
         Insert: {
           created_at?: string;
@@ -282,6 +283,7 @@ export interface Database {
           imageUrl: string;
           user_id: string;
           username: string;
+          game_currency: number;
         };
         Update: {
           created_at?: string;
@@ -289,6 +291,7 @@ export interface Database {
           imageUrl?: string;
           user_id?: string;
           username?: string;
+          game_currency?: number;
         };
         Relationships: [];
       };
