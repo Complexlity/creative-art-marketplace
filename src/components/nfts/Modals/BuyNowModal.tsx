@@ -9,6 +9,7 @@ import { AlertDialogHeader, AlertDialogFooter } from "../../ui/alert-dialog";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "@clerk/nextjs";
+import MktIcon from "~/components/Universal/MktIcon";
 
 export default function BuyNowModal({ nftData }: { nftData: Nft }) {
   const [open, setOpen] = useState(false)
@@ -63,7 +64,7 @@ export default function BuyNowModal({ nftData }: { nftData: Nft }) {
             <br />
             <br />
             Are you sure you want to purchase this item for{" "}
-            <span className="font-bold text-black">{nftData.price}ETH?</span>
+            <span className="font-bold text-black">{nftData.price}<MktIcon />?</span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

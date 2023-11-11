@@ -13,6 +13,7 @@ import LikeButton from "./LikeButton";
 import Modals from "./Modals";
 import { supabaseWithoutClient as supabase } from "supabase";
 import { getViewsCount } from "~/utils/queries";
+import MktIcon from "~/components/Universal/MktIcon";
 
 export default function NftDetails({
   nftData,
@@ -87,7 +88,7 @@ const currentPathname = pathname.split('/').pop()!
         <h1 className="item-name text-5xl md:text-6xl">{nftData.name}</h1>
         <p className="item-price text-3xl text-primary md:text-4xl">
           {" "}
-          {nftData.price}ETH
+          {nftData.price}<MktIcon />
         </p>
 
         <div className="interactions flex gap-4">

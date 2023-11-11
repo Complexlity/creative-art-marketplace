@@ -3,9 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import CountDownComponent from "~/components/Universal/Countdown";
-import { Nft } from "~/utils/types";
 import "react-loading-skeleton/dist/skeleton.css";
+import CountDownComponent from "~/components/Universal/Countdown";
+import MktIcon from "~/components/Universal/MktIcon";
+import { Nft } from "~/utils/types";
 
 
 type HeroProps = {
@@ -59,7 +60,7 @@ const Hero = ({ sortedNfts: nftsData }: HeroProps) => {
                 <CountDownComponent timeDifference={nftsData[0]!.endTime} />
               </span>
               <span suppressHydrationWarning={true}>
-                {nftsData[0]?.price}ETH
+                {nftsData[0]?.price}<MktIcon />
               </span>
             </p>
             <Link href={`/nfts/${nftsData[0]!.slug}`} className="grid">

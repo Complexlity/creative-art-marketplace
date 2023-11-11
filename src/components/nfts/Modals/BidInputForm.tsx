@@ -1,4 +1,4 @@
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
@@ -7,6 +7,7 @@ import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as z from "zod";
+import MktIcon from "~/components/Universal/MktIcon";
 import {
   Form,
   FormControl,
@@ -17,7 +18,6 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import useCurrentPage from "~/hooks/useCurrentPage";
 import useSupabase from "~/hooks/useSupabaseWithAuth";
 import { Nft } from "~/utils/types";
 
@@ -45,7 +45,7 @@ export default function BidInputForm({
   const queryClient = useQueryClient()
   const pathname = usePathname();
   const currentPathname = pathname.split("/").pop()!;
-  
+
 
 
   const { userId } = useAuth();
@@ -97,7 +97,7 @@ export default function BidInputForm({
             name="itemPrice"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Current Price(ETH)</FormLabel>
+                <FormLabel>Current Price(<MktIcon />)</FormLabel>
                 <FormControl>
                   <Input disabled placeholder="shadcn" {...field} />
                 </FormControl>
@@ -113,7 +113,7 @@ export default function BidInputForm({
             name="bid"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Bid Amount(ETH)</FormLabel>
+                <FormLabel>Bid Amount(<MktIcon />)</FormLabel>
                 <FormControl>
                   <Input
                     className="placeholder:italic"

@@ -9,8 +9,8 @@ export function shuffleArray<T>(array: T[]) {
 
 export function generateRandomNFTPrice() {
   // Define the range of possible values for NFT cost
-  const minPrice = 0.01; // Minimum cost in ETH
-  const maxPrice = 5; // Maximum cost in ETH
+  const minPrice = 0.01; // Minimum cost in MKT
+  const maxPrice = 5; // Maximum cost in MKT
   // Generate a random value within the range
   const randomPrice = Math.random() * (maxPrice - minPrice) + minPrice;
   return Number(randomPrice.toFixed(2));

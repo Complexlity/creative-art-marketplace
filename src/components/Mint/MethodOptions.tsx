@@ -14,7 +14,7 @@ export default function MethodOptions({
     const minBidErr = errors.minBid && touched.minBid;
     values.isPrice = method == "FIXED_PRICE" ? true : false;
     values.isMinBid = method == "TIMED_AUCTION" ? true : false;
-  
+
     return (
       <>
       <LayoutGroup>
@@ -28,7 +28,7 @@ export default function MethodOptions({
               className="price mb-6 grid gap-2 text-gray-200"
             >
               <label htmlFor="price" className="">
-                Price (ETH)
+                Price (MKT)
               </label>
               <input
                 type="number"
@@ -64,7 +64,7 @@ export default function MethodOptions({
                 className="price mb-6 grid gap-2 text-gray-200"
               >
                 <label htmlFor="minBid" className="">
-                  Minimum Bid (ETH)
+                  Minimum Bid (MKT)
                 </label>
                 <input
                   type="number"
@@ -86,7 +86,7 @@ export default function MethodOptions({
                   {minBidErr ? errors.minBid : ""}
                 </small>
               </motion.div>
-  
+
               <motion.div
               layout
                 initial={{ opacity: 0 }}
@@ -131,5 +131,5 @@ export default function MethodOptions({
       </>
     );
   }
-  
+
 

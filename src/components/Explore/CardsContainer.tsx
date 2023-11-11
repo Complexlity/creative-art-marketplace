@@ -208,9 +208,9 @@ export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
             onChange={(e) => setPriceRange(e.target.value)}
           >
             <option value="all">Price</option>
-            <option value="cheap">{`Cheap (< 1ETH)`}</option>
-            <option value="affordable">{`Affordable (1 - 3 ETH)`}</option>
-            <option value="costly">{`Costly (> 3ETH)`}</option>
+            <option value="cheap">{`Cheap (< 1MKT)`}</option>
+            <option value="affordable">{`Affordable (1 - 3 MKT)`}</option>
+            <option value="costly">{`Costly (> 3MKT)`}</option>
           </select>
         </div>
         <div className="cards">

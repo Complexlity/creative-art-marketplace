@@ -1,6 +1,7 @@
 import { useAuth } from "@clerk/nextjs";
 import useCurrentUser from "~/hooks/useCurrentUser";
 import { CircleDollarSign } from "lucide-react";
+import MktIcon from "../MktIcon";
 
 const CurrencyButton = () => {
   const { userId } = useAuth()
@@ -10,7 +11,7 @@ const CurrencyButton = () => {
   if(!user) return
   return (
     <div className="flex items-center gap-1">
-      <CircleDollarSign className="h-6 w-6 text-[#ffbb33]" />
+      <MktIcon />
       <p className="text-2xl">
       {user.game_currency}
       </p>

@@ -7,6 +7,7 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { usePathname } from "next/navigation";
 import useCurrentPage from "~/hooks/useCurrentPage";
 import type { Nft, WithUser } from "~/utils/types";
+import MktIcon from "~/components/Universal/MktIcon";
 
 
 type BidStatus = 'rejected' | 'pending' | 'accepted'
@@ -63,7 +64,7 @@ const pathname = usePathname()
           {statusText}
           {": "}
           <span className="font-bold tracking-wider text-white">
-            {bid.amount}ETH
+            {bid.amount}<MktIcon />
           </span>
         </p>
         <p>

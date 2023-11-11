@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Nft } from "~/utils/types";
 import type { NFT } from "~/data/nfts";
+import MktIcon from "./MktIcon";
 export function Card({
   item,
   fromInput,
@@ -76,7 +77,7 @@ export function Card({
               src={ethereumImage}
             />
           </span>
-          <span suppressHydrationWarning={true}>{mergedItem!.price}ETH</span>
+          <span suppressHydrationWarning={true}>{mergedItem!.price}<MktIcon /></span>
         </p>
       </div>
       <div className="flex justify-between">

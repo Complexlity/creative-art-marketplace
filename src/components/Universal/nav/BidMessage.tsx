@@ -16,6 +16,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSupabase from "~/hooks/useSupabaseWithAuth";
 import { useState } from "react";
 import { useAuth } from "@clerk/nextjs";
+import MktIcon from "~/components/Universal/MktIcon";
 
 
 type BidMailProps = {
@@ -36,11 +37,11 @@ const [acceptModal, setAcceptModal] = useState(false)
       let bidMessage: string;
       if (type == 'accepted') {
         setAcceptModal(false)
-        bidMessage = `Your bid of ${bid.amount}ETH for ${bid.nfts.name} was ACCEPTED!!`
+        bidMessage = `Your bid of ${bid.amount}MKT for ${bid.nfts.name} was ACCEPTED!!`
       }
       else{
         setRejectModal(false)
-        bidMessage = `Your bid of ${bid.amount}ETH for ${bid.nfts.name} was REJECTED!!`
+        bidMessage = `Your bid of ${bid.amount}MKT for ${bid.nfts.name} was REJECTED!!`
     }
       if (userId !== bid.nfts.user_id) {
         alert('Cannot accept or reject bid. This is not your item')
@@ -73,8 +74,8 @@ const [acceptModal, setAcceptModal] = useState(false)
     <div className="flex items-center gap-4 border-b-2 border-amber-100 text-black">
       <span>{bid.users.username}</span>
       <span>{bid.nfts.name}</span>
-      <span>{bid.amount}ETH</span>
-      <span>{bid.nfts.price}ETH</span>
+      <span>{bid.amount}<MktIcon /></span>
+      <span>{bid.nfts.price}<MktIcon /></span>
       <div className="ml-auto flex items-center gap-2 justify-self-end">
         {isReactingBid ? (
           <Loader2 className="animate-spin duration-1000 ease-in-out" />
