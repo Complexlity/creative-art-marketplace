@@ -17,7 +17,7 @@ const Hero = ({ sortedNfts: nftsData }: HeroProps) => {
   const [loaded, setLoaded] = useState<boolean>(false)
 
   return (
-    <section className="mb-24 px-1 py-2 md:py-6 md:grid md:grid-cols-2">
+    <section className="mb-24 px-1 py-2 md:grid md:grid-cols-2 md:py-6">
       <div className=" mb-6 space-y-8 text-center text-white  md:max-w-[60ch] md:text-start">
         <h1 className=" text-6xl">
           Discover and Collect The Best NFTs{" "}
@@ -34,7 +34,8 @@ const Hero = ({ sortedNfts: nftsData }: HeroProps) => {
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.95 }}
               className=" rounded-lg bg-primary px-5 py-2 text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:px-11 md:py-3"
-            >Explore Now
+            >
+              Explore Now
             </motion.button>
           </Link>
           <button className="">
@@ -46,52 +47,55 @@ const Hero = ({ sortedNfts: nftsData }: HeroProps) => {
         <CountingDiv className="hidden md:-ml-12 md:flex" />
       </div>
 
-      {nftsData ? <div className="">
-        <div className="relative mx-auto h-[400px] w-[80%] max-w-[350px] ">
-          <div className="absolute left-[20%] right-0 top-[85%] z-20 mx-auto grid w-[220px] scale-[80%] gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2 md:left-[40%] md:mx-4 lg:scale-[100%]">
-            <p className="flex justify-between text-primary">
-              <span>Ends in</span>
-              <span>Current bid</span>
-            </p>
-            <p className="flex justify-between font-bold text-white">
-              <span>
-
-                {/* @ts-expect-error Endtime not found */}
-                <CountDownComponent timeDifference={nftsData[0]!.endTime} />
-              </span>
-              <span suppressHydrationWarning={true}>
-                {nftsData[0]?.price}<MktIcon />
-              </span>
-            </p>
-            <Link href={`/nfts/${nftsData[0]!.slug}`} className="grid">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                className="mt-1 rounded-lg border border-primary py-2 font-bold text-primary transition-all duration-200 ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800"
-              >
-                Place A Bid
-              </motion.button>
-            </Link>
-          </div>
-          <div
-            className={`${loaded && nftsData[0] && nftsData[0].image ? "" : "hidden"
+      {nftsData ? (
+        <div className="">
+          <div className="relative mx-auto h-[400px] w-[80%] max-w-[350px] ">
+            <div className="absolute left-[20%] right-0 top-[85%] z-20 mx-auto grid w-[220px] scale-[80%] gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2 md:left-[40%] md:mx-4 lg:scale-[100%]">
+              <p className="flex justify-between text-primary">
+                <span>Ends in</span>
+                <span>Current bid</span>
+              </p>
+              <p className="flex justify-between font-bold text-white">
+                <span>
+                  {/* @ts-expect-error Endtime not found */}
+                  <CountDownComponent timeDifference={nftsData[0]!.endTime} />
+                </span>
+                <span suppressHydrationWarning={true}>
+                  <MktIcon />
+                  {nftsData[0]?.price}
+                </span>
+              </p>
+              <Link href={`/nfts/${nftsData[0]!.slug}`} className="grid">
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="mt-1 rounded-lg border border-primary py-2 font-bold text-primary transition-all duration-200 ease-in hover:scale-[103%] hover:bg-primary hover:text-gray-800"
+                >
+                  Place A Bid
+                </motion.button>
+              </Link>
+            </div>
+            <div
+              className={`${
+                loaded && nftsData[0] && nftsData[0].image ? "" : "hidden"
               } gradient absolute right-[43%] top-[30%] h-[50%] w-1/2 rotate-45 rounded-full shadow-3xl shadow-primary`}
-          ></div>
-          <Image
-            width={20}
-            height={20}
-            suppressHydrationWarning={true}
-            alt="Trending Image"
-            className="relative z-10 mx-auto h-full w-full max-w-[500px] rounded-2xl object-cover object-top"
-            src={nftsData[0]!.image}
-            priority
-            unoptimized
-            onLoad={setLoaded.bind(null, true)}
-          />
+            ></div>
+            <Image
+              width={20}
+              height={20}
+              suppressHydrationWarning={true}
+              alt="Trending Image"
+              className="relative z-10 mx-auto h-full w-full max-w-[500px] rounded-2xl object-cover object-top"
+              src={nftsData[0]!.image}
+              priority
+              unoptimized
+              onLoad={setLoaded.bind(null, true)}
+            />
+          </div>
         </div>
-      </div>
-        : <FeaturedSkeleton />
-      }
+      ) : (
+        <FeaturedSkeleton />
+      )}
       <CountingDiv className="mx-auto mt-32 flex md:hidden" />
     </section>
   );

@@ -8,11 +8,11 @@ type useCurrentUserProps =
   }
 
 type User = {
-  username: string | null,
-  userId: string | null,
-  imageUrl: string | null,
-  game_currency: number | null
-}
+  username: string | null | undefined;
+  userId: string | null | undefined;
+  imageUrl: string | null | undefined;
+  game_currency: number | null | undefined;
+};
 
 
 const useCurrentUser = ({ userId }: useCurrentUserProps) => {

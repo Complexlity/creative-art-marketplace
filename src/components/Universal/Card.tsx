@@ -55,15 +55,15 @@ export function Card({
           src={mergedItem!.image}
         />
       ) : ( */}
-        <Image
-          suppressHydrationWarning={true}
-          alt={`${mergedItem.name} Image`}
-          className="my-card-image mx-auto aspect-square rounded-lg object-cover object-top w-full"
-          src={mergedItem!.image}
-          width={300}
-          height={300}
-        />
-       {/* )} */}
+      <Image
+        suppressHydrationWarning={true}
+        alt={`${mergedItem.name} Image`}
+        className="my-card-image mx-auto aspect-square w-full rounded-lg object-cover object-top"
+        src={mergedItem!.image}
+        width={300}
+        height={300}
+      />
+      {/* )} */}
       <div
         suppressHydrationWarning={true}
         className="flex justify-between font-semibold tracking-wide"
@@ -71,13 +71,9 @@ export function Card({
         <p suppressHydrationWarning={true}>{mergedItem!.name}</p>
         <p className="flex items-center gap-1">
           <span>
-            <Image
-              alt="Ethereum Icon"
-              className="h-4 w-6"
-              src={ethereumImage}
-            />
+            <MktIcon />
           </span>
-          <span suppressHydrationWarning={true}>{mergedItem!.price}<MktIcon /></span>
+          <span suppressHydrationWarning={true}>{mergedItem!.price}</span>
         </p>
       </div>
       <div className="flex justify-between">
@@ -90,7 +86,7 @@ export function Card({
             </span>
           </p>
         </div>
-        <Link href={mergedItem.slug ? `/nfts/${mergedItem.slug}`: ""}>
+        <Link href={mergedItem.slug ? `/nfts/${mergedItem.slug}` : ""}>
           <motion.button
             whileHover={{
               scale: 1.1,

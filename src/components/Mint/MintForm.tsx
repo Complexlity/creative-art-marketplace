@@ -17,10 +17,13 @@ import { useRouter } from "next/navigation";
 import useSupabase from "~/hooks/useSupabaseWithAuth";
 import slugify from "slugify";
 import { Nft } from "~/utils/types";
-import { NFT } from "~/data/nfts";
+import useCurrentUser from "~/hooks/useCurrentUser";
+
+const MINT_PERCENTAGE_COST = 0.8
 
 export default function MintForm() {
   const { userId } = useAuth()
+  const { data: user } = useCurrentUser({})
   const router = useRouter()
   const supabase = useSupabase()
   const [image, setImage] = useState<File>();
@@ -72,7 +75,7 @@ export default function MintForm() {
         isMinBid: false,
       },
       onSubmit: async (values, { resetForm }) => {
-        if (!userId) {
+        if (!(userId && user) ) {
           toast("Pleas Login")
           return
         }
@@ -109,7 +112,15 @@ export default function MintForm() {
           nft_slug: slug,
           views_count: 0
         })
-      
+
+      const { data: userUpdate } = await supabase
+        .from("users")
+        //@ts-ignore null != undefined
+  .update({ game_currency: Math.round(user.game_currency - (MINT_PERCENTAGE_COST * (values.price || values.minBid))) })
+  .eq("some_column", "someValue")
+  .select();
+
+
         if (data) {
           setLoadingMessage("Completed")
           notifyMint()
@@ -413,7 +424,7 @@ export default function MintForm() {
                 name: values.title,
                 price: values.price || values.minBid,
                 category: values.collections,
-              } as unknown as NFT}
+              } as unknown as Nft}
               fromInput={true}
             />
           </div>

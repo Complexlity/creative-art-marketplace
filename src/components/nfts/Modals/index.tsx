@@ -1,10 +1,10 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 import BuyNowModal from "./BuyNowModal";
 import PlaceBidModal from "./PlaceBidModal";
 
-export default function Modals({ nftData }: { nftData: Nft }) {
+export default function Modals({ nftData }: { nftData: WithUser<Nft> }) {
   return (
     <div className="flex gap-4">
       <BuyNowModal nftData={nftData} />

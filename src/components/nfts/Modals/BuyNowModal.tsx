@@ -4,15 +4,17 @@ import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import useSupabase from "~/hooks/useSupabaseWithAuth";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 import { AlertDialogHeader, AlertDialogFooter } from "../../ui/alert-dialog";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "@clerk/nextjs";
 import MktIcon from "~/components/Universal/MktIcon";
+import useCurrentUser from "~/hooks/useCurrentUser";
 
-export default function BuyNowModal({ nftData }: { nftData: Nft }) {
+export default function BuyNowModal({ nftData }: { nftData: WithUser<Nft> }) {
   const [open, setOpen] = useState(false)
+  const {data: user } = useCurrentUser({})
   const supabase = useSupabase()
   const { userId } = useAuth()
   const queryClient = useQueryClient();
@@ -22,7 +24,7 @@ export default function BuyNowModal({ nftData }: { nftData: Nft }) {
 
   const [isLoading, setIsLoading] = useState(false)
   async function buyItem () {
-    if (!supabase || !userId) return toast("Not Autheticated");
+    if (!supabase || !userId || !user) return toast("Not Autheticated");
     if (nftData.user_id === userId)
     return toast("Cannot bid for your own item");
     setIsLoading(true)
@@ -31,6 +33,18 @@ export default function BuyNowModal({ nftData }: { nftData: Nft }) {
         .from("bids")
         .insert([{ user_id: userId, slug: currentPathname, amount: nftData.price, status: "accepted" }])
         .select();
+
+const { data: buyer } = await supabase
+  .from("users")
+  .update({ game_currency: user.game_currency! - nftData.price  })
+  .eq("user_id", userId)
+  .select();
+const { data: seller } = await supabase
+  .from("users")
+  .update({ game_currency: user.game_currency! + nftData.price  })
+  .eq("user_id", nftData.users.user_id)
+  .select();
+
 
       if (error) throw error;
       toast(`Thank you for buying ${nftData.name} for ${nftData.price}`);

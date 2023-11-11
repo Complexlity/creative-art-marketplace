@@ -49,7 +49,7 @@ const pathname = usePathname()
 
   return (
     <div className="flex gap-4">
-      <div className="bidder-image relative h-12  w-12 rounded-full border-2 border-white aspect-square">
+      <div className="bidder-image relative aspect-square  h-12 w-12 rounded-full border-2 border-white">
         <StatusIcon className={`absolute -bottom-1 -right-1 ${checkColor}`} />
         <Image
           className="h-full w-full rounded-full object-cover object-top"
@@ -63,14 +63,17 @@ const pathname = usePathname()
         <p>
           {statusText}
           {": "}
-          <span className="font-bold tracking-wider text-white">
-            {bid.amount}<MktIcon />
+          <span className="font-bold flex items-center tracking-wider text-white">
+            <MktIcon />
+            {bid.amount}
           </span>
         </p>
         <p>
           by{" "}
           <span className="font-bold tracking-wider text-white">
-            {bid.status === 'pending' ? bid.users.username : nftData.users.username}
+            {bid.status === "pending"
+              ? bid.users.username
+              : nftData.users.username}
           </span>{" "}
           at {bid.updated_at}
         </p>

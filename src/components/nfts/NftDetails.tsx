@@ -86,9 +86,10 @@ const currentPathname = pathname.split('/').pop()!
         </small>
 
         <h1 className="item-name text-5xl md:text-6xl">{nftData.name}</h1>
-        <p className="item-price text-3xl text-primary md:text-4xl">
+        <p className="item-price flex items-center text-3xl text-primary md:text-4xl">
           {" "}
-          {nftData.price}<MktIcon />
+          <MktIcon />
+          {nftData.price}
         </p>
 
         <div className="interactions flex gap-4">
@@ -98,10 +99,7 @@ const currentPathname = pathname.split('/').pop()!
           <div className="flex items-center gap-1 rounded-sm bg-slate-500 px-4 py-[.1rem] text-gray-300 shadow-md shadow-gray-700 duration-300 hover:-translate-y-1">
             <AiFillEye /> {views}
           </div>
-          <LikeButton
-          initialLikes={initialLikes}
-          />
-
+          <LikeButton initialLikes={initialLikes} />
         </div>
         <p className="item-description text-gray-400"> {nftData.description}</p>
 
