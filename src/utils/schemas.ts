@@ -2,25 +2,14 @@ import * as yup from 'yup'
 
 type equalitySymbol = "startDate" | "endDate"
 
-function verifyDate(date: string, applied = "startDate", diff = 0) {
-  const checkedDate = new Date(date)
-  checkedDate.setHours(0, 0, 0, 0)
-  const currentDate = new Date()
-  currentDate.setDate(currentDate.getDate() + diff)
-  currentDate.setHours(0, 0, 0, 0)
+function verifyDate(startDate: string, endDate: string) {
+  const checkedStartDate = new Date(startDate)
+  checkedStartDate.setHours(0, 0, 0, 0)
+  const checkedEndDate = new Date(endDate)
+  checkedEndDate.setDate(checkedEndDate.getDate())
+  checkedEndDate.setHours(0, 0, 0, 0)
 
-  console.log(checkedDate, currentDate)
-
-  let result
-
-  switch (applied) {
-    case 'startDate':
-      result = checkedDate.getTime() >= currentDate.getTime()
-    case 'endDate':
-      result = checkedDate.getTime() >= (currentDate.getTime() + diff)
-    default:
-      result = checkedDate.getTime() == currentDate.getTime()
-  }
+  return checkedEndDate.getTime() > checkedStartDate.getTime()
 }
 
 export const schema = yup.object().shape({
@@ -82,7 +71,7 @@ export const schema = yup.object().shape({
     .nullable()
     .max(70, "Item cannot exceed 70%"),
 
-  collections: yup.string().required("Choose a category"),
+  collections: yup.string().required("Choose a category").notOneOf(["SEL"], "Choose a category"),
 });
 
 

@@ -18,7 +18,7 @@ import useSupabase from "~/hooks/useSupabaseWithAuth";
 import slugify from "slugify";
 import { Nft } from "~/utils/types";
 import useCurrentUser from "~/hooks/useCurrentUser";
-import { cn } from "~/utils/libs";
+import { cn, verifyDates } from "~/utils/libs";
 
 const MINT_PERCENTAGE_COST = 0.2
 
@@ -77,6 +77,14 @@ export default function MintForm() {
         isCheckingDate: false
       },
       onSubmit: async (values, { resetForm }) => {
+        if (values.startDate && values.endDate && method === "TIMED_AUCTION") {
+          const isDatesGood = verifyDates(values.startDate, values.endDate)
+           if (!isDatesGood) {
+             setFieldError("endDate", "End date must be after the start date");
+           }
+           return
+        }
+
         if (!(userId && user) ) {
           toast("Please Login")
           return
@@ -149,7 +157,7 @@ export default function MintForm() {
       },
       validationSchema: schema,
     });
-    const { errors, touched, values, handleChange, handleSubmit, handleBlur } =
+    const { errors, touched, values, handleChange, handleSubmit, handleBlur, setFieldError } =
       formik;
     const toggleColor = checked ? "bg-primary" : "";
     let royaltiesErr = errors.royalties && touched.royalties;
@@ -174,7 +182,7 @@ export default function MintForm() {
       setImageError("");
     }
 
-console.log({touched})
+
     return (
       <>
         <form
@@ -361,8 +369,8 @@ console.log({touched})
                 className={cn(`my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary`,
                {
                    "base": !values.collections,
-                   "border-red-400": values.collections && collectionsErr,
-                   "border-green-400": values.collections !== "SEL" && !collectionsErr
+                   "border-red-400": values.collections  && errors.collections,
+                   "border-green-400": values.collections !== "SEL" && !errors.collections
                })}
                 value={values.collections}
                 onChange={handleChange}
