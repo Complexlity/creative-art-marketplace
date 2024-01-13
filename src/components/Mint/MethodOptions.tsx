@@ -12,8 +12,6 @@ export default function MethodOptions({
   formik: any;
 }) {
   const { errors, touched, values, handleChange, handleBlur } = formik;
-  const priceErr = errors.price && touched.price;
-  const minBidErr = errors.minBid && touched.minBid;
 
   switch (method) {
     case "OPEN_BIDS":
@@ -31,7 +29,13 @@ export default function MethodOptions({
       values.isMinBid = false;
       values.isCheckingDate = false
   }
-  
+
+  const priceErr = errors.price && touched.price;
+  const minBidErr = errors.minBid && touched.minBid;
+  const startDateErr = errors.startDate && (touched.startDate || values.isCheckingDate)
+  const endDateErr = errors.endDate && (touched.endDate || values.isCheckingDate)
+
+
   return (
     <>
       <LayoutGroup>
@@ -158,7 +162,7 @@ export default function MethodOptions({
               >
                 <div>
                   <div className=" grid gap-2 text-gray-200">
-                    <label htmlFor="startDate">Starting Date</label>
+                    <label htmlFor="startDate">Start Date</label>
                     <input
                       type="date"
                       name="startDate"
@@ -166,8 +170,8 @@ export default function MethodOptions({
                       className={cn(
                         `date-picker w-full rounded-lg border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary`,
                         {
-                          "border-green-400": values.startDate && !errors.startDate,
-                          "border-red-400": values.startDate && errors.startDate,
+                          "border-green-400": values.startDate && !startDateErr,
+                          "border-red-400": startDateErr,
                         }
                       )}
                       value={values.startDate}
@@ -176,12 +180,12 @@ export default function MethodOptions({
                     />
                   </div>
                   <small className="text-red-400">
-                    {values.startDate ? errors.startDate : ""}
+                    { startDateErr ? errors.startDate : ""}
                   </small>
                 </div>
                 <div>
                   <div className="grid gap-2 text-gray-200">
-                    <label htmlFor="endDate">Ending Date</label>
+                    <label htmlFor="endDate">End Date</label>
                     <input
                       type="date"
                       name="endDate"
@@ -189,8 +193,8 @@ export default function MethodOptions({
                       className={cn(
                         `date-picker w-full rounded-lg border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary`,
                         {
-                          "border-green-400": values.endDate && !errors.endDate,
-                          "border-red-400": values.endDate && errors.endDate,
+                          "border-green-400": values.endDate && !endDateErr,
+                          "border-red-400": endDateErr,
                         }
                       )}
                       value={values.endDate}
@@ -199,7 +203,7 @@ export default function MethodOptions({
                     />
                   </div>
                   <small className="text-red-400">
-                    {values.endDate ? errors.endDate : ""}
+                    { endDateErr ? errors.endDate : "" }
                   </small>
                 </div>
               </motion.div>

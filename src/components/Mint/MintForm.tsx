@@ -18,7 +18,7 @@ import useSupabase from "~/hooks/useSupabaseWithAuth";
 import slugify from "slugify";
 import { Nft } from "~/utils/types";
 import useCurrentUser from "~/hooks/useCurrentUser";
-import { cn, verifyDates } from "~/utils/libs";
+import { cn } from "~/utils/libs";
 
 const MINT_PERCENTAGE_COST = 0.2
 
@@ -77,21 +77,16 @@ export default function MintForm() {
         isCheckingDate: false
       },
       onSubmit: async (values, { resetForm }) => {
-        if (values.startDate && values.endDate && method === "TIMED_AUCTION") {
-          const isDatesGood = verifyDates(values.startDate, values.endDate)
-           if (!isDatesGood) {
-             setFieldError("endDate", "End date must be after the start date");
-           }
-           return
+
+        if (!image) {
+          setImageError("NFT image not provided");
+          window.scrollTo(0, 0);
+          return
         }
 
         if (!(userId && user) ) {
           toast("Please Login")
           return
-        }
-        if (!image) {
-          setImageError("NFT image not provided");
-          return;
         }
         if (!supabase) return toast("Not Authenticated")
         setIsLoading(true)
@@ -180,7 +175,9 @@ export default function MintForm() {
       setImage(file);
       setImageUrl(fileUrl)
       setImageError("");
-    }
+  }
+
+  console.log({values, errors})
 
 
     return (
@@ -333,11 +330,10 @@ export default function MintForm() {
                     checked={method === "TIMED_AUCTION"}
                   />
                 </label>
-
               </div>
             </div>
             <MethodOptions method={method} formik={formik} />
-            <div
+            {/* <div
               className="unlock grid gap-2 rounded-lg border-2 border-gray-600 p-4"
               tabIndex={0}
             >
@@ -360,18 +356,21 @@ export default function MintForm() {
               <p className="text-gray-400">
                 Unlock content after successful transaction
               </p>
-            </div>
+            </div> */}
             <div className="choose-collection grid gap-1 text-white">
               <label htmlFor="collections">Choose collection</label>
               <select
                 id="collections"
                 name="collections"
-                className={cn(`my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary`,
-               {
-                   "base": !values.collections,
-                   "border-red-400": values.collections  && errors.collections,
-                   "border-green-400": values.collections !== "SEL" && !errors.collections
-               })}
+                className={cn(
+                  `my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary`,
+                  {
+                    base: !values.collections,
+                    "border-red-400": errors.collections && touched.collections,
+                    "border-green-400":
+                      !errors.collections &&  touched.collections,
+                  }
+                )}
                 value={values.collections}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -431,12 +430,14 @@ export default function MintForm() {
           <div className="preview-item hidden gap-4 self-start ">
             <label>Preview Item</label>
             <Card
-              item={{
-                image: imageUrl as unknown as StaticImageData,
-                name: values.title,
-                price: values.price || values.minBid,
-                category: values.collections,
-              } as unknown as Nft}
+              item={
+                {
+                  image: imageUrl as unknown as StaticImageData,
+                  name: values.title,
+                  price: values.price || values.minBid,
+                  category: values.collections,
+                } as unknown as Nft
+              }
               fromInput={true}
             />
           </div>

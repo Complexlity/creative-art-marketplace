@@ -29,13 +29,3 @@ export const getCategory = {
   "DOM":"domain names"
 }
 
-
-export function verifyDates(startDate: string, endDate: string) {
-  const checkedStartDate = new Date(startDate);
-  checkedStartDate.setHours(0, 0, 0, 0);
-  const checkedEndDate = new Date(endDate);
-  checkedEndDate.setDate(checkedEndDate.getDate());
-  checkedEndDate.setHours(0, 0, 0, 0);
-
-  return checkedEndDate.getTime() > checkedStartDate.getTime();
-}
