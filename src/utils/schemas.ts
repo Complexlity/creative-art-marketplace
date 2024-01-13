@@ -7,7 +7,7 @@ export const schema = yup.object().shape({
   price: yup.number().when("isPrice", {
     is: true,
     then: () =>
-      yup.number().moreThan(0, "Number must be greater than zero").nullable().required("Min bid cannot be empty"),
+      yup.number().moreThan(0, "Number must be greater than zero").nullable().required("Price cannot be empty"),
   }),
   minBid: yup.number().when("isMinBid", {
     is: true,
@@ -16,7 +16,7 @@ export const schema = yup.object().shape({
         .number()
         .moreThan(0, "Number must be greater than zero")
         .nullable()
-        .required("Min bid cannot be empty"),
+        .required("Minimum bid cannot be empty"),
   }),
   description: yup.string().required("Provide a description of you NFT"),
   royalties: yup

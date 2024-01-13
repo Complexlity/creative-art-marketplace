@@ -19,7 +19,7 @@ import slugify from "slugify";
 import { Nft } from "~/utils/types";
 import useCurrentUser from "~/hooks/useCurrentUser";
 
-const MINT_PERCENTAGE_COST = 0.8
+const MINT_PERCENTAGE_COST = 0.2
 
 export default function MintForm() {
   const { userId } = useAuth()
@@ -104,20 +104,24 @@ export default function MintForm() {
           lower: true,
           trim: true
         })
+
+        let price = method === "FIXED_PRICE" ? values.price : values.minBid
         const { data, error } = await supabase
         .from("nft")
-        .insert([{ name: values.title, price:  values.price || values.minBid, image: fileUrl, user_id: userId , description: values.description, category: values.collections, slug: slug }])
+        .insert([{ name: values.title, price, image: fileUrl, user_id: userId , description: values.description, category: values.collections, slug: slug }])
           .select()
         const { data: viewCount, } = await supabase.from('nft_views').insert({
           nft_slug: slug,
           views_count: 0
         })
 
+        // Deduct some percentage from user after mint
+        const valueDeducted =  Math.round(MINT_PERCENTAGE_COST * price)
       const { data: userUpdate } = await supabase
         .from("users")
         //@ts-ignore null != undefined
-  .update({ game_currency: Math.round(user.game_currency - (MINT_PERCENTAGE_COST * (values.price || values.minBid))) })
-  .eq("some_column", "someValue")
+  .update({ game_currency: user.game_currency - valueDeducted})
+  .eq("user_id", userId)
   .select();
 
 
@@ -290,22 +294,6 @@ export default function MintForm() {
                   tabIndex={0}
                   className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
                 >
-                  <FaHourglassHalf className="icon h-8 w-8" color={"gray"} />
-                  <p>Timed auction</p>
-                  <input
-                    className="hidden-input"
-                    type="radio"
-                    name="method"
-                    id=""
-                    value="timed_auction"
-                    onChange={toggleOptions}
-                    checked={method === "TIMED_AUCTION"}
-                  />
-                </label>
-                <label
-                  tabIndex={0}
-                  className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
-                >
                   <MdGroups className="icon h-8 w-8" color={"gray"} />
                   <p>Open Bids</p>
                   <input
@@ -318,6 +306,23 @@ export default function MintForm() {
                     checked={method === "OPEN_BIDS"}
                   />
                 </label>
+                <label
+                  tabIndex={0}
+                  className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
+                >
+                  <FaHourglassHalf className="icon h-8 w-8" color={"gray"} />
+                  <p>Timed auction</p>
+                  <input
+                    className="hidden-input"
+                    type="radio"
+                    name="method"
+                    id=""
+                    value="timed_auction"
+                    onChange={toggleOptions}
+                    checked={method === "TIMED_AUCTION"}
+                  />
+                </label>
+
               </div>
             </div>
             <MethodOptions method={method} formik={formik} />
