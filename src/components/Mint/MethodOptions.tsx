@@ -1,5 +1,6 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import MktIcon from "~/components/Universal/MktIcon";
+import { cn } from "~/utils/libs";
 
 export type Methods = "FIXED_PRICE" | "TIMED_AUCTION" | "OPEN_BIDS";
 
@@ -18,13 +19,19 @@ export default function MethodOptions({
     case "OPEN_BIDS":
       values.isPrice = false;
       values.isMinBid = true;
+      values.isCheckingDate = false
       break;
-    default:
+    case "TIMED_AUCTION":
       values.isPrice = true;
       values.isMinBid = false;
+      values.isCheckingDate = true
+      break
+    case "FIXED_PRICE":
+      values.isPrice = true;
+      values.isMinBid = false;
+      values.isCheckingDate = false
   }
-
-  console.log({values})
+  
   return (
     <>
       <LayoutGroup>
@@ -149,33 +156,51 @@ export default function MethodOptions({
                 exit={{ opacity: 0 }}
                 className="grid grid-cols-2 gap-4"
               >
-                <div className="mb-6 grid gap-2 text-gray-200">
-                  <label htmlFor="startDate">Starting Date</label>
-                  <input
-                    type="date"
-                    name="startDate"
-                    id="startDate"
-                    className={`date-picker focus:border-primaryfocus:ring-primary w-full   rounded-lg border-2  border-gray-600 bg-transparent p-2 text-sm text-white placeholder-gray-500
-                    ${touched.endData && values.endDate ? ".success" : ""}
-                    `}
-                    value={values.startDate}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
+                <div>
+                  <div className=" grid gap-2 text-gray-200">
+                    <label htmlFor="startDate">Starting Date</label>
+                    <input
+                      type="date"
+                      name="startDate"
+                      id="startDate"
+                      className={cn(
+                        `date-picker w-full rounded-lg border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary`,
+                        {
+                          "border-green-400": values.startDate && !errors.startDate,
+                          "border-red-400": values.startDate && errors.startDate,
+                        }
+                      )}
+                      value={values.startDate}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </div>
+                  <small className="text-red-400">
+                    {values.startDate ? errors.startDate : ""}
+                  </small>
                 </div>
-                <div className="mb-6 grid gap-2 text-gray-200">
-                  <label htmlFor="endDate">Ending Date</label>
-                  <input
-                    type="date"
-                    name="endDate"
-                    id="endDate"
-                    className={`date-picker w-full rounded-lg border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary
-                    ${touched.endData && values.endDate ? "success" : ""}
-                    `}
-                    value={values.endDate}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
+                <div>
+                  <div className="grid gap-2 text-gray-200">
+                    <label htmlFor="endDate">Ending Date</label>
+                    <input
+                      type="date"
+                      name="endDate"
+                      id="endDate"
+                      className={cn(
+                        `date-picker w-full rounded-lg border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary`,
+                        {
+                          "border-green-400": values.endDate && !errors.endDate,
+                          "border-red-400": values.endDate && errors.endDate,
+                        }
+                      )}
+                      value={values.endDate}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </div>
+                  <small className="text-red-400">
+                    {values.endDate ? errors.endDate : ""}
+                  </small>
                 </div>
               </motion.div>
             </>

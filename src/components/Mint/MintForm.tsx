@@ -18,6 +18,7 @@ import useSupabase from "~/hooks/useSupabaseWithAuth";
 import slugify from "slugify";
 import { Nft } from "~/utils/types";
 import useCurrentUser from "~/hooks/useCurrentUser";
+import { cn } from "~/utils/libs";
 
 const MINT_PERCENTAGE_COST = 0.2
 
@@ -73,6 +74,7 @@ export default function MintForm() {
         endDate: undefined,
         isPrice: false,
         isMinBid: false,
+        isCheckingDate: false
       },
       onSubmit: async (values, { resetForm }) => {
         if (!(userId && user) ) {
@@ -172,6 +174,7 @@ export default function MintForm() {
       setImageError("");
     }
 
+console.log({touched})
     return (
       <>
         <form
@@ -355,16 +358,15 @@ export default function MintForm() {
               <select
                 id="collections"
                 name="collections"
-                className={`my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary
-               ${
-                 !touched.collections
-                   ? "base"
-                   : collectionsErr
-                   ? "error"
-                   : "success"
-               }`}
+                className={cn(`my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary`,
+               {
+                   "base": !values.collections,
+                   "border-red-400": values.collections && collectionsErr,
+                   "border-green-400": values.collections !== "SEL" && !collectionsErr
+               })}
                 value={values.collections}
                 onChange={handleChange}
+                onBlur={handleBlur}
               >
                 <option disabled value="SEL">
                   Select Collection
