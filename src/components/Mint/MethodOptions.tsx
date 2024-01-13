@@ -17,24 +17,24 @@ export default function MethodOptions({
     case "OPEN_BIDS":
       values.isPrice = false;
       values.isMinBid = true;
-      values.isCheckingDate = false
+      values.isCheckingDate = false;
       break;
     case "TIMED_AUCTION":
       values.isPrice = true;
       values.isMinBid = false;
-      values.isCheckingDate = true
-      break
+      values.isCheckingDate = true;
+      break;
     case "FIXED_PRICE":
       values.isPrice = true;
       values.isMinBid = false;
-      values.isCheckingDate = false
+      values.isCheckingDate = false;
   }
 
-  const priceErr = errors.price && touched.price;
-  const minBidErr = errors.minBid && touched.minBid;
-  const startDateErr = errors.startDate && (touched.startDate || values.isCheckingDate)
-  const endDateErr = errors.endDate && (touched.endDate || values.isCheckingDate)
-
+  // The touching doesn't alway trigger when you use the date picker but does when you change the date with text
+  const startDateErr =
+    errors.startDate && (touched.startDate || values.isCheckingDate);
+  const endDateErr =
+    errors.endDate && (touched.endDate || values.isCheckingDate);
 
   return (
     <>
@@ -57,14 +57,13 @@ export default function MethodOptions({
               <input
                 type="number"
                 id="price"
-                className={`block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary
-                 ${
-                   !touched.price
-                     ? "border-gray-600"
-                     : priceErr
-                     ? "border-red-400"
-                     : "border-green-400"
-                 }`}
+                className={cn(
+                  `block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary`,
+                  {
+                    "border-red-400": errors.price && touched.price,
+                    "border-green-400": !errors.price && touched.price,
+                  }
+                )}
                 placeholder="Enter price for item"
                 required
                 value={values.price}
@@ -72,7 +71,7 @@ export default function MethodOptions({
                 onBlur={handleBlur}
               />
               <small className="text-red-400">
-                {priceErr ? errors.price : ""}
+                {errors.price && touched.price ? errors.price : ""}
               </small>
             </motion.div>
           )}
@@ -96,13 +95,13 @@ export default function MethodOptions({
                 <input
                   type="number"
                   id="minBid"
-                  className={`block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary ${
-                    !touched.minBid
-                      ? "border-gray-600"
-                      : minBidErr
-                      ? "border-red-400"
-                      : "border-green-400"
-                  }`}
+                  className={cn(
+                    `block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary`,
+                    {
+                      "border-red-400": errors.minBid && touched.minbid,
+                      "border-green-400": !errors.minBid && touched.minbid,
+                    }
+                  )}
                   placeholder="Enter minimum bid"
                   required
                   value={values.minBid}
@@ -110,7 +109,7 @@ export default function MethodOptions({
                   onBlur={handleBlur}
                 />
                 <small className="text-red-400">
-                  {minBidErr ? errors.minBid : ""}
+                  {errors.minBid && touched.minBid ? errors.minBid : ""}
                 </small>
               </motion.div>
             </>
@@ -135,14 +134,13 @@ export default function MethodOptions({
                 <input
                   type="number"
                   id="price"
-                  className={`block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary
-                 ${
-                   !touched.price
-                     ? "border-gray-600"
-                     : priceErr
-                     ? "border-red-400"
-                     : "border-green-400"
-                 }`}
+                  className={cn(
+                    `block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary`,
+                    {
+                      "border-red-400": errors.price && touched.price,
+                      "border-green-400": errors.price && touched.price,
+                    }
+                  )}
                   placeholder="Enter price for item"
                   required
                   value={values.price}
@@ -150,7 +148,7 @@ export default function MethodOptions({
                   onBlur={handleBlur}
                 />
                 <small className="text-red-400">
-                  {priceErr ? errors.price : ""}
+                  {errors.price && touched.price ? errors.price : ""}
                 </small>
               </motion.div>
               <motion.div
@@ -180,7 +178,7 @@ export default function MethodOptions({
                     />
                   </div>
                   <small className="text-red-400">
-                    { startDateErr ? errors.startDate : ""}
+                    {startDateErr ? errors.startDate : ""}
                   </small>
                 </div>
                 <div>
@@ -203,7 +201,7 @@ export default function MethodOptions({
                     />
                   </div>
                   <small className="text-red-400">
-                    { endDateErr ? errors.endDate : "" }
+                    {endDateErr ? errors.endDate : ""}
                   </small>
                 </div>
               </motion.div>
