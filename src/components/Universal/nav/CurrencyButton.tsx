@@ -4,10 +4,8 @@ import { CircleDollarSign } from "lucide-react";
 import MktIcon from "../MktIcon";
 
 const CurrencyButton = () => {
-  const { userId } = useAuth()
   const { data: user } = useCurrentUser({})
 
-  console.log(user)
   if(!user) return
   return (
     <div className="flex items-center gap-1">

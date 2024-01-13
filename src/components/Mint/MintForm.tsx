@@ -182,8 +182,6 @@ export default function MintForm() {
     setImageError("");
   }
 
-  console.log({ values, errors });
-
   return (
     <>
       <form
