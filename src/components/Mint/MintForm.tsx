@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MdGroups } from "react-icons/md";
 import { ImPriceTag } from "react-icons/im";
-import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
+import { FaHourglassHalf, FaLock, FaUnlockAlt  } from "react-icons/fa";
 import Card from "~/components/Universal/Card";
 import { useFormik } from "formik";
 import { schema } from "~/utils/schemas";
@@ -106,8 +106,9 @@ export default function MintForm() {
       });
 
       let price = method === "FIXED_PRICE" ? values.price : values.minBid;
+
       const { data, error } = await supabase
-        .from("nft")
+        .from("nfts")
         .insert([
           {
             name: values.title,
@@ -117,6 +118,9 @@ export default function MintForm() {
             description: values.description,
             category: values.collections,
             slug: slug,
+            sale_type: method,
+            start_date: values.startDate ?? "",
+            end_date: values.endDate ?? ""
           },
         ])
         .select();
