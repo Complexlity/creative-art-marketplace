@@ -1,4 +1,4 @@
-import { StaticImageData } from "next/dist/client/image";
+import { StaticImageData } from "next/image";
 import image1 from "/public/people/1.webp";
 import image2 from "/public/people/18.webp";
 import image3 from "/public/people/3.webp";

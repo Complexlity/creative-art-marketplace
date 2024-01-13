@@ -1,4 +1,4 @@
-import { StaticImageData } from "next/dist/client/image";
+import { StaticImageData } from "next/image";
 import image1 from "/public/nfts/1.png";
 import image2 from "/public/nfts/2.png";
 import image3 from "/public/nfts/3.png";
