@@ -127,6 +127,7 @@ export default function MintForm() {
 
       // Deduct some percentage from user after mint
       const valueDeducted = Math.round(MINT_PERCENTAGE_COST * price);
+
       const { data: userUpdate } = await supabase
         .from("users")
         //@ts-ignore null != undefined
@@ -162,10 +163,6 @@ export default function MintForm() {
     handleBlur,
     setFieldError,
   } = formik;
-  const toggleColor = checked ? "bg-primary" : "";
-
-  let titleErr = errors.title && touched.title;
-  let descriptionErr = errors.description && touched.description;
 
   function showImage(e: any) {
     const file = e.target.files[0];
@@ -336,8 +333,8 @@ export default function MintForm() {
             </div>
           </div>
           <MethodOptions method={method} formik={formik} />
-          {/* <div
-              className="unlock grid gap-2 rounded-lg border-2 border-gray-600 p-4"
+          <div
+              className="unlock hidden previously:grid gap-2 rounded-lg border-2 border-gray-600 p-4"
               tabIndex={0}
             >
               <div className="header flex justify-between ">
@@ -351,7 +348,7 @@ export default function MintForm() {
                 </p>
                 <input
                   type="checkbox"
-                  className={`toggle ${toggleColor} focus:outline-2 focus:outline-primary`}
+                  className={cn(`toggle focus:outline-2 focus:outline-primary, {"bg-primary": checked}`)}
                   checked={checked}
                   onChange={toggleChecked}
                 />
@@ -359,7 +356,7 @@ export default function MintForm() {
               <p className="text-gray-400">
                 Unlock content after successful transaction
               </p>
-            </div> */}
+            </div>
           <div className="choose-collection grid gap-1 text-white">
             <label htmlFor="collections">Choose collection</label>
             <select
