@@ -30,7 +30,7 @@ export type NFT = {
   creator: string,
   description: string,
   category: string,
-  fromInput: boolean
+  fromInput: boolean,
 };
 
 
