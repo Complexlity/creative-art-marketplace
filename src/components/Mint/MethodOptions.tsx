@@ -1,4 +1,5 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import MktIcon from "~/components/Universal/MktIcon";
 
 export type Methods = "FIXED_PRICE" | "TIMED_AUCTION" | "OPEN_BIDS";
 
@@ -27,8 +28,10 @@ export default function MethodOptions({
               exit={{ opacity: 0, transition: { duration: 0.3 } }}
               className="price mb-6 grid gap-2 text-gray-200"
             >
-              <label htmlFor="price" className="">
-                Price (MKT)
+              <label htmlFor="price" className="flex gap-1">
+                  Price <span className="flex items-center">
+                  (<MktIcon className="w-4 h-4 m-0 p-0" />)
+                  </span>
               </label>
               <input
                 type="number"
@@ -63,8 +66,9 @@ export default function MethodOptions({
                 exit={{ opacity: 0, transition: { duration: 0.3 } }}
                 className="price mb-6 grid gap-2 text-gray-200"
               >
-                <label htmlFor="minBid" className="">
-                  Minimum Bid (MKT)
+                <label htmlFor="minBid" className="flex gap-1">
+                    Minimum Bid
+                    <span>(<MktIcon className="w-4 h-4 m-0 p-0" />)</span>
                 </label>
                 <input
                   type="number"

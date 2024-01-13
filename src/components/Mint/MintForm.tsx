@@ -76,7 +76,7 @@ export default function MintForm() {
       },
       onSubmit: async (values, { resetForm }) => {
         if (!(userId && user) ) {
-          toast("Pleas Login")
+          toast("Please Login")
           return
         }
         if (!image) {
@@ -347,9 +347,6 @@ export default function MintForm() {
             </div>
             <div className="choose-collection grid gap-1 text-white">
               <label htmlFor="collections">Choose collection</label>
-              <p className="text-md text-gray-400">
-                Unlock content after successful transaction.
-              </p>
               <select
                 id="collections"
                 name="collections"
