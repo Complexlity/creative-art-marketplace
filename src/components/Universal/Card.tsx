@@ -1,41 +1,33 @@
-
 import Link from "next/link";
 import Image from "next/image";
-import ethereumImage from "/public/icons/ethereum.png";
 import clockImage from "/public/icons/clock.png";
 import CountDownComponent from "./Countdown";
 import { nanoid } from "nanoid";
-import defaultImage from "/public/nfts/default.svg";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Nft } from "~/utils/types";
-import type { NFT } from "~/data/nfts";
 import MktIcon from "./MktIcon";
-export function Card({
-  item,
-  fromInput,
-}: {
-  item?: Nft | NFT;
-  fromInput?: boolean;
-}) {
-  const [isStaticImage, setStaticImage] = useState<boolean>(false);
-  useEffect(() => {
-    if (!fromInput) setStaticImage(false);
-  }, []);
+export function Card({ item }: { item?: Nft }) {
   const defaultItem = {
     id: nanoid(5),
-    name: "",
+    name: "Lorem Ipsum",
     price: 0,
-    image: defaultImage,
+    image: "/nfts/default.png",
     category: "",
     description: "",
-    endTime: 0,
-    creator: "",
-    slug: ''
+    slug: "",
   };
 
   const mergedItem = { ...defaultItem, ...item };
-  if (mergedItem.image === undefined) mergedItem.image = defaultImage;
+
+  // @ts-expect-error type item not defined
+  Object.entries(item).forEach(([key, value]) => {
+    //@ts-expect-error element has any type
+    if (value === "" && defaultItem[key] !== undefined) {
+      //@ts-expect-error element has any type
+      mergedItem[key] = defaultItem[key];
+    }
+  });
 
   return (
     <motion.div
@@ -47,23 +39,17 @@ export function Card({
       suppressHydrationWarning={true}
       className="mx-auto mb-6 w-full max-w-[500px] space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
     >
-      {/* {isStaticImage ? (
+      <div>
         <Image
           suppressHydrationWarning={true}
           alt={`${mergedItem.name} Image`}
-          className="my-card-image mx-auto aspect-square rounded-lg object-cover object-top"
-          src={mergedItem!.image}
+          className="my-card-image mx-auto aspect-square w-full rounded-lg object-cover object-top"
+          src={mergedItem.image}
+          width={300}
+          height={300}
         />
-      ) : ( */}
-      <Image
-        suppressHydrationWarning={true}
-        alt={`${mergedItem.name} Image`}
-        className="my-card-image mx-auto aspect-square w-full rounded-lg object-cover object-top"
-        src={mergedItem!.image}
-        width={300}
-        height={300}
-      />
-      {/* )} */}
+      </div>
+
       <div
         suppressHydrationWarning={true}
         className="flex justify-between font-semibold tracking-wide"
