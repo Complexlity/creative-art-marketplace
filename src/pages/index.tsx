@@ -9,11 +9,12 @@ import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
 import { useNftsDataContext } from "~/contexts/NftsDataContext";
 import useNfts from "~/hooks/useNfts";
 import 'react-loading-skeleton/dist/skeleton.css'
+import { Nft } from "~/utils/types";
 
 const Home: NextPage = () => {
   const nftsData = useNftsDataContext().nftsData;
   let { data: nfts } = useNfts({});
-  const sortedNfts = nfts?.sort((a, b) => a.price - b.price);
+  const sortedNfts = nfts?.sort((a, b) => a.price - b.price) as unknown as Nft[]
 
   return (
     <>

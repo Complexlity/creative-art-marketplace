@@ -35,7 +35,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`px-2 md:px-4 sticky top-[10px] text-xl z-[20] flex py-1 md:py-2 items-center justify-between text-white
+      className={`px-2 md:px-4 sticky top-[10px] text-xl z-[30] flex py-1 md:py-2 items-center justify-between text-white
         ${isScrolling ? "rounded-full top-[.5rem] opacity-[90%] backdrop-blur-md shadow-sm shadow-primary" : ""}`}
     >
       <Link href="/" className="flex items-center gap-1 text-3xl">
