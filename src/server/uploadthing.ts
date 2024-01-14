@@ -2,6 +2,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
 
+import { UTApi } from "uploadthing/server";
+
+export const utapi = new UTApi();
+
 const f = createUploadthing();
 
 const auth = (req: NextApiRequest, res: NextApiResponse) => ({ id: "fakeId" }); // Fake auth function
