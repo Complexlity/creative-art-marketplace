@@ -21,6 +21,11 @@ import useCurrentUser from "~/hooks/useCurrentUser";
 import { cn } from "~/utils/libs";
 
 const MINT_PERCENTAGE_COST = 0.2;
+function convertStringDateToMilleseconds(date?: string) {
+  if(!date) return Date.now()
+  const dateObject = new Date(date);
+  return dateObject.setHours(0, 0, 0, 0)};
+
 
 export default function MintForm() {
   const { userId } = useAuth();
@@ -438,15 +443,16 @@ export default function MintForm() {
           <Card
             item={
               {
-                image: imageUrl as unknown as StaticImageData,
+                image: imageUrl ,
                 name: values.title,
                 price: values.price || values.minBid,
                 category: values.collections,
-                start_date: values.startDate,
-                end_date: values.endDate,
+                start_date: convertStringDateToMilleseconds(values.startDate),
+
                 sale_type: method
               } as unknown as Nft
             }
+            fromInput={true}
           />
         </div>
       </form>

@@ -1,13 +1,8 @@
 import Countdown, { zeroPad } from "react-countdown";
 
-type Renderer = {
-  hours: number;
-  minutes: number;
-  seconds: number;
-  completed: boolean;
-};
+
 //@ts-ignore
-let renderer = ({ days, hours, minutes, seconds, completed }: Renderer) => {
+let renderer = ({ days, hours, minutes, seconds, completed }) => {
   hours += days * 24;
   const Completionist = () => <span className="text-green-500">NIL</span>;
   if (completed) {
@@ -23,44 +18,41 @@ let renderer = ({ days, hours, minutes, seconds, completed }: Renderer) => {
   }
 };
 
-function convertStringDateToMilleseconds(date: string) {
-  if(!date) return 0
-  const dateObject = new Date(date);
-  return dateObject.setHours(0, 0, 0, 0)};
+//@ts-ignore
+let renderer2 = ({ days, hours, minutes, seconds, completed }) => {
+  const Completionist = () => <span className="text-green-500">NIL</span>;
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return (
+      <span suppressHydrationWarning={true}>
+        {days}d {hours}h
+      </span>
+    );
+  }
+};
+
 
 
 
 export default function CountDownComponent({
-  startDate, endDate
+  start_date,
+  fromInput
 }: {
-    startDate: string,
-  endDate: string
+    start_date: number,
+  fromInput? : boolean
+
   })
 
-{
 
-  // console.log("I am here")
-  //     let dateCounted = 0
-  // let start = convertStringDateToMilleseconds(startDate);
-  //     let now = Date.now();
-  // let end = convertStringDateToMilleseconds(endDate);
-
-  //   if (start > now) {
-  //     dateCounted = start;
-
-  //     } else if (end > now) {
-  //     dateCounted = end;
-  // }
-  // else { dateCounted = Date.now() }
-
-
-
-  // console.log(`${dateCounted} was set`)
+  {
+  const myRenderer = fromInput ? renderer2 : renderer
   return (
     <Countdown
-      date={Date.now()  + 1000}
-      renderer={renderer}
-      daysInHours
+      date={start_date}
+      renderer={myRenderer}
     />
   );
 }

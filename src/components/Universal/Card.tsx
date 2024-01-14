@@ -1,22 +1,16 @@
-import Link from "next/link";
-import Image from "next/image";
-import clockImage from "/public/icons/clock.png";
-import CountDownComponent from "./Countdown";
-import { customAlphabet } from "nanoid";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect } from "react";
 import { Nft } from "~/utils/types";
+import CountDownComponent from "./Countdown";
 import MktIcon from "./MktIcon";
+import clockImage from "/public/icons/clock.png";
 
 
-export function Card({ item }: { item?: Nft }) {
-  let [dateState, setDateState] = useState('')
-  let nanoid2 = customAlphabet("0123456789", 5) as any as (
-    ...args: unknown[]
-  ) => number;
+export function Card({ item, fromInput }: { item?: Nft, fromInput?: boolean }) {
 
   const defaultItem = {
-    id: nanoid2(5),
     name: "Lorem Ipsum",
     price: 0,
     image: "/nfts/default.png",
@@ -79,13 +73,13 @@ export function Card({ item }: { item?: Nft }) {
         {mergedItem.sale_type === "FIXED_PRICE" && <div>Fixed Price </div>}
         {mergedItem.sale_type === "TIMED_AUCTION" && (
           <div className="grid text-start ">
-            <small className="text-gray-400"> In</small>
+            <small className="text-gray-400">Starting In </small>
             <p className="flex items-center gap-1">
               <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
               <span className="font-bold">
                 <CountDownComponent
-                  startDate={mergedItem.start_date!}
-                  endDate={mergedItem.end_date!}
+                  start_date={mergedItem.start_date as unknown as number}
+                  fromInput={fromInput}
                 />
               </span>
             </p>
