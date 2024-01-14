@@ -8,7 +8,7 @@ interface useCurrentPageProps {
 }
 
 const useCurrentPage = ({ serverNfts  }: useCurrentPageProps) => {
-  return useQuery<Nft[], Nft[]>({
+  return useQuery({
     queryKey: [`nfts`],
     queryFn: async () => {
       return await getAllNfts();
