@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { MdGroups } from "react-icons/md";
 import { ImPriceTag } from "react-icons/im";
 import { FaHourglassHalf, FaLock, FaUnlockAlt  } from "react-icons/fa";
@@ -39,6 +39,13 @@ export default function MintForm() {
   const [method, setMethod] = useState<Methods>("FIXED_PRICE");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
+
+  const handleKeyDown = (event: React.KeyboardEvent, value: Methods) => {
+    if (event.keyCode === 13) {
+      // Perform your action here
+      setMethod(value)
+    }
+  };
 
   const toggleChecked = () => {
     setChecked(!checked);
@@ -294,7 +301,11 @@ export default function MintForm() {
           <div className="select-method grid gap-4">
             <h3 className="">Select Method</h3>
             <div className="flex flex-wrap items-start gap-4">
-              <label className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32">
+              <label
+                className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32"
+                tabIndex={0}
+                onKeyDown={(e) => handleKeyDown(e, "FIXED_PRICE")}
+              >
                 <ImPriceTag className="icon h-8 w-8" color={"gray"} />
                 <p>Fixed Price</p>
                 <input
@@ -305,10 +316,12 @@ export default function MintForm() {
                   value="fixed_price"
                   onChange={toggleOptions}
                   checked={method === "FIXED_PRICE"}
+                  tabIndex={-1}
                 />
               </label>
               <label
                 tabIndex={0}
+                onKeyDown={(e) => handleKeyDown(e, "OPEN_BIDS")}
                 className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
               >
                 <MdGroups className="icon h-8 w-8" color={"gray"} />
@@ -321,10 +334,12 @@ export default function MintForm() {
                   value="open_bids"
                   onChange={toggleOptions}
                   checked={method === "OPEN_BIDS"}
+                  tabIndex={-1}
                 />
               </label>
               <label
                 tabIndex={0}
+                onKeyDown={(e) => handleKeyDown(e, "TIMED_AUCTION")}
                 className="method-card flex h-28 w-28 flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-600 md:h-32 md:w-32 "
               >
                 <FaHourglassHalf className="icon h-8 w-8" color={"gray"} />
@@ -337,35 +352,38 @@ export default function MintForm() {
                   value="timed_auction"
                   onChange={toggleOptions}
                   checked={method === "TIMED_AUCTION"}
+                  tabIndex={-1}
                 />
               </label>
             </div>
           </div>
           <MethodOptions method={method} formik={formik} />
           <div
-              className="unlock hidden previously:grid gap-2 rounded-lg border-2 border-gray-600 p-4"
-              tabIndex={0}
-            >
-              <div className="header flex justify-between ">
-                <p className="flex items-center gap-1">
-                  {checked ? (
-                    <FaUnlockAlt className="text-primary" />
-                  ) : (
-                    <FaLock className="text-gray-600" />
-                  )}{" "}
-                  Unlock once purchased{" "}
-                </p>
-                <input
-                  type="checkbox"
-                  className={cn(`toggle focus:outline-2 focus:outline-primary, {"bg-primary": checked}`)}
-                  checked={checked}
-                  onChange={toggleChecked}
-                />
-              </div>
-              <p className="text-gray-400">
-                Unlock content after successful transaction
+            className="unlock previously:grid hidden gap-2 rounded-lg border-2 border-gray-600 p-4"
+            tabIndex={0}
+          >
+            <div className="header flex justify-between ">
+              <p className="flex items-center gap-1">
+                {checked ? (
+                  <FaUnlockAlt className="text-primary" />
+                ) : (
+                  <FaLock className="text-gray-600" />
+                )}{" "}
+                Unlock once purchased{" "}
               </p>
+              <input
+                type="checkbox"
+                className={cn(
+                  `focus:outline-primary, {"bg-primary": checked} toggle focus:outline-2`
+                )}
+                checked={checked}
+                onChange={toggleChecked}
+              />
             </div>
+            <p className="text-gray-400">
+              Unlock content after successful transaction
+            </p>
+          </div>
           <div className="choose-collection grid gap-1 text-white">
             <label htmlFor="collections">Choose collection</label>
             <select
@@ -443,13 +461,13 @@ export default function MintForm() {
           <Card
             item={
               {
-                image: imageUrl ,
+                image: imageUrl,
                 name: values.title,
                 price: values.price || values.minBid,
                 category: values.collections,
                 start_date: convertStringDateToMilleseconds(values.startDate),
 
-                sale_type: method
+                sale_type: method,
               } as unknown as Nft
             }
             fromInput={true}
