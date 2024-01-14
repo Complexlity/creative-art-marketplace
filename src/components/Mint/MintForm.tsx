@@ -71,6 +71,7 @@ export default function MintForm() {
       isCheckingDate: false,
     },
     onSubmit: async (values, { resetForm }) => {
+
       if (!image) {
         setImageError("NFT image not provided");
         window.scrollTo(0, 0);
@@ -105,7 +106,7 @@ export default function MintForm() {
         trim: true,
       });
 
-      let price = method === "FIXED_PRICE" ? values.price : values.minBid;
+      const price = method === "FIXED_PRICE" ? values.price : values.minBid;
 
       const { data, error } = await supabase
         .from("nfts")
@@ -181,6 +182,7 @@ export default function MintForm() {
     setImageUrl(fileUrl);
     setImageError("");
   }
+
 
   return (
     <>
@@ -440,9 +442,11 @@ export default function MintForm() {
                 name: values.title,
                 price: values.price || values.minBid,
                 category: values.collections,
+                start_date: values.startDate,
+                end_date: values.endDate,
+                sale_type: method
               } as unknown as Nft
             }
-            fromInput={true}
           />
         </div>
       </form>

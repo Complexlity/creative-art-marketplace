@@ -2,20 +2,28 @@ import Link from "next/link";
 import Image from "next/image";
 import clockImage from "/public/icons/clock.png";
 import CountDownComponent from "./Countdown";
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Nft } from "~/utils/types";
 import MktIcon from "./MktIcon";
+
+
 export function Card({ item }: { item?: Nft }) {
+  let [dateState, setDateState] = useState('')
+  let nanoid2 = customAlphabet("0123456789", 5) as any as (
+    ...args: unknown[]
+  ) => number;
+
   const defaultItem = {
-    id: nanoid(5),
+    id: nanoid2(5),
     name: "Lorem Ipsum",
     price: 0,
     image: "/nfts/default.png",
     category: "",
     description: "",
     slug: "",
+    sale_type: "FIXED_PRICE",
   };
 
   const mergedItem = { ...defaultItem, ...item };
@@ -28,6 +36,10 @@ export function Card({ item }: { item?: Nft }) {
       mergedItem[key] = defaultItem[key];
     }
   });
+
+  useEffect(() => {
+
+  })
 
   return (
     <motion.div
@@ -63,15 +75,23 @@ export function Card({ item }: { item?: Nft }) {
         </p>
       </div>
       <div className="flex justify-between">
-        <div className="grid text-start ">
-          <small className="text-gray-400">Ending In</small>
-          <p className="flex items-center gap-1">
-            <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
-            <span className="font-bold">
-              <CountDownComponent timeDifference={mergedItem!.endTime} />
-            </span>
-          </p>
-        </div>
+        {mergedItem.sale_type === "OPEN_BIDS" && <div>Open Bids </div>}
+        {mergedItem.sale_type === "FIXED_PRICE" && <div>Fixed Price </div>}
+        {mergedItem.sale_type === "TIMED_AUCTION" && (
+          <div className="grid text-start ">
+            <small className="text-gray-400"> In</small>
+            <p className="flex items-center gap-1">
+              <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
+              <span className="font-bold">
+                <CountDownComponent
+                  startDate={mergedItem.start_date!}
+                  endDate={mergedItem.end_date!}
+                />
+              </span>
+            </p>
+          </div>
+        )}
+
         <Link href={mergedItem.slug ? `/nfts/${mergedItem.slug}` : ""}>
           <motion.button
             whileHover={{
