@@ -1,13 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import Head from "next/head";
 import CardsContainer from "~/components/Explore/CardsContainer";
 import Footer from "~/components/Universal/Footer";
 import Header from "~/components/Universal/Header";
 import NavBar from "~/components/Universal/nav/NavBar";
-import { NFT } from "~/data/nfts";
 import useNfts from "~/hooks/useNfts";
 import { getAllNfts } from "~/utils/queries";
-import { Nft, WithUser } from "~/utils/types";
+import { Nft } from "~/utils/types";
 
 export async function getStaticProps() {
   const serverNfts = await getAllNfts();
@@ -21,7 +19,7 @@ type ExploreProps = {
 const Explore = ({ serverNfts }: ExploreProps) => {
   const { data: nfts } = useNfts({ serverNfts })
 
-  
+
   return (
     <>
       <Head>
