@@ -12,9 +12,8 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { Nft } from "~/utils/types";
 
 const Home: NextPage = () => {
-  const nftsData = useNftsDataContext().nftsData;
   let { data: nfts } = useNfts({});
-  const sortedNfts = nfts?.sort((a, b) => a.price - b.price) as unknown as Nft[]
+
 
   return (
     <>
@@ -33,8 +32,8 @@ const Home: NextPage = () => {
         >
           <NavBar />
           <div suppressHydrationWarning className="overflow-x-hidden">
-            <Hero sortedNfts={sortedNfts} />
-            <UniqueArt sortedNfts={sortedNfts} />
+            <Hero nfts={nfts} />
+            <UniqueArt nfts={nfts} />
             <WeeklyArtists />
             <Subscribe />
             <Footer />

@@ -9,10 +9,10 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 type Props = {
-  sortedNfts? :Nft[]
+  nfts? :Nft[]
 }
 
-const UniqueArt = ({ sortedNfts: nftsData}: Props) => {
+const UniqueArt = ({ nfts: nftsData}: Props) => {
 if(!nftsData) return null
 
   let cards = [];

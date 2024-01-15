@@ -26,22 +26,37 @@ let renderer2 = ({ days, hours, minutes, seconds, completed }) => {
     return <Completionist />;
   } else {
     // Render a countdown
-    return (
-      <span suppressHydrationWarning={true}>
-        {days}d {hours}h
+    if (days > 0) {
+      return (
+        <span suppressHydrationWarning={true}>
+        {days}d {hours}h {minutes}m
       </span>
     );
+    }
+
+    return (
+      <span suppressHydrationWarning={true}>
+        {hours}h {minutes}m {seconds}s
+      </span>
+    );
+
   }
 };
 
 
+
+function convertStringDateToMilleseconds(date: string | null) {
+  if (!date) return Date.now();
+  const dateObject = new Date(date);
+  return dateObject.setHours(0, 0, 0, 0);
+}
 
 
 export default function CountDownComponent({
   start_date,
   fromInput
 }: {
-    start_date: number,
+  start_date: string | null,
   fromInput? : boolean
 
   })
@@ -51,7 +66,7 @@ export default function CountDownComponent({
   const myRenderer = fromInput ? renderer2 : renderer
   return (
     <Countdown
-      date={start_date}
+      date={convertStringDateToMilleseconds(start_date)}
       renderer={myRenderer}
     />
   );

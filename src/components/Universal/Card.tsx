@@ -78,7 +78,7 @@ export function Card({ item, fromInput }: { item?: Nft, fromInput?: boolean }) {
               <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
               <span className="font-bold">
                 <CountDownComponent
-                  start_date={mergedItem.start_date as unknown as number}
+                  start_date={mergedItem.start_date!}
                   fromInput={fromInput}
                 />
               </span>

@@ -22,11 +22,6 @@ import { cn } from "~/utils/libs";
 import { useQueryClient } from "@tanstack/react-query";
 
 const MINT_PERCENTAGE_COST = 0.2;
-function convertStringDateToMilleseconds(date?: string) {
-  if (!date) return Date.now();
-  const dateObject = new Date(date);
-  return dateObject.setHours(0, 0, 0, 0);
-}
 
 export default function MintForm() {
   const { userId } = useAuth();
@@ -501,8 +496,7 @@ export default function MintForm() {
                 name: values.title,
                 price: values.price || values.minBid,
                 category: values.collections,
-                start_date: convertStringDateToMilleseconds(values.startDate),
-
+                start_date: values.startDate,
                 sale_type: method,
               } as unknown as Nft
             }
