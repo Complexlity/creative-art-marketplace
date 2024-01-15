@@ -138,7 +138,7 @@ export default function MethodOptions({
                     `block w-full rounded-lg   border-2 border-gray-600  bg-transparent p-2 text-sm text-white placeholder-gray-500 focus:border-primary focus:ring-primary`,
                     {
                       "border-red-400": errors.price && touched.price,
-                      "border-green-400": errors.price && touched.price,
+                      "border-green-400": !errors.price && touched.price,
                     }
                   )}
                   placeholder="Enter price for item"
