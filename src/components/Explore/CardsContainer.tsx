@@ -31,34 +31,34 @@ export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
   const [expiryDate, setExpiryDate] = useState("0");
   const [displayedData, setDisplayedData] = useState(nftsData);
 
-  const [cardsShownOnScreen, setDisplayedLength] = useState(getDisplayedLength(displayedData));
+  const [numberOfCardsToShow, setDisplayedLength] = useState(getNumberOfCardsShow(displayedData));
 
-  function getDisplayedLength(data: unknown[]) {
+  function getNumberOfCardsShow(data: unknown[]) {
 return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_TO_SHOW : data.length
   }
 
   const MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN = displayedData.length;
 
-  const willSeeMore = MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN > cardsShownOnScreen
-  const willSeeLess = cardsShownOnScreen > INITIAL_NUMBER_OF_CARDS_TO_SHOW
+  const willSeeMore = MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN > numberOfCardsToShow
+  const willSeeLess = numberOfCardsToShow > INITIAL_NUMBER_OF_CARDS_TO_SHOW
 
   function showMore() {
-    const remaining = MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN - cardsShownOnScreen
+    const remaining = MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN - numberOfCardsToShow
     setDisplayedLength((prev) => prev + (remaining > STEP ? STEP : remaining))
   }
   function showLess() {
-  if (cardsShownOnScreen % STEP === 0) {
+  if (numberOfCardsToShow % STEP === 0) {
      setDisplayedLength((prev) => prev - STEP);
     }
     else {
-      setDisplayedLength((prev) => prev - (cardsShownOnScreen % STEP))
+      setDisplayedLength((prev) => prev - (numberOfCardsToShow % STEP))
     }
   }
 
   useEffect(() => {
     const totalData = aggregateQuery(debouncedSearch, category, expiryDate, priceRange)
     setDisplayedData(totalData);
-    setDisplayedLength(getDisplayedLength(totalData))
+    setDisplayedLength(getNumberOfCardsShow(totalData))
 
   }, [debouncedSearch, category, expiryDate, priceRange]);
 
@@ -195,7 +195,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
             className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             <AnimatePresence>
-              {displayedData.slice(0, cardsShownOnScreen).map((item) => {
+              {displayedData.slice(0, numberOfCardsToShow).map((item) => {
                 return <Card key={item.id} item={item} />;
               })}
             </AnimatePresence>
