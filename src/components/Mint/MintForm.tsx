@@ -98,7 +98,7 @@ export default function MintForm() {
         (err) => (uploadError = err)
       );
       const fileUrl = fileUploadResponse![0].fileUrl;
-      console.log("Uploaded File:", {res: fileUploadResponse})
+
 
       if (uploadError) {
         toast("Could not upload file");
@@ -135,15 +135,14 @@ export default function MintForm() {
             },
           ])
           .select();
-        console.log({data})
         supabaseData = data
         supabaseError = error
+        if(error) throw error
       } catch (error) {
         function deleteFiles(index: number = 0) {
-          console.log("Trying to delete files:", index)
+
           if (index == 2) {
-            console.log({ success: false, message: "Could not delete files" })
-            return
+            return {success: false, error: "Could Not Delete Files"}
           }
           fetch("/api/delete_uploaded_images", {
             method: "POST",
@@ -157,7 +156,6 @@ export default function MintForm() {
         }
             )
             .catch((err) => {
-            console.log({ err });
             deleteFiles(index + 1);
             // TODO: retry to delete the files if there's an error
           });
@@ -182,10 +180,9 @@ export default function MintForm() {
           .update({ game_currency: user.game_currency - valueDeducted })
           .eq("user_id", userId)
           .select();
-
         queryClient.invalidateQueries({
           queryKey: ["nfts"]
-        })
+        }).then(() => {
         setLoadingMessage("Completed");
         notifyMint();
         setImage(undefined);
@@ -194,10 +191,11 @@ export default function MintForm() {
         setImage(undefined);
         setImageUrl("");
         setIsLoading(false);
-        router.push("/explore");
+          router.push("/explore");
+        })
+
       } else if (supabaseError) {
         toast("Something Went Wrong", {});
-        console.log(supabaseError);
         setIsLoading(false);
         setLoadingMessage("");
       }
