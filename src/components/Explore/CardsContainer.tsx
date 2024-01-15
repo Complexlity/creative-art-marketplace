@@ -5,7 +5,6 @@ import useDebounce from "~/hooks/useDebounce";
 import { AnimatePresence } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
-import { getCategory } from "~/utils/libs";
 import { Nft } from "~/utils/types";
 
 type SeeMore = {
