@@ -8,7 +8,7 @@ import MktIcon from "./MktIcon";
 import clockImage from "/public/icons/clock.png";
 
 
-export function Card({ item, fromInput }: { item?: Nft, fromInput?: boolean }) {
+export function Card({ item }: { item?: Nft }) {
 
   const defaultItem = {
     name: "Lorem Ipsum",
@@ -79,7 +79,7 @@ export function Card({ item, fromInput }: { item?: Nft, fromInput?: boolean }) {
               <span className="font-bold">
                 <CountDownComponent
                   start_date={mergedItem.start_date!}
-                  fromInput={fromInput}
+
                 />
               </span>
             </p>

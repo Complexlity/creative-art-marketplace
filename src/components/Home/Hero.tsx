@@ -16,7 +16,7 @@ type HeroProps = {
 const Hero = ({ nfts: nftsData }: HeroProps) => {
   const [loaded, setLoaded] = useState<boolean>(false)
   const heroItem = nftsData && nftsData![nftsData!.length - 1]
-  
+
 
   return (
     <section className="mb-24 px-1 py-2 md:grid md:grid-cols-2 md:py-6">
@@ -60,7 +60,6 @@ const Hero = ({ nfts: nftsData }: HeroProps) => {
               <p className="flex justify-between font-bold text-white">
                 <span>
                   <CountDownComponent
-                    fromInput={true}
                     start_date={heroItem!.start_date} />
                 </span>
                 <span suppressHydrationWarning={true}>

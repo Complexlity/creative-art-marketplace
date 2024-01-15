@@ -139,30 +139,38 @@ export default function MintForm() {
         supabaseError = error
         if(error) throw error
       } catch (error) {
-        function deleteFiles(index: number = 0) {
+        console.log({ error });
 
+        function deleteFiles(index: number = 0) {
           if (index == 2) {
-            return {success: false, error: "Could Not Delete Files"}
+            return { success: false, error: "Could Not Delete Files" };
           }
           fetch("/api/delete_uploaded_images", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(fileUploadResponse),
           })
-            .then(res => {
-              if (!res.ok)
-                throw new Error("Something went wrong")
-             else return res.json()
-        }
-            )
+            .then((res) => {
+              if (!res.ok) throw new Error("Something went wrong");
+              else return res.json();
+            })
             .catch((err) => {
-            deleteFiles(index + 1);
-            // TODO: retry to delete the files if there's an error
-          });
+              //Retry if delete fails
+              deleteFiles(index + 1);
+            });
         }
-        // delete the uploaded file behind the scenes without blocking the ui with two retries
-        deleteFiles()
 
+        // delete the uploaded file behind the scenes without blocking the ui with two retries
+        deleteFiles();
+
+        //@ts-expect-error 'code' does not exist on error
+        if (error && error.code === "PGRST301") {
+          //auth issues
+          toast("Could Not Authenticate. Refreshing the page")
+          setTimeout(() => {
+            router.refresh()
+          }, 5000);
+        }
       }
 
       if (supabaseData) {
@@ -174,12 +182,13 @@ export default function MintForm() {
         // Deduct some percentage from user after mint
         const valueDeducted = Math.round(MINT_PERCENTAGE_COST * price);
 
-        const { data: userUpdate } = await supabase
+        const { data: userUpdate, error: userUpdateError } = await supabase
           .from("users")
           //@ts-ignore null != undefined
           .update({ game_currency: user.game_currency - valueDeducted })
           .eq("user_id", userId)
           .select();
+        console.log({userUpdate, userUpdateError})
         queryClient.invalidateQueries({
           queryKey: ["nfts"]
         }).then(() => {
@@ -498,7 +507,6 @@ export default function MintForm() {
                 sale_type: method,
               } as unknown as Nft
             }
-            fromInput={true}
           />
         </div>
       </form>
