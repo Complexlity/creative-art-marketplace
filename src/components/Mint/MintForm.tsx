@@ -19,6 +19,7 @@ import slugify from "slugify";
 import { Nft } from "~/utils/types";
 import useCurrentUser from "~/hooks/useCurrentUser";
 import { cn } from "~/utils/libs";
+import { useQueryClient } from "@tanstack/react-query";
 
 const MINT_PERCENTAGE_COST = 0.2;
 function convertStringDateToMilleseconds(date?: string) {
@@ -39,7 +40,7 @@ export default function MintForm() {
   const [method, setMethod] = useState<Methods>("FIXED_PRICE");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
-
+  const queryClient = useQueryClient()
   const handleKeyDown = (event: React.KeyboardEvent, value: Methods) => {
     if (event.keyCode === 13) {
       // Perform your action here
@@ -139,6 +140,7 @@ export default function MintForm() {
             },
           ])
           .select();
+        console.log({data})
         supabaseData = data
         supabaseError = error
       } catch (error) {
@@ -186,6 +188,9 @@ export default function MintForm() {
           .eq("user_id", userId)
           .select();
 
+        queryClient.invalidateQueries({
+          queryKey: ["nfts"]
+        })
         setLoadingMessage("Completed");
         notifyMint();
         setImage(undefined);
