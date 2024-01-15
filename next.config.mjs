@@ -14,7 +14,7 @@ const config = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["uploadthing.com", "img.clerk.com"],
+    domains: ["uploadthing.com", "img.clerk.com", "utfs.io"],
   },
 
   /**
