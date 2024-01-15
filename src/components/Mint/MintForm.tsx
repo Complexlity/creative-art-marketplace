@@ -118,7 +118,7 @@ export default function MintForm() {
         trim: true,
       });
 
-      const price = method === "FIXED_PRICE" ? values.price : values.minBid;
+      const price = method ===  "OPEN_BIDS" ? values.minBid : values.price;
       let supabaseData;
       let supabaseError;
       try {
