@@ -14,79 +14,53 @@ type SeeMore = {
   max: number;
 };
 
+const INITIAL_NUMBER_OF_CARDS_TO_SHOW = 6;
+const STEP = 3;
+const CHEAP = 30;
+const AFFORDABLE = 50;
+
+
 type Search = string | number | readonly string[] | undefined;
 
 export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
+
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
   const [priceRange, setPriceRange] = useState<string>("all");
   const [category, setCategory] = useState("default");
   const [expiryDate, setExpiryDate] = useState("0");
   const [displayedData, setDisplayedData] = useState(nftsData);
-  const [seeMore, setSeeMore] = useState<SeeMore>({
-    initialValue: 6,
-    step: 3,
-    max: displayedData.length,
-  });
-  const [showingCondition, setShowingCondition] = useState({
-    maxxed: false,
-    minned: true,
-  });
+
+  const [cardsShownOnScreen, setDisplayedLength] = useState(getDisplayedLength(displayedData));
+
+  function getDisplayedLength(data: unknown[]) {
+return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_TO_SHOW : data.length
+  }
+
+  const MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN = displayedData.length;
+
+  const willSeeMore = MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN > cardsShownOnScreen
+  const willSeeLess = cardsShownOnScreen > INITIAL_NUMBER_OF_CARDS_TO_SHOW
 
   function showMore() {
-    if (showingCondition.maxxed) return;
-    if (showingCondition.minned)
-      setShowingCondition({ ...showingCondition, minned: false });
-    const { initialValue, step, max } = seeMore;
-
-    let next = initialValue + step;
-    if (next >= max) {
-      next = max;
-      setShowingCondition({ ...showingCondition, maxxed: true });
-    }
-    setSeeMore({ ...seeMore, initialValue: next });
+    const remaining = MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN - cardsShownOnScreen
+    setDisplayedLength((prev) => prev + (remaining > STEP ? STEP : remaining))
   }
   function showLess() {
-    if (showingCondition.minned) return;
-    if (showingCondition.maxxed) {
-      setShowingCondition(() => {
-        return { ...showingCondition, maxxed: false };
-      });
+  if (cardsShownOnScreen % STEP === 0) {
+     setDisplayedLength((prev) => prev - STEP);
     }
-
-    const { initialValue, step } = seeMore;
-    let prev = initialValue - step;
-
-    if (prev <= 6) {
-      setShowingCondition(() => {
-        return { ...showingCondition, minned: true };
-      });
-      prev = 6;
+    else {
+      setDisplayedLength((prev) => prev - (cardsShownOnScreen % STEP))
     }
-
-    setSeeMore({ ...seeMore, initialValue: prev });
   }
 
   useEffect(() => {
-    setDisplayedData(
-      aggregateQuery(debouncedSearch, category, expiryDate, priceRange)
-    );
+    const totalData = aggregateQuery(debouncedSearch, category, expiryDate, priceRange)
+    setDisplayedData(totalData);
+    setDisplayedLength(getDisplayedLength(totalData))
+
   }, [debouncedSearch, category, expiryDate, priceRange]);
-
-  useEffect(() => {
-    if (displayedData.length <= 6) {
-      setShowingCondition({ minned: true, maxxed: true });
-    } else {
-      setShowingCondition({ ...showingCondition, maxxed: false });
-      setSeeMore({
-        initialValue: 6,
-        step: 3,
-        max: displayedData.length,
-      });
-    }
-  }, [displayedData]);
-
-  const timeInMilliseconds = (hours: number) => hours * 60 * 60 * 1000;
 
   function aggregateQuery(
     search: string,
@@ -146,11 +120,11 @@ export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
   function searchByPrice(item: Nft, priceRange: string) {
     switch (priceRange) {
       case "cheap":
-        return item.price < 1;
+        return item.price < CHEAP;
       case "affordable":
-        return item.price >= 1 && item.price < 3;
+        return item.price >= CHEAP && item.price < AFFORDABLE;
       case "costly":
-        return item.price > 3;
+        return item.price > AFFORDABLE;
       default:
         return true;
     }
@@ -208,9 +182,11 @@ export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
             onChange={(e) => setPriceRange(e.target.value)}
           >
             <option value="all">Price</option>
-            <option value="cheap">{`Cheap (< 1💲)`}</option>
-            <option value="affordable">{`Affordable (1💲 - 3💲)`}</option>
-            <option value="costly">{`Costly (> 3💲)`}</option>
+            <option value="cheap">{`Cheap (< 💲${CHEAP})`}</option>
+            <option value="affordable">
+              {`Affordable (💲${CHEAP} - 💲${AFFORDABLE})`}
+            </option>
+            <option value="costly">{`Costly (> 💲${AFFORDABLE})`}</option>
           </select>
         </div>
         <div className="cards">
@@ -219,36 +195,36 @@ export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
             className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             <AnimatePresence>
-              {displayedData.slice(0, seeMore.initialValue).map((item) => {
+              {displayedData.slice(0, cardsShownOnScreen).map((item) => {
                 return <Card key={item.id} item={item} />;
               })}
             </AnimatePresence>
           </div>
           <div className="flex justify-center gap-4 text-center">
-          <button
-            onClick={showMore}
-            className={`flex items-center justify-center gap-2 rounded-full px-4 py-2   ${
-              showingCondition.maxxed
-                ? disabledStyles
-                : "bg-primary text-gray-800 hover:scale-[102%] hover:shadow-round hover:shadow-gray-400"
-            }`}
-          >
-            Load More
-            <BsArrowDownCircleFill className="h-6 w-6 text-green-700" />
-          </button>
-          <button
-            onClick={showLess}
-            className={`flex items-center  gap-2 rounded-full px-4 py-2
-              ${
-                showingCondition.minned
-                  ? disabledStyles
-                  : "bg-gray-500 hover:shadow-round hover:shadow-primary"
+            <button
+              onClick={showMore}
+              className={`flex items-center justify-center gap-2 rounded-full px-4 py-2   ${
+                willSeeMore
+                  ? "bg-primary text-gray-800 hover:scale-[102%] hover:shadow-round hover:shadow-gray-400"
+                  : disabledStyles
               }`}
-          >
-            See Less{" "}
-            <BsFillArrowUpCircleFill className="h-6 w-6 text-rose-700" />
-          </button>
-        </div>
+            >
+              Load More
+              <BsArrowDownCircleFill className="h-6 w-6 text-green-700" />
+            </button>
+            <button
+              onClick={showLess}
+              className={`flex items-center  gap-2 rounded-full px-4 py-2
+              ${
+                willSeeLess
+                  ? "bg-gray-500 hover:shadow-round hover:shadow-primary"
+                  : disabledStyles
+              }`}
+            >
+              See Less{" "}
+              <BsFillArrowUpCircleFill className="h-6 w-6 text-rose-700" />
+            </button>
+          </div>
         </div>
       </section>
     </>

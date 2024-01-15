@@ -19,7 +19,6 @@ type ExploreProps = {
 const Explore = ({ serverNfts }: ExploreProps) => {
   const { data: nfts } = useNfts({ serverNfts })
 
-
   return (
     <>
       <Head>
@@ -31,8 +30,7 @@ const Explore = ({ serverNfts }: ExploreProps) => {
         <div className="mx-auto max-w-[1200px] px-4 text-white md:px-8">
           <NavBar />
           <Header>Explore</Header>
-          {/* @ts-ignore query giving differnet type */}
-            <CardsContainer nftsData={nfts} />
+           <CardsContainer nftsData={[...nfts!].reverse()} />
           <Footer />
         </div>
       </div>
