@@ -77,8 +77,8 @@ const MessagesButton: FC<MessagesButtonProps> = () => {
           <DialogTitle className="mb-4 text-center ">Messages</DialogTitle>
           <DialogDescription>
             <div className=" grid rounded-xl gap-1">
-              {messages?.map((message) => (
-                <div className={`${message.status === 'unread' ? "border-2 border-collapse bg-amber-50 border-primary opacity-[90%]" : ""} text-black p-4 rounded-md`}>
+              {messages?.map((message, index) => (
+                <div key={`${messages}${index}`} className={`${message.status === 'unread' ? "border-2 border-collapse bg-amber-50 border-primary opacity-[90%]" : ""} text-black p-4 rounded-md`}>
                   {message.content}
               </div>
               ))}
