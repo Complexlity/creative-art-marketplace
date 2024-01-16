@@ -489,6 +489,7 @@ export default function MintForm() {
               `submit cursor-pointer rounded-full bg-primary px-6 py-2 text-gray-800`,
               {
                 "opacity-50": isLoading,
+                "cursor-not-allowed": isLoading,
               }
             )}
           />
