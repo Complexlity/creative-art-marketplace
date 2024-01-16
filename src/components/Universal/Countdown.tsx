@@ -18,7 +18,9 @@ let renderer = ({ days, hours, minutes, seconds, completed }) => {
 
     return (
       <span suppressHydrationWarning={true}>
-        {zeroPad(hours)}h {zeroPad(minutes)}m {zeroPad(seconds)}s
+        {zeroPad(hours)}h {zeroPad(minutes)}m <span className="text-red-400">
+        {zeroPad(seconds)}s
+        </span>
       </span>
     );
 
@@ -35,9 +37,9 @@ function convertStringDateToMilleseconds(date: string | null) {
 
 
 export default function CountDownComponent({
-  start_date,
+  date,
 }: {
-  start_date: string | null,
+  date: string | null,
 
   })
 
@@ -46,7 +48,7 @@ export default function CountDownComponent({
 
   return (
     <Countdown
-      date={convertStringDateToMilleseconds(start_date)}
+      date={convertStringDateToMilleseconds(date)}
       renderer={renderer}
     />
   );

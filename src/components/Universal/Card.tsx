@@ -1,13 +1,12 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "~/components/ui/badge";
+import { cn } from "~/utils/libs";
 import { Nft } from "~/utils/types";
 import CountDownComponent from "./Countdown";
 import MktIcon from "./MktIcon";
 import clockImage from "/public/icons/clock.png";
-import { Badge } from "~/components/ui/badge";
-import { Methods } from "../Mint/MethodOptions";
-import { cn } from "~/utils/libs";
 
 
 export function Card({ item }: { item?: Nft }) {
@@ -33,6 +32,17 @@ export function Card({ item }: { item?: Nft }) {
     }
   });
 
+  function getAuctionDateStatus(start_date: string, end_date: string) {
+    const now = new Date();
+    const startDate = new Date(start_date)
+    if (now > startDate) {
+      return {started: true, countDownDate: end_date}
+    }
+    return {started: false, countDownDate: start_date}
+  }
+
+  const { started, countDownDate } = getAuctionDateStatus(mergedItem.start_date!, mergedItem.end_date!)
+
   return (
     <motion.div
       layout
@@ -42,7 +52,7 @@ export function Card({ item }: { item?: Nft }) {
       transition={{ duration: 0.5 }}
       suppressHydrationWarning={true}
       className={cn("mx-auto mb-6 w-full max-w-[500px] space-y-3 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4 border-b-[3px]", {
-        "border-b-red-700": mergedItem.sale_type === "FIXED_PRICE",
+        "border-b-amber-700": mergedItem.sale_type === "FIXED_PRICE",
         "border-b-blue-700": mergedItem.sale_type === "OPEN_BIDS",
         "border-b-green-700": mergedItem.sale_type === "TIMED_AUCTION",
       })}
@@ -72,15 +82,15 @@ export function Card({ item }: { item?: Nft }) {
       </div>
       <div className="flex justify-between items-center">
         {mergedItem.sale_type === "OPEN_BIDS" && <Badge className="bg-blue-700">Open Bid</Badge>}
-        {mergedItem.sale_type === "FIXED_PRICE" && <Badge className="bg-red-700">Fixed Price</Badge>}
+        {mergedItem.sale_type === "FIXED_PRICE" && <Badge className="bg-amber-700">Fixed Price</Badge>}
         {mergedItem.sale_type === "TIMED_AUCTION" && (
           <div className="grid text-start ">
-            <small className="text-green-400 ">Starting In </small>
+            <small className={cn("text-green-400 ", {"text-red-600": started})}>{started ? "Ending" : "Starting"} In </small>
             <p className="flex items-center gap-1">
               <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
               <span className="font-bold">
                 <CountDownComponent
-                  start_date={mergedItem.start_date!}
+                  date={countDownDate}
 
                 />
               </span>
@@ -104,10 +114,6 @@ export function Card({ item }: { item?: Nft }) {
       </div>
     </motion.div>
   );
-}
-
-function shownBadge({method}: {method: Methods}) {
-
 }
 
 
