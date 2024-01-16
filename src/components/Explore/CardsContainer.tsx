@@ -135,60 +135,62 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
     "bg-gray-400 hover:scale-[100%] hover:shadow-none text-blue-900 opacity-[60%] cursor-not-allowed";
   return (
     <>
-      <section className="grid gap-12 border-b-2 border-b-gray-300 pb-12 pt-8">
-        <div className="filters grid items-center gap-4 md:grid-cols-4">
-          <div className="relative flex w-full self-end">
+      <div className="grid gap-6 border-b-2 border-b-gray-300 py-6 pb-12">
+        <div className="filters grid items-center gap-2 md:flex">
+          <div className="relative  flex w-full basis-1/3 self-end">
             <div className="pointer-events-none absolute inset-y-0 right-[2px] flex  items-center">
               <AiOutlineSearch className="white h-6 w-6" />
             </div>
             <input
               type="search"
               id="email-address-icon"
-              className="block w-full rounded-lg border-2 border-gray-600 bg-transparent p-2 text-sm text-gray-200 placeholder:text-gray-300  focus:border-primary focus:ring-primary"
+              className="block w-full rounded-lg border-2 border-gray-600 bg-transparent px-2 py-[.43rem] text-sm text-gray-200 placeholder:text-gray-300  focus:border-primary focus:ring-primary"
               placeholder="Search Nft..."
               onChange={(e) => setSearch(e.target.value)}
               value={search}
             />
           </div>
 
-          <select
-            id="categories"
-            className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="default">All Categories</option>
-            <option value="music">Music</option>
-            <option value="gaming">Gaming </option>
-            <option value="estate">Real Estate</option>
-            <option value="art">Digital Art</option>
-            <option value="collectibles">Collectibles</option>
-            <option value="domain">Domain Names</option>
-          </select>
-          <select
-            id="expiry-time"
-            className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
-            value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
-          >
-            <option value="0">Expiry Time</option>
-            <option value="24">{`< 24 hours`}</option>
-            <option value="48">24 - 48hours</option>
-            <option value="49">{`> 48hours`}</option>
-          </select>
-          <select
-            id="items-type"
-            className="my-select mt-2 block w-full max-w-[250px] rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
-            value={priceRange}
-            onChange={(e) => setPriceRange(e.target.value)}
-          >
-            <option value="all">Price</option>
-            <option value="cheap">{`Cheap (< 💲${CHEAP})`}</option>
-            <option value="affordable">
-              {`Affordable (💲${CHEAP} - 💲${AFFORDABLE})`}
-            </option>
-            <option value="costly">{`Costly (> 💲${AFFORDABLE})`}</option>
-          </select>
+          <div className="flex w-full gap-2">
+            <select
+              id="categories"
+              className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="default">All Categories</option>
+              <option value="music">Music</option>
+              <option value="gaming">Gaming </option>
+              <option value="estate">Real Estate</option>
+              <option value="art">Digital Art</option>
+              <option value="collectibles">Collectibles</option>
+              <option value="domain">Domain Names</option>
+            </select>
+            <select
+              id="expiry-time"
+              className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+              value={expiryDate}
+              onChange={(e) => setExpiryDate(e.target.value)}
+            >
+              <option value="0">Expiry Time</option>
+              <option value="24">{`< 24 hours`}</option>
+              <option value="48">24 - 48hours</option>
+              <option value="49">{`> 48hours`}</option>
+            </select>
+            <select
+              id="items-type"
+              className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+              value={priceRange}
+              onChange={(e) => setPriceRange(e.target.value)}
+            >
+              <option value="all">Price</option>
+              <option value="cheap">{`Cheap (< 💲${CHEAP})`}</option>
+              <option value="affordable">
+                {`Affordable (💲${CHEAP} - 💲${AFFORDABLE})`}
+              </option>
+              <option value="costly">{`Costly (> 💲${AFFORDABLE})`}</option>
+            </select>
+          </div>
         </div>
         <div className="cards">
           <div
@@ -227,7 +229,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
             </button>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }
