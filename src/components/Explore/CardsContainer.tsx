@@ -19,7 +19,7 @@ const CHEAP = 30;
 const AFFORDABLE = 50;
 
 
-type Search = string | number | readonly string[] | undefined;
+type Search = string;
 
 export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
 
