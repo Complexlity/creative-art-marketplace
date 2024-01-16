@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 import { Nft } from "~/utils/types";
 import CountDownComponent from "./Countdown";
 import MktIcon from "./MktIcon";
 import clockImage from "/public/icons/clock.png";
+import { Badge } from "~/components/ui/badge";
+import { Methods } from "../Mint/MethodOptions";
+import { cn } from "~/utils/libs";
 
 
 export function Card({ item }: { item?: Nft }) {
@@ -31,10 +33,6 @@ export function Card({ item }: { item?: Nft }) {
     }
   });
 
-  useEffect(() => {
-
-  })
-
   return (
     <motion.div
       layout
@@ -43,7 +41,11 @@ export function Card({ item }: { item?: Nft }) {
       exit={{ opacity: 0, x: "-100%", transition: { duration: 0.4 } }}
       transition={{ duration: 0.5 }}
       suppressHydrationWarning={true}
-      className="mx-auto mb-6 w-full max-w-[500px] space-y-2 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4"
+      className={cn("mx-auto mb-6 w-full max-w-[500px] space-y-3 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4 border-b-[3px]", {
+        "border-b-red-700": mergedItem.sale_type === "FIXED_PRICE",
+        "border-b-blue-700": mergedItem.sale_type === "OPEN_BIDS",
+        "border-b-green-700": mergedItem.sale_type === "TIMED_AUCTION",
+      })}
     >
       <div>
         <Image
@@ -68,12 +70,12 @@ export function Card({ item }: { item?: Nft }) {
           <span suppressHydrationWarning={true}>{mergedItem!.price}</span>
         </p>
       </div>
-      <div className="flex justify-between">
-        {mergedItem.sale_type === "OPEN_BIDS" && <div>Open Bids </div>}
-        {mergedItem.sale_type === "FIXED_PRICE" && <div>Fixed Price </div>}
+      <div className="flex justify-between items-center">
+        {mergedItem.sale_type === "OPEN_BIDS" && <Badge className="bg-blue-700">Open Bid</Badge>}
+        {mergedItem.sale_type === "FIXED_PRICE" && <Badge className="bg-red-700">Fixed Price</Badge>}
         {mergedItem.sale_type === "TIMED_AUCTION" && (
           <div className="grid text-start ">
-            <small className="text-gray-400">Starting In </small>
+            <small className="text-green-400 ">Starting In </small>
             <p className="flex items-center gap-1">
               <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
               <span className="font-bold">
@@ -103,5 +105,10 @@ export function Card({ item }: { item?: Nft }) {
     </motion.div>
   );
 }
+
+function shownBadge({method}: {method: Methods}) {
+
+}
+
 
 export default Card;
