@@ -11,7 +11,7 @@ import useNfts from "~/hooks/useNfts";
 import { getAllNfts } from "~/utils/queries";
 import { Nft } from "~/utils/types";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const serverNfts = await getAllNfts();
   return { props: { serverNfts } };
 }
