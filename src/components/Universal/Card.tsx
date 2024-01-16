@@ -15,7 +15,7 @@ export function Card({ item }: { item?: Nft }) {
   const defaultItem = {
     name: "Lorem Ipsum",
     price: 0,
-    image: "/nfts/default.png",
+    image: "/default.png",
     category: "",
     description: "",
     slug: "",
