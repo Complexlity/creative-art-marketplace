@@ -6,17 +6,20 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CountDownComponent from "~/components/Universal/Countdown";
 import MktIcon from "~/components/Universal/MktIcon";
+import { cn, getAuctionDateStatus } from "~/utils/libs";
 import { Nft } from "~/utils/types";
+import { Badge } from "../ui/badge";
 
 
 type HeroProps = {
   nfts?: Nft[]
 }
 
-const Hero = ({ nfts: nftsData }: HeroProps) => {
+const Hero = ({ nfts }: HeroProps) => {
   const [loaded, setLoaded] = useState<boolean>(false)
-  const heroItem = nftsData && nftsData![nftsData!.length - 1]
+  const heroItem = nfts && nfts![nfts!.length - 1]
 
+  const { started, countDownDate } = getAuctionDateStatus(heroItem?.start_date!, heroItem?.end_date!)
 
   return (
     <section className="mb-24 px-1 py-2 md:grid md:grid-cols-2 md:py-6">
@@ -49,24 +52,40 @@ const Hero = ({ nfts: nftsData }: HeroProps) => {
         <CountingDiv className="hidden md:-ml-12 md:flex" />
       </div>
 
-      {nftsData ? (
+      {nfts ? (
         <div className="">
           <div className="relative mx-auto h-[400px] w-[80%] max-w-[350px] ">
             <div className="absolute left-[20%] right-0 top-[85%] z-20 mx-auto grid w-[220px] scale-[80%] gap-2 rounded-2xl border border-t-2 border-gray-600 border-t-primary bg-blue-950 px-2 py-2 md:left-[40%] md:mx-4 lg:scale-[100%]">
-              <p className="flex justify-between text-primary">
-                <span>Starts in</span>
-                <span>Current bid</span>
-              </p>
-              <p className="flex justify-between font-bold text-white">
-                <span>
-                  <CountDownComponent
-                    start_date={heroItem!.start_date} />
-                </span>
-                <span suppressHydrationWarning={true}>
-                  <MktIcon />
-                  {heroItem?.price}
-                </span>
-              </p>
+              <div className="flex justify-between">
+                <p className="grid  items-center gap-1 text-primary">
+                  {heroItem?.sale_type === "FIXED_PRICE" && (
+                    <>
+                      <Badge className="rounded-md bg-amber-700">Fixed Price</Badge>
+                    </>
+                  )}
+                  {heroItem?.sale_type === "OPEN_BIDS" && (
+                    <>
+                      <Badge className="rounded-md bg-blue-700">Open Bid</Badge>
+                    </>
+                  )}
+                  {heroItem?.sale_type === "TIMED_AUCTION" && (
+                    <>
+                      <span>{started ? "Ends" : "Starts"} in</span>
+                      <span>
+                        <CountDownComponent date={heroItem!.start_date} />
+                      </span>
+                    </>
+                  )}
+                </p>
+                <p className="grid gap-1 text-end font-bold text-white">
+                  <span>Current Price</span>
+                  <span suppressHydrationWarning={true}>
+                    <MktIcon />
+                    {heroItem?.price}
+                  </span>
+                </p>
+              </div>
+
               <Link href={`/nfts/${heroItem?.slug}`} className="grid">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
@@ -78,9 +97,15 @@ const Hero = ({ nfts: nftsData }: HeroProps) => {
               </Link>
             </div>
             <div
-              className={`${
-                loaded && heroItem && heroItem.image ? "" : "hidden"
-              } gradient absolute right-[43%] top-[30%] h-[50%] w-1/2 rotate-45 rounded-full shadow-3xl shadow-primary`}
+              className={cn(
+                `gradient absolute right-[43%] top-[30%] hidden h-[50%] w-1/2 rotate-45 rounded-full shadow-3xl shadow-primary`,
+                {
+                  block: loaded && heroItem && heroItem.image,
+                  "shadow-amber-700": heroItem?.sale_type === "FIXED_PRICE",
+                  "shadow-blue-700": heroItem?.sale_type === "OPEN_BIDS",
+                  "shadow-green-700": heroItem?.sale_type === "TIMED_AUCTION",
+                }
+              )}
             ></div>
             <Image
               width={20}

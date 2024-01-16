@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "~/components/ui/badge";
-import { cn } from "~/utils/libs";
+import { cn, getAuctionDateStatus } from "~/utils/libs";
 import { Nft } from "~/utils/types";
 import CountDownComponent from "./Countdown";
 import MktIcon from "./MktIcon";
@@ -32,14 +32,7 @@ export function Card({ item }: { item?: Nft }) {
     }
   });
 
-  function getAuctionDateStatus(start_date: string, end_date: string) {
-    const now = new Date();
-    const startDate = new Date(start_date)
-    if (now > startDate) {
-      return {started: true, countDownDate: end_date}
-    }
-    return {started: false, countDownDate: start_date}
-  }
+
 
   const { started, countDownDate } = getAuctionDateStatus(mergedItem.start_date!, mergedItem.end_date!)
 

@@ -29,3 +29,11 @@ export const getCategory = {
   "DOM":"domain names"
 }
 
+export function getAuctionDateStatus(start_date: string, end_date: string) {
+  const now = new Date();
+  const startDate = new Date(start_date);
+  if (now > startDate) {
+    return { started: true, countDownDate: end_date };
+  }
+  return { started: false, countDownDate: start_date };
+}
