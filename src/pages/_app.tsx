@@ -1,17 +1,14 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import {
-  QueryClient,
-  QueryClientProvider
-} from "@tanstack/react-query";
-import { Analytics } from '@vercel/analytics/react';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react";
 import { type AppType } from "next/dist/shared/lib/utils";
 import Head from "next/head";
 import React from "react";
 import "~/styles/globals.css";
-import NftsDataContextProvider from "../contexts/NftsDataContext";
+import NftsDataContextProvider from "../contexts/legacy_NftsDataContext";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
   return (
     <>
       <Head>
@@ -39,12 +36,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <SafeHydrate>
         <ClerkProvider appearance={{}} {...pageProps}>
           <QueryClientProvider client={queryClient}>
-
-
-          <NftsDataContextProvider>
-            <Component {...pageProps} />
-          </NftsDataContextProvider>
-              
+            <NftsDataContextProvider>
+              <Component {...pageProps} />
+            </NftsDataContextProvider>
           </QueryClientProvider>
         </ClerkProvider>
       </SafeHydrate>
@@ -52,8 +46,6 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     </>
   );
 };
-
-
 
 function SafeHydrate({ children }: { children: React.ReactNode }) {
   return (

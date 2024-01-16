@@ -1,23 +1,19 @@
-
-import { useNftsDataContext } from "~/contexts/NftsDataContext";
-import Card from "~/components/Universal/Card";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Nft } from "~/utils/types";
-import { NFT } from "~/data/nfts";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Card from "~/components/Universal/Card";
+import { Nft } from "~/utils/types";
 
 type Props = {
-  nfts? :Nft[]
-}
+  nfts?: Nft[];
+};
 
-const UniqueArt = ({ nfts: nftsData}: Props) => {
-if(!nftsData) return null
+const UniqueArt = ({ nfts: nftsData }: Props) => {
+  if (!nftsData) return null;
 
   let cards = [];
   for (let i = 1; i < 4; i++) {
-    const item = nftsData[i] as Nft
+    const item = nftsData[i] as Nft;
     cards.push(<Card key={item.id} item={item} />);
   }
 

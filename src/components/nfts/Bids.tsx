@@ -1,17 +1,13 @@
-import { People } from "~/data/people";
 import Image from "next/image";
-import { generateRandomDate, generateRandomNFTPrice, pickFromArray } from "~/utils/randoms";
-import { IconType } from "react-icons";
-import { MdCancel, MdPending } from "react-icons/md";
-import { IoMdCheckmarkCircle } from "react-icons/io";
 import { usePathname } from "next/navigation";
+import { IconType } from "react-icons";
+import { IoMdCheckmarkCircle } from "react-icons/io";
+import { MdCancel, MdPending } from "react-icons/md";
+import MktIcon from "~/components/Universal/MktIcon";
 import useCurrentPage from "~/hooks/useCurrentPage";
 import type { Nft, WithUser } from "~/utils/types";
-import MktIcon from "~/components/Universal/MktIcon";
 
-
-type BidStatus = 'rejected' | 'pending' | 'accepted'
-
+type BidStatus = "rejected" | "pending" | "accepted";
 
 function getStatusText(status: BidStatus) {
   let checkColor: string, statusText: string, StatusIcon: IconType;
@@ -35,15 +31,10 @@ function getStatusText(status: BidStatus) {
   return { checkColor, statusText, StatusIcon };
 }
 
-export default function Bids({
-  bid,
-}: {
-  bid: any
-}) {
-
-const pathname = usePathname()
-  const currentPathname = pathname.split('/').pop()!
-  const { data } = useCurrentPage({ slug: currentPathname })
+export default function Bids({ bid }: { bid: any }) {
+  const pathname = usePathname();
+  const currentPathname = pathname.split("/").pop()!;
+  const { data } = useCurrentPage({ slug: currentPathname });
   const nftData = data as unknown as WithUser<Nft>;
   const { checkColor, statusText, StatusIcon } = getStatusText(bid.status);
 
@@ -63,7 +54,7 @@ const pathname = usePathname()
         <p>
           {statusText}
           {": "}
-          <span className="font-bold flex items-center tracking-wider text-white">
+          <span className="flex items-center font-bold tracking-wider text-white">
             <MktIcon />
             {bid.amount}
           </span>

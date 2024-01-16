@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useNftsDataContext } from "~/contexts/NftsDataContext";
+import { useNftsDataContext } from "~/contexts/legacy_NftsDataContext";
 import { motion } from "framer-motion";
 
 const Subscribe = () => {
@@ -48,7 +48,7 @@ const Subscribe = () => {
           <input
             type="text"
             placeholder="Enter your e-mail"
-            className="input-bordered input mb-6 w-full max-w-[50ch] bg-slate-700 text-white hover:border-2 hover:border-white focus:border-2 focus:border-primary md:rounded-r-none"
+            className="input input-bordered mb-6 w-full max-w-[50ch] bg-slate-700 text-white hover:border-2 hover:border-white focus:border-2 focus:border-primary md:rounded-r-none"
           />
           <motion.button
             whileHover={{ scale: 1.01 }}
@@ -63,17 +63,17 @@ const Subscribe = () => {
       <div className="fan-cards-small mt-12">
         <div className="image1 perspective-origin-top-leftop relative flex justify-center text-5xl perspective-200 md:hidden">
           <Image
-            className="one relative left-[70px] aspect-square w-[50%] rounded-xl object-cover object-top opacity-[60%] rotate-y-30 transform md:-ml-8 "
+            className="one relative left-[70px] aspect-square w-[50%] transform rounded-xl object-cover object-top opacity-[60%] rotate-y-30 md:-ml-8 "
             src={nftsData[9]!.image}
             alt="Nft Image"
           />
           <Image
-            className="two two relative  top-[50px]  z-10 aspect-square w-5/12 rounded-lg object-cover object-top opacity-[60%] transition-all duration-1000 ease-in-out transform"
+            className="two two relative  top-[50px]  z-10 aspect-square w-5/12 transform rounded-lg object-cover object-top opacity-[60%] transition-all duration-1000 ease-in-out"
             src={nftsData[10]!.image}
             alt="Nft Image"
           />
           <Image
-            className="three relative left-[-70px]  aspect-square w-[50%] rounded-xl object-cover object-top opacity-[60%] -rotate-y-30 transform md:-ml-8 "
+            className="three relative left-[-70px]  aspect-square w-[50%] transform rounded-xl object-cover object-top opacity-[60%] -rotate-y-30 md:-ml-8 "
             src={nftsData[11]!.image}
             alt="Nft Image"
           />

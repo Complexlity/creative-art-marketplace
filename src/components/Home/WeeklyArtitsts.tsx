@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useNftsDataContext } from "~/contexts/NftsDataContext";
+import { useNftsDataContext } from "~/contexts/legacy_NftsDataContext";
 
 const WeeklyArtists = () => {
   const people = useNftsDataContext().peopleData.slice(0, 5);

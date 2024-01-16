@@ -5,11 +5,9 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import { nftsData as initialNftsData, NFT } from "~/data/nfts";
-import { People, people } from "~/data/people";
-import {
-  shuffleArray,
-} from "~/utils/randoms";
+import { nftsData as initialNftsData, NFT } from "~/legacy_data/nfts";
+import { People, people } from "~/legacy_data/people";
+import { shuffleArray } from "~/utils/randoms";
 
 const nftsData = shuffleArray(initialNftsData);
 const randomPeopleData = shuffleArray(people);

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useNftsDataContext } from "~/contexts/NftsDataContext";
+import { useNftsDataContext } from "~/contexts/legacy_NftsDataContext";
 
 const WeeklyArtists = () => {
   const people = useNftsDataContext().peopleData.slice(0, 5);
@@ -10,7 +10,7 @@ const WeeklyArtists = () => {
         <h2 className=" text-center text-4xl text-white md:text-5xl">
           <span className="relative">
             Artists
-            <hr className="bg-primary absolute left-1/2 right-1/2 top-[100%] w-full translate-x-[-50%] p-[.06rem] sm:top-[calc(100%+2px)] md:p-[.07rem]" />
+            <hr className="absolute left-1/2 right-1/2 top-[100%] w-full translate-x-[-50%] bg-primary p-[.06rem] sm:top-[calc(100%+2px)] md:p-[.07rem]" />
           </span>{" "}
           Of The <span className=" text-primary">Week</span>
         </h2>
