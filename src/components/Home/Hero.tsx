@@ -18,8 +18,12 @@ type HeroProps = {
 const Hero = ({ nfts }: HeroProps) => {
   const [loaded, setLoaded] = useState<boolean>(false)
   const heroItem = nfts && nfts![nfts!.length - 1]
+  const [started, setStarted] = useState(getAuctionDateStatus(heroItem?.start_date!, heroItem?.end_date!).started)
+  const [ended, setEnded] = useState(false);
 
-  const { started, countDownDate } = getAuctionDateStatus(heroItem?.start_date!, heroItem?.end_date!)
+  const countDownDate = started ? heroItem?.end_date : heroItem?.start_date;
+
+
 
   return (
     <section className="mb-24 px-1 py-2 md:grid md:grid-cols-2 md:py-6">
@@ -60,7 +64,9 @@ const Hero = ({ nfts }: HeroProps) => {
                 <p className="grid  items-center gap-1 text-primary">
                   {heroItem?.sale_type === "FIXED_PRICE" && (
                     <>
-                      <Badge className="rounded-md bg-amber-700">Fixed Price</Badge>
+                      <Badge className="rounded-md bg-amber-700">
+                        Fixed Price
+                      </Badge>
                     </>
                   )}
                   {heroItem?.sale_type === "OPEN_BIDS" && (
@@ -72,7 +78,12 @@ const Hero = ({ nfts }: HeroProps) => {
                     <>
                       <span>{started ? "Ends" : "Starts"} in</span>
                       <span>
-                        <CountDownComponent date={heroItem!.start_date} />
+                        <CountDownComponent
+                          date={countDownDate!}
+                          type={started ? "end" : "start"}
+                          setStarted={setStarted}
+                          setEnded={setEnded}
+                        />
                       </span>
                     </>
                   )}
