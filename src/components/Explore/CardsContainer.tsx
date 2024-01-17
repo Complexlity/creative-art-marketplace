@@ -276,7 +276,12 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
                 layout
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ y: "-100%", transition: { duration: 0.4 } }}
+                transition={{
+                  ease: "easeIn",
+                  duration: 0.6,
+                  type: "spring",
+                  stiffness: 100,
+                }}
                 className="flex w-full flex-1 items-center justify-center"
               >
                 <p className="font-roboto text-5xl md:text-6xl">
