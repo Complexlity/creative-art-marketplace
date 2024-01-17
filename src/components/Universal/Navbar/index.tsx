@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import AuthButton from "./AuthButton";
 import logo from "/public/icons/logo.png";
 
+
 const NavBar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
 
@@ -129,12 +130,13 @@ function MobileMenu() {
   const routePath = useRouter().pathname;
   const activeMobileLink = "border-primary border-y-2";
 
+
 useEffect(() => {
   if(openState === 'closed'){
     setOpenState('open')
     return
   }
-  setOpenState('closed')
+    setOpenState('closed')
 
 }, [isOpen])
 
@@ -162,7 +164,8 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
         </Link>
             <Link href="/explore">
               {" "}
-              <motion.li
+          <motion.li
+            onClick={setIsOpen.bind(null, false)}
                 variants={threeVariants}
                 className={`flex items-center justify-center rounded-lg
     py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${

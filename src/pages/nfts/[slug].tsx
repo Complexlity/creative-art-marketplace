@@ -1,5 +1,5 @@
 import Footer from "~/components/Universal/Footer";
-import NavBar from "~/components/Universal/nav/NavBar";
+import NavBar from "~/components/Universal/NavBar";
 
 import Head from "next/head";
 import { useRouter } from "next/router";

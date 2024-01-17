@@ -6,7 +6,7 @@ import Subscribe from "~/components/Home/Subscribe";
 import UniqueArt from "~/components/Home/UniqueArt";
 import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
 import Footer from "~/components/Universal/Footer";
-import NavBar from "~/components/Universal/nav/NavBar";
+import NavBar from "~/components/Universal/NavBar";
 import useNfts from "~/hooks/useNfts";
 import { getAllNfts } from "~/utils/queries";
 import { Nft } from "~/utils/types";
