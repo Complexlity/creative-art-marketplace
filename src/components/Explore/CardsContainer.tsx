@@ -27,7 +27,7 @@ export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
 
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
-  const [priceRange, setPriceRange] = useState<string>("all");
+  const [priceRange, setPriceRange] = useState<string>("default");
   const [category, setCategory] = useState("default");
   const [expiryDate, setExpiryDate] = useState("0");
   const [saleType, setSaleType] = useState('default')
@@ -123,9 +123,6 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
   function searchByCategory(item: Nft, category: string) {
     if (category === "default") return true;
     let itemCategory = item.category
-
-    // itemCategory = getCategory[itemCategory].toLowerCase();
-    // category = category.toLowerCase();
     return itemCategory === category;
   }
 
@@ -159,7 +156,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
   }
 
   const disabledStyles =
-    "bg-gray-400 hover:scale-[100%] hover:shadow-none text-blue-900 opacity-[60%] cursor-not-allowed";
+    "bg-gray-400 hover:scale-[100%] hover:shadow-none text-blue-900 opacity-[60%] cursor-nodefaultllowed";
   return (
     <>
       <div className="grid gap-6 border-b-2 border-b-gray-300 py-6 pb-12">
@@ -181,14 +178,21 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
           <div className="flex w-full gap-2">
             <select
               id="sale_type"
-              className={cn("my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary", {
-                "border-amber-700": saleType === "fixed_price",
-                "border-blue-700": saleType === "open_bids",
-                "border-t-green-700 border-l-green-700 border-b-red-700 border-r-red-700": saleType === "timed_auction",
-                "border-red-700": saleType === "timed_auction" && auctionState === "started",
-                "border-green-800": saleType === "timed_auction" && auctionState === "not_started"
-              })}
-
+              className={cn(
+                "my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary",
+                {
+                  "text-purple-400": saleType !== "default",
+                  "border-amber-700": saleType === "fixed_price",
+                  "border-blue-700": saleType === "open_bids",
+                  "border-b-red-700 border-l-green-700 border-r-red-700 border-t-green-700":
+                    saleType === "timed_auction",
+                  "border-red-700":
+                    saleType === "timed_auction" && auctionState === "started",
+                  "border-green-800":
+                    saleType === "timed_auction" &&
+                    auctionState === "not_started",
+                }
+              )}
               value={saleType}
               onChange={(e) => setSaleType(e.target.value)}
             >
@@ -197,23 +201,31 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
               <option value="open_bids">Open Bids</option>
               <option value="timed_auction">Timed Auction</option>
             </select>
-            {
-              saleType === "timed_auction" &&
+            {saleType === "timed_auction" && (
               <select
-              id="auction_state"
-              className={cn("my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary")}
-
-              value={auctionState}
-              onChange={(e) => setAuctionState(e.target.value)}
-            >
-              <option value="default">Auction State</option>
-              <option value="not_started">Not Started</option>
-              <option value="started">Started</option>
-            </select>
-            }
+                id="auction_state"
+                className={cn(
+                  "my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary",
+                  {
+                    "text-purple-400": auctionState !== "default",
+                  }
+                )}
+                value={auctionState}
+                onChange={(e) => setAuctionState(e.target.value)}
+              >
+                <option value="default">Auction State</option>
+                <option value="not_started">Not Started</option>
+                <option value="started">Started</option>
+              </select>
+            )}
             <select
               id="categories"
-              className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+              className={cn(
+                `my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary`,
+                {
+                  "text-purple-400": category !== "default",
+                }
+              )}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
@@ -225,7 +237,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
               <option value="collectibles">Collectibles</option>
               <option value="domain">Domain Names</option>
             </select>
-            <select
+            {/* <select
               id="expiry-time"
               className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
               value={expiryDate}
@@ -235,14 +247,20 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
               <option value="24">{`< 24 hours`}</option>
               <option value="48">24 - 48hours</option>
               <option value="49">{`> 48hours`}</option>
-            </select>
+            </select> */}
             <select
               id="items-type"
-              className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+              className={cn(
+                `my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary
+              `,
+                {
+                  "text-purple-400": priceRange !== "default",
+                }
+              )}
               value={priceRange}
               onChange={(e) => setPriceRange(e.target.value)}
             >
-              <option value="all">Price</option>
+              <option value="default">Price</option>
               <option value="cheap">{`Cheap (< 💲${CHEAP})`}</option>
               <option value="affordable">
                 {`Affordable (💲${CHEAP} - 💲${AFFORDABLE})`}
