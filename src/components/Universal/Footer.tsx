@@ -5,7 +5,7 @@ import { AiFillGithub } from "react-icons/ai";
 const Footer = () => {
   return (
     <>
-      <footer className="footer p-10 text-white grid grid-cols-2 md:grid-cols-4">
+      <footer className="footer p-10 text-white grid grid-cols-2 md:grid-cols-4 ">
         <div>
           <span className="footer-title">About Us</span>
           <a className="link-hover link">Our Story</a>

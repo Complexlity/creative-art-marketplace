@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card } from "~/components/Universal/Card";
 import useDebounce from "~/hooks/useDebounce";
 
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
 import { Nft } from "~/utils/types";
@@ -159,9 +159,9 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
     "bg-gray-400 hover:scale-[100%] hover:shadow-none text-blue-900 opacity-[60%] cursor-nodefaultllowed";
   return (
     <>
-      <div className="grid gap-6 border-b-2 border-b-gray-300 py-6 pb-12">
-        <div className="filters grid items-center gap-2 md:flex">
-          <div className="relative  flex w-full basis-1/3 self-end">
+      <div className="flex flex-1 flex-col gap-6 border-b-2 border-b-gray-300 py-6 pb-12">
+        <div className="filters grid items-start gap-2 md:flex">
+          <div className="searchBar relative  flex w-full basis-1/3 ">
             <div className="pointer-events-none absolute inset-y-0 right-[2px] flex  items-center">
               <AiOutlineSearch className="white h-6 w-6" />
             </div>
@@ -175,11 +175,11 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
             />
           </div>
 
-          <div className="flex w-full gap-2">
+          <div className="flex w-full items-start gap-2">
             <select
               id="sale_type"
               className={cn(
-                "my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary",
+                "my-select block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary",
                 {
                   "text-purple-400": saleType !== "default",
                   "border-amber-700": saleType === "fixed_price",
@@ -205,7 +205,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
               <select
                 id="auction_state"
                 className={cn(
-                  "my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary",
+                  "my-select block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary",
                   {
                     "text-purple-400": auctionState !== "default",
                   }
@@ -221,7 +221,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
             <select
               id="categories"
               className={cn(
-                `my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary`,
+                `my-select block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary`,
                 {
                   "text-purple-400": category !== "default",
                 }
@@ -239,7 +239,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
             </select>
             {/* <select
               id="expiry-time"
-              className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
+              className="my-select block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
               value={expiryDate}
               onChange={(e) => setExpiryDate(e.target.value)}
             >
@@ -251,7 +251,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
             <select
               id="items-type"
               className={cn(
-                `my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary
+                `my-select block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary
               `,
                 {
                   "text-purple-400": priceRange !== "default",
@@ -269,42 +269,60 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
             </select>
           </div>
         </div>
-        <div className="cards">
-          <div
-            suppressHydrationWarning={true}
-            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-          >
-            <AnimatePresence>
-              {displayedData.slice(0, NUMBER_OF_CARDS_SHOWN).map((item) => {
-                return <Card key={item.id} item={item} />;
-              })}
-            </AnimatePresence>
-          </div>
-          <div className="flex justify-center gap-4 text-center">
-            <button
-              onClick={showMore}
-              className={`flex items-center justify-center gap-2 rounded-full px-4 py-2   ${
-                willSeeMore
-                  ? "bg-primary text-gray-800 hover:scale-[102%] hover:shadow-round hover:shadow-gray-400"
-                  : disabledStyles
-              }`}
-            >
-              Load More
-              <BsArrowDownCircleFill className="h-6 w-6 text-green-700" />
-            </button>
-            <button
-              onClick={showLess}
-              className={`flex items-center  gap-2 rounded-full px-4 py-2
+        <div className="cards flex flex-1 flex-col">
+          <AnimatePresence>
+            {displayedData.length === 0 ? (
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ y: "-100%", transition: { duration: 0.4 } }}
+                className="flex w-full flex-1 items-center justify-center"
+              >
+                <p className="font-roboto text-5xl md:text-6xl">
+                  No Item Found
+                </p>
+              </motion.div>
+            ) : (
+              <div
+                suppressHydrationWarning={true}
+                className="grid flex-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+              >
+                <AnimatePresence>
+                  {displayedData.slice(0, NUMBER_OF_CARDS_SHOWN).map((item) => {
+                    return <Card key={item.id} item={item} />;
+                  })}
+                </AnimatePresence>
+              </div>
+            )}
+          </AnimatePresence>
+          {displayedData.length !== 0 && (
+            <div className="flex justify-center gap-4 text-center">
+              <button
+                onClick={showMore}
+                className={`flex items-center justify-center gap-2 rounded-full px-4 py-2   ${
+                  willSeeMore
+                    ? "bg-primary text-gray-800 hover:scale-[102%] hover:shadow-round hover:shadow-gray-400"
+                    : disabledStyles
+                }`}
+              >
+                Load More
+                <BsArrowDownCircleFill className="h-6 w-6 text-green-700" />
+              </button>
+              <button
+                onClick={showLess}
+                className={`flex items-center  gap-2 rounded-full px-4 py-2
               ${
                 willSeeLess
                   ? "bg-gray-500 hover:shadow-round hover:shadow-primary"
                   : disabledStyles
               }`}
-            >
-              See Less{" "}
-              <BsFillArrowUpCircleFill className="h-6 w-6 text-rose-700" />
-            </button>
-          </div>
+              >
+                See Less{" "}
+                <BsFillArrowUpCircleFill className="h-6 w-6 text-rose-700" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -27,7 +27,7 @@ const Explore = ({ serverNfts }: ExploreProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="main">
-        <div className="mx-auto max-w-[1200px] px-4 text-white md:px-8">
+        <div className="mx-auto max-w-[1200px] px-4 text-white md:px-8 min-h-screen flex flex-col">
           <NavBar />
           <Header>Explore</Header>
            <CardsContainer nftsData={[...nfts!].reverse()} />
