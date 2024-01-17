@@ -7,9 +7,21 @@ import { Nft } from "~/utils/types";
 import CountDownComponent from "./Countdown";
 import MktIcon from "./MktIcon";
 import clockImage from "/public/icons/clock.png";
+import { useEffect, useState } from "react";
 
 
 export function Card({ item }: { item?: Nft }) {
+  const [started, setStarted] = useState(getAuctionDateStatus(item?.start_date!, item?.end_date!).started)
+  const [ended, setEnded] = useState(false)
+
+  const countDownDate = started ? item?.end_date : item?.start_date
+
+  useEffect(() => {
+    if (ended) {
+      console.log("Item is sold")
+      //TODO: Transfer item ownership to the current highest bidder
+    }
+  }, [ended])
 
   const defaultItem = {
     name: "Lorem Ipsum",
@@ -31,10 +43,6 @@ export function Card({ item }: { item?: Nft }) {
       mergedItem[key] = defaultItem[key];
     }
   });
-
-
-
-  const { started, countDownDate } = getAuctionDateStatus(mergedItem.start_date!, mergedItem.end_date!)
 
   return (
     <motion.div
@@ -83,8 +91,10 @@ export function Card({ item }: { item?: Nft }) {
               <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
               <span className="font-bold">
                 <CountDownComponent
-                  date={countDownDate}
-
+                  date={countDownDate!}
+                  setStarted={setStarted}
+                  type={started ? "end" : "start"}
+                  setEnded={setEnded}
                 />
               </span>
             </p>

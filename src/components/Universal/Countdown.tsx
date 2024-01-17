@@ -1,4 +1,6 @@
+import { Dispatch, SetStateAction } from "react";
 import Countdown, { zeroPad } from "react-countdown";
+import { convertStringDateToMilleseconds } from "~/utils/libs";
 
 //@ts-ignore
 let renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -29,27 +31,30 @@ let renderer = ({ days, hours, minutes, seconds, completed }) => {
 
 
 
-function convertStringDateToMilleseconds(date: string | null) {
-  if (!date) return Date.now();
-  const dateObject = new Date(date);
-  return dateObject.setHours(0, 0, 0, 0);
-}
+
 
 
 export default function CountDownComponent({
   date,
+  setStarted,
+  setEnded,
+  type
 }: {
-  date: string | null,
-
-  })
-
-
-  {
-
+    date: string | null;
+  type: "start" | "end"
+  setStarted: Dispatch<SetStateAction<boolean>>;
+  setEnded: Dispatch<SetStateAction<boolean>>;
+}) {
   return (
     <Countdown
       date={convertStringDateToMilleseconds(date)}
       renderer={renderer}
+      onComplete={() => {
+        if(type === "start")
+          setStarted(true);
+        if (type === "end")
+          setEnded(true)
+      }}
     />
   );
 }
