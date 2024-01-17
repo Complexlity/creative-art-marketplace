@@ -10,7 +10,13 @@
 10. Add Countdown ✔
 11. Add modal for purchase item ✔
 12. Fix card sizing on medium screens ✔
-13. Sort items on explore page ✔
+13. Filter items on explore page ✔
 14. Add load more and see less buttons ✔
 15. Optional add artists page and routing to artists page
 16. Remove daisyui footer. Create custom footer component
+17. Add NextUi components
+18. Add artist page
+19. Modify buy now and place bid buttons
+20. Complete all backend functions for timed auction
+21. Fix Mobile Navbar behaviour
+22. Add preview for mobile mint page
