@@ -168,7 +168,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
             <input
               type="search"
               id="email-address-icon"
-              className="block w-full rounded-lg border-2 border-gray-600 bg-transparent px-2 py-[.43rem] text-sm text-gray-200 placeholder:text-gray-300  focus:border-primary focus:ring-primary"
+              className="block w-full rounded-lg border-2 border-gray-600 bg-transparent px-2 py-[.43rem] text-sm text-purple-400 placeholder:text-gray-300  focus:border-primary focus:ring-primary"
               placeholder="Search Nft..."
               onChange={(e) => setSearch(e.target.value)}
               value={search}
