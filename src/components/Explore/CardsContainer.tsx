@@ -6,6 +6,8 @@ import { AnimatePresence } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
 import { Nft } from "~/utils/types";
+import { cn, convertStringDateToMilleseconds } from "~/utils/libs";
+import { Methods } from "../Mint/MethodOptions";
 
 type SeeMore = {
   initialValue: number;
@@ -28,6 +30,8 @@ export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
   const [priceRange, setPriceRange] = useState<string>("all");
   const [category, setCategory] = useState("default");
   const [expiryDate, setExpiryDate] = useState("0");
+  const [saleType, setSaleType] = useState('default')
+  const [auctionState, setAuctionState] = useState("default")
   const [displayedData, setDisplayedData] = useState(nftsData);
 
   const [NUMBER_OF_CARDS_SHOWN, setDisplayedLength] = useState(getNumberOfCardsShow(displayedData));
@@ -57,14 +61,16 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
   }
 
   useEffect(() => {
-    const totalData = aggregateQuery(debouncedSearch, category, expiryDate, priceRange)
+    const totalData = aggregateQuery( debouncedSearch,saleType, auctionState, category, expiryDate, priceRange)
     setDisplayedData(totalData);
     setDisplayedLength(getNumberOfCardsShow(totalData))
 
-  }, [debouncedSearch, category, expiryDate, priceRange]);
+  }, [debouncedSearch, saleType,auctionState, category, expiryDate, priceRange, ]);
 
   function aggregateQuery(
     search: string,
+    saleType: string,
+    auctionState: string,
     category: string,
     date: string,
     priceRange: string
@@ -75,6 +81,8 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
     for (let i = 0; i < items.length; i++) {
       let curr = items[i] as Nft;
       if (
+        searchBySaleType(curr, saleType) &&
+        searchByAuctionState(curr, auctionState) &&
         searchByName(curr, search) &&
         searchByCategory(curr, category) &&
         // searchByDate(curr, dateNum) &&
@@ -86,6 +94,25 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
     return newItems;
   }
 
+
+  function searchByAuctionState(item: Nft, auctionState: string) {
+    if (auctionState === "default" || item.sale_type !== 'TIMED_AUCTION') return true
+    const now = new Date().getTime()
+    console.log({ now })
+
+    const startDate = convertStringDateToMilleseconds(item.start_date)
+    console.log({startDate})
+    const itemIsStarted = now > startDate ? "started" : "not_started"
+    return itemIsStarted === auctionState
+
+}
+
+  function searchBySaleType(item: Nft, saleType: string) {
+    if(saleType === "default") return true
+    const itemSaleType = item.sale_type.toLowerCase() as Lowercase<Methods>
+    return itemSaleType === saleType
+
+  }
   function searchByName(item: Nft, searchString: string) {
     if (!searchString) return true;
     const itemName = item.name.toLowerCase();
@@ -152,6 +179,38 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
           </div>
 
           <div className="flex w-full gap-2">
+            <select
+              id="sale_type"
+              className={cn("my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary", {
+                "border-amber-700": saleType === "fixed_price",
+                "border-blue-700": saleType === "open_bids",
+                "border-t-green-700 border-l-green-700 border-b-red-700 border-r-red-700": saleType === "timed_auction",
+                "border-red-700": saleType === "timed_auction" && auctionState === "started",
+                "border-green-800": saleType === "timed_auction" && auctionState === "not_started"
+              })}
+
+              value={saleType}
+              onChange={(e) => setSaleType(e.target.value)}
+            >
+              <option value="default">Sale Type</option>
+              <option value="fixed_price">Fixed Price</option>
+              <option value="open_bids">Open Bids</option>
+              <option value="timed_auction">Timed Auction</option>
+            </select>
+            {
+              saleType === "timed_auction" &&
+              <select
+              id="auction_state"
+              className={cn("my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary")}
+
+              value={auctionState}
+              onChange={(e) => setAuctionState(e.target.value)}
+            >
+              <option value="default">Auction State</option>
+              <option value="not_started">Not Started</option>
+              <option value="started">Started</option>
+            </select>
+            }
             <select
               id="categories"
               className="my-select mt-2 block w-full rounded-lg border-2 border-gray-600 bg-gray-900 p-2 text-sm   text-gray-300 placeholder-gray-600 focus:border-primary focus:ring-primary"
