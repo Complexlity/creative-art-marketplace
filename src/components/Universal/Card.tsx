@@ -55,7 +55,8 @@ export function Card({ item }: { item?: Nft }) {
       className={cn("mx-auto mb-6 w-full max-w-[500px] space-y-3 rounded-lg border-t-2 border-t-primary bg-[#17233a] px-4 py-4 border-b-[3px]", {
         "border-b-amber-700": mergedItem.sale_type === "FIXED_PRICE",
         "border-b-blue-700": mergedItem.sale_type === "OPEN_BIDS",
-        "border-b-green-700": mergedItem.sale_type === "TIMED_AUCTION",
+        "border-b-green-700": mergedItem.sale_type === "TIMED_AUCTION" &&  !started,
+        "border-b-red-700": mergedItem.sale_type === "TIMED_AUCTION" &&  started,
       })}
     >
       <div>
@@ -86,7 +87,7 @@ export function Card({ item }: { item?: Nft }) {
         {mergedItem.sale_type === "FIXED_PRICE" && <Badge className="bg-amber-700">Fixed Price</Badge>}
         {mergedItem.sale_type === "TIMED_AUCTION" && (
           <div className="grid text-start ">
-            <small className={cn("text-green-400 ", {"text-red-600": started})}>{started ? "Ending" : "Starting"} In </small>
+            <small className={cn("text-green-400 ", {"text-red-400": started})}>{started ? "Ending" : "Starting"} In </small>
             <p className="flex items-center gap-1">
               <Image alt="Clock Icon" className="h-4 w-4" src={clockImage} />{" "}
               <span className="font-bold">
