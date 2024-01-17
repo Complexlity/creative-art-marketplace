@@ -9,6 +9,8 @@ import MktIcon from "~/components/Universal/MktIcon";
 import { cn, getAuctionDateStatus } from "~/utils/libs";
 import { Nft } from "~/utils/types";
 import { Badge } from "../ui/badge";
+import clockImage from "/public/icons/clock.png";
+
 
 
 type HeroProps = {
@@ -78,12 +80,19 @@ const Hero = ({ nfts }: HeroProps) => {
                     <>
                       <span>{started ? "Ends" : "Starts"} in</span>
                       <span>
-                        <CountDownComponent
-                          date={countDownDate!}
-                          type={started ? "end" : "start"}
-                          setStarted={setStarted}
-                          setEnded={setEnded}
-                        />
+                        <div className="flex items-center gap-1">
+                          <Image
+                            alt="Clock Icon"
+                            className="h-4 w-4"
+                            src={clockImage}
+                          />{" "}
+                          <CountDownComponent
+                            date={countDownDate!}
+                            type={started ? "end" : "start"}
+                            setStarted={setStarted}
+                            setEnded={setEnded}
+                          />
+                        </div>
                       </span>
                     </>
                   )}
@@ -112,9 +121,9 @@ const Hero = ({ nfts }: HeroProps) => {
                 `gradient absolute right-[43%] top-[30%] hidden h-[50%] w-1/2 rotate-45 rounded-full shadow-3xl shadow-primary`,
                 {
                   block: loaded && heroItem && heroItem.image,
-                  "shadow-amber-700": heroItem?.sale_type === "FIXED_PRICE",
-                  "shadow-blue-700": heroItem?.sale_type === "OPEN_BIDS",
-                  "shadow-green-700": heroItem?.sale_type === "TIMED_AUCTION",
+                  "shadow-amber-300": heroItem?.sale_type === "FIXED_PRICE",
+                  "shadow-blue-300": heroItem?.sale_type === "OPEN_BIDS",
+                  "shadow-green-300": heroItem?.sale_type === "TIMED_AUCTION",
                 }
               )}
             ></div>
