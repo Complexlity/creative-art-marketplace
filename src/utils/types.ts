@@ -24,4 +24,6 @@ export type CommentVotesFromDB =
 export type VoteType = "up" | "down";
 export type CommentVotes = Prettify<
   Omit<CommentVotesFromDB, "type"> & { type: VoteType }
->;
+  >;
+
+export type Transactions = Database["public"]["Tables"]["transactions"]["Row"]
