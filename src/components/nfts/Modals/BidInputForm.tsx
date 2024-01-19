@@ -73,6 +73,12 @@ export default function BidInputForm({
         .insert([{ user_id: userId, slug: currentPathname, amount: values.bid ?? values.itemPrice }])
         .select();
 
+      // Add to bidder's transactions
+      const { data: transaction } = await supabase
+        .from("transactions")
+        .insert([{ user_id: userId, amount: values.bid ?? values.itemPrice, type: "bid", status: "pending" ,  name: nftData.name, balance_change: -values.bid ?? values.itemPrice }])
+        .select();
+
       if (error) throw error;
       toast("Bid submit successful. We will get back to you shortly 🤗");
       queryClient.invalidateQueries({ queryKey: ["bids", currentPathname] })

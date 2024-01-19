@@ -174,7 +174,10 @@ export default function MintForm() {
       }
 
       if (supabaseData) {
-        const { data: viewCount } = await supabase.from("nft_views").insert({
+
+
+        // Create a new views count with the nft slug
+        const promise1 =  supabase.from("nft_views").insert({
           nft_slug: slug,
           views_count: 0,
         });
@@ -182,13 +185,22 @@ export default function MintForm() {
         // Deduct some percentage from user after mint
         const valueDeducted = Math.round(MINT_PERCENTAGE_COST * price);
 
-        const { data: userUpdate, error: userUpdateError } = await supabase
+        //Deduct fees from minting user
+        const promise2 = supabase
           .from("users")
           //@ts-ignore null != undefined
           .update({ game_currency: user.game_currency - valueDeducted })
           .eq("user_id", userId)
           .select();
-        console.log({userUpdate, userUpdateError})
+
+        //add to the minter's transactions
+        const promise3 = supabase
+          .from('transactions')
+        .insert([{user_id: user.userId!, name: values.title , amount: price, balance_change: -valueDeducted, type: "mint", status: "complete"}])
+
+        // complete all transactions in a single go
+        const [{ data: viewsCount }, { data: userDeducted }, { data: transactions }] = await Promise.all([promise1, promise2, promise3]);
+
         queryClient.invalidateQueries({
           queryKey: ["nfts"]
         }).then(() => {
