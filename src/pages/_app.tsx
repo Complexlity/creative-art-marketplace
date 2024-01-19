@@ -7,6 +7,7 @@ import React from "react";
 import "~/styles/globals.css";
 import NftsDataContextProvider from "../contexts/legacy_NftsDataContext";
 import NextNProgress from "nextjs-progressbar";
+import {NextUIProvider} from '@nextui-org/react'
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const queryClient = new QueryClient();
@@ -38,8 +39,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <ClerkProvider appearance={{}} {...pageProps}>
           <QueryClientProvider client={queryClient}>
             <NftsDataContextProvider>
-              <NextNProgress color="#d2f55e" height={4} options={{showSpinner: false}} />
+              <NextNProgress color="#d2f55e" height={4} options={{ showSpinner: false }} />
+                <NextUIProvider>
               <Component {...pageProps} />
+                </NextUIProvider>
             </NftsDataContextProvider>
           </QueryClientProvider>
         </ClerkProvider>
