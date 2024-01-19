@@ -1,12 +1,17 @@
 import Footer from "~/components/Universal/Footer";
-import NavBar from "~/components/Universal/NavBar";
+import Navbar from "~/components/Universal/Navbar";
 
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Comments from "~/components/nfts/Comments";
 import NftDetails from "~/components/nfts/NftDetails";
 import useCurrentPage from "~/hooks/useCurrentPage";
-import { getAllNfts, getLikes, getSingleNft, getViewsCount } from "~/utils/queries";
+import {
+  getAllNfts,
+  getLikes,
+  getSingleNft,
+  getViewsCount,
+} from "~/utils/queries";
 import { Like, Nft, WithUser } from "~/utils/types";
 
 export const getStaticPaths = async () => {
@@ -19,13 +24,21 @@ export const getStaticPaths = async () => {
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
   const singlePost = await getSingleNft(params.slug);
-  const initialLikes = await getLikes(params.slug)
-  const viewsCount = await getViewsCount(params.slug)
+  const initialLikes = await getLikes(params.slug);
+  const viewsCount = await getViewsCount(params.slug);
 
-  return { props: { singlePost,initialLikes, viewsCount } };
+  return { props: { singlePost, initialLikes, viewsCount } };
 }
 
-function NFTItem({ singlePost, initialLikes, viewsCount }: { singlePost: WithUser<Nft>, initialLikes: Like[], viewsCount: number }) {
+function NFTItem({
+  singlePost,
+  initialLikes,
+  viewsCount,
+}: {
+  singlePost: WithUser<Nft>;
+  initialLikes: Like[];
+  viewsCount: number;
+}) {
   const router = useRouter();
   const slug = router.query.slug as string;
   const { data } = useCurrentPage({ slug, singlePost });
@@ -46,8 +59,12 @@ function NFTItem({ singlePost, initialLikes, viewsCount }: { singlePost: WithUse
           suppressHydrationWarning
           className="mx-auto max-w-[1200px]  px-6 text-white"
         >
-          <NavBar />
-          <NftDetails nftData={nftData} initialLikes={initialLikes} viewsCount={viewsCount} />
+          <Navbar />
+          <NftDetails
+            nftData={nftData}
+            initialLikes={initialLikes}
+            viewsCount={viewsCount}
+          />
           <Comments />
           {/* <RelatedItems relatedItems={relatedItems} /> */}
           <Footer />

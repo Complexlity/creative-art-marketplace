@@ -12,8 +12,7 @@ import {
 import { getPendingBids } from "~/utils/queries";
 
 import { useAuth } from "@clerk/nextjs";
-import BidMessage from "./BidMessage";
-
+import BidMessage from "./BidMessage"
 interface PendingBidsButtonProps {}
 
 const PendingBidsButton: FC<PendingBidsButtonProps> = () => {
@@ -25,7 +24,7 @@ const PendingBidsButton: FC<PendingBidsButtonProps> = () => {
       return data;
     },
   });
-  
+
   if(!pendingBids || pendingBids.length === 0) return null
   return (
     <Dialog>

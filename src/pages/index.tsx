@@ -1,12 +1,12 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import 'react-loading-skeleton/dist/skeleton.css';
+import "react-loading-skeleton/dist/skeleton.css";
 import Hero from "~/components/Home/Hero";
 import Subscribe from "~/components/Home/Subscribe";
 import UniqueArt from "~/components/Home/UniqueArt";
 import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
 import Footer from "~/components/Universal/Footer";
-import NavBar from "~/components/Universal/NavBar";
+import Navbar from "~/components/Universal/Navbar";
 import useNfts from "~/hooks/useNfts";
 import { getAllNfts } from "~/utils/queries";
 import { Nft } from "~/utils/types";
@@ -16,9 +16,8 @@ export async function getServerSideProps() {
   return { props: { serverNfts } };
 }
 
-const Home = ({serverNfts}: {serverNfts: Nft[]}) => {
-  let { data: nfts } = useNfts({serverNfts});
-
+const Home = ({ serverNfts }: { serverNfts: Nft[] }) => {
+  let { data: nfts } = useNfts({ serverNfts });
 
   return (
     <>
@@ -35,15 +34,14 @@ const Home = ({serverNfts}: {serverNfts: Nft[]}) => {
           suppressHydrationWarning
           className="mx-auto max-w-[1200px]  px-2 md:px-4"
         >
-          <NavBar />
+          <Navbar />
           <div suppressHydrationWarning className="overflow-x-hidden">
-            {
-              nfts && nfts.length > 0 &&
+            {nfts && nfts.length > 0 && (
               <>
-            <Hero nfts={nfts} />
+                <Hero nfts={nfts} />
                 <UniqueArt nfts={[...nfts].reverse()} />
-                </>
-            }
+              </>
+            )}
             <WeeklyArtists />
             <Subscribe />
             <Footer />
