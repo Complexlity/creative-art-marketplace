@@ -40,7 +40,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           <QueryClientProvider client={queryClient}>
             <NftsDataContextProvider>
               <NextNProgress color="#d2f55e" height={4} options={{ showSpinner: false }} />
-                <NextUIProvider>
+              <NextUIProvider>
               <Component {...pageProps} />
                 </NextUIProvider>
             </NftsDataContextProvider>

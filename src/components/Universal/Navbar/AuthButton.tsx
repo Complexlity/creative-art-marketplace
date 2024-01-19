@@ -5,6 +5,7 @@ import { Mail } from "lucide-react";
 import PendingBidsButton from "./PendingBidsButton";
 import MessagesButton from "./MessagesButton";
 import CurrencyButton from "./CurrencyButton";
+import MessagesButton2 from "./MessagesButton2";
 export default function AuthButton() {
   const pathname = usePathname();
 
@@ -16,6 +17,7 @@ export default function AuthButton() {
           <div className="flex gap-4">
         <PendingBidsButton />
           <MessagesButton />
+          <MessagesButton2 />
           <CurrencyButton />
           </div>
         <UserButton showName={true} afterSignOutUrl={pathname} />
