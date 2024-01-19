@@ -290,29 +290,32 @@ export interface Database {
       };
       transactions: {
         Row: {
-          amount: string;
+          amount: number;
           balance_change: number;
           created_at: string;
           id: number;
           name: string;
+          status: string;
           type: string;
           user_id: string;
         };
         Insert: {
-          amount: string;
+          amount: number;
           balance_change: number;
           created_at?: string;
           id?: number;
           name: string;
+          status: string;
           type: string;
           user_id: string;
         };
         Update: {
-          amount?: string;
+          amount?: number;
           balance_change?: number;
           created_at?: string;
           id?: number;
           name?: string;
+          status?: string;
           type?: string;
           user_id?: string;
         };
