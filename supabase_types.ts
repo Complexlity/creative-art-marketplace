@@ -295,6 +295,7 @@ export interface Database {
           created_at: string;
           id: number;
           name: string;
+          read_status: string;
           status: string;
           type: string;
           user_id: string;
@@ -305,6 +306,7 @@ export interface Database {
           created_at?: string;
           id?: number;
           name: string;
+          read_status?: string;
           status: string;
           type: string;
           user_id: string;
@@ -315,6 +317,7 @@ export interface Database {
           created_at?: string;
           id?: number;
           name?: string;
+          read_status?: string;
           status?: string;
           type?: string;
           user_id?: string;

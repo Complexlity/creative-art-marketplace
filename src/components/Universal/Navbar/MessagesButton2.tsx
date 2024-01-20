@@ -1,36 +1,99 @@
-import React from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import {
+  Chip,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 
 import { useAuth } from "@clerk/nextjs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Mail, Bell } from "lucide-react";
-import { FC } from "react";
+import { Bell } from "lucide-react";
 
-import useMessages from "~/hooks/useMessages";
-import { Message } from "~/utils/types";
-import { supabaseWithClient as supabaseClient } from "supabase";
 import {
   Table,
-  TableHeader,
-  TableColumn,
   TableBody,
-  TableRow,
   TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
 } from "@nextui-org/react";
+import { supabaseWithClient as supabaseClient } from "supabase";
+import useTransactions from "~/hooks/useTransactions";
+import { formatDate } from "~/utils/libs";
+import { Transactions } from "~/utils/types";
+import { useCallback } from "react";
 
 interface MessagesButtonProps {}
-type ReduceReturnType = { unreadMessages: Message[]; count: number };
+type ReduceReturnType = {
+  unreadTransactions: Transactions[];
+  count: number;
+  selectedKeys: string[];
+};
 
-const COLUMNS = ["type", "item", "amount", "status"];
+const COLUMNS = [
+  {
+    key: "created_at",
+    label: "Date",
+  },
+  {
+    key: "type",
+    label: "Type",
+  },
+  {
+    key: "name",
+    label: "Name",
+  },
+  {
+    key: "amount",
+    label: "Amount",
+  },
+  {
+    key: "status",
+    label: "Status",
+  },
+  {
+    key: "balance_change",
+    label: "% Chng",
+  },
+];
+
+const ROWS = [
+  {
+    key: "1",
+    name: "Tony Reichert",
+    role: "CEO",
+    status: "Active",
+  },
+  {
+    key: "2",
+    name: "Zoey Lang",
+    role: "Technical Lead",
+    status: "Paused",
+  },
+  {
+    key: "3",
+    name: "Jane Fisher",
+    role: "Senior Developer",
+    status: "Active",
+  },
+  {
+    key: "4",
+    name: "William Howard",
+    role: "Community Manager",
+    status: "Vacation",
+  },
+];
 
 export default function MessagesButton2() {
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const { data: messages } = useMessages();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { data: transactions } = useTransactions();
   const { getToken, userId } = useAuth();
   const queryClient = useQueryClient();
-  const { mutate: readMessages } = useMutation({
+  const { mutate: readTransactions } = useMutation({
     mutationFn: async () => {
-      if (unreadMessages.length === 0) return;
+      if (unreadTransactions.length === 0) return;
       const supabaseAccessToken = await getToken({
         template: "supabase",
       });
@@ -45,18 +108,19 @@ export default function MessagesButton2() {
       queryClient.invalidateQueries(["messages"]);
     },
   });
-  if (!messages || messages.length === 0) return <p></p>;
-  const { unreadMessages, count } = messages.reduce<ReduceReturnType>(
-    (acc, curr) => {
-      if (curr.status == "unread") {
-        acc.unreadMessages.push(curr);
-        acc.count++;
-      }
-      return acc;
-    },
-    { unreadMessages: [], count: 0 }
-  );
-
+  if (!transactions || transactions.length === 0) return <p></p>;
+  const { unreadTransactions, count, selectedKeys } =
+    transactions.reduce<ReduceReturnType>(
+      (acc, curr) => {
+        if (curr.read_status == "unread") {
+          acc.unreadTransactions.push(curr);
+          acc.count++;
+          acc.selectedKeys.push(`${curr.id}`);
+        }
+        return acc;
+      },
+      { unreadTransactions: [], count: 0, selectedKeys: [] }
+    );
 
 
   return (
@@ -80,9 +144,9 @@ export default function MessagesButton2() {
         className="text-foreground dark"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-				classNames={{
-					body: "pb-6 px-0",
-					header: "pb-0",
+        classNames={{
+          body: "pb-6 px-0",
+          header: "pb-0",
           backdrop: "bg-primary/10 backdrop-opacity-10",
           base: "border-[#292f46] bg-gray-900 dark:bg-indigo-950 text-orange",
         }}
@@ -90,56 +154,57 @@ export default function MessagesButton2() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col">
-                Messages
-              </ModalHeader>
+              <ModalHeader className="flex flex-col">Messages</ModalHeader>
               <ModalBody>
                 <Table
+                  removeWrapper
                   shadow="none"
                   radius="none"
-                  classNames={{
-                    base: "[&>*]:bg-transparent [&>*]:bg-none"
-                  }}
-                  aria-label="Example static collection table">
-      <TableHeader>
-        <TableColumn>Type</TableColumn>
-        <TableColumn>Item</TableColumn>
-        <TableColumn>Amount</TableColumn>
-        <TableColumn>Status</TableColumn>
-        <TableColumn>+-Bal(fees)</TableColumn>
-      </TableHeader>
-      <TableBody emptyContent={"You have no messages"}>
-        <TableRow key="1">
-          <TableCell>Tony Reichert</TableCell>
-          <TableCell>CEO</TableCell>
-          <TableCell>Active</TableCell>
-          <TableCell>CEO</TableCell>
-          <TableCell>Active</TableCell>
-        </TableRow>
-        <TableRow key="2">
-          <TableCell>Zoey Lang</TableCell>
-          <TableCell>Technical Lead</TableCell>
-          <TableCell>Paused</TableCell>
-          <TableCell>Technical Lead</TableCell>
-          <TableCell>Paused</TableCell>
-        </TableRow>
-        <TableRow key="3">
-          <TableCell>Jane Fisher</TableCell>
-          <TableCell>Senior Developer</TableCell>
-          <TableCell>Active</TableCell>
-          <TableCell>Senior Developer</TableCell>
-          <TableCell>Active</TableCell>
-        </TableRow>
-        <TableRow key="4">
-          <TableCell>William Howard</TableCell>
-          <TableCell>Community Manager</TableCell>
-          <TableCell>Vacation</TableCell>
-          <TableCell>Community Manager</TableCell>
-          <TableCell>Vacation</TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
-
+                  aria-label="Example static collection table"
+                  color="primary"
+                  selectionMode="single"
+                  defaultSelectedKeys={selectedKeys}
+                >
+                  <TableHeader columns={COLUMNS}>
+                    {(column) => (
+                      <TableColumn key={column.key}>{column.label}</TableColumn>
+                    )}
+                  </TableHeader>
+                  <TableBody
+                    emptyContent={"You have no transactions"}
+                    items={[...transactions].reverse()}
+                  >
+                    {(item) => (
+                      <TableRow key={`${item.id}`}>
+                        {(columnKey) => {
+                          return (
+                            <TableCell>
+                              {columnKey === "status" ? (
+                                <Chip
+                                  color={
+                                    item[columnKey] === "complete"
+                                      ? "success"
+                                      : "warning"
+                                  }
+                                  classNames={{
+                                    base: "p-0 m-0",
+                                  }}
+                                >
+                                  {item[columnKey]}
+                                </Chip>
+                              ) : columnKey === "created_at" ? (
+                                formatDate(item[columnKey])
+                              ) : (
+                                //@ts-expect-error
+                                item[columnKey]
+                              )}
+                            </TableCell>
+                          );
+                        }}
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
               </ModalBody>
               {/* <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
