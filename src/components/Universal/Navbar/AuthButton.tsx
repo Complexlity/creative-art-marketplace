@@ -1,11 +1,10 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 import { usePathname } from "next/navigation";
-import { Mail } from "lucide-react";
-import PendingBidsButton from "./PendingBidsButton";
-import MessagesButton from "./MessagesButton";
 import CurrencyButton from "./CurrencyButton";
-import MessagesButton2 from "./MessagesButton2";
+import MessagesButton from "./MessagesButton";
+import PendingBidsButton from "./PendingBidsButton";
+import TransactionsButton from "./TransactionsButton";
 export default function AuthButton() {
   const pathname = usePathname();
 
@@ -16,8 +15,8 @@ export default function AuthButton() {
         <div className="lg:flex gap-4 grid">
           <div className="flex gap-4">
         <PendingBidsButton />
-          <MessagesButton />
-          <MessagesButton2 />
+          {/* <MessagesButton /> */}
+          <TransactionsButton />
           <CurrencyButton />
           </div>
         <UserButton showName={true} afterSignOutUrl={pathname} />

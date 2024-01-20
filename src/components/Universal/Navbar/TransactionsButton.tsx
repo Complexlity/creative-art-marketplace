@@ -9,7 +9,7 @@ import {
 
 import { useAuth } from "@clerk/nextjs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Bell } from "lucide-react";
+import { ArrowLeftRight } from "lucide-react";
 
 import {
   Table,
@@ -23,9 +23,8 @@ import { supabaseWithClient as supabaseClient } from "supabase";
 import useTransactions from "~/hooks/useTransactions";
 import { formatDate } from "~/utils/libs";
 import { Transactions } from "~/utils/types";
-import { useCallback } from "react";
 
-interface MessagesButtonProps {}
+interface TransactionsButtonProps {}
 type ReduceReturnType = {
   unreadTransactions: Transactions[];
   count: number;
@@ -55,7 +54,7 @@ const COLUMNS = [
   },
   {
     key: "balance_change",
-    label: "% Chng",
+    label: "+- Bal",
   },
 ];
 
@@ -86,7 +85,7 @@ const ROWS = [
   },
 ];
 
-export default function MessagesButton2() {
+export default function TransactionsButton() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: transactions } = useTransactions();
   const { getToken, userId } = useAuth();
@@ -99,13 +98,15 @@ export default function MessagesButton2() {
       });
       const supabase = await supabaseClient(supabaseAccessToken);
       const { data, error } = await supabase
-        .from("messages")
-        .update({ status: "read" })
+        .from("transactions")
+        .update({ read_status: "read" })
         .eq("user_id", userId!)
-        .select();
+      .select()
+
     },
+
     onSuccess: () => {
-      queryClient.invalidateQueries(["messages"]);
+      queryClient.invalidateQueries(["transactions"]);
     },
   });
   if (!transactions || transactions.length === 0) return <p></p>;
@@ -122,16 +123,16 @@ export default function MessagesButton2() {
       { unreadTransactions: [], count: 0, selectedKeys: [] }
     );
 
-
   return (
     <div className="">
       <div
         onClick={() => {
           onOpen();
+          readTransactions()
         }}
       >
         <div className="relative mx-auto w-fit cursor-pointer rounded-full p-1 hover:bg-gray-700">
-          <Bell />
+          <ArrowLeftRight />
 
           {count > 0 ? (
             <div className="min-h-4 min-w-4 absolute -top-[0px] left-[calc(100%-10px)] flex items-center  justify-center rounded-full bg-blue-400 px-1 text-xs">
@@ -164,10 +165,17 @@ export default function MessagesButton2() {
                   color="primary"
                   selectionMode="single"
                   defaultSelectedKeys={selectedKeys}
+                  classNames={{
+                    thead: "rounded-none",
+                    th: "text-center text-white first:rounded-none last:rounded-none",
+                    td: "text-center"
+                  }}
                 >
-                  <TableHeader columns={COLUMNS}>
+                  <TableHeader columns={COLUMNS}
+                 className="rounded-none bg-primary"
+                  >
                     {(column) => (
-                      <TableColumn key={column.key}>{column.label}</TableColumn>
+                      <TableColumn align="center" key={column.key}>{column.label}</TableColumn>
                     )}
                   </TableHeader>
                   <TableBody
