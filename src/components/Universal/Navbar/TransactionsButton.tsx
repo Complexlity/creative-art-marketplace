@@ -161,7 +161,7 @@ export default function TransactionsButton() {
                   removeWrapper
                   shadow="none"
                   radius="none"
-                  aria-label="Example static collection table"
+                  aria-label="A table of all your transactions on the site"
                   color="primary"
                   selectionMode="single"
                   defaultSelectedKeys={selectedKeys}
