@@ -155,7 +155,7 @@ export default function TransactionsButton() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col">Messages</ModalHeader>
+              <ModalHeader className="flex flex-col">Transactions</ModalHeader>
               <ModalBody>
                 <Table
                   removeWrapper
