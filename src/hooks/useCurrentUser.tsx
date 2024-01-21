@@ -48,7 +48,7 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
       }
       const res = await fetch("/api/current_user", {
         method: "POST",
-        body: userId,
+        body: userOrAuthUserId,
       });
       const result = await res.json()
       const user = result.user as User
