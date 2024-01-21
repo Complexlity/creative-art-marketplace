@@ -109,7 +109,9 @@ export default function TransactionsButton() {
       queryClient.invalidateQueries(["transactions"]);
     },
   });
-  if (!transactions || transactions.length === 0) return <p></p>;
+
+  
+  if (!transactions || !Array.isArray(transactions)) return <p></p>;
   const { unreadTransactions, count, selectedKeys } =
     transactions.reduce<ReduceReturnType>(
       (acc, curr) => {
