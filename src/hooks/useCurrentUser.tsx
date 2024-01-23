@@ -22,8 +22,6 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
   }
   const userOrAuthUserId = userId ?? authUserId
 
-  const userName = (user: User) => user.username
-
   return useQuery({
     queryKey: [userOrAuthUserId],
     queryFn: async (): Promise<User> => {
@@ -36,6 +34,8 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
         }
       }
       const { data: users, error: fetchError } = await supabase.from('users').select('*').eq('user_id', userOrAuthUserId)
+
+      //User found in db
       if (users && users.length > 0) {
         const user = users[0]!
         return {
@@ -46,39 +46,18 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
         }
 
       }
+
+      // Check server side
       const res = await fetch("/api/current_user", {
         method: "POST",
         body: userOrAuthUserId,
       });
       const result = await res.json()
       const user = result.user as User
-      if (!user) return {
-          username:null,
-          userId: '',
-        imageUrl: '',
-          game_currency: null
 
-      }
-      if (authUserId) {
-        const { data: newUser, error: createError } = await supabase
-        .from('users')
-        .insert(
-          [{ username :userName(user)!, imageUrl: user.imageUrl!, user_id: userOrAuthUserId!, game_currency: 1000 }],
-        )
-        .select("*")
-        return newUser![0] as unknown as User
-      }
-      else {
-        return {
-          username:userName(user),
-          userId: userOrAuthUserId,
-          imageUrl: user.imageUrl,
-          game_currency: user.game_currency
-        }
-      }
+      return user
     }
-
-  });
+  })
 }
 
 export default useCurrentUser
