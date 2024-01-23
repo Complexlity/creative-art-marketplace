@@ -58,32 +58,6 @@ const COLUMNS = [
   },
 ];
 
-const ROWS = [
-  {
-    key: "1",
-    name: "Tony Reichert",
-    role: "CEO",
-    status: "Active",
-  },
-  {
-    key: "2",
-    name: "Zoey Lang",
-    role: "Technical Lead",
-    status: "Paused",
-  },
-  {
-    key: "3",
-    name: "Jane Fisher",
-    role: "Senior Developer",
-    status: "Active",
-  },
-  {
-    key: "4",
-    name: "William Howard",
-    role: "Community Manager",
-    status: "Vacation",
-  },
-];
 
 export default function TransactionsButton() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -110,7 +84,7 @@ export default function TransactionsButton() {
     },
   });
 
-  
+
   if (!transactions || !Array.isArray(transactions)) return <p></p>;
   const { unreadTransactions, count, selectedKeys } =
     transactions.reduce<ReduceReturnType>(
@@ -147,6 +121,7 @@ export default function TransactionsButton() {
         className="text-foreground dark"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        scrollBehavior="inside"
         classNames={{
           body: "pb-6 px-0",
           header: "pb-0",
