@@ -19,7 +19,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import useSupabase from "~/hooks/useSupabaseWithAuth";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 
 const formSchema = z.object({
   itemPrice: z.number().positive().optional(),
