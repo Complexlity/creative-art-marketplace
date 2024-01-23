@@ -42,10 +42,9 @@ const WeeklyArtists = ({nfts: nftsData}: {nfts: WithUser<Nft>[]}) => {
       <ul className="honeycomb" lang="es">
         {nftsDataUsers.map((item, index) => {
           let curr = item[0]!
-//             ^?
           const [firstName, LastName] = curr.username.split(" ");
           return (
-            <li key={index} className="honeycomb-cell">
+            <li key={index} className="hover:cursor-pointer honeycomb-cell">
               <Image
                 alt={`${curr.username} Profile Image`}
                 className="honeycomb-cell__image w-full object-contain"
