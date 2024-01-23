@@ -12,7 +12,7 @@ function verifyDates(startDate: string, endDate: string) {
 
 // Start date must be tomorrow
 const START_DATE_DIFFERENCE = 0
-// Date must not exceed 30 days from now
+// End Date must not exceed 30 days from now
 const END_DATE_DIFFERENCE = 30
 
 
@@ -117,3 +117,6 @@ export const bidSchema = yup.object().shape({
     .oneOf([true], 'You need to accept the terms and conditions'),
 })
 
+export const subscribeSchema = yup.object().shape({
+  subscriptionEmail: yup.string().email().required("Please provide a valid email")
+})
