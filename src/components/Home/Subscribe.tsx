@@ -1,9 +1,31 @@
 import Image from "next/image";
 import { useNftsDataContext } from "~/contexts/legacy_NftsDataContext";
 import { motion } from "framer-motion";
+import { useFormik } from "formik";
+import { subscribeSchema } from "~/utils/schemas";
 
 const Subscribe = () => {
   const nftsData = useNftsDataContext().nftsData;
+
+  const formik = useFormik({
+    initialValues: {
+      subscriptionEmail: "",
+    },
+    onSubmit: async () => {
+      return 'wowo'
+    },
+    validationSchema: subscribeSchema
+  })
+
+  const {
+    errors,
+    touched,
+    values,
+    handleChange,
+    handleSubmit,
+    handleBlur,
+  } = formik;
+
   return (
     <section className="mb-24 mt-40 items-center gap-4 px-1 md:mt-44 md:grid md:grid-cols-2">
       <div className="fan-cards hidden md:grid">
@@ -44,12 +66,18 @@ const Subscribe = () => {
           We have a blog related to NFT so we can share thoughts and routines on
           our blog which is updated weekly
         </p>
-        <div className="mx-1 md:flex md:max-w-[50ch]  ">
+        <form
+          onSubmit={handleSubmit}
+          className="mx-1 md:flex md:max-w-[50ch]"
+        >
           <input
-            type="text"
+            type="email"
             placeholder="Enter your e-mail"
             className="input input-bordered mb-6 w-full max-w-[50ch] bg-slate-700 text-white hover:border-2 hover:border-white focus:border-2 focus:border-primary md:rounded-r-none"
+            value={values.subscriptionEmail}
+            onChange={handleChange}
           />
+          <small>{errors.subscriptionEmail && touched.subscriptionEmail ? errors.subscriptionEmail : ""}</small>
           <motion.button
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.95 }}
@@ -57,7 +85,7 @@ const Subscribe = () => {
           >
             Subscribe
           </motion.button>
-        </div>
+        </form>
       </div>
 
       <div className="fan-cards-small mt-12">
