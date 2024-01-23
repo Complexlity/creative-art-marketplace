@@ -167,9 +167,10 @@ export default function TransactionsButton() {
                               {columnKey === "status" ? (
                                 <Chip
                                   color={
-                                    item[columnKey] === "complete"
+                                    item[columnKey] === "complete" || "accepted"
                                       ? "success"
-                                      : "warning"
+                                      : item[columnKey] === "pending" ? "warning"
+                                        : "danger"
                                   }
                                   classNames={{
                                     base: "p-0 m-0",
