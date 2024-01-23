@@ -1,8 +1,32 @@
 import Image from "next/image";
-import { useNftsDataContext } from "~/contexts/legacy_NftsDataContext";
+import { Nft, NftUser, WithUser } from "~/utils/types";
 
-const WeeklyArtists = () => {
-  const people = useNftsDataContext().peopleData.slice(0, 5);
+type ReduceReturnType =
+  NftUser[][]
+const WeeklyArtists = ({nfts: nftsData}: {nfts: WithUser<Nft>[]}) => {
+
+  if (!nftsData) return null;
+
+  const nftsDataUsers = nftsData.reduce<ReduceReturnType>((acc, curr) => {
+    let currUser = curr.users;
+    for (let i = 0; i < acc.length + 1; i++) {
+      let currentItem = acc[i];
+      if (!currentItem || currentItem.length === 0) {
+        acc.push([currUser]);
+        break;
+      } else {
+        let currentUser = currentItem[0]!;
+        if (currentUser.user_id === currUser.user_id) {
+          acc[i] = [...currentItem, currentUser];
+          break;
+        }
+        continue;
+      }
+    }
+    return acc.sort((a, b) => b.length - a.length).slice(0, 5);
+  }, []);
+
+
 
   return (
     <section className="mb-32 px-1 md:mb-40">
@@ -16,14 +40,19 @@ const WeeklyArtists = () => {
         </h2>
       </header>
       <ul className="honeycomb" lang="es">
-        {people.map((item, index) => {
-          const [firstName, LastName] = item.name.split(" ");
+        {nftsDataUsers.map((item, index) => {
+          let curr = item[0]!
+//             ^?
+          const [firstName, LastName] = curr.username.split(" ");
           return (
             <li key={index} className="honeycomb-cell">
               <Image
-                alt={`${item.name} Profile Image`}
-                className="honeycomb-cell__image"
-                src={item.image}
+                alt={`${curr.username} Profile Image`}
+                className="honeycomb-cell__image w-full object-contain"
+                src={curr.imageUrl}
+                width={100}
+                height={100}
+
               />
               <div className="honeycomb-cell__title">
                 {firstName}

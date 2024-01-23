@@ -5,7 +5,7 @@ import Card from "~/components/Universal/Card";
 import { Nft, WithUser } from "~/utils/types";
 
 type Props = {
-  nfts?: WithUser<Nft[]>;
+  nfts?: WithUser<Nft>[];
 };
 
 const UniqueArt = ({ nfts: nftsData }: Props) => {
@@ -13,7 +13,7 @@ const UniqueArt = ({ nfts: nftsData }: Props) => {
 
   let cards = [];
   for (let i = 1; i < 4; i++) {
-    const item = nftsData[i] as Nft;
+    const item = nftsData[i] as WithUser<Nft>;
     cards.push(<Card key={item.id} item={item} />);
   }
 

@@ -4,7 +4,7 @@ import useDebounce from "~/hooks/useDebounce";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
-import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
+import { BsArrowDownCircleFill, BsFillArrowUpCircleFill } from "react-icons/bs";
 import { Nft, WithUser } from "~/utils/types";
 import { cn, convertStringDateToMilleseconds } from "~/utils/libs";
 import { Methods } from "../Mint/MethodOptions";
@@ -20,52 +20,72 @@ const STEP = 3;
 const CHEAP = 30;
 const AFFORDABLE = 50;
 
-
 type Search = string;
 
-export default function CardsContainer({ nftsData }: { nftsData: WithUser<Nft[]> }) {
-
+export default function CardsContainer({
+  nftsData,
+}: {
+  nftsData: WithUser<Nft>[];
+}) {
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
   const [priceRange, setPriceRange] = useState<string>("default");
   const [category, setCategory] = useState("default");
   const [expiryDate, setExpiryDate] = useState("0");
-  const [saleType, setSaleType] = useState('default')
-  const [auctionState, setAuctionState] = useState("default")
+  const [saleType, setSaleType] = useState("default");
+  const [auctionState, setAuctionState] = useState("default");
   const [displayedData, setDisplayedData] = useState(nftsData);
 
-  const [NUMBER_OF_CARDS_SHOWN, setDisplayedLength] = useState(getNumberOfCardsShow(displayedData));
+  const [NUMBER_OF_CARDS_SHOWN, setDisplayedLength] = useState(
+    getNumberOfCardsShow(displayedData)
+  );
 
   function getNumberOfCardsShow(data: unknown[]) {
-return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_TO_SHOW : data.length
+    return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW
+      ? INITIAL_NUMBER_OF_CARDS_TO_SHOW
+      : data.length;
   }
 
   const MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN = displayedData.length;
 
-  const willSeeMore = MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN > NUMBER_OF_CARDS_SHOWN
-  const willSeeLess = NUMBER_OF_CARDS_SHOWN > INITIAL_NUMBER_OF_CARDS_TO_SHOW
+  const willSeeMore =
+    MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN > NUMBER_OF_CARDS_SHOWN;
+  const willSeeLess = NUMBER_OF_CARDS_SHOWN > INITIAL_NUMBER_OF_CARDS_TO_SHOW;
 
   function showMore() {
-    if(!willSeeMore) return
-    const remaining = MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN - NUMBER_OF_CARDS_SHOWN
-    setDisplayedLength((prev) => prev + (remaining > STEP ? STEP : remaining))
+    if (!willSeeMore) return;
+    const remaining =
+      MAXIMUM_NUMBER_OF_CARDS_THAT_CAN_BE_SHOWN - NUMBER_OF_CARDS_SHOWN;
+    setDisplayedLength((prev) => prev + (remaining > STEP ? STEP : remaining));
   }
   function showLess() {
-    if (!willSeeLess) return
-  if (NUMBER_OF_CARDS_SHOWN % STEP === 0) {
-     setDisplayedLength((prev) => prev - STEP);
-    }
-    else {
-      setDisplayedLength((prev) => prev - (NUMBER_OF_CARDS_SHOWN % STEP))
+    if (!willSeeLess) return;
+    if (NUMBER_OF_CARDS_SHOWN % STEP === 0) {
+      setDisplayedLength((prev) => prev - STEP);
+    } else {
+      setDisplayedLength((prev) => prev - (NUMBER_OF_CARDS_SHOWN % STEP));
     }
   }
 
   useEffect(() => {
-    const totalData = aggregateQuery( debouncedSearch,saleType, auctionState, category, expiryDate, priceRange)
+    const totalData = aggregateQuery(
+      debouncedSearch,
+      saleType,
+      auctionState,
+      category,
+      expiryDate,
+      priceRange
+    );
     setDisplayedData(totalData);
-    setDisplayedLength(getNumberOfCardsShow(totalData))
-
-  }, [debouncedSearch, saleType,auctionState, category, expiryDate, priceRange, ]);
+    setDisplayedLength(getNumberOfCardsShow(totalData));
+  }, [
+    debouncedSearch,
+    saleType,
+    auctionState,
+    category,
+    expiryDate,
+    priceRange,
+  ]);
 
   function aggregateQuery(
     search: string,
@@ -94,24 +114,22 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
     return newItems;
   }
 
-
   function searchByAuctionState(item: WithUser<Nft>, auctionState: string) {
-    if (auctionState === "default" || item.sale_type !== 'TIMED_AUCTION') return true
-    const now = new Date().getTime()
-    console.log({ now })
+    if (auctionState === "default" || item.sale_type !== "TIMED_AUCTION")
+      return true;
+    const now = new Date().getTime();
+    console.log({ now });
 
-    const startDate = convertStringDateToMilleseconds(item.start_date)
-    console.log({startDate})
-    const itemIsStarted = now > startDate ? "started" : "not_started"
-    return itemIsStarted === auctionState
-
-}
+    const startDate = convertStringDateToMilleseconds(item.start_date);
+    console.log({ startDate });
+    const itemIsStarted = now > startDate ? "started" : "not_started";
+    return itemIsStarted === auctionState;
+  }
 
   function searchBySaleType(item: WithUser<Nft>, saleType: string) {
-    if(saleType === "default") return true
-    const itemSaleType = item.sale_type.toLowerCase() as Lowercase<Methods>
-    return itemSaleType === saleType
-
+    if (saleType === "default") return true;
+    const itemSaleType = item.sale_type.toLowerCase() as Lowercase<Methods>;
+    return itemSaleType === saleType;
   }
   function searchByName(item: WithUser<Nft>, searchString: string) {
     if (!searchString) return true;
@@ -122,7 +140,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
 
   function searchByCategory(item: WithUser<Nft>, category: string) {
     if (category === "default") return true;
-    let itemCategory = item.category
+    let itemCategory = item.category;
     return itemCategory === category;
   }
 

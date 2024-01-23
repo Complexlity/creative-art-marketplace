@@ -11,21 +11,19 @@ import { Nft, WithUser } from "~/utils/types";
 import { Badge } from "../ui/badge";
 import clockImage from "/public/icons/clock.png";
 
-
-
 type HeroProps = {
-  nfts?: WithUser<Nft[]>
-}
+  nfts?: WithUser<Nft>[];
+};
 
 const Hero = ({ nfts }: HeroProps) => {
-  const [loaded, setLoaded] = useState<boolean>(false)
-  const heroItem = nfts && nfts![nfts!.length - 1]
-  const [started, setStarted] = useState(getAuctionDateStatus(heroItem?.start_date!, heroItem?.end_date!).started)
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const heroItem = nfts && nfts![nfts!.length - 1];
+  const [started, setStarted] = useState(
+    getAuctionDateStatus(heroItem?.start_date!, heroItem?.end_date!).started
+  );
   const [ended, setEnded] = useState(false);
 
   const countDownDate = started ? heroItem?.end_date : heroItem?.start_date;
-
-
 
   return (
     <section className="mb-24 px-1 py-2 md:grid md:grid-cols-2 md:py-6">
@@ -192,6 +190,5 @@ function FeaturedSkeleton() {
     </SkeletonTheme>
   );
 }
-
 
 export default Hero;

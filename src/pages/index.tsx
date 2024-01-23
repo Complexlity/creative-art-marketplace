@@ -4,19 +4,19 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Hero from "~/components/Home/Hero";
 import Subscribe from "~/components/Home/Subscribe";
 import UniqueArt from "~/components/Home/UniqueArt";
-import WeeklyArtists from "~/components/Home/WeeklyArtitsts";
+import WeeklyArtists from "~/components/Home/WeeklyArtists";
 import Footer from "~/components/Universal/Footer";
 import Navbar from "~/components/Universal/Navbar";
 import useNfts from "~/hooks/useNfts";
 import { getAllNfts } from "~/utils/queries";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 
 export async function getServerSideProps() {
   const serverNfts = await getAllNfts();
   return { props: { serverNfts } };
 }
 
-const Home = ({ serverNfts }: { serverNfts: WithUser<Nft[]> }) => {
+const Home = ({ serverNfts }: { serverNfts: WithUser<Nft>[] }) => {
   let { data: nfts } = useNfts({ serverNfts });
 
   return (
@@ -40,9 +40,9 @@ const Home = ({ serverNfts }: { serverNfts: WithUser<Nft[]> }) => {
               <>
                 <Hero nfts={nfts} />
                 <UniqueArt nfts={[...nfts].reverse()} />
+                <WeeklyArtists nfts={nfts} />
               </>
             )}
-            <WeeklyArtists />
             <Subscribe />
             <Footer />
           </div>

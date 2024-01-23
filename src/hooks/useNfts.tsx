@@ -1,13 +1,12 @@
-import { useQuery } from '@tanstack/react-query'
-import { getAllNfts, getSingleNft } from '~/utils/queries'
-import type { Nft, WithUser } from '~/utils/types'
+import { useQuery } from "@tanstack/react-query";
+import { getAllNfts, getSingleNft } from "~/utils/queries";
+import type { Nft, WithUser } from "~/utils/types";
 
 interface useCurrentPageProps {
-  serverNfts?: WithUser<Nft[]>
-
+  serverNfts?: WithUser<Nft>[];
 }
 
-const useCurrentPage = ({ serverNfts  }: useCurrentPageProps) => {
+const useCurrentPage = ({ serverNfts }: useCurrentPageProps) => {
   return useQuery({
     queryKey: [`nfts`],
     queryFn: async () => {
@@ -15,7 +14,6 @@ const useCurrentPage = ({ serverNfts  }: useCurrentPageProps) => {
     },
     initialData: serverNfts,
   });
+};
 
-}
-
-export default useCurrentPage
+export default useCurrentPage;

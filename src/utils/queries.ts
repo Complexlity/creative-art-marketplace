@@ -1,18 +1,20 @@
 import { supabaseWithoutClient as supabase } from "~/../supabase";
 import { Nft, NftBid, NftComment, WithUser } from "./types";
 
-
 export async function getSingleNft(slug: string) {
-  const { data } = await supabase.from("nfts").select(`
+  const { data } = await supabase
+    .from("nfts")
+    .select(
+      `
   "*",
   users (
     "*"
-  )`).eq("slug", slug);
+  )`
+    )
+    .eq("slug", slug);
   const nft = data![0];
-  return nft! as unknown as WithUser<Nft>
+  return nft! as unknown as WithUser<Nft>;
 }
-
-
 
 export async function getAllNfts() {
   const { data: nfts, error } = await supabase.from("nfts").select(
@@ -22,10 +24,10 @@ export async function getAllNfts() {
       "*"
     )`
   );
-  console.log({nfts})
+  console.log({ nfts });
 
-  if(error) throw new Error(error.message)
-  return nfts! as unknown as WithUser<Nft[]>
+  if (error) throw new Error(error.message);
+  return nfts! as unknown as WithUser<Nft>[];
 }
 
 export async function getBids(slug: string) {
@@ -38,11 +40,11 @@ export async function getBids(slug: string) {
         "*"
       )
       `
-      )
-      .eq("slug", slug);
-  if (error) throw new Error(error.message)
+    )
+    .eq("slug", slug);
+  if (error) throw new Error(error.message);
 
-  return bids as unknown as WithUser<NftBid>[]
+  return bids as unknown as WithUser<NftBid>[];
 }
 
 export async function getComments(slug: string) {
@@ -57,11 +59,10 @@ export async function getComments(slug: string) {
     `
     )
     .eq("slug", slug)
-    .order('created_at', { ascending: false })
-  if (error) throw new Error(error.message)
-  return comments as unknown as WithUser<NftComment>[]
+    .order("created_at", { ascending: false });
+  if (error) throw new Error(error.message);
+  return comments as unknown as WithUser<NftComment>[];
 }
-
 
 export async function getPendingBids(id: string) {
   let { data: bids, error } = await supabase
@@ -77,16 +78,20 @@ export async function getPendingBids(id: string) {
     )
     `
     )
-    .eq("nfts.user_id", id).eq('status', "pending");
+    .eq("nfts.user_id", id)
+    .eq("status", "pending");
 
   return bids as unknown as (WithUser<NftBid> & {
-    nfts: WithUser<Nft>
-  }) []
+    nfts: WithUser<Nft>;
+  })[];
 }
 
 export async function getMessages(id: string) {
-  let { data: messages, error } = await supabase.from('messages').select("*").eq('user_id', id)
-  return messages
+  let { data: messages, error } = await supabase
+    .from("messages")
+    .select("*")
+    .eq("user_id", id);
+  return messages;
 }
 
 export async function getLikes(slug: string) {
@@ -97,12 +102,11 @@ export async function getLikes(slug: string) {
   return likes;
 }
 
-
 export async function getViewsCount(slug: string) {
   const { data: views, error } = await supabase
-    .from('nft_views')
+    .from("nft_views")
     .select("*")
-    .eq('nft_slug', slug)
-  if(!views || views.length === 0) return null
-  return views[0]!.views_count
+    .eq("nft_slug", slug);
+  if (!views || views.length === 0) return null;
+  return views[0]!.views_count;
 }

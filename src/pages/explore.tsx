@@ -13,7 +13,7 @@ export async function getServerSideProps() {
 }
 
 type ExploreProps = {
-  serverNfts: WithUser<Nft[]>;
+  serverNfts: WithUser<Nft>[];
 };
 
 const Explore = ({ serverNfts }: ExploreProps) => {
