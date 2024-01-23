@@ -118,10 +118,10 @@ export default function CardsContainer({
     if (auctionState === "default" || item.sale_type !== "TIMED_AUCTION")
       return true;
     const now = new Date().getTime();
-    console.log({ now });
+    
 
     const startDate = convertStringDateToMilleseconds(item.start_date);
-    console.log({ startDate });
+
     const itemIsStarted = now > startDate ? "started" : "not_started";
     return itemIsStarted === auctionState;
   }

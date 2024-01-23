@@ -24,7 +24,6 @@ export async function getAllNfts() {
       "*"
     )`
   );
-  console.log({ nfts });
 
   if (error) throw new Error(error.message);
   return nfts! as unknown as WithUser<Nft>[];

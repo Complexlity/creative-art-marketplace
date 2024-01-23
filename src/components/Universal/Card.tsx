@@ -18,7 +18,7 @@ export function Card({ item }: { item?: Nft }) {
 
   useEffect(() => {
     if (ended) {
-      console.log("Item is sold")
+      
       //TODO: Transfer item ownership to the current highest bidder
     }
   }, [ended])
