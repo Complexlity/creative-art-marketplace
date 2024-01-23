@@ -10,7 +10,7 @@ import clockImage from "/public/icons/clock.png";
 import { useEffect, useState } from "react";
 
 
-export function Card({ item }: { item?: WithUser<Nft> }) {
+export function Card({ item }: { item?: Nft }) {
   const [started, setStarted] = useState(getAuctionDateStatus(item?.start_date!, item?.end_date!).started)
   const [ended, setEnded] = useState(false)
 
