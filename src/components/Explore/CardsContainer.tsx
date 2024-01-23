@@ -5,7 +5,7 @@ import useDebounce from "~/hooks/useDebounce";
 import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowDownCircleFill, BsFillArrowUpCircleFill} from 'react-icons/bs'
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 import { cn, convertStringDateToMilleseconds } from "~/utils/libs";
 import { Methods } from "../Mint/MethodOptions";
 
@@ -23,7 +23,7 @@ const AFFORDABLE = 50;
 
 type Search = string;
 
-export default function CardsContainer({ nftsData }: { nftsData: Nft[] }) {
+export default function CardsContainer({ nftsData }: { nftsData: WithUser<Nft[]> }) {
 
   const [search, setSearch] = useState<Search>("");
   const debouncedSearch = useDebounce(search, 500);
@@ -79,7 +79,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
     const items = [...nftsData];
     const newItems = [];
     for (let i = 0; i < items.length; i++) {
-      let curr = items[i] as Nft;
+      let curr = items[i] as WithUser<Nft>;
       if (
         searchBySaleType(curr, saleType) &&
         searchByAuctionState(curr, auctionState) &&
@@ -95,7 +95,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
   }
 
 
-  function searchByAuctionState(item: Nft, auctionState: string) {
+  function searchByAuctionState(item: WithUser<Nft>, auctionState: string) {
     if (auctionState === "default" || item.sale_type !== 'TIMED_AUCTION') return true
     const now = new Date().getTime()
     console.log({ now })
@@ -107,20 +107,20 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
 
 }
 
-  function searchBySaleType(item: Nft, saleType: string) {
+  function searchBySaleType(item: WithUser<Nft>, saleType: string) {
     if(saleType === "default") return true
     const itemSaleType = item.sale_type.toLowerCase() as Lowercase<Methods>
     return itemSaleType === saleType
 
   }
-  function searchByName(item: Nft, searchString: string) {
+  function searchByName(item: WithUser<Nft>, searchString: string) {
     if (!searchString) return true;
     const itemName = item.name.toLowerCase();
     searchString = searchString.toLowerCase();
     return itemName.includes(searchString);
   }
 
-  function searchByCategory(item: Nft, category: string) {
+  function searchByCategory(item: WithUser<Nft>, category: string) {
     if (category === "default") return true;
     let itemCategory = item.category
     return itemCategory === category;
@@ -142,7 +142,7 @@ return data.length > INITIAL_NUMBER_OF_CARDS_TO_SHOW ? INITIAL_NUMBER_OF_CARDS_T
   //   }
   // }
 
-  function searchByPrice(item: Nft, priceRange: string) {
+  function searchByPrice(item: WithUser<Nft>, priceRange: string) {
     switch (priceRange) {
       case "cheap":
         return item.price < CHEAP;

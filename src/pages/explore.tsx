@@ -5,7 +5,7 @@ import Header from "~/components/Universal/Header";
 import Navbar from "~/components/Universal/Navbar";
 import useNfts from "~/hooks/useNfts";
 import { getAllNfts } from "~/utils/queries";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 
 export async function getServerSideProps() {
   const serverNfts = await getAllNfts();
@@ -13,7 +13,7 @@ export async function getServerSideProps() {
 }
 
 type ExploreProps = {
-  serverNfts: Nft[];
+  serverNfts: WithUser<Nft[]>;
 };
 
 const Explore = ({ serverNfts }: ExploreProps) => {

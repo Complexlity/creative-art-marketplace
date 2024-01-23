@@ -1,7 +1,7 @@
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 import Card from "../Universal/Card";
 
-export default function RelatedItems({ relatedItems }: { relatedItems: Nft[] }) {
+export default function RelatedItems({ relatedItems }: { relatedItems: WithUser<Nft[]> }) {
   return (
     <section className="related-items grid gap-12 text-center">
       <h2 className="relative  text-3xl tracking-wide md:text-4xl">

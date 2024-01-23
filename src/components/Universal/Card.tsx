@@ -3,14 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "~/components/ui/badge";
 import { cn, getAuctionDateStatus } from "~/utils/libs";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 import CountDownComponent from "./Countdown";
 import MktIcon from "./MktIcon";
 import clockImage from "/public/icons/clock.png";
 import { useEffect, useState } from "react";
 
 
-export function Card({ item }: { item?: Nft }) {
+export function Card({ item }: { item?: WithUser<Nft> }) {
   const [started, setStarted] = useState(getAuctionDateStatus(item?.start_date!, item?.end_date!).started)
   const [ended, setEnded] = useState(false)
 

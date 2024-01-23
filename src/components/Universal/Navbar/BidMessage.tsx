@@ -20,7 +20,7 @@ import MktIcon from "~/components/Universal/MktIcon";
 
 
 type BidMailProps = {
-  bid: WithUser<NftBid> & { nfts: Nft };
+  bid: WithUser<NftBid> & { nfts: WithUser<Nft> };
 };
 
 

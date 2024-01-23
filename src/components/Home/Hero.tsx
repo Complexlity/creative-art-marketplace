@@ -7,14 +7,14 @@ import "react-loading-skeleton/dist/skeleton.css";
 import CountDownComponent from "~/components/Universal/Countdown";
 import MktIcon from "~/components/Universal/MktIcon";
 import { cn, getAuctionDateStatus } from "~/utils/libs";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 import { Badge } from "../ui/badge";
 import clockImage from "/public/icons/clock.png";
 
 
 
 type HeroProps = {
-  nfts?: Nft[]
+  nfts?: WithUser<Nft[]>
 }
 
 const Hero = ({ nfts }: HeroProps) => {

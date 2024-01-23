@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import "react-loading-skeleton/dist/skeleton.css";
 import Card from "~/components/Universal/Card";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 
 type Props = {
-  nfts?: Nft[];
+  nfts?: WithUser<Nft[]>;
 };
 
 const UniqueArt = ({ nfts: nftsData }: Props) => {

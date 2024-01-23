@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
 import { motion } from "framer-motion";
-import { Nft } from "~/utils/types";
+import { Nft, WithUser } from "~/utils/types";
 import BidInputForm from "./BidInputForm";
 
-export default function PlaceBidModal({ nftData }: { nftData: Nft }) {
+export default function PlaceBidModal({ nftData }: { nftData: WithUser<Nft> }) {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>

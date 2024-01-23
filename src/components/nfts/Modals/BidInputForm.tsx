@@ -40,7 +40,7 @@ export default function BidInputForm({
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>;
     price: number;
-  nftData: Nft
+  nftData: WithUser<Nft>
   }) {
   const queryClient = useQueryClient()
   const pathname = usePathname();

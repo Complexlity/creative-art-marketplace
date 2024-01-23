@@ -16,7 +16,7 @@ export async function getServerSideProps() {
   return { props: { serverNfts } };
 }
 
-const Home = ({ serverNfts }: { serverNfts: Nft[] }) => {
+const Home = ({ serverNfts }: { serverNfts: WithUser<Nft[]> }) => {
   let { data: nfts } = useNfts({ serverNfts });
 
   return (

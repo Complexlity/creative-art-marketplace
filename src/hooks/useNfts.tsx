@@ -3,7 +3,7 @@ import { getAllNfts, getSingleNft } from '~/utils/queries'
 import type { Nft, WithUser } from '~/utils/types'
 
 interface useCurrentPageProps {
-  serverNfts?: Nft[]
+  serverNfts?: WithUser<Nft[]>
 
 }
 
