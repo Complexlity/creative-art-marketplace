@@ -11,13 +11,13 @@ export default async function handler(
   // let error = false
   if (req.method === "POST") {
     let supabase;
-    const resendApiKey = process.env.RESEND_API_KEY;
+    // const resendApiKey = process.env.RESEND_API_KEY;
     try {
       supabase = createPagesServerClient({ req, res });
     } catch (err) {
       // Ensures this does not throw on the client
     }
-    if (!resendApiKey || !supabase) {
+    if (!supabase) {
       //catches both errors here
       return res
         .status(500)
@@ -32,7 +32,7 @@ export default async function handler(
       return res.status(500).json({ success: false, message: "Invalid Email" });
     }
     // TODO: Get a domain and verify to send emails
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    // const resend = new Resend(process.env.RESEND_API_KEY);
 
       const { data, error } = await supabase
         .from('subscribers')
