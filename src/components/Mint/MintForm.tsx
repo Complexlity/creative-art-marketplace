@@ -1,25 +1,24 @@
-import { useRef, useState } from "react";
-import { MdGroups } from "react-icons/md";
-import { ImPriceTag } from "react-icons/im";
-import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
-import Card from "~/components/Universal/Card";
 import { useFormik } from "formik";
-import { schema } from "~/utils/schemas";
-import { StaticImageData } from "next/image";
-import MethodOptions, { type Methods } from "./MethodOptions";
-import { toast, ToastContainer } from "react-toastify";
+import { useState } from "react";
+import { FaHourglassHalf, FaLock, FaUnlockAlt } from "react-icons/fa";
+import { ImPriceTag } from "react-icons/im";
+import { MdGroups } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Card from "~/components/Universal/Card";
+import { schema } from "~/utils/schemas";
+import MethodOptions, { type Methods } from "./MethodOptions";
 
 import { useAuth } from "@clerk/nextjs";
 
-import { useUploadThing } from "~/utils/uploadthing";
-import { useRouter } from "next/navigation";
-import useSupabase from "~/hooks/useSupabaseWithAuth";
-import slugify from "slugify";
-import { Nft } from "~/utils/types";
-import useCurrentUser from "~/hooks/useCurrentUser";
-import { cn } from "~/utils/libs";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import slugify from "slugify";
+import useCurrentUser from "~/hooks/useCurrentUser";
+import useSupabase from "~/hooks/useSupabaseWithAuth";
+import { cn } from "~/utils/libs";
+import { Nft } from "~/utils/types";
+import { useUploadThing } from "~/utils/uploadthing";
 
 const MINT_PERCENTAGE_COST = 0.2;
 
