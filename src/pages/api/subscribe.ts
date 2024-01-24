@@ -1,6 +1,5 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { NextApiRequest, NextApiResponse } from "next";
-import { AiOutlineConsoleSql } from "react-icons/ai";
 import { Resend } from "resend";
 import { subscribeSchema } from "~/utils/schemas";
 
@@ -16,6 +15,7 @@ export default async function handler(
       supabase = createPagesServerClient({ req, res });
     } catch (err) {
       // Ensures this does not throw on the client
+      console.log({err})
     }
     if (!supabase) {
       //catches both errors here
