@@ -109,15 +109,15 @@ export default function BuyNowModal({ nftData }: { nftData: WithUser<Nft> }) {
           Buy Now
         </motion.button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent >
         <AlertDialogHeader>
           <AlertDialogTitle>{nftData.name}</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogDescription className="text-white">
             {nftData.description}
             <br />
             <br />
             Are you sure you want to purchase this item for{" "}
-            <span className="font-bold text-black">
+            <span className="font-bold">
               {nftData.price}
               <MktIcon />?
             </span>

@@ -7,7 +7,7 @@ import BidInputForm from "./BidInputForm";
 export default function PlaceBidModal({ nftData }: { nftData: WithUser<Nft> }) {
   const [open, setOpen] = useState(false);
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog  open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <motion.button
           className="rounded-full bg-gray-500 px-6 py-2 hover:shadow-round hover:shadow-primary"
@@ -17,7 +17,7 @@ export default function PlaceBidModal({ nftData }: { nftData: WithUser<Nft> }) {
           Place a bid
         </motion.button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="dark sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{nftData.name}</DialogTitle>
           <DialogDescription>{nftData.description}</DialogDescription>

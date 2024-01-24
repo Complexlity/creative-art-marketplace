@@ -6,7 +6,7 @@ import PlaceBidModal from "./PlaceBidModal";
 
 export default function Modals({ nftData }: { nftData: WithUser<Nft> }) {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 dark">
       <BuyNowModal nftData={nftData} />
       <PlaceBidModal nftData={nftData} />
       <ToastContainer
