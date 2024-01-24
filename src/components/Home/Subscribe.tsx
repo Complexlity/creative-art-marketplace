@@ -1,32 +1,58 @@
 import Image from "next/image";
 import { useNftsDataContext } from "~/contexts/legacy_NftsDataContext";
 import { motion } from "framer-motion";
-import { useFormik } from "formik";
 import { subscribeSchema } from "~/utils/schemas";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { cn } from "~/utils/libs";
 
 const Subscribe = () => {
+
   const nftsData = useNftsDataContext().nftsData;
+  const [email, setEmail] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const formik = useFormik({
-    initialValues: {
-      subscriptionEmail: "",
-    },
-    onSubmit: async () => {
-      return 'wowo'
-    },
-    validationSchema: subscribeSchema
-  })
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email) {
+      toast.error("Please Provide An Email Address")
+      return
+    }
+    let subscriptionEmail;
+    try {
+      subscriptionEmail = await subscribeSchema.validate({email})
+    } catch (error) {
+      console.log({error})
+      toast.error("Email is Invalid")
+      return
+    }
+    setIsLoading(true)
+    setEmail('')
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: "POST",
+        body:email
+      })
+      const result = await res.json()
+      if (!res.ok) {
+        throw result
+      }
+      toast(result.message)
+    } catch (error) {
+      //@ts-expect-error message may not exist on error
+      toast.error(error.message)
+      setEmail(email)
+    }
+    finally {
+      setIsLoading(false)
+      return
+    }
+  }
 
-  const {
-    errors,
-    touched,
-    values,
-    handleChange,
-    handleSubmit,
-    handleBlur,
-  } = formik;
 
   return (
+    <>
     <section className="mb-24 mt-40 items-center gap-4 px-1 md:mt-44 md:grid md:grid-cols-2">
       <div className="fan-cards hidden md:grid">
         <div className="grid grid-cols-3">
@@ -66,24 +92,39 @@ const Subscribe = () => {
           We have a blog related to NFT so we can share thoughts and routines on
           our blog which is updated weekly
         </p>
-        <form
-          onSubmit={handleSubmit}
-          className="mx-1 md:flex md:max-w-[50ch]"
-        >
+        <form onSubmit={handleSubmit} className="mx-1 md:flex md:max-w-[50ch]">
           <input
             type="email"
+            name="email"
             placeholder="Enter your e-mail"
             className="input input-bordered mb-6 w-full max-w-[50ch] bg-slate-700 text-white hover:border-2 hover:border-white focus:border-2 focus:border-primary md:rounded-r-none"
-            value={values.subscriptionEmail}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <small>{errors.subscriptionEmail && touched.subscriptionEmail ? errors.subscriptionEmail : ""}</small>
-          <motion.button
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.95 }}
-            className="mx-auto block rounded-lg bg-primary px-11 py-3 font-bold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:inline md:h-12  md:rounded-l-none md:px-4 md:py-2  "
+
+            <motion.button
+              disabled={isLoading}
+            whileHover={{ scale: isLoading ? 1 : 1.01 }}
+            whileTap={{ scale: isLoading ? 1 : 0.95 }}
+              className={cn("mx-auto block rounded-lg bg-primary px-11 py-3 font-bold text-gray-800 hover:bg-blue-950 hover:text-primary hover:outline-dotted hover:outline-2 hover:outline-primary md:inline md:h-12  md:rounded-l-none md:px-4 md:py-2", {
+                "disabled opacity-60": isLoading,
+                            })}
           >
-            Subscribe
+              {isLoading ? <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="mr-2 h-8 w-8 animate-spin"
+              >
+
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+              </svg> : "Subscribe"}
           </motion.button>
         </form>
       </div>
@@ -108,6 +149,14 @@ const Subscribe = () => {
         </div>
       </div>
     </section>
+    <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        closeOnClick
+        theme="dark"
+        pauseOnHover={false}
+      />
+    </>
   );
 };
 
