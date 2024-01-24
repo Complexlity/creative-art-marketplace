@@ -2,7 +2,6 @@ import Footer from "~/components/Universal/Footer";
 import Navbar from "~/components/Universal/Navbar";
 
 import Head from "next/head";
-import { useRouter } from "next/router";
 import Comments from "~/components/nfts/Comments";
 import NftDetails from "~/components/nfts/NftDetails";
 import useCurrentPage from "~/hooks/useCurrentPage";
@@ -13,6 +12,7 @@ import {
   getViewsCount,
 } from "~/utils/queries";
 import { Like, Nft, WithUser } from "~/utils/types";
+import { usePathname, useRouter } from "next/navigation";
 
 export const getStaticPaths = async () => {
   const nftsData = await getAllNfts();
@@ -40,9 +40,17 @@ function NFTItem({
   viewsCount: number;
 }) {
   const router = useRouter();
-  const slug = router.query.slug as string;
+  // const slug = router.query.slug as string;
+  const pathname = usePathname();
+  const slug = pathname.split("/").pop()!;
   const { data } = useCurrentPage({ slug, singlePost });
   const nftData = data as unknown as WithUser<Nft>;
+
+    if (!nftData) {
+      router.push("/");
+      return;
+    }
+
 
   return (
     <>

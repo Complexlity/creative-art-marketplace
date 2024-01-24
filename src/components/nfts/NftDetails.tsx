@@ -14,57 +14,69 @@ import Modals from "./Modals";
 import { supabaseWithoutClient as supabase } from "supabase";
 import { getViewsCount } from "~/utils/queries";
 import MktIcon from "~/components/Universal/MktIcon";
+import { getAuctionDateStatus } from "~/utils/libs";
+import { useState } from "react";
 
 export default function NftDetails({
   nftData,
   initialLikes,
-  viewsCount
-
+  viewsCount,
 }: {
-  nftData: WithUser<Nft> | undefined;
-    initialLikes: Like[];
-    viewsCount: number
+  nftData: WithUser<Nft>;
+  initialLikes: Like[];
+  viewsCount: number;
 }) {
+  const pathname = usePathname();
+  const currentPathname = pathname.split("/").pop()!;
 
-  const pathname = usePathname()
+const [started, setStarted] = useState(
+    getAuctionDateStatus(nftData.start_date!, nftData.end_date!).started
+  );
+  const [ended, setEnded] = useState(false);
+
+  const { data: bids, isLoading: isFetchingBids } = useNftBids({
+    currentPathname,
+  });
 
 
-const currentPathname = pathname.split('/').pop()!
-  const { data: bids, isLoading: isFetchingBids } = useNftBids({ currentPathname })
-
-  if (!nftData)
-  return <div>Not Found</div>;
   const { data: viewsUpdate } = useQuery({
     queryKey: [`views-${nftData.slug}`],
     queryFn: async () => {
-      let addedColumn: ViewCount[] | null
+      let addedColumn: ViewCount[] | null;
       if (viewsCount === null) {
-        const { data, error } = await supabase.from('nft_views').insert({
-          'views_count': 1,
-          'nft_slug': nftData.slug,
-        }).select()
-        addedColumn = data
+        const { data, error } = await supabase
+          .from("nft_views")
+          .insert({
+            views_count: 1,
+            nft_slug: nftData.slug,
+          })
+          .select();
+        addedColumn = data;
+      } else {
+        const { data, error } = await supabase
+          .from("nft_views")
+          .update({
+            views_count: viewsCount + 1,
+          })
+          .eq("nft_slug", nftData.slug)
+          .select();
+        addedColumn = data;
       }
-      else {
-        const { data, error } = await supabase.from('nft_views').update({
-          'views_count': viewsCount + 1
-        }).eq('nft_slug', nftData.slug).select()
-        addedColumn = data
-      }
-      return addedColumn
+      return addedColumn;
     },
     refetchOnWindowFocus: false,
-  })
+  });
 
+
+
+  const countDownDate = started ? nftData?.end_date : nftData?.start_date;
 
   const { data: views } = useQuery({
     queryFn: async () => {
-     return await getViewsCount(nftData.slug)
+      return await getViewsCount(nftData.slug);
     },
     initialData: viewsCount ?? 1,
-  })
-
-
+  });
 
   return (
     <section className="my-grid item-details mx-auto grid  max-w-[500px] gap-4 md:max-w-full md:grid-cols-2 md:gap-12">
@@ -78,13 +90,18 @@ const currentPathname = pathname.split('/').pop()!
         />
       </div>
       <div className="item-descriptions mb-8 grid gap-4 md:-m-2">
-        <small className="auction-time">
-          {" "}
-          <span className="text-gray-400">Auctions end in</span>{" "}
-          {/* @ts-ignore time function not created yet */}
-          <CountDownComponent timeDifference={nftData.endTime} />
-        </small>
-
+        {nftData?.sale_type === "TIMED_AUCTION" && (
+          <small className="auction-time">
+            {" "}
+            <span className="text-gray-400">Auction {started ? "Ends" : "Starts"} in</span>{" "}
+            <CountDownComponent
+              date={countDownDate!}
+              type={started ? "end" : "start"}
+              setStarted={setStarted}
+              setEnded={setEnded}
+            />
+          </small>
+        )}
         <h1 className="item-name text-5xl md:text-6xl">{nftData.name}</h1>
         <p className="item-price flex items-center text-3xl text-primary md:text-4xl">
           {" "}
@@ -128,4 +145,3 @@ const currentPathname = pathname.split('/').pop()!
     </section>
   );
 }
-
