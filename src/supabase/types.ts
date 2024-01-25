@@ -288,6 +288,24 @@ export interface Database {
           }
         ];
       };
+      subscribers: {
+        Row: {
+          created_at: string;
+          email: string;
+          id: number;
+        };
+        Insert: {
+          created_at?: string;
+          email: string;
+          id?: number;
+        };
+        Update: {
+          created_at?: string;
+          email?: string;
+          id?: number;
+        };
+        Relationships: [];
+      };
       transactions: {
         Row: {
           amount: number;
@@ -364,16 +382,57 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      getmintpercentagecost: {
+        Args: Record<PropertyKey, never>;
+        Returns: number;
+      };
+      mint_nft: {
+        Args: {
+          _name: string;
+          _price: number;
+          _image: string;
+          _user_id: string;
+          _description: string;
+          _category: string;
+          _slug: string;
+          _sale_type: string;
+          _start_date: string;
+          _end_date: string;
+        };
+        Returns: {
+          name: string;
+          price: number;
+          image: string;
+          user_id: string;
+          description: string;
+          category: string;
+          slug: string;
+          sale_type: string;
+          start_date: string;
+          end_date: string;
+        }[];
+      };
       requesting_user_id: {
         Args: Record<PropertyKey, never>;
         Returns: string;
+      };
+      return_setof_trade_table: {
+        Args: Record<PropertyKey, never>;
+        Returns: Database["public"]["CompositeTypes"]["trade_record"][];
       };
     };
     Enums: {
       [_ in never]: never;
     };
     CompositeTypes: {
-      [_ in never]: never;
+      trade_record: {
+        slug: string;
+        seller: string;
+        name: string;
+        amount: number;
+        buyer: string;
+        bid_id: number;
+      };
     };
   };
 }
