@@ -17,6 +17,7 @@ import useSupabase from "~/hooks/useSupabaseWithAuth";
 import { useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import MktIcon from "~/components/Universal/MktIcon";
+import { toast } from "react-toastify";
 
 
 type BidMailProps = {
@@ -67,11 +68,12 @@ const [acceptModal, setAcceptModal] = useState(false)
     onError: (error) => {
       //@ts-ignore
       console.log(error?.message)
+      toast.error("Something Went Wrong")
     }
   })
 
   return (
-    <div className="flex items-center gap-4 border-b-2 border-amber-100 text-black">
+    <div className="flex items-center gap-4 border-b-2 border-amber-100 text-white">
       <span>{bid.users.username}</span>
       <span>{bid.nfts.name}</span>
       <span>{bid.amount}<MktIcon /></span>
