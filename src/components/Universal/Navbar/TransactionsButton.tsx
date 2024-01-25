@@ -19,10 +19,11 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { supabaseWithClient as supabaseClient } from "supabase";
+import { supabaseWithClient as supabaseClient } from "~/supabase";
 import useTransactions from "~/hooks/useTransactions";
 import { formatDate } from "~/utils/libs";
 import { Transactions } from "~/utils/types";
+import { toast } from "react-toastify";
 
 interface TransactionsButtonProps {}
 type ReduceReturnType = {
@@ -58,7 +59,6 @@ const COLUMNS = [
   },
 ];
 
-
 export default function TransactionsButton() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: transactions } = useTransactions();
@@ -75,15 +75,13 @@ export default function TransactionsButton() {
         .from("transactions")
         .update({ read_status: "read" })
         .eq("user_id", userId!)
-      .select()
-
+        .select();
     },
 
     onSuccess: () => {
       queryClient.invalidateQueries(["transactions"]);
     },
   });
-
 
   if (!transactions || !Array.isArray(transactions)) return <p></p>;
   const { unreadTransactions, count, selectedKeys } =
@@ -104,7 +102,7 @@ export default function TransactionsButton() {
       <div
         onClick={() => {
           onOpen();
-          readTransactions()
+          readTransactions();
         }}
       >
         <div className="relative mx-auto w-fit cursor-pointer rounded-full p-1 hover:bg-gray-700">
@@ -145,14 +143,17 @@ export default function TransactionsButton() {
                   classNames={{
                     thead: "rounded-none",
                     th: "text-center text-white first:rounded-none last:rounded-none",
-                    td: "text-center"
+                    td: "text-center",
                   }}
                 >
-                  <TableHeader columns={COLUMNS}
-                 className="rounded-none bg-primary"
+                  <TableHeader
+                    columns={COLUMNS}
+                    className="rounded-none bg-primary"
                   >
                     {(column) => (
-                      <TableColumn align="center" key={column.key}>{column.label}</TableColumn>
+                      <TableColumn align="center" key={column.key}>
+                        {column.label}
+                      </TableColumn>
                     )}
                   </TableHeader>
                   <TableBody
@@ -167,10 +168,12 @@ export default function TransactionsButton() {
                               {columnKey === "status" ? (
                                 <Chip
                                   color={
-                                    item[columnKey] === "complete" || "accepted"
+                                    item[columnKey] === "pending"
+                                      ? "warning"
+                                      : item[columnKey] ===
+                                        ("complete" || "accepted")
                                       ? "success"
-                                      : item[columnKey] === "pending" ? "warning"
-                                        : "danger"
+                                      : "danger"
                                   }
                                   classNames={{
                                     base: "p-0 m-0",

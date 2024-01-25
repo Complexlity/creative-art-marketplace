@@ -11,7 +11,7 @@ import type { Like, Nft, ViewCount, WithUser } from "~/utils/types";
 import HistoryBids from "./HistoryBids";
 import LikeButton from "./LikeButton";
 import Modals from "./Modals";
-import { supabaseWithoutClient as supabase } from "supabase";
+import { supabaseWithoutClient as supabase } from "~/supabase";
 import { getViewsCount } from "~/utils/queries";
 import MktIcon from "~/components/Universal/MktIcon";
 import { getAuctionDateStatus } from "~/utils/libs";
@@ -29,7 +29,7 @@ export default function NftDetails({
   const pathname = usePathname();
   const currentPathname = pathname.split("/").pop()!;
 
-const [started, setStarted] = useState(
+  const [started, setStarted] = useState(
     getAuctionDateStatus(nftData.start_date!, nftData.end_date!).started
   );
   const [ended, setEnded] = useState(false);
@@ -37,7 +37,6 @@ const [started, setStarted] = useState(
   const { data: bids, isLoading: isFetchingBids } = useNftBids({
     currentPathname,
   });
-
 
   const { data: viewsUpdate } = useQuery({
     queryKey: [`views-${nftData.slug}`],
@@ -67,8 +66,6 @@ const [started, setStarted] = useState(
     refetchOnWindowFocus: false,
   });
 
-
-
   const countDownDate = started ? nftData?.end_date : nftData?.start_date;
 
   const { data: views } = useQuery({
@@ -93,7 +90,9 @@ const [started, setStarted] = useState(
         {nftData?.sale_type === "TIMED_AUCTION" && (
           <small className="auction-time">
             {" "}
-            <span className="text-gray-400">Auction {started ? "Ends" : "Starts"} in</span>{" "}
+            <span className="text-gray-400">
+              Auction {started ? "Ends" : "Starts"} in
+            </span>{" "}
             <CountDownComponent
               date={countDownDate!}
               type={started ? "end" : "start"}

@@ -1,4 +1,4 @@
-import { Database } from "supabase_types";
+import { Database } from "~/supabase/types";
 import { type Methods } from "~/components/Mint/MethodOptions";
 
 export type NftComment = Database["public"]["Tables"]["comments"]["Row"];
@@ -7,7 +7,9 @@ export type NftBid = Database["public"]["Tables"]["bids"]["Row"];
 
 export type NftUser = Database["public"]["Tables"]["users"]["Row"];
 
-export type Nft = Prettify<Database["public"]["Tables"]["nfts"]["Row"] & { sale_type: Methods }>
+export type Nft = Prettify<
+  Database["public"]["Tables"]["nfts"]["Row"] & { sale_type: Methods }
+>;
 
 export type Message = Database["public"]["Tables"]["messages"]["Row"];
 
@@ -24,6 +26,6 @@ export type CommentVotesFromDB =
 export type VoteType = "up" | "down";
 export type CommentVotes = Prettify<
   Omit<CommentVotesFromDB, "type"> & { type: VoteType }
-  >;
+>;
 
-export type Transactions = Database["public"]["Tables"]["transactions"]["Row"]
+export type Transactions = Database["public"]["Tables"]["transactions"]["Row"];

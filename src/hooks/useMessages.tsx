@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import useSupabase from "./useSupabaseWithAuth";
 import { useAuth } from "@clerk/nextjs";
-import { supabaseWithClient as supabaseClient } from "supabase";
+import { supabaseWithClient as supabaseClient } from "~/supabase";
 
 export default function useMessages() {
   const { getToken, userId } = useAuth();
@@ -12,14 +11,12 @@ export default function useMessages() {
       const supabaseAccessToken = await getToken({
         template: "supabase",
       });
-      const supabase = await supabaseClient(supabaseAccessToken)
+      const supabase = await supabaseClient(supabaseAccessToken);
       let { data: messages, error } = await supabase!
         .from("messages")
         .select("*")
-        .eq('user_id', userId!);
+        .eq("user_id", userId!);
       return messages;
     },
   });
-
 }
-

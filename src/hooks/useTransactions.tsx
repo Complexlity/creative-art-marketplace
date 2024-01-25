@@ -1,6 +1,6 @@
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
-import { supabaseWithClient as supabaseClient } from "supabase";
+import { supabaseWithClient as supabaseClient } from "~/supabase";
 
 export default function useTransactions() {
   const { getToken, userId } = useAuth();
@@ -8,19 +8,17 @@ export default function useTransactions() {
   return useQuery({
     queryKey: ["transactions"],
 
-		queryFn: async () => {
-			const supabaseAccessToken = await getToken({
+    queryFn: async () => {
+      const supabaseAccessToken = await getToken({
         template: "supabase",
       });
-      const supabase = await supabaseClient(supabaseAccessToken)
+      const supabase = await supabaseClient(supabaseAccessToken);
       let { data: transactions, error } = await supabase!
         .from("transactions")
         .select("*")
-        .eq('user_id', userId!);
+        .eq("user_id", userId!);
 
       return transactions;
     },
   });
-
 }
-

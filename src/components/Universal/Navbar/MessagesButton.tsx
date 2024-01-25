@@ -13,16 +13,15 @@ import {
 
 import useMessages from "~/hooks/useMessages";
 import { Message } from "~/utils/types";
-import { supabaseWithClient as supabaseClient } from "supabase";
-
+import { supabaseWithClient as supabaseClient } from "~/supabase";
 
 interface MessagesButtonProps {}
-type ReduceReturnType = { unreadMessages: Message[]; count: number }
+type ReduceReturnType = { unreadMessages: Message[]; count: number };
 
 const MessagesButton: FC<MessagesButtonProps> = () => {
-  const { data: messages } = useMessages()
-  const { getToken, userId } = useAuth()
-  const queryClient = useQueryClient()
+  const { data: messages } = useMessages();
+  const { getToken, userId } = useAuth();
+  const queryClient = useQueryClient();
   const { mutate: readMessages } = useMutation({
     mutationFn: async () => {
       if (unreadMessages.length === 0) return;
@@ -39,12 +38,9 @@ const MessagesButton: FC<MessagesButtonProps> = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["messages"]);
     },
-  })
+  });
   if (!messages || messages.length === 0) return <p></p>;
-  const {
-    unreadMessages,
-    count,
-  }  = messages.reduce<ReduceReturnType>(
+  const { unreadMessages, count } = messages.reduce<ReduceReturnType>(
     (acc, curr) => {
       if (curr.status == "unread") {
         acc.unreadMessages.push(curr);
@@ -55,7 +51,6 @@ const MessagesButton: FC<MessagesButtonProps> = () => {
     { unreadMessages: [], count: 0 }
   );
 
-
   return (
     <Dialog>
       {/* @ts-ignore passing mutation to onclick */}
@@ -63,24 +58,29 @@ const MessagesButton: FC<MessagesButtonProps> = () => {
         <div className="relative mx-auto w-fit rounded-full p-1 hover:bg-gray-700">
           <Bell />
 
-          {
-            count > 0 ?
+          {count > 0 ? (
             <div className="min-h-4 min-w-4 absolute -top-[0px] left-[calc(100%-10px)] flex items-center  justify-center rounded-full bg-blue-400 px-1 text-xs">
-            {count}
-              </div>
-              : null
-          }
+              {count}
+            </div>
+          ) : null}
         </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="mb-4 text-center ">Messages</DialogTitle>
           <DialogDescription>
-            <div className=" grid rounded-xl gap-1">
+            <div className=" grid gap-1 rounded-xl">
               {messages?.map((message, index) => (
-                <div key={`${messages}${index}`} className={`${message.status === 'unread' ? "border-2 border-collapse bg-amber-50 border-primary opacity-[90%]" : ""} text-black p-4 rounded-md`}>
+                <div
+                  key={`${messages}${index}`}
+                  className={`${
+                    message.status === "unread"
+                      ? "border-collapse border-2 border-primary bg-amber-50 opacity-[90%]"
+                      : ""
+                  } rounded-md p-4 text-black`}
+                >
                   {message.content}
-              </div>
+                </div>
               ))}
             </div>
           </DialogDescription>

@@ -1,6 +1,5 @@
-
 import { createClient } from "@supabase/supabase-js";
-import { Database } from "supabase_types";
+import { Database } from "~/supabase/types";
 import { Prettify } from "~/utils/types";
 
 export const supabaseWithClient = async (supabaseAccessToken: any) => {
@@ -17,9 +16,9 @@ export const supabaseWithClient = async (supabaseAccessToken: any) => {
 };
 
 export const supabaseWithoutClient = createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_KEY!,
   {
-      auth: { persistSession: false}
-    }
-  );
+    auth: { persistSession: false },
+  }
+);

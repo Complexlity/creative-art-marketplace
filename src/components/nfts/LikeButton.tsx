@@ -4,40 +4,35 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { supabaseWithClient as supabaseClient } from "supabase";
+import { supabaseWithClient as supabaseClient } from "~/supabase";
 import { getLikes } from "~/utils/queries";
-import { Like } from '~/utils/types'
+import { Like } from "~/utils/types";
 
 type LikeButtonProps = {
-  initialLikes: Like[]
-}
+  initialLikes: Like[];
+};
 
-
-const LikeButton = ({
-  initialLikes
-}: LikeButtonProps) => {
+const LikeButton = ({ initialLikes }: LikeButtonProps) => {
   const pathname = usePathname();
 
   const currentPathname = pathname.split("/").pop()!;
-  const { userId, getToken } = useAuth()
-  const [likesAmt, setLikesAmt] = useState(initialLikes.length)
-  const [likedByMe, setLikedByMe] = useState(!!initialLikes.find(obj => obj.user_id === userId))
-    const { data: likes } = useQuery({
-      queryKey: [`likes-${currentPathname}`],
-      queryFn: async () => await getLikes(currentPathname),
-      initialData: initialLikes,
-    });
-
-
+  const { userId, getToken } = useAuth();
+  const [likesAmt, setLikesAmt] = useState(initialLikes.length);
+  const [likedByMe, setLikedByMe] = useState(
+    !!initialLikes.find((obj) => obj.user_id === userId)
+  );
+  const { data: likes } = useQuery({
+    queryKey: [`likes-${currentPathname}`],
+    queryFn: async () => await getLikes(currentPathname),
+    initialData: initialLikes,
+  });
 
   useEffect(() => {
-      setLikedByMe(!!likes?.find((obj) => obj.user_id === userId));
-      setLikesAmt(likes!.length)
-    }, [likes, initialLikes, userId ]);
+    setLikedByMe(!!likes?.find((obj) => obj.user_id === userId));
+    setLikesAmt(likes!.length);
+  }, [likes, initialLikes, userId]);
 
-
-
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const { mutate: likePost } = useMutation({
     mutationKey: ["like-post"],
@@ -47,7 +42,7 @@ const LikeButton = ({
       });
       const supabase = await supabaseClient(supabaseAccessToken);
       if (!userId || !supabase) {
-        throw new Error("User not found")
+        throw new Error("User not found");
       }
       if (likedByMe) {
         const { data, error } = await supabase
@@ -70,26 +65,21 @@ const LikeButton = ({
       }
     },
     onMutate: () => {
-
-        if (likedByMe) {
-          setLikesAmt(likesAmt - 1)
-        }
-        else setLikesAmt(likesAmt + 1)
-        setLikedByMe((prev) => !prev)
-
-      },
-      onSuccess: (data) => {
-        queryClient.invalidateQueries([`likes-${currentPathname}`]);
+      if (likedByMe) {
+        setLikesAmt(likesAmt - 1);
+      } else setLikesAmt(likesAmt + 1);
+      setLikedByMe((prev) => !prev);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries([`likes-${currentPathname}`]);
     },
     onError: () => {
-        if (likedByMe) {
-          setLikesAmt(likesAmt - 1)
-        }
-        else setLikesAmt(likesAmt + 1)
-        setLikedByMe((prev) => !prev)
-      },
-
-    });
+      if (likedByMe) {
+        setLikesAmt(likesAmt - 1);
+      } else setLikesAmt(likesAmt + 1);
+      setLikedByMe((prev) => !prev);
+    },
+  });
 
   return (
     <div
@@ -100,6 +90,6 @@ const LikeButton = ({
       <AiFillHeart fill={likedByMe ? `#be123c` : ""} /> {likesAmt}
     </div>
   );
-}
+};
 
 export default LikeButton;

@@ -1,4 +1,4 @@
-import { supabaseWithoutClient as supabase } from "~/../supabase";
+import { supabaseWithoutClient as supabase } from "~/supabase";
 import { Nft, NftBid, NftComment, WithUser } from "./types";
 
 export async function getSingleNft(slug: string) {

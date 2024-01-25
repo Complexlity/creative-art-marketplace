@@ -5,15 +5,13 @@ import { FC, useEffect, useState } from "react";
 import {
   supabaseWithoutClient as supabase,
   supabaseWithClient as supabaseClient,
-} from "supabase";
+} from "~/supabase";
 import { cn } from "~/utils/libs";
 import { CommentVotes, VoteType } from "~/utils/types";
 
 interface CommentVotesProps {
-  commentId: number
+  commentId: number;
 }
-
-
 
 const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
   const queryClient = useQueryClient();
@@ -68,7 +66,6 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
     previousVoteType: VoteType | null;
   };
 
-
   const { mutate: vote } = useMutation({
     mutationFn: async (data: VoteUpdateType) => {
       const { newVoteType, previousVoteType } = data;
@@ -83,30 +80,23 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
       }
       if (previousVoteType) {
         if (previousVoteType !== newVoteType) {
-
           const { data: newVotes, error } = await supabase
-          .from("comment_votes")
-          .update({ type: newVoteType })
-          .eq("voter_id", userId)
-          .eq("comment", commentId)
-
+            .from("comment_votes")
+            .update({ type: newVoteType })
+            .eq("voter_id", userId)
+            .eq("comment", commentId);
 
           if (error) throw new Error(error.message);
-        }
-        else {
-
+        } else {
           const { data: newVotes, error } = await supabase
-          .from("comment_votes")
-          .delete()
-          .eq("voter_id", userId)
-          .eq("comment", commentId)
-
+            .from("comment_votes")
+            .delete()
+            .eq("voter_id", userId)
+            .eq("comment", commentId);
 
           if (error) throw new Error(error.message);
-
         }
       } else {
-
         const { data: newVotes, error } = await supabase
           .from("comment_votes")
           .insert({
@@ -120,20 +110,20 @@ const CommentVotes: FC<CommentVotesProps> = ({ commentId }) => {
     onMutate: async ({ newVoteType, previousVoteType }) => {
       const oldVoteCount = voteCount;
       if (newVoteType === previousVoteType) {
-        setMyVote(null)
-        if (newVoteType === 'up') setVoteCount(oldVoteCount - 1)
-        else if(newVoteType === 'down') setVoteCount(oldVoteCount + 1)
-      }
-      else {
-        setMyVote(newVoteType)
-        if (newVoteType === 'up') setVoteCount(oldVoteCount + (previousVoteType ? 2 : 1))
-        else if (newVoteType === 'down') setVoteCount(oldVoteCount - (previousVoteType ? 2 : 1 ))
+        setMyVote(null);
+        if (newVoteType === "up") setVoteCount(oldVoteCount - 1);
+        else if (newVoteType === "down") setVoteCount(oldVoteCount + 1);
+      } else {
+        setMyVote(newVoteType);
+        if (newVoteType === "up")
+          setVoteCount(oldVoteCount + (previousVoteType ? 2 : 1));
+        else if (newVoteType === "down")
+          setVoteCount(oldVoteCount - (previousVoteType ? 2 : 1));
       }
 
       return { oldVoteCount };
     },
     onError: (err, { newVoteType, previousVoteType }, context) => {
-
       setMyVote(previousVoteType);
       setVoteCount(context?.oldVoteCount!);
     },
