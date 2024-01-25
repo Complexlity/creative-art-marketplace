@@ -93,12 +93,15 @@ export default function NftDetails({
             <span className="text-gray-400">
               Auction {started ? "Ends" : "Starts"} in
             </span>{" "}
+            <span className="text-3xl lg:text-4xl">
             <CountDownComponent
               date={countDownDate!}
               type={started ? "end" : "start"}
               setStarted={setStarted}
               setEnded={setEnded}
-            />
+              />
+            </span>
+
           </small>
         )}
         <h1 className="item-name text-5xl md:text-6xl">{nftData.name}</h1>
