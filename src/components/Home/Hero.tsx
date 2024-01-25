@@ -95,8 +95,8 @@ const Hero = ({ nfts }: HeroProps) => {
                     </>
                   )}
                 </p>
-                <p className="grid gap-1 text-end font-bold text-white">
-                  <span>Current Price</span>
+                <p className="grid gap-1 font-bold text-white">
+                  <span>Price *</span>
                   <span suppressHydrationWarning={true}>
                     <MktIcon />
                     {heroItem?.price}
