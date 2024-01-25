@@ -116,89 +116,61 @@ export default function MintForm() {
       const price = method ===  "OPEN_BIDS" ? values.minBid : values.price;
       let supabaseData;
       let supabaseError;
-      try {
-        const { data, error } = await supabase
-          .from("nfts")
-          .insert([
-            {
-              name: values.title,
-              price,
-              image: fileUrl,
-              user_id: userId,
-              description: values.description,
-              category: values.collections,
-              slug: slug,
-              sale_type: method,
-              start_date: values.startDate ?? "",
-              end_date: values.endDate ?? "",
-            },
-          ])
-          .select();
-        supabaseData = data
-        supabaseError = error
-        if(error) throw error
-      } catch (error) {
-        console.log({ error });
 
-        function deleteFiles(index: number = 0) {
-          if (index == 2) {
-            return { success: false, error: "Could Not Delete Files" };
-          }
-          fetch("/api/delete_uploaded_images", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(fileUploadResponse),
-          })
-            .then((res) => {
-              if (!res.ok) throw new Error("Something went wrong");
-              else return res.json();
-            })
-            .catch((err) => {
-              //Retry if delete fails
-              deleteFiles(index + 1);
-            });
+
+
+let { data, error } = await supabase
+  .rpc('mint_nft', {
+    _name: values.title,
+    _price:price,
+    _image: fileUrl,
+    _user_id: userId,
+    _description: values.description,
+    _category: values.collections,
+    _slug: slug,
+    _sale_type: method,
+    _start_date: values.startDate ?? "",
+    _end_date: values.endDate ?? "",
+  })
+
+      if (error) {
+ console.log({ error });
+
+ function deleteFilesWithRetries(index: number = 0) {
+   if (index == 2) {
+     return { success: false, error: "Could Not Delete Files" };
+   }
+   fetch("/api/delete_uploaded_images", {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify(fileUploadResponse),
+   })
+     .then((res) => {
+       if (!res.ok) throw new Error("Something went wrong");
+       else return res.json();
+     })
+     .catch((err) => {
+       //Retry if delete fails
+       deleteFilesWithRetries(index + 1);
+     });
+ }
+
+ // delete the uploaded file behind the scenes without blocking the ui with two retries
+ deleteFilesWithRetries();
+toast("Something Went Wrong", {});
+        setIsLoading(false);
+        setLoadingMessage("");
+
+ if (error && error.code === "PGRST301") {
+   //auth issues
+   toast("Could Not Authenticate. Refreshing the page");
+   setTimeout(() => {
+     router.refresh();
+   }, 5000);
         }
 
-        // delete the uploaded file behind the scenes without blocking the ui with two retries
-        deleteFiles();
-
-        //@ts-expect-error 'code' does not exist on error
-        if (error && error.code === "PGRST301") {
-          //auth issues
-          toast("Could Not Authenticate. Refreshing the page")
-          setTimeout(() => {
-            router.refresh()
-          }, 5000);
-        }
-      }
-
-      if (supabaseData) {
-
-
-        // Create a new views count with the nft slug
-        const promise1 =  supabase.from("nft_views").insert({
-          nft_slug: slug,
-          views_count: 0,
-        });
-
-        // Deduct some percentage from user after mint
-        const valueDeducted = Math.round(MINT_PERCENTAGE_COST * price);
-
-        //Deduct fees from minting user
-        const promise2 = supabase
-          .from("users")
-          //@ts-ignore null != undefined
-          .update({ game_currency: user.game_currency - valueDeducted })
-          .eq("user_id", userId)
-          .select();
-
-        //add to the minter's transactions
-        const promise3 = supabase
-          .from('transactions')
-        .insert([{user_id: user.userId!, name: values.title , amount: price, balance_change: -valueDeducted, type: "mint", status: "complete"}])
-
-        // complete all transactions in a single go
-        const [{ data: viewsCount }, { data: userDeducted }, { data: transactions }] = await Promise.all([promise1, promise2, promise3]);
+     return
+}
 
         queryClient.invalidateQueries({
           queryKey: ["nfts"]
@@ -212,13 +184,8 @@ export default function MintForm() {
         setImageUrl("");
         setIsLoading(false);
           router.push("/explore");
-        })
+        }).catch(err => router.push('/explore'))
 
-      } else if (supabaseError) {
-        toast("Something Went Wrong", {});
-        setIsLoading(false);
-        setLoadingMessage("");
-      }
     },
     validationSchema: schema,
   });
