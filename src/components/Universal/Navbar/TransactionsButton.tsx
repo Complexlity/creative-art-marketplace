@@ -170,8 +170,7 @@ export default function TransactionsButton() {
                                   color={
                                     item[columnKey] === "pending"
                                       ? "warning"
-                                      : item[columnKey] ===
-                                        ("complete" || "accepted")
+                                      : ["complete", "accepted"].includes(item[columnKey])
                                       ? "success"
                                       : "danger"
                                   }
