@@ -357,6 +357,7 @@ export interface Database {
           id: number;
           imageUrl: string;
           user_id: string;
+          user_url: string;
           username: string;
         };
         Insert: {
@@ -365,6 +366,7 @@ export interface Database {
           id?: number;
           imageUrl: string;
           user_id: string;
+          user_url: string;
           username: string;
         };
         Update: {
@@ -373,6 +375,7 @@ export interface Database {
           id?: number;
           imageUrl?: string;
           user_id?: string;
+          user_url?: string;
           username?: string;
         };
         Relationships: [];
