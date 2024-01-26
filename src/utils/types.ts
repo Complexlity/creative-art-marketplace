@@ -29,3 +29,11 @@ export type CommentVotes = Prettify<
 >;
 
 export type Transactions = Database["public"]["Tables"]["transactions"]["Row"];
+
+export type newUser = {
+  username: string | null | undefined;
+  userId: string | null | undefined;
+  imageUrl: string | null | undefined;
+  userUrl: string | null | undefined
+  game_currency: number | null | undefined;
+};
