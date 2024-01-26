@@ -5,12 +5,28 @@ import { Nft, NftUser } from "~/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { getNftsByUserId } from "~/utils/queries";
 import Card from "~/components/Universal/Card";
+import { useAuth } from "@clerk/nextjs";
+import useCurrentUser from "~/hooks/useCurrentUser";
 
 export default function ArtistDetails({ artist }: { artist: NftUser }) {
+  const loggedInUserId = useCurrentUser({}).data?.userId
+  const artistId = artist.user_id
+  const isSameUser = loggedInUserId === artistId
+
   let { data, error, isLoading } = useQuery({
     queryKey: ["artist", artist.user_url],
     queryFn: getNftsByUserId.bind(null, artist.user_id),
   });
+  let listedItems: Nft[] = []
+  let unlistedItems: Nft[] = []
+
+  if (data) {
+    data.forEach(item => {
+      if (item.status === "listed") listedItems.push(item)
+      else unlistedItems.push(item)
+    })
+  }
+
 
   return (
     <div className="flex min-h-screen w-full flex-col dark">
@@ -41,7 +57,7 @@ export default function ArtistDetails({ artist }: { artist: NftUser }) {
           </div>
           <div className="flex items-center space-x-2">
             <PaintbrushIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-            <p className="text-lg font-bold">120 Artworks</p>
+            <p className="text-lg font-bold">{isSameUser ? data?.length || 0 : listedItems.length} Artworks</p>
           </div>
           <div className="flex items-center space-x-2">
             <ShoppingCartIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
@@ -54,20 +70,31 @@ export default function ArtistDetails({ artist }: { artist: NftUser }) {
         </div>
       </header>
       <main className="flex flex-1 flex-col py-4">
-        {isLoading ? (
+        {isLoading || loggedInUserId === undefined ? (
           // TODO: Add a loading component or skeleton
           <p>Loading ...</p>
         ) : error ? (
           <p>Something went wrong. Please Try again </p>
-        ) : (
-          <UserNfts userNfts={data} />
-        )}
+        ) :
+
+            isSameUser
+              ?
+              <AuthUserNfts allItems={data} listedItems={listedItems} unlistedItems={unlistedItems} />
+              : <NormalUserNfts listedItems={listedItems} />
+
+      }
       </main>
     </div>
   );
 }
 
-function UserNfts({ userNfts }: { userNfts: Nft[] | null | undefined }) {
+function AuthUserNfts({ allItems, listedItems, unlistedItems }: {
+  allItems: Nft[] | null | undefined,
+  listedItems: Nft[] | null | undefined,
+  unlistedItems: Nft[] | null | undefined,
+
+}) {
+
   return (
     <Tabs className="flex w-full flex-1 flex-col" defaultValue="all">
       <TabsList className="flex w-full gap-1 py-[22px] dark:bg-gray-900 dark:text-white">
@@ -76,35 +103,65 @@ function UserNfts({ userNfts }: { userNfts: Nft[] | null | undefined }) {
         <TabsTrigger value="unlisted">Unlisted</TabsTrigger>
       </TabsList>
       <TabsContent className="" value="all">
-        {!userNfts && (
+        {!allItems ? (
           <div className="grid flex-1 items-center justify-center bg-orange-400">
             You Have No NFTS
           </div>
-        )}
-        {userNfts && (
+        ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {userNfts.map((item) => {
+            {allItems.map((item) => {
               return <Card key={item.id} item={item} />;
             })}
           </div>
         )}
       </TabsContent>
       <TabsContent value="listed">
-        {!userNfts && (
+        {!allItems ? (
           <div className="grid flex-1 items-center justify-center bg-orange-400">
             You Have No Listed NFTS
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {listedItems!.map((item) => {
+              return <Card key={item.id} item={item} />;
+            })}
           </div>
         )}
       </TabsContent>
       <TabsContent value="unlisted">
-        {!userNfts && (
+        {!allItems ? (
           <div className="grid flex-1 items-center justify-center bg-orange-400">
             You Have No Purchased NFTS
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {unlistedItems!.map((item) => {
+              return <Card key={item.id} item={item} />;
+            })}
           </div>
         )}
       </TabsContent>
     </Tabs>
   );
+}
+
+function NormalUserNfts({ listedItems }: { listedItems: Nft[] | null | undefined }) {
+  return (
+    <>
+{
+  !listedItems
+    ?
+    <div>This aritst has no item</div>
+    :
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+   {listedItems!.map((item) => {
+     return <Card key={item.id} item={item} />;
+   })}
+   </div>
+
+      }
+      </>
+  )
 }
 
 type TSVGElementProps = SVGProps<SVGSVGElement>;
