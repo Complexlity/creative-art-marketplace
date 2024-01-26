@@ -39,7 +39,7 @@ export default async function handler(
           username: user.username!,
           imageUrl: user.imageUrl!,
           user_id: userId!,
-          userUrl,
+          user_url: userUrl,
           game_currency: 1000
         }],
       )
