@@ -2,10 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Nft, NftUser, WithUser } from "~/utils/types";
 
-type ReduceReturnType =
-  NftUser[][]
-const WeeklyArtists = ({nfts: nftsData}: {nfts: WithUser<Nft>[]}) => {
-
+type ReduceReturnType = NftUser[][];
+const WeeklyArtists = ({ nfts: nftsData }: { nfts: WithUser<Nft>[] }) => {
   if (!nftsData) return null;
 
   const nftsDataUsers = nftsData.reduce<ReduceReturnType>((acc, curr) => {
@@ -27,8 +25,6 @@ const WeeklyArtists = ({nfts: nftsData}: {nfts: WithUser<Nft>[]}) => {
     return acc.sort((a, b) => b.length - a.length).slice(0, 5);
   }, []);
 
-
-
   return (
     <section className="mb-32 px-1 md:mb-40">
       <header className="mb-8 tracking-wide">
@@ -42,27 +38,24 @@ const WeeklyArtists = ({nfts: nftsData}: {nfts: WithUser<Nft>[]}) => {
       </header>
       <ul className="honeycomb" lang="es">
         {nftsDataUsers.map((item, index) => {
-          let curr = item[0]!
+          let curr = item[0]!;
           const [firstName, LastName] = curr.username.split(" ");
           return (
-            <Link href={`artists/${curr.user_url}`
-        } >
-
-            <li key={index} className="hover:cursor-pointer honeycomb-cell">
-              <Image
-                alt={`${curr.username} Profile Image`}
-                className="honeycomb-cell__image w-full object-contain"
-                src={curr.imageUrl}
-                width={100}
-                height={100}
-
-              />
-              <div className="honeycomb-cell__title">
-                {firstName}
-                <small> {LastName}</small>
-              </div>
+            <li key={index} className="honeycomb-cell hover:cursor-pointer">
+                <Link href={`artists/${curr.user_url}`}>
+                <Image
+                  alt={`${curr.username} Profile Image`}
+                  className="honeycomb-cell__image w-full object-contain"
+                  src={curr.imageUrl}
+                  width={200}
+                  height={200}
+                />
+                <div className="honeycomb-cell__title">
+                  {firstName}
+                  <small> {LastName}</small>
+                </div>
+            </Link>
               </li>
-              </Link>
           );
         })}
       </ul>
