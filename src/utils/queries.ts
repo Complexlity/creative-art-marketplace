@@ -1,5 +1,5 @@
 import { supabaseWithoutClient as supabase } from "~/supabase";
-import { Nft, NftBid, NftComment, WithUser } from "./types";
+import { Nft, NftBid, NftComment, NftUser, WithUser } from "./types";
 
 export async function getSingleNft(slug: string) {
   const { data } = await supabase
@@ -108,4 +108,11 @@ export async function getViewsCount(slug: string) {
     .eq("nft_slug", slug);
   if (!views || views.length === 0) return null;
   return views[0]!.views_count;
+}
+
+export async function getSingleArtist(slug: string) {
+  const { data: user, error } = await supabase.from("users").select("*").eq("user_url", slug)
+  if (!user || user.length === 0) return null
+
+  return user[0] as NftUser
 }
