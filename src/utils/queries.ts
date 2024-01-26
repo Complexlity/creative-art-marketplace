@@ -116,3 +116,9 @@ export async function getSingleArtist(slug: string) {
 
   return user[0] as NftUser
 }
+
+export async function getNftsByUserId(userId: string) {
+  const { data: artistNfts, error } = await supabase.from("nfts").select("*").eq("user_id", userId)
+  if (!artistNfts || artistNfts.length === 0) return null
+  return artistNfts as Nft[]
+}

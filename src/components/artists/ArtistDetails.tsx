@@ -1,9 +1,17 @@
-import { TabsTrigger, TabsList, TabsContent, Tabs } from "~/components/ui/tabs"
-import { CardContent, Card } from "~/components/ui/card"
-import { type SVGProps } from "react"
+import { TabsTrigger, TabsList, TabsContent, Tabs } from "~/components/ui/tabs";
+import { CardContent, Card } from "~/components/ui/card";
+import { type SVGProps } from "react";
 import { cn } from "~/utils/libs";
+import { NftUser } from "~/utils/types";
+import { useQuery } from "@tanstack/react-query";
+import { getNftsByUserId } from "~/utils/queries";
 
-export default function ArtistDetails() {
+export default function ArtistDetails({ artist }: { artist: NftUser }) {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["artist", artist.user_url],
+    queryFn: getNftsByUserId.bind(null, artist.user_id),
+  });
+
   return (
     <div className="flex min-h-screen w-full flex-col dark">
       <header className="flex flex-col items-center justify-between border-b p-4 md:flex-row md:p-6">
@@ -12,7 +20,7 @@ export default function ArtistDetails() {
             alt="Artist Avatar"
             className="rounded-full"
             height="100"
-            src="/placeholder.svg"
+            src={artist.imageUrl}
             style={{
               aspectRatio: "100/100",
               objectFit: "cover",
@@ -20,7 +28,7 @@ export default function ArtistDetails() {
             width="100"
           />
           <div className="flex flex-col">
-            <h1 className="text-2xl font-bold">Artist Name</h1>
+            <h1 className="text-2xl font-bold">{artist.username}</h1>
             <p className="text-gray-500 dark:text-gray-400">
               Artist Description
             </p>
@@ -29,7 +37,7 @@ export default function ArtistDetails() {
         <div className="mt-4 flex flex-col gap-4 md:mt-0 md:flex-row md:gap-6">
           <div className="flex items-center space-x-2">
             <DollarSignIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-            <p className="text-lg font-bold">$45,231.89</p>
+            <p className="text-lg font-bold">${artist.game_currency}</p>
           </div>
           <div className="flex items-center space-x-2">
             <PaintbrushIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
@@ -45,57 +53,73 @@ export default function ArtistDetails() {
           </div>
         </div>
       </header>
-      <main className="flex flex-col py-4">
-        <Tabs className="w-full" defaultValue="listed">
-          <TabsList className="flex gap-1 w-full dark:bg-gray-900 dark:text-white py-[22px]">
-            <TabsTrigger value="all" className="">
-              {/* Listed */}
-              All
-            </TabsTrigger>
-            <TabsTrigger value="listed" className="">
-              {/* Listed */}
-              Listed
-            </TabsTrigger>
-            <TabsTrigger value="purchases" className="">
-              Purchases
-            </TabsTrigger>
-            <TabsTrigger value="sales" className="">
-              Sales
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="listed">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <Card>
-                <CardContent>
-                  <img
-                    alt="Artwork Image"
-                    className="h-auto w-full object-cover"
-                    height="200"
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "200/200",
-                      objectFit: "cover",
-                    }}
-                    width="200"
-                  />
-                  <h3 className="mt-2 text-lg font-bold">Artwork Title</h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Artwork Description
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-          <TabsContent value="purchases" />
-          <TabsContent value="sales" />
-        </Tabs>
-      </main>
+      {
+        isLoading ?
+          <p>Loading ...</p>
+          : error
+            ? <p>Something went wrong. Please Try again </p>
+            : data === null
+            ? <p>You have no nfts</p>
+           : <UserNfts />
+      }
     </div>
   );
 }
 
- type TSVGElementProps = SVGProps<SVGSVGElement>
-function DollarSignIcon(props: TSVGElementProps  ) {
+function UserNfts() {
+  return (
+    <main className="flex flex-col py-4">
+      <Tabs className="w-full" defaultValue="all">
+        <TabsList className="flex w-full gap-1 py-[22px] dark:bg-gray-900 dark:text-white">
+          <TabsTrigger value="all" className="">
+            {/* Listed */}
+            All
+          </TabsTrigger>
+          <TabsTrigger value="listed" className="">
+            {/* Listed */}
+            Listed
+          </TabsTrigger>
+          <TabsTrigger value="purchases" className="">
+            Purchases
+          </TabsTrigger>
+          <TabsTrigger value="sales" className="">
+            Sales
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="listed">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <Card>
+              <CardContent>
+                <img
+                  alt="Artwork Image"
+                  className="h-auto w-full object-cover"
+                  height="200"
+                  src="/placeholder.svg"
+                  style={{
+                    aspectRatio: "200/200",
+                    objectFit: "cover",
+                  }}
+                  width="200"
+                />
+                <h3 className="mt-2 text-lg font-bold">Artwork Title</h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Artwork Description
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+        <TabsContent value="purchases" />
+        <TabsContent value="sales" />
+      </Tabs>
+    </main>
+  );
+}
+
+
+
+type TSVGElementProps = SVGProps<SVGSVGElement>;
+function DollarSignIcon(props: TSVGElementProps) {
   return (
     <svg
       {...props}
@@ -112,9 +136,8 @@ function DollarSignIcon(props: TSVGElementProps  ) {
       <line x1="12" x2="12" y1="2" y2="22" />
       <path d="M17 5H9.5a3.5 3.5 0 7h5a3.5 1 7H6" />
     </svg>
-  )
+  );
 }
-
 
 function PaintbrushIcon(props: TSVGElementProps) {
   return (
@@ -134,9 +157,8 @@ function PaintbrushIcon(props: TSVGElementProps) {
       <path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7" />
       <path d="M14.5 17.5 4.5 15" />
     </svg>
-  )
+  );
 }
-
 
 function ShoppingCartIcon(props: TSVGElementProps) {
   return (
@@ -156,9 +178,8 @@ function ShoppingCartIcon(props: TSVGElementProps) {
       <circle cx="19" cy="21" r="1" />
       <path d="M2.05 2.05h2l2.66 12.42a2 2 0 1.58h9.78a2 1.95-1.57l1.65-7.43H5.12" />
     </svg>
-  )
+  );
 }
-
 
 function StoreIcon(props: TSVGElementProps) {
   return (
@@ -180,5 +201,5 @@ function StoreIcon(props: TSVGElementProps) {
       <path d="M2 7h20" />
       <path d="M22 7v3a2 2 0 1-2 2v0a2.7 2.7 1-1.59-.63.7.7 0-.82 0A2.7 1 16 12a2.7 12 8 4 12v0a2 1-2-2V7" />
     </svg>
-  )
+  );
 }
