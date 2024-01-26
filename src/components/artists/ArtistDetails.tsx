@@ -70,7 +70,7 @@ export default function ArtistDetails({ artist }: { artist: NftUser }) {
         </div>
       </header>
       <main className="flex flex-1 flex-col py-4">
-        {isLoading || loggedInUserId === undefined ? (
+        {!data && isLoading || !data && loggedInUserId === undefined ? (
           // TODO: Add a loading component or skeleton
           <p>Loading ...</p>
         ) : error ? (
