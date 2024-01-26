@@ -30,7 +30,7 @@ export default function ArtistDetails({ artist }: { artist: NftUser }) {
 
   return (
     <div className="flex min-h-screen w-full flex-col dark">
-      <header className="flex flex-col items-center justify-between border-b p-4 md:flex-row md:p-6">
+      <header className="flex flex-col items-center justify-between border-b p-4 sm:flex-row md:p-6">
         <div className="flex items-center space-x-4">
           <img
             alt="Artist Avatar"
@@ -50,7 +50,7 @@ export default function ArtistDetails({ artist }: { artist: NftUser }) {
             </p> */}
           </div>
         </div>
-        <div className="mt-4 flex flex-col gap-4 md:mt-0 md:flex-row md:gap-6">
+        <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:gap-6">
           <div className="flex items-center space-x-2">
             <MktIcon className="h-5 w-5" />
             <p className="text-lg font-bold">${artist.game_currency}</p>
