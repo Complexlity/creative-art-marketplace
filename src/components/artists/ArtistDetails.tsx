@@ -1,13 +1,13 @@
 import { TabsTrigger, TabsList, TabsContent, Tabs } from "~/components/ui/tabs";
-import { CardContent, Card } from "~/components/ui/card";
 import { type SVGProps } from "react";
 import { cn } from "~/utils/libs";
-import { NftUser } from "~/utils/types";
+import { Nft, NftUser } from "~/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { getNftsByUserId } from "~/utils/queries";
+import Card from "~/components/Universal/Card";
 
 export default function ArtistDetails({ artist }: { artist: NftUser }) {
-  const { data, error, isLoading } = useQuery({
+  let { data, error, isLoading } = useQuery({
     queryKey: ["artist", artist.user_url],
     queryFn: getNftsByUserId.bind(null, artist.user_id),
   });
@@ -53,70 +53,59 @@ export default function ArtistDetails({ artist }: { artist: NftUser }) {
           </div>
         </div>
       </header>
-      {
-        isLoading ?
+      <main className="flex flex-1 flex-col py-4">
+        {isLoading ? (
+          // TODO: Add a loading component or skeleton
           <p>Loading ...</p>
-          : error
-            ? <p>Something went wrong. Please Try again </p>
-            : data === null
-            ? <p>You have no nfts</p>
-           : <UserNfts />
-      }
+        ) : error ? (
+          <p>Something went wrong. Please Try again </p>
+        ) : (
+          <UserNfts userNfts={data} />
+        )}
+      </main>
     </div>
   );
 }
 
-function UserNfts() {
+function UserNfts({ userNfts }: { userNfts: Nft[] | null | undefined }) {
   return (
-    <main className="flex flex-col py-4">
-      <Tabs className="w-full" defaultValue="all">
-        <TabsList className="flex w-full gap-1 py-[22px] dark:bg-gray-900 dark:text-white">
-          <TabsTrigger value="all" className="">
-            {/* Listed */}
-            All
-          </TabsTrigger>
-          <TabsTrigger value="listed" className="">
-            {/* Listed */}
-            Listed
-          </TabsTrigger>
-          <TabsTrigger value="purchases" className="">
-            Purchases
-          </TabsTrigger>
-          <TabsTrigger value="sales" className="">
-            Sales
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="listed">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardContent>
-                <img
-                  alt="Artwork Image"
-                  className="h-auto w-full object-cover"
-                  height="200"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: "200/200",
-                    objectFit: "cover",
-                  }}
-                  width="200"
-                />
-                <h3 className="mt-2 text-lg font-bold">Artwork Title</h3>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Artwork Description
-                </p>
-              </CardContent>
-            </Card>
+    <Tabs className="flex w-full flex-1 flex-col" defaultValue="all">
+      <TabsList className="flex w-full gap-1 py-[22px] dark:bg-gray-900 dark:text-white">
+        <TabsTrigger value="all">All</TabsTrigger>
+        <TabsTrigger value="listed">Listed</TabsTrigger>
+        <TabsTrigger value="unlisted">Unlisted</TabsTrigger>
+      </TabsList>
+      <TabsContent className="" value="all">
+        {!userNfts && (
+          <div className="grid flex-1 items-center justify-center bg-orange-400">
+            You Have No NFTS
           </div>
-        </TabsContent>
-        <TabsContent value="purchases" />
-        <TabsContent value="sales" />
-      </Tabs>
-    </main>
+        )}
+        {userNfts && (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {userNfts.map((item) => {
+              return <Card key={item.id} item={item} />;
+            })}
+          </div>
+        )}
+      </TabsContent>
+      <TabsContent value="listed">
+        {!userNfts && (
+          <div className="grid flex-1 items-center justify-center bg-orange-400">
+            You Have No Listed NFTS
+          </div>
+        )}
+      </TabsContent>
+      <TabsContent value="unlisted">
+        {!userNfts && (
+          <div className="grid flex-1 items-center justify-center bg-orange-400">
+            You Have No Purchased NFTS
+          </div>
+        )}
+      </TabsContent>
+    </Tabs>
   );
 }
-
-
 
 type TSVGElementProps = SVGProps<SVGSVGElement>;
 function DollarSignIcon(props: TSVGElementProps) {

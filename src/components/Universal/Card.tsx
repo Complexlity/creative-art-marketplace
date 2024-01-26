@@ -18,7 +18,7 @@ export function Card({ item }: { item?: Nft }) {
 
   useEffect(() => {
     if (ended) {
-      
+
       //TODO: Transfer item ownership to the current highest bidder
     }
   }, [ended])
@@ -83,8 +83,8 @@ export function Card({ item }: { item?: Nft }) {
         </p>
       </div>
       <div className="flex justify-between items-center">
-        {mergedItem.sale_type === "OPEN_BIDS" && <Badge className="bg-blue-700">Open Bid</Badge>}
-        {mergedItem.sale_type === "FIXED_PRICE" && <Badge className="bg-amber-700">Fixed Price</Badge>}
+        {mergedItem.sale_type === "OPEN_BIDS" && <Badge className="bg-blue-700 dark:bg-blue-700">Open Bid</Badge>}
+        {mergedItem.sale_type === "FIXED_PRICE" && <Badge className="bg-amber-700 dark:bg-amber-700">Fixed Price</Badge>}
         {mergedItem.sale_type === "TIMED_AUCTION" && (
           <div className="grid text-start ">
             <small className={cn("text-green-400 ", {"text-red-400": started})}>{started ? "Ending" : "Starting"} In </small>
