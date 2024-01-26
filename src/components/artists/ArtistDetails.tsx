@@ -47,7 +47,11 @@ export default function ArtistDetails() {
       </header>
       <main className="flex flex-col py-4">
         <Tabs className="w-full" defaultValue="listed">
-          <TabsList className="grid w-full grid-cols-3 dark:bg-gray-900 dark:text-white">
+          <TabsList className="flex gap-1 w-full dark:bg-gray-900 dark:text-white py-[22px]">
+            <TabsTrigger value="all" className="">
+              {/* Listed */}
+              All
+            </TabsTrigger>
             <TabsTrigger value="listed" className="">
               {/* Listed */}
               Listed
