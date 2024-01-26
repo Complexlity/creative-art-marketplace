@@ -1,12 +1,10 @@
-import { TabsTrigger, TabsList, TabsContent, Tabs } from "~/components/ui/tabs";
-import { type SVGProps } from "react";
-import { cn } from "~/utils/libs";
-import { Nft, NftUser } from "~/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { getNftsByUserId } from "~/utils/queries";
+import { type SVGProps } from "react";
 import Card from "~/components/Universal/Card";
-import { useAuth } from "@clerk/nextjs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import useCurrentUser from "~/hooks/useCurrentUser";
+import { getNftsByUserId } from "~/utils/queries";
+import { Nft, NftUser } from "~/utils/types";
 
 export default function ArtistDetails({ artist }: { artist: NftUser }) {
   const loggedInUserId = useCurrentUser({}).data?.userId

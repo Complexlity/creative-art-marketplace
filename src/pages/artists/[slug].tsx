@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from 'next/head';
 import Footer from "~/components/Universal/Footer";
 import Navbar from "~/components/Universal/Navbar";
 import ArtistDetails from "~/components/artists/ArtistDetails";
