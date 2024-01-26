@@ -104,7 +104,7 @@ function AuthUserNfts({ allItems, listedItems, unlistedItems }: {
       </TabsList>
       <TabsContent className="" value="all">
         {!allItems ? (
-          <div className="grid flex-1 items-center justify-center bg-orange-400">
+          <div className="grid flex-1 items-center justify-center text-3xl">
             You Have No NFTS
           </div>
         ) : (
@@ -117,7 +117,7 @@ function AuthUserNfts({ allItems, listedItems, unlistedItems }: {
       </TabsContent>
       <TabsContent value="listed">
         {!listedItems || listedItems.length === 0 ? (
-          <div className="grid flex-1 items-center justify-center bg-orange-400">
+          <div className="grid flex-1 items-center justify-center text-3xl">
             You Have No Listed NFTS
           </div>
         ) : (
@@ -130,7 +130,7 @@ function AuthUserNfts({ allItems, listedItems, unlistedItems }: {
       </TabsContent>
       <TabsContent value="unlisted">
         {!unlistedItems || unlistedItems.length == 0 ? (
-          <div className="grid flex-1 items-center justify-center bg-orange-400">
+          <div className="grid flex-1 items-center justify-center text-3xl">
             You Have No Unlisted NFTS
           </div>
         ) : (
@@ -151,7 +151,9 @@ function NormalUserNfts({ listedItems }: { listedItems: Nft[] | null | undefined
 {
   !listedItems
     ?
-    <div>This aritst has no item</div>
+    <div className="grid flex-1 items-center justify-center text-3xl">
+            This Artist Hast No Item
+          </div>
     :
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
    {listedItems!.map((item) => {
