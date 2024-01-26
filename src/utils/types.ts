@@ -8,7 +8,7 @@ export type NftBid = Database["public"]["Tables"]["bids"]["Row"];
 export type NftUser = Database["public"]["Tables"]["users"]["Row"];
 
 export type Nft = Prettify<
-  Database["public"]["Tables"]["nfts"]["Row"] & { sale_type: Methods }
+  Database["public"]["Tables"]["nfts"]["Row"] & { sale_type: Methods, status: "listed" | "unlisted" }
 >;
 
 export type Message = Database["public"]["Tables"]["messages"]["Row"];
