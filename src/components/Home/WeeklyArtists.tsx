@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Nft, NftUser, WithUser } from "~/utils/types";
 
 type ReduceReturnType =
@@ -44,6 +45,9 @@ const WeeklyArtists = ({nfts: nftsData}: {nfts: WithUser<Nft>[]}) => {
           let curr = item[0]!
           const [firstName, LastName] = curr.username.split(" ");
           return (
+            <Link href={`artists/${curr.user_url}`
+        } >
+
             <li key={index} className="hover:cursor-pointer honeycomb-cell">
               <Image
                 alt={`${curr.username} Profile Image`}
@@ -57,7 +61,8 @@ const WeeklyArtists = ({nfts: nftsData}: {nfts: WithUser<Nft>[]}) => {
                 {firstName}
                 <small> {LastName}</small>
               </div>
-            </li>
+              </li>
+              </Link>
           );
         })}
       </ul>
