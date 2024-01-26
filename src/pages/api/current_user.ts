@@ -2,25 +2,21 @@ import { clerkClient } from '@clerk/nextjs'
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createPagesServerClient } from '@supabase/auth-helpers-nextjs'
+import { newUser } from '~/utils/types';
 
 
 
 
-type User = {
-  username: string | null | undefined;
-  userId: string | null | undefined;
-  imageUrl: string | null | undefined;
-  game_currency: number | null | undefined;
-};
+
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ user: User }>
+  res: NextApiResponse<{ user: newUser }>
 ) {
 
   if (req.method === 'POST') {
     const supabase = createPagesServerClient({ req, res })
-    const userId = req.body
+    const userId = req.body as string
     let user = await clerkClient.users.getUser(userId)
 
     if (!user) {
@@ -29,10 +25,13 @@ export default async function handler(
           username: null,
           userId: '',
           imageUrl: '',
+          userUrl: '',
           game_currency: null
         }
       })
     }
+
+    const userUrl = user.username! + userId.slice(userId.length - 6)
     const { data: newUser, error: createError } = await supabase
       .from('users')
       .insert(
@@ -40,6 +39,7 @@ export default async function handler(
           username: user.username!,
           imageUrl: user.imageUrl!,
           user_id: userId!,
+          userUrl,
           game_currency: 1000
         }],
       )
@@ -47,6 +47,6 @@ export default async function handler(
 
 
 
-    return res.status(200).json({ user: newUser as unknown as User });
+    return res.status(200).json({ user: newUser as unknown as newUser });
   }
 }

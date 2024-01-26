@@ -1,17 +1,13 @@
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import { supabaseWithoutClient as supabase } from "~/supabase";
+import { newUser } from "~/utils/types";
 
 type useCurrentUserProps = {
   userId?: string | null;
 };
 
-type User = {
-  username: string | null | undefined;
-  userId: string | null | undefined;
-  imageUrl: string | null | undefined;
-  game_currency: number | null | undefined;
-};
+
 
 const useCurrentUser = ({ userId }: useCurrentUserProps) => {
   let authUserId: string | null | undefined;
@@ -22,12 +18,13 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
 
   return useQuery({
     queryKey: [userOrAuthUserId],
-    queryFn: async (): Promise<User> => {
+    queryFn: async (): Promise<newUser> => {
       if (!userOrAuthUserId) {
         return {
           username: null,
           userId: null,
           imageUrl: null,
+          userUrl: null,
           game_currency: null,
         };
       }
@@ -43,6 +40,7 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
           username: user.username,
           userId: user.user_id,
           imageUrl: user.imageUrl,
+          userUrl: user.user_url,
           game_currency: user.game_currency,
         };
       }
@@ -53,7 +51,7 @@ const useCurrentUser = ({ userId }: useCurrentUserProps) => {
         body: userOrAuthUserId,
       });
       const result = await res.json();
-      const user = result.user as User;
+      const user = result.user as newUser;
 
       return user;
     },
