@@ -2,8 +2,26 @@ import Head from 'next/head'
 import Footer from "~/components/Universal/Footer";
 import Navbar from "~/components/Universal/Navbar";
 import ArtistDetails from "~/components/artists/ArtistDetails";
+import { getSingleArtist } from '~/utils/queries';
+import { NftUser } from '~/utils/types';
 
-function ArtistPage() {
+export const getStaticPaths = async () => {
+  // const nftsData = await getAllUsers();
+  // const paths = nftsData.map((item) => ({
+  //   params: { slug: item.slug },
+  // }));
+  return { paths: [], fallback: true };
+};
+
+export async function getStaticProps({ params }: { params: { slug: string } }) {
+  const singleArtist = await getSingleArtist(params.slug);
+
+  return { props: { singleArtist } };
+}
+
+
+function ArtistPage({ singleArtist }: { singleArtist: NftUser }) {
+  console.table({singleArtist})
 
   return (
     <>
