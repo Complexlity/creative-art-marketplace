@@ -248,6 +248,7 @@ export interface Database {
           sale_type: string | null;
           slug: string;
           start_date: string | null;
+          status: string;
           user_id: string;
         };
         Insert: {
@@ -262,6 +263,7 @@ export interface Database {
           sale_type?: string | null;
           slug: string;
           start_date?: string | null;
+          status?: string;
           user_id: string;
         };
         Update: {
@@ -276,6 +278,7 @@ export interface Database {
           sale_type?: string | null;
           slug?: string;
           start_date?: string | null;
+          status?: string;
           user_id?: string;
         };
         Relationships: [
