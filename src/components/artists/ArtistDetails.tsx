@@ -114,7 +114,7 @@ function AuthUserNfts({ allItems, listedItems, unlistedItems }: {
         )}
       </TabsContent>
       <TabsContent value="listed">
-        {!allItems ? (
+        {!listedItems ? (
           <div className="grid flex-1 items-center justify-center bg-orange-400">
             You Have No Listed NFTS
           </div>
@@ -127,7 +127,7 @@ function AuthUserNfts({ allItems, listedItems, unlistedItems }: {
         )}
       </TabsContent>
       <TabsContent value="unlisted">
-        {!allItems ? (
+        {!unlistedItems ? (
           <div className="grid flex-1 items-center justify-center bg-orange-400">
             You Have No Purchased NFTS
           </div>
