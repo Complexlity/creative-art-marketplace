@@ -114,7 +114,7 @@ function AuthUserNfts({ allItems, listedItems, unlistedItems }: {
         )}
       </TabsContent>
       <TabsContent value="listed">
-        {!listedItems ? (
+        {!listedItems || listedItems.length === 0 ? (
           <div className="grid flex-1 items-center justify-center bg-orange-400">
             You Have No Listed NFTS
           </div>
@@ -127,13 +127,13 @@ function AuthUserNfts({ allItems, listedItems, unlistedItems }: {
         )}
       </TabsContent>
       <TabsContent value="unlisted">
-        {!unlistedItems ? (
+        {!unlistedItems || unlistedItems.length == 0 ? (
           <div className="grid flex-1 items-center justify-center bg-orange-400">
-            You Have No Purchased NFTS
+            You Have No Unlisted NFTS
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {unlistedItems!.map((item) => {
+            {unlistedItems.map((item) => {
               return <Card key={item.id} item={item} />;
             })}
           </div>
