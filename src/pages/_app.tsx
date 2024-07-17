@@ -1,13 +1,15 @@
 import { Analytics } from '@vercel/analytics/react';
-import merge from "lodash.merge";
 import { type AppType } from "next/dist/shared/lib/utils";
 import Head from "next/head";
 import React from "react";
 import "~/styles/globals.css";
-import ogImage from '../../public/og.png';
 import NftsDataContextProvider from "../contexts/NftsDataContext";
- 
+ import { TonConnectUIProvider } from '@tonconnect/ui-react';
+import { TransportProvider } from '~/components/Universal/TransportContext';
+const manifestUrl = `${process.env.NEXT_PUBLIC_HOST!}/tonconnect-manifest.json`
 
+console.log({manifestUrl})
+ 
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
@@ -35,10 +37,15 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <meta property="og:locale" content="en_US" />
       </Head>
       <SafeHydrate>
-      
-            <NftsDataContextProvider>
+        <TransportProvider>
+
+      <TonConnectUIProvider manifestUrl={manifestUrl}>
+        <NftsDataContextProvider>
+          
               <Component {...pageProps} />
             </NftsDataContextProvider>
+        </TonConnectUIProvider>
+        </TransportProvider>
       
       </SafeHydrate>
       <Analytics />

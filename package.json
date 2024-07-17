@@ -10,6 +10,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@tonconnect/ui-react": "^2.0.6",
     "@types/lodash.merge": "^4.6.7",
     "@vercel/analytics": "^1.0.1",
     "ethers": "^5.7.2",

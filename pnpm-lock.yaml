@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@tonconnect/ui-react':
+    specifier: ^2.0.6
+    version: 2.0.6(react-dom@18.2.0)(react@18.2.0)
   '@types/lodash.merge':
     specifier: ^4.6.7
     version: 4.6.9
@@ -1930,6 +1933,61 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
+  /@tonconnect/isomorphic-eventsource@0.0.2:
+    resolution: {integrity: sha512-B4UoIjPi0QkvIzZH5fV3BQLWrqSYABdrzZQSI9sJA9aA+iC0ohOzFwVVGXanlxeDAy1bcvPbb29f6sVUk0UnnQ==}
+    dependencies:
+      eventsource: 2.0.2
+    dev: false
+
+  /@tonconnect/isomorphic-fetch@0.0.3:
+    resolution: {integrity: sha512-jIg5nTrDwnite4fXao3dD83eCpTvInTjZon/rZZrIftIegh4XxyVb5G2mpMqXrVGk1e8SVXm3Kj5OtfMplQs0w==}
+    dependencies:
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@tonconnect/protocol@2.2.6:
+    resolution: {integrity: sha512-kyoDz5EqgsycYP+A+JbVsAUYHNT059BCrK+m0pqxykMODwpziuSAXfwAZmHcg8v7NB9VKYbdFY55xKeXOuEd0w==}
+    dependencies:
+      tweetnacl: 1.0.3
+      tweetnacl-util: 0.15.1
+    dev: false
+
+  /@tonconnect/sdk@3.0.3:
+    resolution: {integrity: sha512-ElVre1DPixzQLgLtQIa8Wu5xS8nozlgblZTJhFFPrk82M2rZ+sawyF+LAVwt9wZRN7+htWnJrNz0+bBr4b3geA==}
+    dependencies:
+      '@tonconnect/isomorphic-eventsource': 0.0.2
+      '@tonconnect/isomorphic-fetch': 0.0.3
+      '@tonconnect/protocol': 2.2.6
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@tonconnect/ui-react@2.0.6(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-9VRYP2o/YW4ti+rOMSptIYaRO39V5UFmzdUl18AmDFDdynjacAIht/IInO+AGAKfrnF9bUk/J5NgLcbxVqvZww==}
+    peerDependencies:
+      react: '>=17.0.0'
+      react-dom: '>=17.0.0'
+    dependencies:
+      '@tonconnect/ui': 2.0.6
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@tonconnect/ui@2.0.6:
+    resolution: {integrity: sha512-JMTSxgbnpDjpHi9g0s7w3tpAiLHa8BHUpaBrbSTDcKGQVEm7+NtqhN+gQkGkm8pV7NYRqiS/sKUpRQ1MyjtTBQ==}
+    dependencies:
+      '@tonconnect/sdk': 3.0.3
+      classnames: 2.5.1
+      deepmerge: 4.3.1
+      ua-parser-js: 1.0.38
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@types/aria-query@5.0.4:
     resolution: {integrity: sha512-rfT93uj5s0PRL7EzccGMs3brplhcrghnDoV26NqKhCAS1hVo+WdNsPvE/yb6ilfr5hi2MEk6d5EWJTKdxg8jVw==}
     dev: true
@@ -3549,6 +3607,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /deepmerge@4.3.1:
+    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   /define-data-property@1.1.4:
     resolution: {integrity: sha512-rBMvIzlpA8v6E+SJZoo++HAYqsLrkg7MSfIinMPFhmkorw7X+dOXVJQs+QT69zGkzMyfDnIMN2Wid1+NbL3T+A==}
     engines: {node: '>= 0.4'}
@@ -4254,6 +4317,11 @@ packages:
   /events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
+    dev: false
+
+  /eventsource@2.0.2:
+    resolution: {integrity: sha512-IzUmBGPR3+oUG9dUeXynyNmf91/3zUSJg1lCktzKw47OXuhco54U3r9B7O4XX+Rb1Itm9OZ2b0RkTs10bICOxA==}
+    engines: {node: '>=12.0.0'}
     dev: false
 
   /execa@8.0.1:
@@ -6822,6 +6890,14 @@ packages:
       typescript: 5.5.3
     dev: true
 
+  /tweetnacl-util@0.15.1:
+    resolution: {integrity: sha512-RKJBIj8lySrShN4w6i/BonWp2Z/uxwC3h4y7xsRrpP59ZboCd0GpEVsOnMDYLMmKBpYhb5TgHzZXy7wTfYFBRw==}
+    dev: false
+
+  /tweetnacl@1.0.3:
+    resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
+    dev: false
+
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -6893,6 +6969,10 @@ packages:
     resolution: {integrity: sha512-/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  /ua-parser-js@1.0.38:
+    resolution: {integrity: sha512-Aq5ppTOfvrCMgAPneW1HfWj66Xi7XL+/mIy996R1/CLS/rcyJQm6QZdsKrUeivDFQ+Oc9Wyuwor8Ze8peEoUoQ==}
+    dev: false
 
   /ufo@1.5.3:
     resolution: {integrity: sha512-Y7HYmWaFwPUmkoQCUIAYpKqkOf+SbVj/2fJJZ4RJMCfZp0rTGwRbzQD+HghfnhKOjL9E01okqz+ncJskGYfBNw==}

@@ -5,12 +5,22 @@ import { useState, useEffect } from "react";
 import logo from "/public/icons/logo.png";
 import { Spin as Hamburger } from "hamburger-react";
 import { motion } from "framer-motion";
+import { TonConnectButton, useTonAddress } from "@tonconnect/ui-react";
+import useIsMobile from "~/hooks/useIsMobile";
+import { createPortal } from "react-dom";
+import { useTransportContext } from './TransportContext';
+import TransportableItem from './TransportableItem';
+
 
 const NavBar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
 
   const routePath = useRouter().pathname;
   const activeLink = "border-b-2 border-primary hover:border-white";
+  const { desktopContainerRef } = useTransportContext();
+
+
+
 
 
   const changeBackground = () => {
@@ -30,6 +40,9 @@ const NavBar = () => {
     };
   }, [window.scrollY]);
 
+  // const myConnectButton = <div>
+  //   <TonConnectButton />
+  // </div>
 
   return (
     <nav
@@ -55,10 +68,9 @@ const NavBar = () => {
           <li className={`${routePath === "/mint" ? activeLink : ""} hover:text-primary`}>Mint</li>
         </Link>
       </ul>
-      <div className="hidden lg:block">
-        {/* Connect Button Goes here */}
+      <TransportableItem />
+      <div className="hidden lg:block" ref={desktopContainerRef}>
       </div>
-
       <MobileMenu />
     </nav>
   );
@@ -126,7 +138,7 @@ function MobileMenu() {
   const [openState, setOpenState] = useState('')
   const routePath = useRouter().pathname;
   const activeMobileLink = "border-primary border-y-2";
-
+  const { mobileContainerRef } = useTransportContext();
 useEffect(() => {
   if(openState === 'closed'){
     setOpenState('open')
@@ -184,14 +196,30 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
         </Link>
         <hr className="mx-auto w-4/5" />
         <motion.div
+          ref={mobileContainerRef}
           variants={fourVariants}
           className="mt-4 grid justify-center py-2"
         >
-          {/* Connect Button Goes here */}
         </motion.div>
       </motion.div>
     </>
   );
 }
+
+const Address = () => {
+  const userFriendlyAddress = useTonAddress();
+  const rawAddress = useTonAddress(false);
+
+  return (
+      userFriendlyAddress && (
+          <div>
+              <span>User-friendly address: {userFriendlyAddress}</span>
+              <span>Raw address: {rawAddress}</span>
+          </div>
+      )
+  );
+};
+
+
 
 export default NavBar;

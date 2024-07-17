@@ -279,3 +279,5 @@ body {
 .honeycomb-cell:nth-child(7n + 7), .honeycomb-cell:nth-child(7n + 5):nth-last-child(2) { margin-right: calc(50% - var(--hexagon-width) * 1.5 + var(--hexagon-margin)); }
 
 .honeycombplaceholder:nth-child(7n + 7), .honeycombplaceholder:nth-child(7n + 9), .honeycomb__placeholder:nth-child(7n + 11) { display: block; } }
+
+
