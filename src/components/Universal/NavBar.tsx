@@ -8,9 +8,8 @@ import { motion } from "framer-motion";
 import { TonConnectButton, useTonAddress } from "@tonconnect/ui-react";
 import useIsMobile from "~/hooks/useIsMobile";
 import { createPortal } from "react-dom";
-import { useTransportContext } from './TransportContext';
-import TransportableItem from './TransportableItem';
-
+import { useTransportContext } from "./TransportContext";
+import TransportableItem from "./TransportableItem";
 
 const NavBar = () => {
   const [isScrolling, setIsScrolling] = useState(false);
@@ -19,12 +18,7 @@ const NavBar = () => {
   const activeLink = "border-b-2 border-primary hover:border-white";
   const { desktopContainerRef } = useTransportContext();
 
-
-
-
-
   const changeBackground = () => {
-
     if (window.scrollY >= 90) {
       setIsScrolling(true);
       return;
@@ -46,8 +40,12 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`px-2 md:px-4 sticky top-[10px] text-xl z-[100] flex py-1 md:py-2 items-center justify-between text-white
-        ${isScrolling ? "rounded-full top-[.5rem] opacity-[90%] backdrop-blur-md shadow-sm shadow-primary" : ""}`}
+      className={`sticky top-[10px] z-[100] flex items-center justify-between px-2 py-1 text-xl text-white md:px-4 md:py-2
+        ${
+          isScrolling
+            ? "top-[.5rem] rounded-full opacity-[90%] shadow-sm shadow-primary backdrop-blur-md"
+            : ""
+        }`}
     >
       <Link href="/" className="flex items-center gap-1 text-3xl">
         <Image src={logo} className="h-6 w-6" alt="Creative logo" />
@@ -57,19 +55,36 @@ const NavBar = () => {
       </Link>
       <ul className="hidden list-none items-center gap-8 lg:flex">
         <Link href="/">
-          <li className={`${routePath === "/" ? activeLink : ""} hover:text-primary `}>Home</li>
+          <li
+            className={`${
+              routePath === "/" ? activeLink : ""
+            } hover:text-primary `}
+          >
+            Home
+          </li>
         </Link>
         <Link href="/explore">
-          <li className={`${routePath === "/explore" ? activeLink : ""} hover:text-primary`}>
+          <li
+            className={`${
+              routePath === "/explore" ? activeLink : ""
+            } hover:text-primary`}
+          >
             Explore
           </li>
         </Link>
         <Link href="/mint">
-          <li className={`${routePath === "/mint" ? activeLink : ""} hover:text-primary`}>Mint</li>
+          <li
+            className={`${
+              routePath === "/mint" ? activeLink : ""
+            } hover:text-primary`}
+          >
+            Mint
+          </li>
         </Link>
       </ul>
-      <TransportableItem />
+      {/* <TransportableItem /> */}
       <div className="hidden lg:block" ref={desktopContainerRef}>
+        <TonConnectButton />
       </div>
       <MobileMenu />
     </nav>
@@ -135,18 +150,17 @@ const fourVariants = {
 
 function MobileMenu() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [openState, setOpenState] = useState('')
+  const [openState, setOpenState] = useState("");
   const routePath = useRouter().pathname;
   const activeMobileLink = "border-primary border-y-2";
   const { mobileContainerRef } = useTransportContext();
-useEffect(() => {
-  if(openState === 'closed'){
-    setOpenState('open')
-    return
-  }
-  setOpenState('closed')
-
-}, [isOpen])
+  useEffect(() => {
+    if (openState === "closed") {
+      setOpenState("open");
+      return;
+    }
+    setOpenState("closed");
+  }, [isOpen]);
 
   return (
     <>
@@ -157,7 +171,7 @@ useEffect(() => {
         initial={false}
         animate={openState}
         variants={variants}
-        className={`dropdown_menu absolute right-0  top-[calc(100%+5px)] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden rounded-lg  bg-gray-400/60 backdrop-blur-sm px-2 py-2 text-lg sm:right-4 lg:hidden `}
+        className={`dropdown_menu absolute right-0  top-[calc(100%+5px)] z-[12] grid w-full max-w-[300px] gap-1 overflow-hidden rounded-lg  bg-gray-400/60 px-2 py-2 text-lg backdrop-blur-sm sm:right-4 lg:hidden `}
       >
         <Link href="/">
           <motion.li
@@ -170,18 +184,18 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
             Home
           </motion.li>
         </Link>
-            <Link href="/explore">
-              {" "}
-              <motion.li
-                variants={threeVariants}
-                className={`flex items-center justify-center rounded-lg
+        <Link href="/explore">
+          {" "}
+          <motion.li
+            variants={threeVariants}
+            className={`flex items-center justify-center rounded-lg
     py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
-                  routePath === "/explore" ? activeMobileLink : ""
-                }`}
-              >
-                Explore
-              </motion.li>
-            </Link>
+      routePath === "/explore" ? activeMobileLink : ""
+    }`}
+          >
+            Explore
+          </motion.li>
+        </Link>
         <Link href="/mint">
           {" "}
           <motion.li
@@ -200,6 +214,7 @@ py-2 text-gray-200 hover:bg-[#1a1b1f] hover:text-white ${
           variants={fourVariants}
           className="mt-4 grid justify-center py-2"
         >
+          <TonConnectButton />
         </motion.div>
       </motion.div>
     </>
@@ -211,15 +226,13 @@ const Address = () => {
   const rawAddress = useTonAddress(false);
 
   return (
-      userFriendlyAddress && (
-          <div>
-              <span>User-friendly address: {userFriendlyAddress}</span>
-              <span>Raw address: {rawAddress}</span>
-          </div>
-      )
+    userFriendlyAddress && (
+      <div>
+        <span>User-friendly address: {userFriendlyAddress}</span>
+        <span>Raw address: {rawAddress}</span>
+      </div>
+    )
   );
 };
-
-
 
 export default NavBar;
