@@ -1,6 +1,5 @@
 {
-    "url": "http://locahost:3000",
-    "name": "Creative arts marketplace",                      
-    "iconUrl": "http://localhost:3000/favicon.ico"
-    
+  "url": "https://creative-ton-marketplace.vercel.app/",
+  "name": "Creative arts marketplace",
+  "iconUrl": "https://creative-ton-marketplace.vercel.app/favicon.ico"
 }
